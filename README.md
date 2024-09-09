@@ -8,7 +8,7 @@ As a developer, you should already be familiar with the basics of programming. B
 
 ## Table of Contents
 
-1. Introduction
+1. [Introduction](book/chapters/01_introduction.md)
 2. Big O Notation
 3. Basic Sorting
 4. Advanced Sorting
