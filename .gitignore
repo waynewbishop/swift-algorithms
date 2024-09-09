@@ -2,6 +2,22 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
+# PyCharm
+.idea/
+*.iml
+*.iws
+out/
+.idea_modules/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+
 ## User settings
 xcuserdata/
 
