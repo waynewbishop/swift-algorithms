@@ -8,28 +8,29 @@ As a developer, you should already be familiar with the basics of programming. B
 
 ## Table of Contents
 
-1. Big O Notation
-2. Basic Sorting
-3. Advanced Sorting
-4. Generics
-5. Linked Lists
-6. Tries
-7. Stacks & Queues
-8. Binary Search Trees
-9. Tree Balancing
-10. Graphs
-11. Shortest Paths
-12. Heaps
-13. Traversals
-14. Blockchain Design
-15. Hash Tables
-16. Machine Learning
-17. Closures
-18. Control Structures
-19. Recursion
-20. Dynamic Programming
-21. Unit Testing
-22. Objective-C Primer
+1. Introduction
+2. Big O Notation
+3. Basic Sorting
+4. Advanced Sorting
+5. Generics
+6. Linked Lists
+7. Tries
+8. Stacks & Queues
+9. Binary Search Trees
+10. Tree Balancing
+11. Graphs
+12. Shortest Paths
+13. Heaps
+14. Traversals
+15. Blockchain Design
+16. Hash Tables
+17. Machine Learning
+18. Closures
+19. Control Structures
+20. Recursion
+21. Dynamic Programming
+22. Unit Testing
+23. Objective-C Primer
 
 ## The Book
 
