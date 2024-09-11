@@ -9,7 +9,7 @@ As a developer, you should already be familiar with the basics of programming. B
 ## Table of Contents
 
 1. [Introduction](book/chapters/01_introduction.md)
-2. Big O Notation
+2. [Big O Notation](book/chapters/02_big_o_notation.md)
 3. Basic Sorting
 4. Advanced Sorting
 5. Generics
@@ -31,6 +31,7 @@ As a developer, you should already be familiar with the basics of programming. B
 21. Dynamic Programming
 22. Unit Testing
 23. Objective-C Primer
+24. [Exercise Solutions](book/chapters/24_exercise_solutions.md)
 
 ## The Book
 
