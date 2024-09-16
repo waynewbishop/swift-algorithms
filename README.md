@@ -10,7 +10,7 @@ As a developer, you should already be familiar with the basics of programming. B
 
 1. [Introduction](book/chapters/01_introduction.md)
 2. [Big O Notation](book/chapters/02_big_o_notation.md)
-3. Basic Sorting
+3. [Basic Sorting](book/chapters/03_basic_sorting.md)
 4. Advanced Sorting
 5. Generics
 6. Linked Lists
