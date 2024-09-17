@@ -2,21 +2,21 @@
 
 The sorting functions reviewed in the previous chapter each performed with a time complexity of O(n&#178;). While good for interview situations and general academic knowledge, algorithms like InsertionSort and BubbleSort are seldom used in production code. The Quicksort algorithm, however, has broader practical application and usage. This commonly used algorithm is found in both code libraries and real-life projects. Quicksort features a time complexity of O(n log n) and applies a divide & conquer strategy. This combination results in advanced algorithmic performance.
 
-## How Quicksort Works
+## How quicksort works
 
 Quicksort applies a series of rules to swap pairs of values. Swap events are performed in place so no additional structures are needed to process data. In our implementation, special variables named wall and pivot will help manage the swapping process.
 
-### Making Comparisons
+### Making comparisons
 
 The algorithm starts by examining the source element and iterating through its list of neighbors. The process of comparing and swapping occurs until the current index meets the pivot. Once complete, the pivot is swapped with the wall index value.
 
-### Conquering the Divide
+### Conquering the divide
 
 Interestingly, once the pivot is swapped, it's considered sorted. Even though most values remain unsorted (at this phase), all values less than the pivot are now positioned to the left. Conversely, all values greater than the pivot are positioned to the right. This process is called partitioning.
 
 To sort the remaining values, each value left or right of the initial pivot is also treated as a pivot and the process is repeated.
 
-## The Code
+## The code
 
 The entire algorithm is expressed as two functions. The main `quickSort` function manages the overall execution - specifically, the selection of each pivot value. The implementation is written as an Array extension:
 
@@ -63,17 +63,17 @@ mutating func qPartition(start startIndex: Int, _ pivot: Int) -> Int {
 }
 ```
 
-## Time and Space Complexity Analysis
+## Time and space complexity analysis
 
 Quicksort has an average-case time complexity of O(n log n), making it one of the most efficient sorting algorithms. In the best case, it can achieve O(n log n) time, while in the worst case, it degrades to O(n&#178;). The space complexity is O(log n) due to the recursive call stack.
 
-### Best, Average, and Worst-case Scenarios
+### Best, average, and worst-case scenarios
 
 - Best case: O(n log n) - when the pivot chosen always divides the array into two equal halves.
 - Average case: O(n log n) - occurs with random data and good pivot selection.
 - Worst case: O(n&#178;) - happens when the pivot is always the smallest or largest element, leading to unbalanced partitions.
 
-## Variations of Quicksort
+## Variations of quicksort
 
 The choice of pivot can significantly impact Quicksort's performance. Common pivot selection strategies include:
 
@@ -84,7 +84,7 @@ The choice of pivot can significantly impact Quicksort's performance. Common piv
 
 The median-of-three method often provides good performance across various input distributions.
 
-## Optimization Techniques
+## Optimization techniques
 
 Several techniques can improve Quicksort's performance:
 
@@ -110,7 +110,7 @@ However, other algorithms might be preferable when:
 - Guaranteed O(n log n) performance is needed for all inputs (use Heapsort or Mergesort)
 - Sorting linked lists (Mergesort may be more efficient)
 
-## Code Optimizations
+## Code optimizations
 
 The Swift implementation can be optimized by:
 

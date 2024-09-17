@@ -2,11 +2,11 @@
 
 Sorting is a fundamental operation in computer science, used to arrange data in a specific order. This chapter introduces three basic sorting algorithms: Insertion Sort, Bubble Sort, and Selection Sort. We'll explore their implementations, analyze their performance, and discuss their practical applications.
 
-## 1. Insertion Sort
+## Insertion sort
 
 Insertion sort is a simple sorting algorithm that builds the final sorted array one item at a time. It's much less efficient on large lists than more advanced algorithms such as quicksort, heapsort, or merge sort.
 
-### 1.1 Algorithm Description
+### Algorithm description
 
 1. Iterate through the array from the second element.
 2. Compare the current element with the previous elements.
@@ -14,7 +14,7 @@ Insertion sort is a simple sorting algorithm that builds the final sorted array 
 4. Repeat step 3 until the element is in its correct position.
 5. Move to the next element and repeat steps 2-4.
 
-### 1.2 Swift Implementation
+### Swift implementation
 
 ```swift
 extension Array where Element: Comparable {
@@ -39,7 +39,7 @@ extension Array where Element: Comparable {
 }
 ```
 
-### 1.3 Time and Space Complexity
+### Time and space complexity
 
 - Time Complexity: 
   - Best Case: O(n) - when the array is already sorted
@@ -47,18 +47,18 @@ extension Array where Element: Comparable {
   - Worst Case: O(n&#178;) - when the array is in reverse order
 - Space Complexity: O(1) - in-place sorting algorithm
 
-### 1.4 Characteristics
+### Characteristics
 
 - Stable: Yes
 - Adaptive: Yes
 - In-place: Yes
 - Online: Yes (can sort a list as it receives it)
 
-## 2. Bubble Sort
+## Bubble sort
 
 Bubble sort is a simple sorting algorithm that repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order. The pass through the list is repeated until the list is sorted.
 
-### 2.1 Algorithm Description
+### Algorithm description
 
 1. Start from the first element of the array.
 2. Compare the current element with the next element.
@@ -66,7 +66,7 @@ Bubble sort is a simple sorting algorithm that repeatedly steps through the list
 4. Move to the next element and repeat steps 2-3.
 5. Repeat steps 1-4 for each pass through the array until no swaps are needed.
 
-### 2.2 Swift Implementation
+### Swift implementation
 
 ```swift
 extension Array where Element: Comparable {
@@ -88,7 +88,7 @@ extension Array where Element: Comparable {
 }
 ```
 
-### 2.3 Time and Space Complexity
+### Time and space complexity
 
 - Time Complexity: 
   - Best Case: O(n) - when the array is already sorted
@@ -96,25 +96,25 @@ extension Array where Element: Comparable {
   - Worst Case: O(n&#178;) - when the array is in reverse order
 - Space Complexity: O(1) - in-place sorting algorithm
 
-### 2.4 Characteristics
+### Characteristics
 
 - Stable: Yes
 - Adaptive: Yes
 - In-place: Yes
 - Online: No
 
-## 3. Selection Sort
+## Selection sort
 
 Selection sort is an in-place comparison sorting algorithm. It divides the input list into two parts: a sorted portion at the left end and an unsorted portion at the right end. Initially, the sorted portion is empty and the unsorted portion is the entire list.
 
-### 3.1 Algorithm Description
+### Algorithm description
 
 1. Find the minimum element in the unsorted portion of the array.
 2. Swap it with the first element of the unsorted portion.
 3. Move the boundary between the sorted and unsorted portions one element to the right.
 4. Repeat steps 1-3 until the entire array is sorted.
 
-### 3.2 Swift Implementation
+### Swift implementation
 
 ```swift
 extension Array where Element: Comparable {
@@ -139,7 +139,7 @@ extension Array where Element: Comparable {
 }
 ```
 
-### 3.3 Time and Space Complexity
+### Time and space complexity
 
 - Time Complexity: 
   - Best Case: O(n&#178;)
@@ -147,14 +147,14 @@ extension Array where Element: Comparable {
   - Worst Case: O(n&#178;)
 - Space Complexity: O(1) - in-place sorting algorithm
 
-### 3.4 Characteristics
+### Characteristics
 
 - Stable: No
 - Adaptive: No
 - In-place: Yes
 - Online: No
 
-## 4. When to Use Basic Sorting Algorithms
+## When to use basic sorting algorithms
 
 While these algorithms are not as efficient as advanced sorting algorithms for large datasets, they have their uses:
 
@@ -168,7 +168,7 @@ While these algorithms are not as efficient as advanced sorting algorithms for l
 
 5. Embedded systems: In systems with limited resources, these simple algorithms can be preferred.
 
-## 5. Historical Context
+## Historical context
 
 - Bubble Sort: One of the simplest sorting algorithms, bubble sort was analyzed as early as 1956 by O. J. Podsypanin.
 
@@ -176,6 +176,6 @@ While these algorithms are not as efficient as advanced sorting algorithms for l
 
 - Selection Sort: Developed by Tony Hoare in 1961, selection sort was part of his work on Quicksort, one of the most efficient sorting algorithms.
 
-## 6. Conclusion
+## Conclusion
 
 Basic sorting algorithms provide a foundation for understanding more complex sorting methods. While they may not be the most efficient for large datasets, their simplicity makes them valuable in certain scenarios and as learning tools. In the next chapter, we'll explore advanced sorting algorithms that offer improved performance for larger datasets.
