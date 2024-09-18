@@ -4,7 +4,7 @@ The popularity of Swift is mainly due to the many language features that make co
 
 ## Building frameworks
 
-As we've seen, data structures are the building blocks for organizing data. For example, linked lists, binary trees and queues provide a blueprint for data processing and analysis. Just like any well-designed program, data structures should also be designed for extensibility and reuse. To illustrate, assume you're building a simple service that lists a group of students. The data could be easily organized with a linked list and represented in the following manner:
+Data structures are the building blocks for organizing data. For example, linked lists, binary trees and queues provide a blueprint for data processing and analysis. Just like any well-designed program, data structures should also be designed for extensibility and reuse. To illustrate, assume you're building a simple service that lists a group of students. The data could be easily organized with a linked list and represented in the following manner:
 
 ```swift
 //basic structure

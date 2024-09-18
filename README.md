@@ -12,8 +12,8 @@ As a developer, you should already be familiar with the basics of programming. B
 2. [Big O Notation](book/chapters/02_big_o_notation.md)
 3. [Basic Sorting](book/chapters/03_basic_sorting.md)
 4. [Advanced Sorting](book/chapters/04_advanced_sorting.md)
-5. Generics
-6. Linked Lists
+5. [Generics](book/chapters/05_generics.md)
+6. [Linked Lists](book/chapters/06_linked_lists.md)
 7. Tries
 8. Stacks & Queues
 9. Binary Search Trees
@@ -22,9 +22,9 @@ As a developer, you should already be familiar with the basics of programming. B
 12. Shortest Paths
 13. Heaps
 14. Traversals
-15. Blockchain Design
-16. Hash Tables
-17. Machine Learning
+15. PageRank
+16. Blockchain Design
+17. Hash Tables
 18. Closures
 19. Control Structures
 20. Recursion
