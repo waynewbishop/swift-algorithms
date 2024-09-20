@@ -56,24 +56,14 @@ class LinkedList<T> {
 
 Understanding the time complexity of linked list operations is crucial. Here's a comparison with arrays:
 
-- Access:
-  - Linked List: O(n)
-  - Array: O(1)
-- Insertion (end):
-  - Linked List: O(n)
-  - Array: O(1) amortized
-- Insertion (start):
-  - Linked List: O(1)
-  - Array: O(n)
-- Deletion (end):
-  - Linked List: O(n)
-  - Array: O(1) amortized
-- Deletion (start):
-  - Linked List: O(1)
-  - Array: O(n)
-- Search:
-  - Linked List: O(n)
-  - Array: O(n)
+| Operation        | Linked List | Array           |
+|:-----------------|:------------|:----------------|
+| Access           | O(n)        | O(1)            |
+| Insertion (end)  | O(n)        | O(1) amortized  |
+| Insertion (start)| O(1)        | O(n)            |
+| Deletion (end)   | O(n)        | O(1) amortized  |
+| Deletion (start) | O(1)        | O(n)            |
+| Search           | O(n)        | O(n)            |
 
 As we can see, linked lists excel at insertions and deletions at the beginning, while arrays are better for random access and operations at the end.
 
@@ -216,7 +206,7 @@ Linked lists are used in various real-world applications:
 3. Music playlists
 4. Browser's forward and backward navigation
 
-## Comparison with Other Data Structures
+## Comparison with other data structures
 
 While linked lists offer flexibility in insertions and deletions, they have some drawbacks compared to arrays:
 
