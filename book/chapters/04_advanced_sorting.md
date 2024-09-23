@@ -88,7 +88,7 @@ The median-of-three method often provides good performance across various input 
 
 Several techniques can improve Quicksort's performance:
 
-1. Switching to insertion sort for small subarrays (typically less than 10-20 elements)
+1. Switching to insertion sort for small sub-arrays (typically less than 10-20 elements)
 2. Using a three-way partitioning scheme for arrays with many duplicate elements
 3. Tail call optimization to reduce stack space usage
 
@@ -116,7 +116,7 @@ The Swift implementation can be optimized by:
 
 1. Using in-place sorting to reduce memory usage
 2. Implementing the median-of-three pivot selection
-3. Using insertion sort for small subarrays
+3. Using insertion sort for small sub-arrays
 
 Here's an optimized version of the partition function:
 

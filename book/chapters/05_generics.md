@@ -260,7 +260,7 @@ This powerful feature allows you to provide protocol conformance for your generi
 
 4. Difficulty with type inference: In complex generic code, type inference might fail. In such cases, provide explicit type annotations to help the compiler.
 
-## Exercises 
+## Practice Problems 
 
 1. Implement a generic `Pair` struct that can hold two values of different types. Add a method to swap the values.
 
@@ -269,7 +269,3 @@ This powerful feature allows you to provide protocol conformance for your generi
 3. Write a generic function that can find the minimum and maximum values in any collection of `Comparable` elements.
 
 4. Implement a generic `Cache` class that can store any type of value for any type of key.
-
-5. Design a generic `SafeArray` class that provides bounds-checked access to its elements. It should throw an error if an index is out of bounds.
-
-6. Create a generic `Counter` class that can keep track of occurrences of any `Hashable` type. Include methods to increment, decrement, and get the count for a given item.

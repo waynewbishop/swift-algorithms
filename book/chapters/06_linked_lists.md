@@ -216,53 +216,7 @@ While linked lists offer flexibility in insertions and deletions, they have some
 
 However, linked lists shine in scenarios where frequent insertions and deletions are required, especially at the beginning of the list.
 
-## Exercises
-
-Here are some coding exercises to practice working with linked lists:
+## Practice Problems 
 
 1. Implement a method to remove duplicates from an unsorted linked list.
-
-```swift
-extension LinkedList where T: Equatable {
-    func removeDuplicates() {
-        var current = head
-        while let currentNode = current {
-            var runner = currentNode
-            while let nextNode = runner.next {
-                if nextNode.data == currentNode.data {
-                    runner.next = nextNode.next
-                } else {
-                    runner = nextNode
-                }
-            }
-            current = currentNode.next
-        }
-    }
-}
-```
-
 2. Write a method to find the kth to last element of a singly linked list.
-
-```swift
-extension LinkedList {
-    func kthToLast(_ k: Int) -> T? {
-        guard var slow = head, var fast = head else { return nil }
-        
-        // Move fast k nodes ahead
-        for _ in 0..<k {
-            guard let nextFast = fast.next else { return nil }
-            fast = nextFast
-        }
-        
-        // Move both pointers until fast reaches the end
-        while let nextFast = fast.next {
-            slow = slow.next ?? slow
-            fast = nextFast
-        }
-        
-        return slow.data
-    }
-}
-```
-
-These exercises cover various aspects of linked list manipulation and provide good practice for working with this data structure.
