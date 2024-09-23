@@ -56,29 +56,6 @@ public class Trie {
 
 ## Adding words
 
-****Here's an algorithm that adds words to a trie:
-
-```swift
-func insert(_ word: String) {
-    var current = root
-    for char in word {
-        if let child = current.children[char] {
-            current = child
-        } else {
-            let newNode = TrieNode()
-            newNode.key = char
-            current.children[char] = newNode
-            current = newNode
-        }
-    }
-    current.isEndOfWord = true
-}
-```
-
-Certainly! I'll add a detailed code explanation for the "Adding words" section, catering to users from beginner to advanced levels. Here's the addition in markdown format:
-
-## Adding words
-
 Here's an algorithm that adds words to a trie:
 
 ```swift
@@ -98,7 +75,7 @@ func insert(_ word: String) {
 }
 ```
 
-### Code Explanation:
+### Explanation:
 
 1. We start by setting `current` to the root node of our trie. This is our starting point for insertion.
 
@@ -140,7 +117,9 @@ This insertion process ensures that each prefix is stored only once, providing s
 
 ## Finding words
 
-The process of finding words in a trie closely mirrors the method used for adding new words, with a few key differences. Like insertion, we start at the root and traverse the trie character by character. However, instead of creating new nodes, we simply check if each character exists in the current node's children. If at any point we can't find a matching child node, we know the word doesn't exist in our trie and can return false immediately. If we successfully traverse all characters of the word, we then check if the final node is marked as the end of a word. This final check is crucial because it allows us to distinguish between complete words and mere prefixes in our trie. This search operation, like insertion, has a time complexity of `O(m)`, where m is the length of the word being searched.
+The process of finding words in a trie closely mirrors the method used for adding new words, with a few key differences. Like insertion, we start at the root and traverse the trie character by character. However, instead of creating new nodes, we simply check if each character exists in the current node's children. 
+
+If at any point we can't find a matching child node, we know the word doesn't exist in our trie and can return false immediately. If we successfully traverse all characters of the word, we then check if the final node is marked as the end of a word. This final check is crucial because it allows us to distinguish between complete words and mere prefixes in our trie. This search operation, like insertion, has a time complexity of `O(m)`, where m is the length of the word being searched.
 
 ```swift
 func search(_ word: String) -> Bool {
@@ -205,13 +184,13 @@ private func delete(_ node: TrieNode, _ word: String, _ index: Int) -> Bool {
 ## Space and time complexity analysis
 
 Space Complexity:
-- Worst case: O(m * n), where m is the length of the longest word and n is the number of words.
-- Best case: O(n), where n is the total number of characters in all words (when there's maximum sharing of prefixes).
+- Worst case: `O(m * n)`, where m is the length of the longest word and n is the number of words.
+- Best case: `O(n)`, where n is the total number of characters in all words (when there's maximum sharing of prefixes).
 
 Time Complexity:
-- Insertion: O(m), where m is the length of the word being inserted.
-- Search: O(m), where m is the length of the word being searched.
-- Deletion: O(m), where m is the length of the word being deleted.
+- Insertion: `O(m)`, where m is the length of the word being inserted.
+- Search: `O(m)`, where m is the length of the word being searched.
+- Deletion: `O(m)`, where m is the length of the word being deleted.
 
 ## Advantages and disadvantages
 
@@ -235,21 +214,6 @@ Disadvantages:
 
 1. Path Compression: Merge nodes with only one child to reduce the number of nodes and improve memory usage.
 2. Lazy Expansion: Only create nodes as needed, rather than initializing all possible character nodes upfront.
-
-## Comparison with other data structures
-
-Tries vs. Hash Tables:
-- Tries are better for prefix-based operations and finding all words with a common prefix.
-- Hash tables are generally faster for single word lookup and use less memory when there are few common prefixes.
-
-Tries vs. Binary Search Trees (BSTs):
-- Tries provide faster prefix-based searching and insertion.
-- BSTs can be more memory-efficient for storing strings with few common prefixes.
-
-When to choose Tries:
-- When prefix-based operations are frequent.
-- When you need to store a large number of strings with common prefixes.
-- When autocomplete or spell-check functionality is required.
 
 ## Practice problems
 
