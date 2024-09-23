@@ -56,6 +56,29 @@ public class Trie {
 
 ## Adding words
 
+****Here's an algorithm that adds words to a trie:
+
+```swift
+func insert(_ word: String) {
+    var current = root
+    for char in word {
+        if let child = current.children[char] {
+            current = child
+        } else {
+            let newNode = TrieNode()
+            newNode.key = char
+            current.children[char] = newNode
+            current = newNode
+        }
+    }
+    current.isEndOfWord = true
+}
+```
+
+Certainly! I'll add a detailed code explanation for the "Adding words" section, catering to users from beginner to advanced levels. Here's the addition in markdown format:
+
+## Adding words
+
 Here's an algorithm that adds words to a trie:
 
 ```swift
@@ -75,9 +98,49 @@ func insert(_ word: String) {
 }
 ```
 
+### Code Explanation:
+
+1. We start by setting `current` to the root node of our trie. This is our starting point for insertion.
+
+2. We then iterate through each character (`char`) in the input `word`:
+
+   - For beginners: Think of this like walking through each letter of the word one by one.
+   - For advanced users: This `for` loop allows us to examine each character in `O(m)` time, where m is the length of the word.
+
+3. For each character, we check if a child node for this character already exists:
+   ```swift
+   if let child = current.children[char] {
+       current = child
+   }
+   ```
+   - If it does exist, we simply move our `current` pointer to this existing child node.
+   - This handles the case where we're inserting a word that shares a prefix with an existing word in the trie.
+
+4. If the child node doesn't exist, we create a new one:
+   ```swift
+   else {
+       let newNode = TrieNode()
+       newNode.key = char
+       current.children[char] = newNode
+       current = newNode
+   }
+   ```
+   - We create a new `TrieNode`.
+   - We set its `key` to the current character.
+   - We add this new node to the `children` dictionary of the current node.
+   - We move our `current` pointer to this new node.
+
+5. After we've processed all characters, we mark the last node as the end of a word:
+   ```swift
+   current.isEndOfWord = true
+   ```
+   - This is crucial because it allows us to distinguish between prefixes and complete words in our trie.
+
+This insertion process ensures that each prefix is stored only once, providing space efficiency. The time complexity is `O(m)`, where m is the length of the word, as we process each character once. The space complexity in the worst case (no shared prefixes) is also `O(m)`.
+
 ## Finding words
 
-The algorithm for finding words in a trie:
+The process of finding words in a trie closely mirrors the method used for adding new words, with a few key differences. Like insertion, we start at the root and traverse the trie character by character. However, instead of creating new nodes, we simply check if each character exists in the current node's children. If at any point we can't find a matching child node, we know the word doesn't exist in our trie and can return false immediately. If we successfully traverse all characters of the word, we then check if the final node is marked as the end of a word. This final check is crucial because it allows us to distinguish between complete words and mere prefixes in our trie. This search operation, like insertion, has a time complexity of `O(m)`, where m is the length of the word being searched.
 
 ```swift
 func search(_ word: String) -> Bool {
