@@ -14,8 +14,8 @@ As a developer, you should already be familiar with the basics of programming. B
 4. [Advanced Sorting](book/chapters/04_advanced_sorting.md)
 5. [Generics](book/chapters/05_generics.md)
 6. [Linked Lists](book/chapters/06_linked_lists.md)
-7. Tries
-8. Stacks & Queues
+7. [Tries](book/chapters/07_tries.md)
+8. [Stacks & Queues](book/chapters/08_stacks_queues.md)
 9. Binary Search Trees
 10. Tree Balancing
 11. Graphs

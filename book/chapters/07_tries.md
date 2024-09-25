@@ -141,15 +141,7 @@ Deleting a word from a trie is more complex than insertion or search operations.
 
 In a trie, multiple words often share common prefixes. This sharing of prefixes is one of the key advantages of tries, allowing for efficient storage and quick prefix-based searches. However, it also complicates the deletion process. When deleting a word, we need to be careful not to remove nodes that are part of other words. This means we may need to remove only part of a path in the trie, not the entire path from root to leaf.
 
-Another factor is the need to maintain the trie's structural integrity after deletion. We must ensure that all remaining words are still accessible and that the trie continues to function correctly for future operations. This often requires a careful, step-by-step approach to deletion.
-
-The deletion process typically involves several stages. First, we need to locate the word in the trie, similar to a search operation. If the word exists, we then need to unmark the last node as the end of a word. However, this is just the beginning. We then need to determine which nodes, if any, can be safely removed without affecting other words in the trie.
-
-This decision-making process often requires a recursive approach, where we traverse the trie from the leaf node back up towards the root, making decisions at each node. We can only remove a node if it has no children and is not marked as the end of another word. As we work our way back up the trie, we may potentially remove parent nodes if they now have no children and are not word endings.
-
-The situation becomes even more intricate when dealing with prefixes. If the word to be deleted is a prefix of a longer word, we need to keep all the nodes but just unmark the end of the word. For example, if our trie contains both `car` and `cart`, and we want to delete `car`, we can't remove any nodes. We simply need to unmark "car" as a complete word while leaving the path intact for "cart".
-
-All these considerations make the deletion operation in tries more complex than other basic operations like insertion or search. The algorithm needs to handle various cases efficiently, balancing the need to remove unnecessary nodes with the requirement to preserve the integrity of the trie structure for remaining words. 
+Another factor is the need to maintain the trie's structural integrity after deletion. We must ensure that all remaining words are still accessible and that the trie continues to function correctly for future operations. This often requires a careful, step-by-step approach to deletion:
 
 ```swift
 func delete(_ word: String) -> Bool {
@@ -180,6 +172,12 @@ private func delete(_ node: TrieNode, _ word: String, _ index: Int) -> Bool {
     return false
 }
 ```
+
+The deletion process typically involves several stages. First, we need to locate the word in the trie, similar to a search operation. If the word exists, we then need to unmark the last node as the end of a word. However, this is just the beginning. We then need to determine which nodes, if any, can be safely removed without affecting other words in the trie.
+
+This decision-making process often requires a recursive approach, where we traverse the trie from the leaf node back up towards the root, making decisions at each node. We can only remove a node if it has no children and is not marked as the end of another word. As we work our way back up the trie, we may potentially remove parent nodes if they now have no children and are not word endings.
+
+The situation becomes even more intricate when dealing with prefixes. If the word to be deleted is a prefix of a longer word, we need to keep all the nodes but just unmark the end of the word. For example, if our trie contains both `car` and `cart`, and we want to delete `car`, we can't remove any nodes. We simply need to unmark "car" as a complete word while leaving the path intact for "cart".
 
 ## Space and time complexity analysis
 

@@ -52,6 +52,23 @@ class LinkedList<T> {
 }
 ```
 
+### Using optionals
+When creating algorithms, it's good practice to set your class properties to nil before they are used. Swift helps enforce this best-practice at compile time through a paradigm called optionals. For example, the function `printAllKeys` employs `current` to iterate through linked list items.
+
+```swift
+func printAllKeys() {
+    var current = head
+    while let node = current {
+        if let key = node.key {
+            print("link item is: \(key)")
+        } else {
+            print("link item has no key")
+        }
+        current = node.next
+    }
+}
+```
+
 ## Time complexity analysis
 
 Understanding the time complexity of linked list operations is crucial. Here's a comparison with arrays:
@@ -172,7 +189,7 @@ class DoublyNode<T> {
 }
 ```
 
-## Common interview questions
+## Practice Problems 
 
 Here are some popular linked list interview questions:
 
@@ -180,22 +197,6 @@ Here are some popular linked list interview questions:
 2. Detect a cycle in a linked list
 3. Find the middle element of a linked list
 4. Merge two sorted linked lists
-
-Here's an example of reversing a singly linked list:
-
-```swift
-func reverse() {
-    var prev: Node<T>? = nil
-    var current = head
-    while let currentNode = current {
-        let next = currentNode.next
-        currentNode.next = prev
-        prev = currentNode
-        current = next
-    }
-    head = prev
-}
-```
 
 ## Real-world Applications
 
@@ -210,7 +211,7 @@ Linked lists are used in various real-world applications:
 
 While linked lists offer flexibility in insertions and deletions, they have some drawbacks compared to arrays:
 
-- Random access is slower (O(n) vs O(1))
+- Random access is slower (`O(n)` vs `O(1)`)
 - They use more memory due to storage of link fields
 - They have poor cache locality, which can affect performance
 
