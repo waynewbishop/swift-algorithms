@@ -16,7 +16,7 @@ As a developer, you should already be familiar with the basics of programming. B
 6. [Linked Lists](book/chapters/06_linked_lists.md)
 7. [Tries](book/chapters/07_tries.md)
 8. [Stacks & Queues](book/chapters/08_stacks_queues.md)
-9. Binary Search Trees
+9. [Binary Search Trees](book/chapters/09_binary_search_trees.md)
 10. Tree Balancing
 11. Graphs
 12. Shortest Paths
