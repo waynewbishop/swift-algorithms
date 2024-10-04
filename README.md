@@ -34,7 +34,7 @@ As a developer, you should already be familiar with the basics of programming. B
 
 ## The Book
 
-Now in its **5th edition** and supporting the latest version of Swift, the Swift Algorithms Book features code and color illustrations that benefits students and professionals. As a collaborative open-source effort, I also welcome feedback and contribution from others.
+Now in its **5th edition** and supporting the latest version of Swift, the [Swift Algorithms Book](https://github.com/waynewbishop/bishop-algorithms-book) features code and color illustrations that benefits students and professionals. As a collaborative open-source effort, I also welcome feedback and contribution from others.
 
 ## Example
 
@@ -68,6 +68,11 @@ func traverse(_ startingv: Vertex, formula: (_ node: inout Vertex) -> ()) {
     print("graph traversal complete..")
 }
 ```
+
+## Other Projects
+- [bishop-algorithms-swift-package](https://github.com/waynewbishop/bishop-algorithms-swift-package) - Examples of commonly used algorithms and data structures in Swift Package format.
+- [bishop-app-runbuddy-swift](https://github.com/waynewbishop/bishop-app-runbuddy-swift) - Plan your next run using Generative AI. Implemented in Swift.
+- [bishop-app-runbuddy-python](https://github.com/waynewbishop/bishop-app-runbuddy-python) - A machine learning model that recommends athletic clothing based on weather conditions.
 
 ## Usage
 
