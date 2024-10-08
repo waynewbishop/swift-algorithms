@@ -1,6 +1,6 @@
 # Big O Notation
 
-As someone reading this series, you're probably familiar with the basics of Swift/iOS Development and may be in the process of writing your next app. When building software, a question we often ask ourselves is what should be our definition of done. As an individual contributor working on a large project, features in your application may be determined by business stakeholders or a project lead. However, it takes more than requirements to build software users will love. Great systems combine detailed analysis, stellar features and performance.
+As someone reading this series, you're probably familiar with the basics of Swift Development and may be in the process of writing your next app. When building software, a question we often ask ourselves is what should be our definition of done. As an individual contributor working on a large project, features in your application may be determined by business stakeholders or a project lead. However, it takes more than requirements to build software users will love. Great systems combine detailed analysis, stellar features and performance.
 
 As we start our journey understanding algorithms and data structures, an idea that unites each concept is the theme of **asymptotic analysis**. Often viewed as a complex topic, asymptotics is the process of describing the efficiency of algorithms as their input size grows. The notion of tracking algorithmic performance can reveal much about a solution's effectiveness. Ironically, this area of study was primarily developed before the introduction of modern computing. Today, this provides an advantage when testing new ideas and communicating with other developers. In computer science, asymptotics is expressed in a standard format known as Big O Notation.
 
@@ -119,8 +119,8 @@ Understanding Big O is crucial for building scalable systems. As your data grows
 ## Common misconceptions
 
 1. Big O always represents the exact running time: It represents the upper bound of growth rate.
-2. Constant time (O(1)) means instantaneous: It means the time doesn't grow with input size.
-3. O(n) is always worse than O(log n): For small n, O(n) might be faster due to simpler operations.
+2. Constant time `(O(1))` means instantaneous: It means the time doesn't grow with input size.
+3. `O(n)` is always worse than `O(log n)`: For small n, `O(n)` might be faster due to simpler operations.
 
 # Exercises
 
@@ -143,7 +143,7 @@ func mystery(_ n: Int) -> Int {
 **Answer: O(n²)**
 
 **Explanation:** 
-This function has two nested loops, both iterating from 1 to n. The outer loop runs n times, and for each iteration of the outer loop, the inner loop also runs n times. This results in n * n = n² operations. The time complexity is therefore O(n²), or quadratic time.
+This function has two nested loops, both iterating from 1 to n. The outer loop runs n times, and for each iteration of the outer loop, the inner loop also runs n times. This results in n * n = n² operations. The time complexity is therefore `O(n²)`, or quadratic time.
 
 ### Exercise 2
 
@@ -162,7 +162,7 @@ func hasDuplicates(_ array: [Int]) -> Bool {
 }
 ```
 
-**Answer:** We can improve this to O(n) time complexity. Here's an improved version:
+**Answer:** We can improve this to `O(n)` time complexity. Here's an improved version:
 
 ```swift
 func hasDuplicates(_ array: [Int]) -> Bool {
@@ -178,13 +178,13 @@ func hasDuplicates(_ array: [Int]) -> Bool {
 ```
 
 **Explanation:** 
-The original function has a time complexity of O(n²) due to the nested loops. In the worst case, it compares each element with every other element in the array.
+The original function has a time complexity of `O(n²)` due to the nested loops. In the worst case, it compares each element with every other element in the array.
 
-The improved version uses a Set to keep track of numbers we've seen. We iterate through the array once, checking if each number is in the Set. If it is, we've found a duplicate and return true. If not, we add the number to the Set and continue.
+The improved version uses a `Set` to keep track of numbers we've seen. We iterate through the array once, checking if each number is in the `Set`. If it is, we've found a duplicate and return true. If not, we add the number to the Set and continue.
 
-This approach has a time complexity of O(n) because we only loop through the array once, and Set operations (contains and insert) have an average time complexity of O(1).
+This approach has a time complexity of `O(n)` because we only loop through the array once, and Set operations (contains and insert) have an average time complexity of `O(1)`.
 
-The trade-off is that we use O(n) extra space for the Set, but we've significantly improved the time complexity from O(n²) to O(n).
+The trade-off is that we use `O(n)` extra space for the Set, but we've significantly improved the time complexity from `O(n²)` to `O(n)`.
 
 These examples demonstrate how to analyze time complexity and how to improve an algorithm's efficiency, reinforcing the concepts introduced in the chapter.
 

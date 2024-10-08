@@ -1,14 +1,10 @@
 # Tree Balancing
 
-In the previous chapter, we saw how binary search trees (BST) are used to manage data. With basic logic, an algorithm can easily traverse a model, searching data in O(log n) time. However, there are occasions when navigating a tree becomes inefficient, in some cases working at O(n) time. In this chapter, we will review those scenarios and introduce the concept of tree balancing.
+In the previous chapter, we saw how binary search trees (BST) are used to manage data. With basic logic, an algorithm can easily traverse a model, searching data in `O(log n)` time. However, there are occasions when navigating a tree becomes inefficient, in some cases working at `O(n)` time. In this chapter, we will review those scenarios and introduce the concept of tree balancing.
 
 ## New models
 
 To start, let's revisit our original example. Array values from `numberList` were used to build a tree. As shown, all elements had either one or two children - otherwise called leaf elements. This is known as a balanced binary search tree.
-
-```swift
-let balanceList: [Int] = [29, 26, 23, 32, 35, 20, 28]
-```
 
 | <img src="../images/bst_balanced.png" alt="A balanced BST with 7 elements - O(log n)" style="display: block; margin: auto;"> |
 |:----------------------------------------------------------------------------------------------------------------------------:|
