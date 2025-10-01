@@ -48,7 +48,7 @@ If we have n elements, we'll perform n comparisons in the worst case. This is wh
 
 **Edge case consideration:** The actual performance can vary significantly. In the best case (target is the first element), we only perform one comparison - O(1). However, Big O notation describes the worst-case scenario, which helps us understand how the algorithm behaves as data grows large.
 
-In most cases, linear time operations are referred to as being "brute force" because little effort goes into how they could run more efficiently. However, linear-based activities still provide value when prototyping complex systems in a technical interview or real-world setting.
+In most cases, linear time operations are referred to as being "brute force" because little effort goes into how they could run more efficiently. However, linear-based activities still provide value when prototyping complex systems in technical interviews or real-world settings.
 
 ## Constant time - O(1)
 

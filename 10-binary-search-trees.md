@@ -28,7 +28,7 @@ let numberList: Array<Int> = [8, 2, 10, 9, 11, 1, 7]
 
 Here's the same list visualized as a balanced binary search tree. It does not matter that the array values are unsorted at the time of insertion. As shown, the rules governing the BST will place each node in its correct position accordingly:
 
-*Balanced binary search tree - O (log n)*
+[diagram: Balanced binary search tree with 7 elements showing O(log n) structure]
 
 ## Adding elements
 
@@ -300,121 +300,197 @@ Each traversal method serves specific purposes:
 
 These traversal methods demonstrate the recursive nature of trees and how the patterns we learned in Chapter 6 (Recursion) apply to real data structures.
 
-## Tree balancing
+## Understanding BST performance: When O(log n) becomes O(n)
 
-Earlier in this chapter, we saw how binary search trees (BST's) are used to manage data. By applying basic logic, an algorithm can easily traverse a model, searching data in O(log n) time. However, there are occasions when navigating a tree becomes inefficient - in some cases working at O(n) time. In this essay, we will review those scenarios and introduce the concept of tree balancing.
+Binary search trees provide excellent O(log n) performance for search, insertion, and deletion—but only when balanced. Let's understand what this means and why it matters.
 
-### New models
+### The problem: Unbalanced trees
 
-To start, let's revisit our original example. Array values from numberList were used to build a tree. As shown, all nodes had either one or two children - otherwise called leaf elements. This is known as a balanced binary search tree.
-
-*A balanced BST with 7 elements - O (log n)*
-
-Our model achieved balance not only through usage of the BST append() algorithm, but also by the way keys were inserted. In reality, there could be numerous ways to populate a tree. Without considering other factors, this can produce unexpected results:
-
-*An unbalanced "left-heavy" BST with 3 elements - O(n)*
-*A 6-node BST with left and right imbalances - O(n)*
-
-### New heights
-
-To compensate for these imbalances, we need to expand the scope of our algorithm. In addition to "left and right" logic, we'll add a new property called height. Coupled with specific rules, we can use height to detect tree imbalances.
+Consider inserting values in sorted order:
 
 ```swift
-private func findHeight(of element: BSNode<T>?) -> Int {
-    //check empty leaves
-    guard let bsNode = element else {
-        return -1
-    }
-    return bsNode.height
-}
-
-private func setHeight(for element: BSNode<T>) {
-    //set leaf variables
-    var elementHeight: Int = 0
-
-    //do comparison and calculate height
-    elementHeight = max(findHeight(of: element.left), findHeight(of: element.right)) + 1
-
-    element.height = elementHeight
+let bst = BSTree<Int>()
+for value in [1, 2, 3, 4, 5, 6, 7] {
+    bst.append(element: value)
 }
 ```
 
-### Measuring balance
+**This creates a degenerate tree:**
 
-With the root element established, we can proceed to add the next value. Upon implementing standard BST logic, item 26 is positioned as the left leaf element. As a new item, its height is also calculated (i.e., 0). However, since our model is a hierarchy, we traverse upwards to recalculate its parent height value.
+[diagram: Unbalanced BST resembling a linked list - all nodes in a straight line from 1 to 7]
 
+This is essentially a linked list! Searching for 7 now requires 7 comparisons instead of 3.
+
+**Balanced tree (O(log n)):**
+
+[diagram: Balanced BST with 4 at root, showing proper tree structure]
+
+Search for 7: 3 comparisons (4 → 6 → 7)
+
+**Unbalanced tree (O(n)):**
+
+[diagram: Linear chain of nodes 1 through 7]
+
+Search for 7: 7 comparisons
+
+### Why balance matters
+
+| Tree State | Search | Insert | Delete | Why |
+|------------|--------|--------|--------|-----|
+| Balanced | O(log n) | O(log n) | O(log n) | Height is log₂(n) |
+| Unbalanced | O(n) | O(n) | O(n) | Height is n |
+
+**Performance comparison (1000 nodes):**
+- Balanced tree: ~10 comparisons (log₂1000 ≈ 10)
+- Unbalanced tree: ~1000 comparisons (worst case)
+
+### Self-balancing trees: The solution
+
+The solution is **self-balancing binary search trees**, which automatically maintain balance:
+
+**Common self-balancing BST types:**
+
+1. **AVL Trees**
+   - Strictly balanced (height difference ≤ 1)
+   - Faster searches than Red-Black trees
+   - More rotations during insertion/deletion
+   - Best when: reads >> writes
+
+2. **Red-Black Trees**
+   - Looser balance guarantees
+   - Fewer rotations than AVL
+   - Used in: Swift's standard library internals, Java's TreeMap
+   - Best when: writes are frequent
+
+3. **Splay Trees**
+   - Recently accessed items move to root
+   - Best when: access patterns have locality
+
+### The balancing concept
+
+Self-balancing trees use **rotations** to restructure themselves:
+
+**Right rotation:**
+
+[diagram: BST right rotation showing before and after states]
+
+**Left rotation:**
+
+[diagram: BST left rotation showing before and after states]
+
+These rotations preserve the BST property (left < parent < right) while reducing height.
+
+### Should you implement balancing?
+
+**For learning and interviews:** Understanding the concept is essential
+
+**For production code:**
+- **Use Swift's built-in collections** (Dictionary, Set) - they handle balancing internally
+- **Don't implement AVL/Red-Black trees yourself** unless you have a very specific need
+- Swift's standard library is highly optimized and battle-tested
+
+### When basic BST is sufficient
+
+Basic BST without balancing works well when:
+- Data is inserted in random order (naturally balanced)
+- Tree is built once and read many times
+- Dataset is small (< 100 elements)
+- You're learning the fundamentals
+
+**Example: Configuration tree built once:**
 ```swift
-func isTreeBalanced(for element: BSNode<T>?) -> Bool {
-    guard element?.key != nil else {
-        print("no element provided..")
-        return false
-    }
-
-    //use absolute value to manage right and left imbalances
-    if (abs(findHeight(of: element?.left) - findHeight(of: element?.right)) <= 1) {
-        return true
-    } else {
-        return false
-    }
-}
+let settings = BSTree<String>()
+// Insert settings in random order - naturally balanced
+settings.append(element: "theme")
+settings.append(element: "notifications")
+settings.append(element: "autosave")
+// Tree is read-only after construction
 ```
 
-### Tree navigation
+## Advanced topic: Implementing AVL tree rotations
 
-You may have noticed that to successfully apply our node balancing algorithms, we also need to determine how to traverse upwards in our BSNode hierarchy. If our BSTree was a recursive structure, we could utilize the in-memory call stack to automatically navigate to parent nodes. To achieve the same results in our iterative design, we'll store BSNode references using a Stack data structure. This technique is known as memoization:
+*Note: This section covers advanced material. Understanding the concept is more important than implementing it yourself.*
 
-```swift
-class BSTree<T: Comparable> {
-    private var elementStack = Stack<BSNode<T>>()
+If you're interested in how self-balancing works, here's a conceptual overview:
 
-    func append(element key: T) {
-        //set initial indicator
-        var current: BSNode<T> = root
+**Key components:**
 
-        while current.key != nil {
-            //send reference of current item to stack
-            self.push(element: &current)
-            // ...
-        }
+1. **Height tracking:** Each node stores its height
+   ```swift
+   class AVLNode<T> {
+       var key: T?
+       var left: AVLNode?
+       var right: AVLNode?
+       var height: Int = 0  // Track height for balance
+   }
+   ```
 
-        //calculate height and balance of call stack..
-        self.rebalance()
-    }
+2. **Balance factor:** Difference between left and right heights
+   ```swift
+   func balanceFactor(of node: AVLNode<T>?) -> Int {
+       let leftHeight = node?.left?.height ?? -1
+       let rightHeight = node?.right?.height ?? -1
+       return leftHeight - rightHeight
+   }
+   ```
 
-    //stack elements for later processing - memoization
-    private func push(element: inout BSNode<T>) {
-        elementStack.push(withKey: element)
-    }
+3. **Rebalancing:** After insertion, check balance and rotate if needed
+   ```swift
+   func rebalance(_ node: AVLNode<T>) {
+       let balance = balanceFactor(of: node)
 
-    //determine height and balance
-    private func rebalance() {
-        for _ in stride(from: elementStack.count, through: 1, by: -1) {
-            //obtain generic stack node - by reference
-            let current = elementStack.peek()
+       if balance > 1 {
+           // Left-heavy - may need right rotation
+       } else if balance < -1 {
+           // Right-heavy - may need left rotation
+       }
+   }
+   ```
 
-            guard let bsNode: BSNode<T> = current.key else {
-                print("element reference not found..")
-                continue
-            }
+For production implementations, libraries like C++'s `std::map` and Java's `TreeMap` use Red-Black trees because they're simpler to implement correctly and perform well in practice.
 
-            setHeight(for: bsNode)
-            rotate(element: bsNode)
+## Summary
 
-            //remove stacked item
-            elementStack.pop()
-        }
-    }
-}
-```
+Binary search trees organize data hierarchically, providing efficient search, insertion, and deletion:
 
-In Swift, the memory address of variables can be shared as inout function parameters. As a result, when a BSNode reference is pushed to the Stack, the original variable can be updated without having to manage new copies of data.
+**Core concepts:**
+- **BST property**: Left child < parent < right child
+- **Recursive structure**: Each subtree is itself a BST
+- **Generic implementation**: Works with any `Comparable` type
 
-### The results
+**Operations:**
+- **Insert**: O(log n) when balanced, O(n) worst case
+- **Search**: O(log n) when balanced, O(n) worst case
+- **Traversals**: In-order (sorted), pre-order, post-order, level-order
 
-With tree balancing, it is important to note that techniques like rotations improve performance, but do not change tree output. For example, even though a right rotation changes the connections between nodes, the overall BST sort order is preserved. As a test, one can traverse a balanced and unbalanced BST (comparing the same values) and receive the same results:
+**Tree traversals:**
+- **In-order**: Produces sorted output from BST
+- **Pre-order**: Used for copying trees
+- **Post-order**: Used for safe deletion
+- **Level-order**: Shows tree structure
 
-```swift
-//sorted values from a traversal
-23, 26, 29
-```
+**Balance matters:**
+- **Balanced tree**: Height is log₂(n) → O(log n) operations
+- **Unbalanced tree**: Height is n → O(n) operations (like linked list)
+- **Self-balancing trees** (AVL, Red-Black) automatically maintain balance
+
+**When to use BST:**
+- Need sorted data structure
+- Frequent insertions and searches
+- Range queries (find all values between x and y)
+- Learning tree concepts
+
+**When to use alternatives:**
+- **Array**: Need random access, small dataset
+- **Hash table**: Only need exact matches, not ranges
+- **Swift Dictionary/Set**: Production code—optimized and balanced internally
+
+**Real-world applications:**
+- Database indexing
+- File system directories
+- Expression parsing
+- Auto-complete systems
+- Game AI decision trees
+
+Understanding BSTs is fundamental to computer science and provides the foundation for more complex tree structures like heaps (Chapter 14) and tries (Chapter 12).
 

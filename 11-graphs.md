@@ -8,9 +8,7 @@ As discussed, a graph is a model that shows how objects relate to one another. G
 
 Graph objects relate to one another through connections called edges. Depending on your requirements, a vertex could be linked to one or more objects through a series of edges. It's also possible to create a vertex without edges. Here are some basic graph configurations:
 
-- An undirected graph with two vertices and one edge.
-- An undirected graph with three vertices and three edges.
-- An undirected graph with four vertices and three edges.
+[diagram: Examples of undirected graphs with varying vertices and edges]
 
 ## Directed vs. undirected
 
@@ -22,401 +20,536 @@ A service like Google Maps is a great example of a directed graph. Unlike an und
 
 Regardless of graph type, it's common to represent the level of connectedness between vertices. Normally associated with an edge, the weight is a numerical value tracked for this purpose. As we'll see, modeling of graphs with edge weights can be used to solve a variety of problems.
 
-*A directed graph with three vertices and three weighted edges.*
+[diagram: A directed graph with three vertices showing weighted edges]
 
 ## The vertex
 
-With our understanding of graphs in place, let's build a basic directed graph with edge weights. To start, here's a data structure that represents a vertex:
+With our understanding of graphs in place, let's build a graph using generics. This allows the graph to work with any data type. Here's the data structure for a vertex:
 
 ```swift
-public class Vertex {
-    var key: String?
-    var neighbors: Array<Edge>
+public class Vertex<T>: Equatable {
+    var tvalue: T?
+    var neighbors = Array<Edge<T>>()
+    var visited: Bool = false
+    let uuid = UUID()
 
-    init() {
-        self.neighbors = Array<Edge>()
+    public init() {
+        // Default initialization
+    }
+
+    public init(with name: T) {
+        self.tvalue = name
+    }
+
+    // Equatable conformance
+    public static func == (lhs: Vertex, rhs: Vertex) -> Bool {
+        return lhs.uuid == rhs.uuid
     }
 }
 ```
 
-As we've seen with other structures, the key represents the data to be associated with a class instance. To keep things straightforward, our key is declared as a string. In a production app, the key type would be replaced with a generic placeholder, `<T>`. This would allow the key to store any object like an integer, account or profile.
+**Key properties:**
+
+- **tvalue**: The value stored in this vertex (generic type T)
+- **neighbors**: Array of edges connecting to other vertices
+- **visited**: Tracks whether we've visited this vertex during traversal
+- **uuid**: Unique identifier for comparing vertices
+
+The `Equatable` conformance allows us to compare vertices using `==`. Two vertices are equal if they have the same UUID, even if their values differ.
 
 ## Adjacency lists
 
 The neighbors property is an array that represents connections a vertex may have with other vertices. As discussed, a vertex can be associated with one or more items. This list of neighboring items is sometimes called an adjacency list and can be used to solve a variety of problems. Here's a basic data structure that represents an edge:
 
 ```swift
-public class Edge {
-    var neighbor: Vertex
+public class Edge<T> {
+    var neighbor: Vertex<T>
     var weight: Int
 
     init() {
         weight = 0
-        self.neighbor = Vertex()
+        self.neighbor = Vertex<T>()
     }
 }
 ```
+
+Each edge contains a reference to a neighboring vertex and a weight representing the "cost" of the connection.
 
 ## Building the graph
 
-With our vertex and edge objects built, we can use these structures to construct a graph. To keep things straightforward, we'll focus on the essential operations of adding and configuring vertices.
+With our vertex and edge objects built, we can use these structures to construct a graph:
 
 ```swift
-public class SwiftGraph {
-    //declare graph canvas
-    private var canvas: Array<Vertex>
-    public var isDirected: Bool
+public class Graph<T> {
+    var canvas: Array<Vertex<T>>
 
-    init() {
+    public init() {
         canvas = Array<Vertex>()
-        isDirected = true
     }
 
-    //create a new vertex
-    func addVertex(key: String) -> Vertex {
-        //set the key
-        let childVertex: Vertex = Vertex()
-        childVertex.key = key
-
-        //add the vertex to the graph canvas
-        canvas.append(childVertex)
-
-        return childVertex
+    // Add vertex to graph canvas
+    public func addVertex(element: Vertex<T>) {
+        canvas.append(element)
     }
-}
-```
 
-The function addVertex accepts a string which is used to create a new vertex. The SwiftGraph class also has a private property named canvas which is used to manage all vertices. While not required, the canvas can be used to track and manage vertices with or without edges.
+    // Represents a relationship between neighboring vertices
+    public func addEdge(source: Vertex<T>, neighbor: Vertex<T>, weight: Int) {
+        // Create a new edge
+        let newEdge = Edge<T>()
 
-## Making connections
+        // Connect source vertex with the neighboring edge
+        newEdge.neighbor = neighbor
+        newEdge.weight = weight
 
-Once a vertex is added, it can be connected to other vertices. Here's the process of establishing an edge:
-
-```swift
-//add edge to source vertex
-func addEdge(source: Vertex, neighbor: Vertex, weight: Int) {
-    //new edge
-    let newEdge = Edge()
-
-    //establish default properties
-    newEdge.neighbor = neighbor
-    newEdge.weight = weight
-    source.neighbors.append(newEdge)
-
-    //check condition for an undirected graph
-    if isDirected == false {
-        //create a new reversed edge
-        let reverseEdge = Edge()
-
-        //establish the reversed properties
-        reverseEdge.neighbor = source
-        reverseEdge.weight = weight
-        neighbor.neighbors.append(reverseEdge)
+        source.neighbors.append(newEdge)
     }
 }
 ```
 
-The function addEdge receives two vertices, identifying them as source and neighbor. Since our model defaults to a directed graph, a new Edge is created and is added to the adjacency list of the source Vertex. For an undirected graph, an additional Edge is created and added to the neighbor Vertex.
+**Key components:**
 
-As we've seen, there are many components to graph theory. Before exploring advanced algorithms like shortest paths, we need to understand how to systematically visit all vertices in a graph. This process is called graph traversal.
+- **canvas**: Array holding all vertices in the graph
+- **addVertex**: Adds a new vertex to the graph
+- **addEdge**: Creates a directed connection from source to neighbor with a given weight
 
 ## Graph traversals
 
-Graph traversal is the process of visiting every vertex in a graph exactly once. Unlike trees, graphs can contain cycles, so we need to track which vertices we've already visited to avoid infinite loops. There are two fundamental approaches to graph traversal: Depth-First Search (DFS) and Breadth-First Search (BFS).
-
-### Depth-first search (DFS)
-
-Depth-First Search explores as far as possible along each branch before backtracking. It uses either recursion or a stack data structure to track the path. DFS is useful for detecting cycles, finding connected components, and solving maze-like problems.
-
-```swift
-extension SwiftGraph {
-    func depthFirstSearch(from startVertex: Vertex) -> [String] {
-        var visited: Set<String> = []
-        var result: [String] = []
-
-        dfsHelper(vertex: startVertex, visited: &visited, result: &result)
-        return result
-    }
-
-    private func dfsHelper(vertex: Vertex, visited: inout Set<String>, result: inout [String]) {
-        guard let key = vertex.key else { return }
-
-        //mark current vertex as visited
-        visited.insert(key)
-        result.append(key)
-
-        //recursively visit all unvisited neighbors
-        for edge in vertex.neighbors {
-            guard let neighborKey = edge.neighbor.key else { continue }
-
-            if !visited.contains(neighborKey) {
-                dfsHelper(vertex: edge.neighbor, visited: &visited, result: &result)
-            }
-        }
-    }
-}
-
-//example usage
-let graph = SwiftGraph()
-let vertexA = graph.addVertex(key: "A")
-let vertexB = graph.addVertex(key: "B")
-let vertexC = graph.addVertex(key: "C")
-let vertexD = graph.addVertex(key: "D")
-
-graph.addEdge(source: vertexA, neighbor: vertexB, weight: 1)
-graph.addEdge(source: vertexB, neighbor: vertexC, weight: 1)
-graph.addEdge(source: vertexC, neighbor: vertexD, weight: 1)
-graph.addEdge(source: vertexA, neighbor: vertexD, weight: 1)
-
-print("DFS traversal: \(graph.depthFirstSearch(from: vertexA))")
-//outputs: ["A", "B", "C", "D"] (order may vary based on implementation)
-```
+Graph traversal is the process of visiting every vertex in a graph exactly once. Unlike trees, graphs can contain cycles, so we need to track which vertices we've already visited to avoid infinite loops.
 
 ### Breadth-first search (BFS)
 
-Breadth-First Search explores all vertices at the current depth before moving to vertices at the next depth level. It uses a queue data structure and is particularly useful for finding the shortest path in unweighted graphs and exploring graphs level by level.
+Breadth-First Search explores all vertices at the current depth before moving to vertices at the next depth level. It uses a queue data structure:
 
 ```swift
-extension SwiftGraph {
-    func breadthFirstSearch(from startVertex: Vertex) -> [String] {
-        var visited: Set<String> = []
-        var result: [String] = []
-        var queue: [Vertex] = [startVertex]
+extension Graph {
+    // BFS traversal
+    public func traverse(_ startingv: Vertex<T>) {
+        // Establish a new queue
+        let graphQueue: Queue<Vertex<T>> = Queue<Vertex<T>>()
 
-        guard let startKey = startVertex.key else { return result }
-        visited.insert(startKey)
+        // Queue a starting vertex
+        graphQueue.enQueue(startingv)
 
-        while !queue.isEmpty {
-            let currentVertex = queue.removeFirst()
+        while !graphQueue.isEmpty() {
+            // Traverse the next queued vertex
+            guard let vitem = graphQueue.deQueue() else {
+                break
+            }
 
-            guard let currentKey = currentVertex.key else { continue }
-            result.append(currentKey)
-
-            //add all unvisited neighbors to queue
-            for edge in currentVertex.neighbors {
-                guard let neighborKey = edge.neighbor.key else { continue }
-
-                if !visited.contains(neighborKey) {
-                    visited.insert(neighborKey)
-                    queue.append(edge.neighbor)
+            // Add unvisited vertices to the queue
+            for e in vitem.neighbors {
+                if e.neighbor.visited == false {
+                    graphQueue.enQueue(e.neighbor)
                 }
             }
+
+            vitem.visited = true
+            print("traversed vertex: \(vitem.tvalue!)..")
         }
 
-        return result
-    }
-}
-
-print("BFS traversal: \(graph.breadthFirstSearch(from: vertexA))")
-//outputs: ["A", "B", "D", "C"] (explores level by level)
-```
-
-### Iterative depth-first search
-
-For those who prefer an iterative approach or want to avoid potential stack overflow with deep recursion, here's an iterative version of DFS using an explicit stack:
-
-```swift
-extension SwiftGraph {
-    func depthFirstSearchIterative(from startVertex: Vertex) -> [String] {
-        var visited: Set<String> = []
-        var result: [String] = []
-        var stack: [Vertex] = [startVertex]
-
-        while !stack.isEmpty {
-            let currentVertex = stack.removeLast()
-
-            guard let currentKey = currentVertex.key else { continue }
-
-            if !visited.contains(currentKey) {
-                visited.insert(currentKey)
-                result.append(currentKey)
-
-                //add neighbors to stack (in reverse order for consistent traversal)
-                for edge in currentVertex.neighbors.reversed() {
-                    guard let neighborKey = edge.neighbor.key else { continue }
-
-                    if !visited.contains(neighborKey) {
-                        stack.append(edge.neighbor)
-                    }
-                }
-            }
-        }
-
-        return result
+        print("graph traversal complete..")
     }
 }
 ```
 
-### Path finding with BFS
+### BFS with closure support
 
-One of the most useful applications of BFS is finding the shortest path between two vertices in an unweighted graph:
+A more flexible version allows you to execute custom logic on each vertex using a closure with an `inout` parameter:
 
 ```swift
-extension SwiftGraph {
-    func shortestPath(from start: Vertex, to destination: Vertex) -> [String]? {
-        guard let startKey = start.key, let destKey = destination.key else { return nil }
+extension Graph {
+    // BFS traversal with inout closure function
+    public func traverse(_ startingv: Vertex<T>, formula: (_ node: inout Vertex<T>) -> ()) {
+        // Establish a new queue
+        let graphQueue: Queue<Vertex<T>> = Queue<Vertex<T>>()
 
-        var visited: Set<String> = []
-        var parent: [String: String] = [:]
-        var queue: [Vertex] = [start]
+        // Queue a starting vertex
+        graphQueue.enQueue(startingv)
 
-        visited.insert(startKey)
-
-        while !queue.isEmpty {
-            let currentVertex = queue.removeFirst()
-            guard let currentKey = currentVertex.key else { continue }
-
-            //found destination
-            if currentKey == destKey {
-                return reconstructPath(from: startKey, to: destKey, parent: parent)
+        while !graphQueue.isEmpty() {
+            // Traverse the next queued vertex
+            guard var vitem = graphQueue.deQueue() else {
+                break
             }
 
-            //explore neighbors
-            for edge in currentVertex.neighbors {
-                guard let neighborKey = edge.neighbor.key else { continue }
-
-                if !visited.contains(neighborKey) {
-                    visited.insert(neighborKey)
-                    parent[neighborKey] = currentKey
-                    queue.append(edge.neighbor)
+            // Add unvisited vertices to the queue
+            for e in vitem.neighbors {
+                if e.neighbor.visited == false {
+                    print("adding vertex: \(e.neighbor.tvalue!) to queue..")
+                    graphQueue.enQueue(e.neighbor)
                 }
             }
+
+            /*
+            Notes: this demonstrates how to invoke a closure with an inout parameter.
+            By passing by reference no return value is required.
+            */
+
+            // Invoke formula
+            formula(&vitem)
         }
 
-        return nil //no path found
-    }
-
-    private func reconstructPath(from start: String, to destination: String, parent: [String: String]) -> [String] {
-        var path: [String] = []
-        var current = destination
-
-        while current != start {
-            path.append(current)
-            guard let prev = parent[current] else { break }
-            current = prev
-        }
-
-        path.append(start)
-        return path.reversed()
+        print("graph traversal complete..")
     }
 }
 
-//find shortest path
-if let path = graph.shortestPath(from: vertexA, to: vertexC) {
-    print("Shortest path from A to C: \(path)")
+// Example usage
+let graph = Graph<String>()
+let vertexA = Vertex(with: "A")
+let vertexB = Vertex(with: "B")
+let vertexC = Vertex(with: "C")
+
+graph.addVertex(element: vertexA)
+graph.addVertex(element: vertexB)
+graph.addVertex(element: vertexC)
+
+graph.addEdge(source: vertexA, neighbor: vertexB, weight: 1)
+graph.addEdge(source: vertexB, neighbor: vertexC, weight: 1)
+
+// Traverse with custom logic
+graph.traverse(vertexA) { vertex in
+    vertex.visited = true
+    print("Processing vertex: \(vertex.tvalue!)")
 }
 ```
 
 ### Understanding traversal complexity
 
-Both DFS and BFS have the same time complexity:
+BFS has the following complexity:
 - **Time Complexity**: O(V + E) where V is the number of vertices and E is the number of edges
-- **Space Complexity**: O(V) for storing visited vertices and the recursion stack/queue
+- **Space Complexity**: O(V) for storing visited vertices and the queue
 
-### When to use each traversal
+## Finding shortest paths with Dijkstra's algorithm
 
-**Use DFS when:**
-- Finding connected components
-- Detecting cycles in graphs
-- Solving maze problems
-- Topological sorting
-- Memory is limited (DFS typically uses less memory)
+While BFS finds the shortest path in terms of the number of edges (hops), many real-world problems require finding the shortest path when edges have different weights or costs. This is where Dijkstra's algorithm becomes essential.
 
-**Use BFS when:**
-- Finding shortest paths in unweighted graphs
-- Level-order exploration is needed
-- Finding all vertices at a specific distance
-- Web crawling applications
+### The shortest path problem
 
-These traversal algorithms demonstrate how the recursive and queue-based patterns from earlier chapters apply to more complex data structures. Understanding these fundamentals is essential before exploring advanced algorithms like Dijkstra's shortest path.
+Consider these real-world scenarios where edge weights matter:
 
-## Shortest paths
+- **GPS Navigation**: Roads have different lengths and travel times
+- **Network Routing**: Network links have different latencies
+- **Flight Planning**: Routes have different costs and durations
+- **Social Networks**: Connections have different "strengths" or relationship levels
 
-As discussed earlier in this chapter, graphs show the relationship between two or more objects. Because of their flexibility, graphs are used in a wide range of applications including map-based services, networking and social media. Popular models may include roads, traffic, people and locations. In this chapter, we'll review how to search a graph and will implement a popular algorithm called Dijkstra's shortest path.
+### Understanding the frontier concept
 
-### Making connections
+The **frontier** is the key concept that makes Dijkstra's algorithm work. Think of it as the "edge of exploration" – the set of paths you're currently considering but haven't fully explored yet.
 
-The challenge with graphs is knowing how a vertex relates to other objects. Consider the social networking website, LinkedIn. With LinkedIn, each profile can be thought of as a single vertex that may be connected with other vertices.
+**Analogy: Exploring a cave system**
 
-One feature of LinkedIn is the ability to introduce yourself to new people. Under this scenario, LinkedIn will suggest routing your message through a shared connection. In graph theory, the most efficient way to deliver your message is called the shortest path.
+Imagine you're exploring a cave with multiple tunnels:
+- You start at the entrance
+- You can see several tunnels leading out (this is your **frontier**)
+- You pick the shortest tunnel to explore first
+- When you reach its end, you discover new tunnels (you **expand the frontier**)
+- You always choose the shortest unexplored path from your current options
+- You keep track of where you've been to avoid going in circles
 
-*The shortest path from vertex A to C is through vertex B*
+**How the frontier works in Dijkstra's:**
 
-### Dijkstra's algorithm
+1. **Initialize**: Add all paths from the starting vertex to the frontier
+2. **Select**: Pick the shortest path from the frontier (greedy choice)
+3. **Explore**: From that path's destination, discover new possible paths
+4. **Expand**: Add these new paths to the frontier
+5. **Remove**: Take the explored path out of the frontier
+6. **Repeat**: Continue until you've found the destination or explored everything
 
-Edsger Dijkstra's algorithm was published in 1959 and is designed to find the shortest path between two vertices in a directed graph with non-negative edge weights.
+### The Path class: Tracking paths in the frontier
 
 ```swift
-//the path class maintains objects that comprise the "frontier"
-class Path {
+/**
+ The `Path` class maintains objects that comprise the `frontier`.
+ */
+public class Path<T> {
     var total: Int
-    var destination: Vertex
+    var destination: Vertex<T>
     var previous: Path?
 
-    //object initialization
-    init() {
-        destination = Vertex()
+    // Object initialization
+    public init() {
+        destination = Vertex<T>()
         total = 0
     }
 }
+```
 
-//Dijkstra's shortest path algorithm
-func processDijkstra(source: Vertex, destination: Vertex) -> Path? {
-    var frontier = Array<Path>()
-    var finalPaths = Array<Path>()
+**Why we need Path objects:**
 
-    //use source edges to create the frontier
-    for e in source.neighbors {
-        let newPath: Path = Path()
+Without the `Path` class, we'd only track vertices. But we need to know:
+- **How we got there** (`previous`) - to reconstruct the final path
+- **What it cost us** (`total`) - to compare different routes
+- **Where we are** (`destination`) - which vertex this path reaches
 
-        newPath.destination = e.neighbor
-        newPath.previous = nil
-        newPath.total = e.weight
+### Dijkstra's algorithm implementation
 
-        //add the new path to the frontier
-        frontier.append(newPath)
-    }
+Here's the complete algorithm as it appears in the production code:
 
-    //construct the best path
-    var bestPath: Path = Path()
+```swift
+extension Graph {
+    // Process Dijkstra's shortest path algorithm
+    public func processDijkstra(_ source: Vertex<T>, destination: Vertex<T>) -> Path<T>? {
 
-    while frontier.count != 0 {
-        //support path changes using the greedy approach
-        bestPath = Path()
-        var pathIndex: Int = 0
+        var frontier: Array<Path<T>> = Array<Path<T>>()
+        var finalPaths: Array<Path<T>> = Array<Path<T>>()
 
-        for x in 0..<frontier.count {
-            let itemPath: Path = frontier[x]
-
-            if (bestPath.total == 0) || (itemPath.total < bestPath.total) {
-                bestPath = itemPath
-                pathIndex = x
-            }
-        }
-
-        //enumerate the bestPath edges
-        for e in bestPath.destination.neighbors {
-            let newPath: Path = Path()
+        // Use source edges to populate the frontier
+        for e in source.neighbors {
+            let newPath: Path = Path<T>()
 
             newPath.destination = e.neighbor
-            newPath.previous = bestPath
-            newPath.total = bestPath.total + e.weight
+            newPath.previous = nil
+            newPath.total = e.weight
 
-            //add the new path to the frontier
+            // Add the new path to the frontier
             frontier.append(newPath)
         }
 
-        //preserve the bestPath
-        finalPaths.append(bestPath)
+        // Construct the best path
+        var bestPath: Path = Path<T>()
 
-        //remove the bestPath from the frontier
-        frontier.remove(at: pathIndex)
-    } //end while
+        while frontier.count != 0 {
+            bestPath = Path()
 
-    // Return result...
-    return nil
+            // Support path changes using the greedy approach - O(n)
+            var pathIndex: Int = 0
+
+            for x in 0..<frontier.count {
+                let itemPath: Path = frontier[x]
+
+                if (bestPath.total == 0) || (itemPath.total < bestPath.total) {
+                    bestPath = itemPath
+                    pathIndex = x
+                }
+            }
+
+            // Enumerate the bestPath edges
+            for e in bestPath.destination.neighbors {
+                let newPath: Path = Path<T>()
+
+                newPath.destination = e.neighbor
+                newPath.previous = bestPath
+                newPath.total = bestPath.total + e.weight
+
+                // Add the new path to the frontier
+                frontier.append(newPath)
+            }
+
+            // Preserve the bestPath
+            finalPaths.append(bestPath)
+
+            // Remove the bestPath from the frontier
+            frontier.remove(at: pathIndex)
+        }
+
+        // Establish the shortest path as an optional
+        var shortestPath: Path! = Path<T>()
+
+        for itemPath in finalPaths {
+            if (itemPath.destination == destination) {
+                if (shortestPath.total == 0) || (itemPath.total < shortestPath.total) {
+                    shortestPath = itemPath
+                }
+            }
+        }
+
+        return shortestPath
+    }
 }
 ```
 
-Dijkstra's algorithm is an elegant solution to a complex problem. It calculates the shortest path from a single source to all other vertices in the graph, making it a "single source" shortest path algorithm.
+**Step-by-step explanation:**
 
+1. **Initialize frontier** (lines 6-15): Create Path objects for all neighbors of the source vertex
+2. **Greedy selection** (lines 22-30): Find the path in the frontier with the lowest total cost - this is O(n) per iteration
+3. **Expand frontier** (lines 33-42): For the best path's destination, create new paths to its neighbors
+4. **Update collections** (lines 45-48): Move the best path from frontier to finalPaths
+5. **Find result** (lines 55-64): Search finalPaths for all paths reaching the destination, return the shortest
+
+### Optimized Dijkstra with heap
+
+The array-based frontier requires O(n) time to find the minimum path. Using a heap improves this to O(log n):
+
+```swift
+extension Graph {
+    /// An optimized version of Dijkstra's shortest path algorithm
+    public func processDijkstraWithHeap(_ source: Vertex<T>, destination: Vertex<T>) -> Path<T>? {
+
+        let frontier: PathHeap = PathHeap<T>()
+        let finalPaths: PathHeap = PathHeap<T>()
+
+        // Use source edges to create the frontier
+        for e in source.neighbors {
+            let newPath: Path = Path<T>()
+
+            newPath.destination = e.neighbor
+            newPath.previous = nil
+            newPath.total = e.weight
+
+            // Add the new path to the frontier - O(log n)
+            frontier.enQueue(newPath)
+        }
+
+        // Construct the best path
+        while frontier.count != 0 {
+            // Use the greedy approach to obtain the best path - O(1)
+            guard let bestPath: Path = frontier.peek() else {
+                break
+            }
+
+            // Enumerate the bestPath edges
+            for e in bestPath.destination.neighbors {
+                let newPath: Path = Path<T>()
+
+                newPath.destination = e.neighbor
+                newPath.previous = bestPath
+                newPath.total = bestPath.total + e.weight
+
+                // Add the new path to the frontier
+                frontier.enQueue(newPath)
+            }
+
+            // Preserve the bestPaths that match destination
+            if (bestPath.destination == destination) {
+                finalPaths.enQueue(bestPath)
+            }
+
+            // Remove the bestPath from the frontier
+            frontier.deQueue()
+        }
+
+        // Obtain the shortest path from the heap
+        var shortestPath: Path? = Path<T>()
+        shortestPath = finalPaths.peek()
+
+        return shortestPath
+    }
+}
+```
+
+**Performance comparison:**
+
+| Implementation | Find Min | Time Complexity |
+|---------------|----------|-----------------|
+| Array-based | O(V) per iteration | O(V²) |
+| Heap-based | O(1) peek, O(log V) enqueue | O((V + E) log V) |
+
+The heap-based version is significantly faster for large graphs, as discussed in Chapter 14.
+
+### Reversing the path
+
+Once we have the shortest path, we can reverse it to get the sequence from source to destination:
+
+```swift
+extension Graph {
+    /**
+     Reverse the sequence of paths given the shortest path. Process analogous to reversing a linked list.
+
+     - Parameter head: The source Vertex.
+     - Parameter source: The connecting destination `Vertex`.
+     - Returns: The reversed `Path`.
+     */
+    public func reversePath(_ head: Path<T>?, source: Vertex<T>) -> Path<T>? {
+
+        guard head != nil else {
+            return head
+        }
+
+        // Mutated copy
+        var output = head
+
+        var current: Path! = output
+        var prev: Path<T>!
+        var next: Path<T>!
+
+        while (current != nil) {
+            next = current.previous
+            current.previous = prev
+            prev = current
+            current = next
+        }
+
+        // Append the source path to the sequence
+        let sourcePath: Path = Path<T>()
+
+        sourcePath.destination = source
+        sourcePath.previous = prev
+        sourcePath.total = 0
+
+        output = sourcePath
+
+        return output
+    }
+}
+```
+
+This reversal technique is analogous to reversing a linked list (Chapter 8), using the same three-pointer approach.
+
+### Practical example: Finding shortest routes
+
+```swift
+// Build a graph representing cities and distances
+let graph = Graph<String>()
+
+let sanFrancisco = Vertex(with: "San Francisco")
+let denver = Vertex(with: "Denver")
+let chicago = Vertex(with: "Chicago")
+let newYork = Vertex(with: "New York")
+
+graph.addVertex(element: sanFrancisco)
+graph.addVertex(element: denver)
+graph.addVertex(element: chicago)
+graph.addVertex(element: newYork)
+
+// Add routes with distances (weights)
+graph.addEdge(source: sanFrancisco, neighbor: denver, weight: 1000)
+graph.addEdge(source: sanFrancisco, neighbor: chicago, weight: 2100)
+graph.addEdge(source: denver, neighbor: chicago, weight: 900)
+graph.addEdge(source: chicago, neighbor: newYork, weight: 800)
+graph.addEdge(source: denver, neighbor: newYork, weight: 1800)
+
+// Find shortest path from San Francisco to New York
+if let shortestPath = graph.processDijkstra(sanFrancisco, destination: newYork) {
+    print("Shortest distance: \(shortestPath.total) miles")
+
+    // Reverse to get the route
+    if let route = graph.reversePath(shortestPath, source: sanFrancisco) {
+        var current = route
+        while current != nil {
+            print("→ \(current!.destination.tvalue!)")
+            current = current!.previous
+        }
+    }
+}
+// Output: San Francisco → Denver → Chicago → New York (2700 miles)
+```
+
+## Summary
+
+Graphs are fundamental data structures that model relationships between objects:
+
+**Key concepts:**
+- **Vertices** represent objects, contain values of generic type T
+- **Edges** connect vertices and have weights representing cost/distance
+- **Canvas** holds all vertices in the graph
+- **Adjacency lists** store each vertex's neighbors
+
+**Traversal algorithms:**
+- **BFS** explores level-by-level using a queue
+- **Closure support** allows custom logic during traversal
+- Time complexity: O(V + E)
+
+**Shortest path finding:**
+- **Dijkstra's algorithm** finds minimum cost paths in weighted graphs
+- **The frontier** maintains the set of paths being explored
+- **Path objects** track route, cost, and previous steps
+- **Array-based**: O(V²) time complexity
+- **Heap-optimized**: O((V + E) log V) time complexity
+
+**Real-world applications:**
+- GPS navigation systems
+- Network routing protocols
+- Social network analysis
+- Flight route optimization
+
+Understanding graphs and Dijkstra's frontier concept is fundamental to many algorithms in computer science and powers countless real-world applications from Google Maps to Internet routing.

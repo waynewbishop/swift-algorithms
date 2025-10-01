@@ -8,17 +8,17 @@ As an iOS developer, it's almost certain that you have experience writing Swift/
 
 However, when it comes to learning computer science, you should consider putting aside the "single-best-way" technique and instead focus on proving your approach. The idea behind proving your approach is empowering but can also be confusing. Instead of thinking of a single way to solve a problem, assume there are many ways to reach a desired outcome. In the book, I cover concepts such as divide & conquer, the greedy approach, dynamic programming, and the brute-force method. When considering the brute-force technique, this implies that we're coding a solution with no concern for algorithmic efficiency. Even though a brute-force technique could be used to build an entire app, ask if that approach would be the most optimal. How would you redesign your function, app, or framework if it had to process one million rows of data? If we consider world class websites like Google, "optimal" often translates to speed and efficiency. As a result, many algorithms are merely recipes to increase performance, solve seemingly unsolvable questions or to improve data storage.
 
-### A simple example: Finding a name
+### A simple example: Finding a book
 
-Consider this everyday scenario: You have a list of 1,000 names written on paper, and you need to find "Sarah Martinez." How would you approach this?
+Consider this everyday scenario: You have a list of 1,000 book titles written on paper, and you need to find "Thinking in Algorithms." How would you approach this?
 
 **Approach 1: Start from the beginning**
-Read the first name. Is it Sarah Martinez? No. Read the second name. Is it Sarah Martinez? No. Continue until you find it or reach the end. This is straightforward but potentially slow—you might check all 1,000 names.
+Read the first title. Is it Thinking in Algorithms? No. Read the second title. Is it Thinking in Algorithms? No. Continue until you find it or reach the end. This is straightforward but potentially slow—you might check all 1,000 titles.
 
 **Approach 2: If the list is sorted alphabetically**
-Open to the middle of the list. Are you looking at names starting with M? Since "Sarah" starts with S, you know Sarah must be in the second half. You've just eliminated 500 names with one check. Repeat this process, cutting the remaining names in half each time.
+Open to the middle of the list. Are you looking at titles starting with M? Since "Thinking in Algorithms" starts with T, you know it must be in the second half. You've just eliminated 500 titles with one check. Repeat this process, cutting the remaining titles in half each time.
 
-Both approaches work. Both will find Sarah Martinez if she's in the list. But Approach 2 demonstrates algorithmic thinking: it finds the answer in roughly 10 checks instead of potentially 1,000.
+Both approaches work. Both will find Thinking in Algorithms if it's in the list. But Approach 2 demonstrates algorithmic thinking: it finds the answer in roughly 10 checks instead of potentially 1,000.
 
 This is the mindset shift algorithms require—there are multiple valid solutions, but some are fundamentally more efficient than others.
 

@@ -202,7 +202,7 @@ Functions can also be generic, allowing you to write operations that work with a
 func swap<T>(_ a: inout T, _ b: inout T) {
     let temp = a
     a = b
-    b = a
+    b = temp
 }
 
 //works with any type
@@ -429,15 +429,7 @@ grid[Coordinate(x: 1, y: 1)] = "treasure"
 
 **Protocol hierarchy:**
 
-```
-Hashable
-   ↓ (includes)
-Equatable
-
-Comparable
-   ↓ (includes)
-Equatable
-```
+[diagram: Protocol hierarchy showing Hashable and Comparable both including Equatable]
 
 Most Swift built-in types (`Int`, `Double`, `String`, `Bool`) conform to all three protocols automatically.
 

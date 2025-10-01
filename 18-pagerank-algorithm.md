@@ -34,12 +34,9 @@ The beauty of PageRank lies in how it transforms the abstract concept of web imp
 // Page A links to pages B and C
 // Page B links to page C
 // Page C links to page A
-//
-// Graph representation:
-//   A → B
-//   ↓   ↓
-//   C ←─┘
 ```
+
+[diagram: Graph showing page link structure between A, B, and C]
 
 This mathematical representation allows us to apply rigorous algorithms to measure page importance based on link structure.
 

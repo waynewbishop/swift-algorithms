@@ -4,6 +4,201 @@ Stacks and queues are structures that help organize data in a particular order. 
 
 These structures can be implemented in various ways. Any app that makes use of a shopping cart, waiting list or playlist makes use of a stack or queue. In software development, a call stack is often used as an essential debugging / analytics tool. For this essay, we'll discuss and implement a stack and queue data structures in Swift.
 
+## Real-world applications: When to use stacks vs queues
+
+Before diving into implementation, let's understand where you'll encounter these structures in real applications.
+
+### Stack applications (LIFO - Last In, First Out)
+
+**1. Undo/Redo functionality**
+```swift
+class TextEditor {
+    private var undoStack = Stack<String>()
+    private var redoStack = Stack<String>()
+
+    func type(_ text: String) {
+        undoStack.push(currentText)  // Save current state
+        currentText += text
+        redoStack = Stack<String>()  // Clear redo history
+    }
+
+    func undo() {
+        guard let previousText = undoStack.pop() else { return }
+        redoStack.push(currentText)  // Save for redo
+        currentText = previousText
+    }
+
+    func redo() {
+        guard let nextText = redoStack.pop() else { return }
+        undoStack.push(currentText)
+        currentText = nextText
+    }
+}
+```
+
+**2. iOS Navigation (UINavigationController)**
+```swift
+// UINavigationController internally uses a stack
+navigationController.pushViewController(detailVC, animated: true)  // Push
+navigationController.popViewController(animated: true)              // Pop
+
+// View hierarchy: [RootVC] → [ListVC] → [DetailVC]
+// Back button pops the stack
+```
+
+**3. Function call stack (debugging)**
+
+[diagram: Thread call stack showing execution order]
+
+**4. Browser history**
+```swift
+class BrowserHistory {
+    private var backStack = Stack<URL>()
+    private var forwardStack = Stack<URL>()
+
+    func navigate(to url: URL) {
+        backStack.push(currentURL)
+        currentURL = url
+        forwardStack = Stack<URL>()  // Clear forward history
+    }
+
+    func back() {
+        guard let previousURL = backStack.pop() else { return }
+        forwardStack.push(currentURL)
+        currentURL = previousURL
+    }
+}
+```
+
+**5. Expression evaluation (parsing)**
+```swift
+// Evaluating: 3 + 4 * 2
+// Stack handles operator precedence
+func evaluate(_ expression: String) -> Int {
+    let operands = Stack<Int>()
+    let operators = Stack<Character>()
+    // Process tokens, maintaining precedence via stack
+}
+```
+
+### Queue applications (FIFO - First In, First Out)
+
+**1. Task scheduling (OperationQueue, DispatchQueue)**
+```swift
+class TaskScheduler {
+    private var tasks = Queue<Task>()
+
+    func schedule(_ task: Task) {
+        tasks.enqueue(task)  // Add to back
+    }
+
+    func executeNext() {
+        guard let task = tasks.dequeue() else { return }  // Remove from front
+        task.execute()
+    }
+}
+
+// Real iOS example
+DispatchQueue.main.async {
+    // Tasks execute in order they're added
+    updateUI()
+}
+```
+
+**2. Print job spooling**
+```swift
+class PrintQueue {
+    private var jobs = Queue<PrintJob>()
+
+    func submitJob(_ job: PrintJob) {
+        jobs.enqueue(job)
+        print("Job queued. Position: \(jobs.count)")
+    }
+
+    func processNext() {
+        guard let job = jobs.dequeue() else { return }
+        print("Printing: \(job.document)")
+    }
+}
+```
+
+**3. Breadth-First Search (BFS) in graphs**
+```swift
+// From Chapter 11
+func traverse(_ startingVertex: Vertex<T>) {
+    let queue = Queue<Vertex<T>>()
+    queue.enqueue(startingVertex)
+
+    while !queue.isEmpty {
+        let vertex = queue.dequeue()!
+        // Process neighbors in order discovered
+        for neighbor in vertex.neighbors {
+            queue.enqueue(neighbor)
+        }
+    }
+}
+```
+
+**4. Network request buffering**
+```swift
+class APIClient {
+    private var requestQueue = Queue<URLRequest>()
+
+    func fetch(_ request: URLRequest) {
+        requestQueue.enqueue(request)
+        processQueueIfNeeded()
+    }
+
+    private func processQueueIfNeeded() {
+        guard !isProcessing, let request = requestQueue.dequeue() else { return }
+        // Process oldest request first
+        executeRequest(request)
+    }
+}
+```
+
+**5. Streaming data buffers**
+```swift
+class VideoStreamBuffer {
+    private var frames = Queue<VideoFrame>()
+
+    func receiveFrame(_ frame: VideoFrame) {
+        frames.enqueue(frame)  // Buffer incoming frames
+    }
+
+    func nextFrameForPlayback() -> VideoFrame? {
+        return frames.dequeue()  // Play frames in order received
+    }
+}
+```
+
+### Choosing between stack and queue
+
+| Use Stack When | Use Queue When |
+|----------------|----------------|
+| Need to reverse order | Need to preserve order |
+| Undo/redo functionality | Task scheduling |
+| Navigation history | Print spooling |
+| Parsing expressions | BFS traversal |
+| Function call tracking | Request buffering |
+| Matching parentheses | Fair resource allocation |
+
+### iOS-specific examples
+
+**UIKit uses stacks:**
+- `UINavigationController` view stack
+- Responder chain (touches propagate through stack)
+- Modal presentation stack
+
+**Foundation uses queues:**
+- `OperationQueue` for concurrent tasks
+- `DispatchQueue` for GCD
+- `NotificationCenter` post order
+
+**CoreData uses both:**
+- Undo manager (stack)
+- Save operation queuing (queue)
+
 ## How queues work
 
 Queues are based on the concept of "first-in, first-out". As new elements are created, they are added to the back of the queue. Items are preserved in order until requested. When a new element is requested, the top level item is removed and is sent to the receiver.
@@ -171,4 +366,64 @@ public class Stack<T> {
     }
 }
 ```
+
+## Performance characteristics
+
+Both stacks and queues offer excellent performance for their core operations:
+
+| Operation | Stack | Queue | Notes |
+|-----------|-------|-------|-------|
+| Push/Enqueue | O(1) | O(1) | Add element |
+| Pop/Dequeue | O(1) | O(1) | Remove element |
+| Peek | O(1) | O(1) | View top/front |
+| isEmpty check | O(1) | O(1) | Check if empty |
+| Search | O(n) | O(n) | Not their purpose |
+
+**Why O(1) is important:**
+
+```swift
+// Stack: Add 1 million items
+for i in 0..<1_000_000 {
+    stack.push(i)  // Each push is O(1) - consistently fast
+}
+
+// Queue: Process 1 million tasks
+for i in 0..<1_000_000 {
+    queue.enqueue(Task(i))  // Each enqueue is O(1)
+    if shouldProcess {
+        queue.dequeue()  // Also O(1)
+    }
+}
+```
+
+No matter how many items are in the structure, adding or removing takes the same amount of time.
+
+## Summary
+
+Stacks and queues are simple yet powerful data structures that maintain ordering through different strategies:
+
+**Stacks (LIFO):**
+- Last item added is first removed
+- Perfect for reversing order or backtracking
+- Real uses: undo/redo, navigation, function calls, expression parsing
+- iOS examples: UINavigationController, responder chain
+
+**Queues (FIFO):**
+- First item added is first removed
+- Perfect for preserving order and fair scheduling
+- Real uses: task scheduling, BFS traversal, request buffering
+- iOS examples: DispatchQueue, OperationQueue, NotificationCenter
+
+**Key benefits:**
+- All core operations are O(1)
+- Simple to implement (built on linked lists)
+- Fundamental building blocks for other algorithms
+- Direct mapping to real-world concepts
+
+**When to use:**
+- Stack: When order reversal matters (navigation, undo, backtracking)
+- Queue: When fairness and order preservation matter (scheduling, buffering)
+- Array: When you need random access or bidirectional iteration
+
+Understanding stacks and queues is essential for iOS development, as they power many of the frameworks you use daily. In Chapter 11, you'll see queues in action for graph traversal algorithms like Breadth-First Search.
 

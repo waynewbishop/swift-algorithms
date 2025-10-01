@@ -1,667 +1,310 @@
-# Dynamic programming
+# Dynamic Programming
 
-Dynamic programming is a powerful algorithmic technique that solves complex problems by breaking them down into simpler subproblems and storing their solutions to avoid redundant calculations. It's particularly effective for optimization problems where the same subproblems appear repeatedly. In this chapter, we'll explore the principles of dynamic programming and implement classic algorithms in Swift.
+Dynamic programming is a technique for solving problems by breaking them into smaller, overlapping subproblems and storing the results to avoid repeating work. It's one of the most powerful optimization techniques in computer science, and while the name sounds intimidating, the core concept is straightforward: remember what you've already calculated so you don't have to calculate it again.
 
-## Understanding dynamic programming
+In this chapter, we'll explore dynamic programming through practical examples that demonstrate why this technique matters and how to apply it in Swift.
 
-Dynamic programming (DP) combines two key concepts:
-1. **Optimal Substructure**: The optimal solution contains optimal solutions to subproblems
-2. **Overlapping Subproblems**: The same subproblems are solved multiple times in a naive recursive approach
+## The problem with naive recursion
 
-When both properties exist, dynamic programming can dramatically improve efficiency by using **memoization** (storing computed results) to avoid recalculating the same subproblems.
-
-### Memoization vs tabulation
-
-There are two main approaches to dynamic programming:
-
-- **Top-Down (Memoization)**: Start with the original problem and recursively break it down, caching results
-- **Bottom-Up (Tabulation)**: Start with the smallest subproblems and build up to the solution
-
-## Classic example: Fibonacci numbers
-
-Let's start with the classic Fibonacci sequence to illustrate the dramatic performance difference:
-
-### Naive recursive approach (exponential time)
+Let's start with a simple question: what's wrong with this Fibonacci implementation?
 
 ```swift
-func fibonacciNaive(_ n: Int) -> Int {
+func fibonacci(_ n: Int) -> Int {
     if n <= 1 {
         return n
     }
-    return fibonacciNaive(n - 1) + fibonacciNaive(n - 2)
+    return fibonacci(n - 1) + fibonacci(n - 2)
 }
-
-// Time Complexity: O(2^n) - exponential!
-// Space Complexity: O(n) - recursion stack
 ```
 
-This naive approach recalculates the same values many times. For `fibonacci(5)`, it calculates `fibonacci(3)` three times and `fibonacci(2)` five times!
+This code is elegant and matches the mathematical definition perfectly. But there's a serious problem: it's incredibly slow.
 
-### Top-down memoization
+**Why it's slow:**
+
+When you calculate `fibonacci(5)`, the function calculates `fibonacci(3)` three separate times and `fibonacci(2)` five separate times. For `fibonacci(40)`, the function makes over 330 million function calls!
+
+[diagram: Fibonacci recursion tree showing duplicate calculations]
+
+The time complexity is O(2^n)—exponential. For larger numbers, this approach becomes unusable.
+
+## What is dynamic programming?
+
+Dynamic programming solves this problem with a simple insight: **store the results of subproblems so you can reuse them instead of recalculating**.
+
+The technique we'll focus on is called **memoization**: start with the big problem and recursively break it down, storing (or "memoizing") results along the way so you can reuse them.
+
+**Note:** There's another approach called tabulation (bottom-up) that builds solutions iteratively from base cases, but memoization is often more intuitive because it follows the natural recursive structure of problems.
+
+## Dynamic programming with memoization
+
+Memoization means storing computed results in a cache (usually a dictionary or array). Before calculating a value, check if you've already computed it.
 
 ```swift
-func fibonacciMemo(_ n: Int, memo: inout [Int: Int]) -> Int {
-    // Check if we've already calculated this value
-    if let cached = memo[n] {
+func fibonacciMemo(_ n: Int, cache: inout [Int: Int]) -> Int {
+    // Check if we've already calculated this
+    if let cached = cache[n] {
         return cached
     }
 
     // Base cases
     if n <= 1 {
-        memo[n] = n
         return n
     }
 
     // Calculate and store the result
-    let result = fibonacciMemo(n - 1, memo: &memo) + fibonacciMemo(n - 2, memo: &memo)
-    memo[n] = result
+    let result = fibonacciMemo(n - 1, cache: &cache) +
+                 fibonacciMemo(n - 2, cache: &cache)
+    cache[n] = result
     return result
 }
 
-// Wrapper function
+// Wrapper function for clean usage
 func fibonacci(_ n: Int) -> Int {
-    var memo: [Int: Int] = [:]
-    return fibonacciMemo(n, memo: &memo)
+    var cache: [Int: Int] = [:]
+    return fibonacciMemo(n, cache: &cache)
 }
 
-// Time Complexity: O(n)
-// Space Complexity: O(n)
+// Usage
+print(fibonacci(40))  // Completes instantly!
 ```
 
-### Bottom-up tabulation
+**How it works:**
+
+1. Before calculating `fibonacci(n)`, check if it's in the cache
+2. If yes, return the cached value immediately
+3. If no, calculate it, store it in the cache, then return it
+
+Now `fibonacci(5)` makes only 9 function calls instead of 15, and each value is calculated exactly once.
+
+**Time Complexity:** O(n) - we calculate each value from 0 to n exactly once
+**Space Complexity:** O(n) - we store n values in the cache plus the recursion stack
+
+This simple change transforms an exponential algorithm into a linear one—a massive improvement!
+
+## A practical problem: Making change
+
+Here's a real-world problem where dynamic programming shines: given coins of different denominations and a target amount, what's the minimum number of coins needed?
+
+**Example:** Make 11 cents using coins of [1, 4, 5]
+
+- Naive approach: 11 pennies = 11 coins
+- Better: 5 + 5 + 1 = 3 coins ✓
+
+### The approach
+
+For each amount from 1 to our target, we calculate the minimum coins needed by trying each coin denomination.
 
 ```swift
-func fibonacciTabulation(_ n: Int) -> Int {
-    guard n > 1 else { return n }
+func minCoins(amount: Int, coins: [Int]) -> Int {
+    // dp[i] represents minimum coins needed for amount i
+    var dp = Array(repeating: Int.max, count: amount + 1)
 
-    var dp = Array(repeating: 0, count: n + 1)
+    // Base case: 0 coins needed for amount 0
     dp[0] = 0
-    dp[1] = 1
 
-    for i in 2...n {
-        dp[i] = dp[i - 1] + dp[i - 2]
-    }
+    // For each amount from 1 to target
+    for currentAmount in 1...amount {
+        // Try each coin
+        for coin in coins {
+            // Can we use this coin?
+            if coin <= currentAmount {
+                let remaining = currentAmount - coin
 
-    return dp[n]
-}
-
-// Time Complexity: O(n)
-// Space Complexity: O(n)
-```
-
-### Space-optimized version
-
-```swift
-func fibonacciOptimized(_ n: Int) -> Int {
-    guard n > 1 else { return n }
-
-    var prev2 = 0  // f(n-2)
-    var prev1 = 1  // f(n-1)
-
-    for _ in 2...n {
-        let current = prev1 + prev2
-        prev2 = prev1
-        prev1 = current
-    }
-
-    return prev1
-}
-
-// Time Complexity: O(n)
-// Space Complexity: O(1)
-```
-
-## The coin change problem
-
-A classic DP problem: given coins of different denominations and a target amount, find the minimum number of coins needed.
-
-### Problem setup
-
-```swift
-struct CoinChange {
-    static func minCoins(amount: Int, coins: [Int]) -> Int {
-        // dp[i] represents minimum coins needed for amount i
-        var dp = Array(repeating: Int.max, count: amount + 1)
-        dp[0] = 0  // Base case: 0 coins needed for amount 0
-
-        // For each amount from 1 to target
-        for currentAmount in 1...amount {
-            // Try each coin
-            for coin in coins {
-                if coin <= currentAmount && dp[currentAmount - coin] != Int.max {
-                    dp[currentAmount] = min(dp[currentAmount], dp[currentAmount - coin] + 1)
+                // If we can make the remaining amount
+                if dp[remaining] != Int.max {
+                    dp[currentAmount] = min(dp[currentAmount],
+                                           dp[remaining] + 1)
                 }
             }
         }
-
-        return dp[amount] == Int.max ? -1 : dp[amount]
     }
 
-    // Return the actual coins used
-    static func minCoinsWithPath(amount: Int, coins: [Int]) -> (count: Int, coins: [Int]) {
-        var dp = Array(repeating: Int.max, count: amount + 1)
-        var parent = Array(repeating: -1, count: amount + 1)
-        dp[0] = 0
-
-        for currentAmount in 1...amount {
-            for coin in coins {
-                if coin <= currentAmount && dp[currentAmount - coin] != Int.max {
-                    if dp[currentAmount - coin] + 1 < dp[currentAmount] {
-                        dp[currentAmount] = dp[currentAmount - coin] + 1
-                        parent[currentAmount] = coin
-                    }
-                }
-            }
-        }
-
-        if dp[amount] == Int.max {
-            return (-1, [])
-        }
-
-        // Reconstruct path
-        var result: [Int] = []
-        var current = amount
-        while current > 0 {
-            let coin = parent[current]
-            result.append(coin)
-            current -= coin
-        }
-
-        return (dp[amount], result)
-    }
+    // If we couldn't make the amount, return -1
+    return dp[amount] == Int.max ? -1 : dp[amount]
 }
 
 // Usage
-let result = CoinChange.minCoins(amount: 11, coins: [1, 4, 5])
-print("Minimum coins needed: \(result)")  // 3 coins (5 + 5 + 1)
-
-let detailed = CoinChange.minCoinsWithPath(amount: 11, coins: [1, 4, 5])
-print("Coins used: \(detailed.coins)")  // [1, 5, 5]
+let result = minCoins(amount: 11, coins: [1, 4, 5])
+print("Minimum coins needed: \(result)")  // 3
 ```
 
-## Longest common subsequence (LCS)
+**How it works:**
 
-Find the longest subsequence common to two sequences.
+1. Create array where `dp[i]` = minimum coins for amount `i`
+2. Start with `dp[0] = 0` (no coins needed for $0)
+3. For each amount, try using each coin
+4. If we use a coin, we need `1 + dp[remaining amount]` coins total
+5. Take the minimum across all coin choices
+
+**Example walkthrough for amount = 11, coins = [1, 4, 5]:**
+
+```
+dp[0] = 0  // base case
+dp[1] = 1  // one 1-cent coin
+dp[2] = 2  // two 1-cent coins
+dp[3] = 3  // three 1-cent coins
+dp[4] = 1  // one 4-cent coin
+dp[5] = 1  // one 5-cent coin
+dp[6] = 2  // 5 + 1
+dp[7] = 3  // 5 + 1 + 1
+dp[8] = 2  // 4 + 4
+dp[9] = 2  // 5 + 4
+dp[10] = 2 // 5 + 5
+dp[11] = 3 // 5 + 5 + 1 ✓
+```
+
+### Tracking which coins were used
+
+If you need to know which coins to use (not just the count), track the parent coins:
 
 ```swift
-struct LongestCommonSubsequence {
-    static func lengthLCS(_ text1: String, _ text2: String) -> Int {
-        let chars1 = Array(text1)
-        let chars2 = Array(text2)
-        let m = chars1.count
-        let n = chars2.count
+func minCoinsWithPath(amount: Int, coins: [Int]) -> (count: Int, coins: [Int]) {
+    var dp = Array(repeating: Int.max, count: amount + 1)
+    var usedCoin = Array(repeating: -1, count: amount + 1)
 
-        // dp[i][j] = LCS length of first i chars of text1 and first j chars of text2
-        var dp = Array(repeating: Array(repeating: 0, count: n + 1), count: m + 1)
+    dp[0] = 0
 
-        for i in 1...m {
-            for j in 1...n {
-                if chars1[i - 1] == chars2[j - 1] {
-                    dp[i][j] = dp[i - 1][j - 1] + 1
-                } else {
-                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+    for currentAmount in 1...amount {
+        for coin in coins {
+            if coin <= currentAmount && dp[currentAmount - coin] != Int.max {
+                if dp[currentAmount - coin] + 1 < dp[currentAmount] {
+                    dp[currentAmount] = dp[currentAmount - coin] + 1
+                    usedCoin[currentAmount] = coin
                 }
             }
         }
-
-        return dp[m][n]
     }
 
-    static func findLCS(_ text1: String, _ text2: String) -> String {
-        let chars1 = Array(text1)
-        let chars2 = Array(text2)
-        let m = chars1.count
-        let n = chars2.count
+    // Reconstruct the coins used
+    var result: [Int] = []
+    var current = amount
 
-        var dp = Array(repeating: Array(repeating: 0, count: n + 1), count: m + 1)
-
-        // Fill the DP table
-        for i in 1...m {
-            for j in 1...n {
-                if chars1[i - 1] == chars2[j - 1] {
-                    dp[i][j] = dp[i - 1][j - 1] + 1
-                } else {
-                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
-                }
-            }
-        }
-
-        // Reconstruct the LCS
-        var result: [Character] = []
-        var i = m, j = n
-
-        while i > 0 && j > 0 {
-            if chars1[i - 1] == chars2[j - 1] {
-                result.append(chars1[i - 1])
-                i -= 1
-                j -= 1
-            } else if dp[i - 1][j] > dp[i][j - 1] {
-                i -= 1
-            } else {
-                j -= 1
-            }
-        }
-
-        return String(result.reversed())
+    while current > 0 && usedCoin[current] != -1 {
+        let coin = usedCoin[current]
+        result.append(coin)
+        current -= coin
     }
+
+    if dp[amount] == Int.max {
+        return (-1, [])
+    }
+
+    return (dp[amount], result)
 }
 
 // Usage
-let lcsLength = LongestCommonSubsequence.lengthLCS("ABCDGH", "AEDFHR")
-print("LCS Length: \(lcsLength)")  // 3
-
-let lcs = LongestCommonSubsequence.findLCS("ABCDGH", "AEDFHR")
-print("LCS: \(lcs)")  // "ADH"
+let solution = minCoinsWithPath(amount: 11, coins: [1, 4, 5])
+print("Minimum coins: \(solution.count)")     // 3
+print("Coins to use: \(solution.coins)")      // [5, 5, 1]
 ```
 
-## 0/1 knapsack problem
+## Comparing approaches
 
-Given items with weights and values, and a knapsack with weight capacity, maximize the value.
+Let's compare naive recursion vs memoization:
 
+| Approach | Time | Space | Fibonacci(40) | Function Calls |
+|----------|------|-------|---------------|----------------|
+| Naive recursion | O(2^n) | O(n) | ~5 seconds | 331,160,281 |
+| Memoization | O(n) | O(n) | Instant | 79 |
+
+The performance difference is dramatic. Exponential algorithms quickly become unusable, while dynamic programming with memoization remains fast even for large inputs.
+
+## When to use dynamic programming
+
+Dynamic programming works well when a problem has these characteristics:
+
+1. **Optimal substructure** - The optimal solution contains optimal solutions to subproblems
+2. **Overlapping subproblems** - The same subproblems are solved multiple times
+
+**Common patterns that suggest DP:**
+
+- "Find the minimum/maximum way to..."
+- "Count the number of ways to..."
+- "What's the longest/shortest..."
+- The problem can be broken into similar smaller problems
+
+**Examples of DP problems:**
+- Fibonacci numbers (as we've seen)
+- Making change with coins
+- Finding shortest paths in graphs
+- Text comparison and spell-checking
+- Game strategy optimization
+
+## Why memoization works so well
+
+Memoization is effective because:
+
+1. **Natural recursion** - The solution follows the problem's recursive structure
+2. **Lazy evaluation** - Only calculates values you actually need
+3. **Easy to implement** - Add caching to existing recursive code
+4. **Clear logic** - Mirrors the mathematical definition of the problem
+
+The trade-off is simple: use O(n) extra memory to reduce time complexity from O(2^n) to O(n). That's a bargain!
+
+## Common pitfalls
+
+**1. Forgetting base cases**
 ```swift
-struct Item {
-    let weight: Int
-    let value: Int
-    let name: String
+// Bad - what if n is 0 or 1?
+func fib(_ n: Int) -> Int {
+    return fib(n - 1) + fib(n - 2)  // Infinite recursion!
 }
 
-struct Knapsack {
-    static func maxValue(items: [Item], capacity: Int) -> Int {
-        let n = items.count
-
-        // dp[i][w] = maximum value using first i items with weight limit w
-        var dp = Array(repeating: Array(repeating: 0, count: capacity + 1), count: n + 1)
-
-        for i in 1...n {
-            let item = items[i - 1]
-            for w in 0...capacity {
-                // Don't include current item
-                dp[i][w] = dp[i - 1][w]
-
-                // Include current item if possible and beneficial
-                if item.weight <= w {
-                    let valueWithItem = dp[i - 1][w - item.weight] + item.value
-                    dp[i][w] = max(dp[i][w], valueWithItem)
-                }
-            }
-        }
-
-        return dp[n][capacity]
-    }
-
-    static func optimalSolution(items: [Item], capacity: Int) -> (value: Int, items: [Item]) {
-        let n = items.count
-        var dp = Array(repeating: Array(repeating: 0, count: capacity + 1), count: n + 1)
-
-        // Fill DP table
-        for i in 1...n {
-            let item = items[i - 1]
-            for w in 0...capacity {
-                dp[i][w] = dp[i - 1][w]
-                if item.weight <= w {
-                    let valueWithItem = dp[i - 1][w - item.weight] + item.value
-                    dp[i][w] = max(dp[i][w], valueWithItem)
-                }
-            }
-        }
-
-        // Backtrack to find which items were selected
-        var selectedItems: [Item] = []
-        var i = n
-        var w = capacity
-
-        while i > 0 && w > 0 {
-            // If value comes from including current item
-            if dp[i][w] != dp[i - 1][w] {
-                selectedItems.append(items[i - 1])
-                w -= items[i - 1].weight
-            }
-            i -= 1
-        }
-
-        return (dp[n][capacity], selectedItems.reversed())
-    }
+// Good
+func fib(_ n: Int) -> Int {
+    if n <= 1 { return n }
+    return fib(n - 1) + fib(n - 2)
 }
-
-// Usage
-let items = [
-    Item(weight: 10, value: 60, name: "Item 1"),
-    Item(weight: 20, value: 100, name: "Item 2"),
-    Item(weight: 30, value: 120, name: "Item 3")
-]
-
-let maxVal = Knapsack.maxValue(items: items, capacity: 50)
-print("Maximum value: \(maxVal)")  // 220
-
-let solution = Knapsack.optimalSolution(items: items, capacity: 50)
-print("Optimal value: \(solution.value)")
-print("Items selected: \(solution.items.map { $0.name })")
 ```
 
-## Longest increasing subsequence (LIS)
-
-Find the length of the longest increasing subsequence in an array.
-
+**2. Off-by-one errors in array sizes**
 ```swift
-struct LongestIncreasingSubsequence {
-    // O(n²) Dynamic Programming Solution
-    static func lengthLIS(_ nums: [Int]) -> Int {
-        guard !nums.isEmpty else { return 0 }
+// Bad - crashes when accessing dp[n]
+var dp = Array(repeating: 0, count: n)
 
-        let n = nums.count
-        var dp = Array(repeating: 1, count: n)  // dp[i] = LIS length ending at index i
-
-        for i in 1..<n {
-            for j in 0..<i {
-                if nums[j] < nums[i] {
-                    dp[i] = max(dp[i], dp[j] + 1)
-                }
-            }
-        }
-
-        return dp.max() ?? 0
-    }
-
-    // O(n log n) Binary Search Solution
-    static func lengthLISOptimized(_ nums: [Int]) -> Int {
-        guard !nums.isEmpty else { return 0 }
-
-        var tails: [Int] = []  // tails[i] = smallest tail of increasing subsequence of length i+1
-
-        for num in nums {
-            // Binary search for the position to insert/replace
-            var left = 0
-            var right = tails.count
-
-            while left < right {
-                let mid = left + (right - left) / 2
-                if tails[mid] < num {
-                    left = mid + 1
-                } else {
-                    right = mid
-                }
-            }
-
-            if left == tails.count {
-                tails.append(num)
-            } else {
-                tails[left] = num
-            }
-        }
-
-        return tails.count
-    }
-
-    // Return actual LIS
-    static func findLIS(_ nums: [Int]) -> [Int] {
-        guard !nums.isEmpty else { return [] }
-
-        let n = nums.count
-        var dp = Array(repeating: 1, count: n)
-        var parent = Array(repeating: -1, count: n)
-
-        for i in 1..<n {
-            for j in 0..<i {
-                if nums[j] < nums[i] && dp[j] + 1 > dp[i] {
-                    dp[i] = dp[j] + 1
-                    parent[i] = j
-                }
-            }
-        }
-
-        // Find index of maximum LIS length
-        let maxLength = dp.max()!
-        let maxIndex = dp.firstIndex(of: maxLength)!
-
-        // Reconstruct LIS
-        var result: [Int] = []
-        var current = maxIndex
-
-        while current != -1 {
-            result.append(nums[current])
-            current = parent[current]
-        }
-
-        return result.reversed()
-    }
-}
-
-// Usage
-let sequence = [10, 9, 2, 5, 3, 7, 101, 18]
-let lisLength = LongestIncreasingSubsequence.lengthLIS(sequence)
-print("LIS Length: \(lisLength)")  // 4
-
-let lis = LongestIncreasingSubsequence.findLIS(sequence)
-print("LIS: \(lis)")  // [2, 3, 7, 18] or [2, 3, 7, 101]
+// Good - array indices go from 0 to n
+var dp = Array(repeating: 0, count: n + 1)
 ```
 
-## Edit distance (Levenshtein distance)
-
-Calculate the minimum number of operations to transform one string into another.
-
+**3. Not checking if a solution exists**
 ```swift
-struct EditDistance {
-    enum Operation: String {
-        case insert = "Insert"
-        case delete = "Delete"
-        case replace = "Replace"
-    }
+// Bad - returns Int.max when no solution
+return dp[amount]
 
-    static func minDistance(_ word1: String, _ word2: String) -> Int {
-        let chars1 = Array(word1)
-        let chars2 = Array(word2)
-        let m = chars1.count
-        let n = chars2.count
-
-        // dp[i][j] = min operations to transform first i chars of word1 to first j chars of word2
-        var dp = Array(repeating: Array(repeating: 0, count: n + 1), count: m + 1)
-
-        // Initialize base cases
-        for i in 0...m {
-            dp[i][0] = i  // Delete all characters
-        }
-        for j in 0...n {
-            dp[0][j] = j  // Insert all characters
-        }
-
-        for i in 1...m {
-            for j in 1...n {
-                if chars1[i - 1] == chars2[j - 1] {
-                    dp[i][j] = dp[i - 1][j - 1]  // No operation needed
-                } else {
-                    dp[i][j] = 1 + min(
-                        dp[i - 1][j],      // Delete
-                        dp[i][j - 1],      // Insert
-                        dp[i - 1][j - 1]   // Replace
-                    )
-                }
-            }
-        }
-
-        return dp[m][n]
-    }
-
-    static func getOperations(_ word1: String, _ word2: String) -> [Operation] {
-        let chars1 = Array(word1)
-        let chars2 = Array(word2)
-        let m = chars1.count
-        let n = chars2.count
-
-        var dp = Array(repeating: Array(repeating: 0, count: n + 1), count: m + 1)
-
-        // Fill DP table
-        for i in 0...m {
-            dp[i][0] = i
-        }
-        for j in 0...n {
-            dp[0][j] = j
-        }
-
-        for i in 1...m {
-            for j in 1...n {
-                if chars1[i - 1] == chars2[j - 1] {
-                    dp[i][j] = dp[i - 1][j - 1]
-                } else {
-                    dp[i][j] = 1 + min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])
-                }
-            }
-        }
-
-        // Backtrack to find operations
-        var operations: [Operation] = []
-        var i = m, j = n
-
-        while i > 0 || j > 0 {
-            if i > 0 && j > 0 && chars1[i - 1] == chars2[j - 1] {
-                i -= 1
-                j -= 1
-            } else if i > 0 && j > 0 && dp[i][j] == dp[i - 1][j - 1] + 1 {
-                operations.append(.replace)
-                i -= 1
-                j -= 1
-            } else if i > 0 && dp[i][j] == dp[i - 1][j] + 1 {
-                operations.append(.delete)
-                i -= 1
-            } else {
-                operations.append(.insert)
-                j -= 1
-            }
-        }
-
-        return operations.reversed()
-    }
-}
-
-// Usage
-let distance = EditDistance.minDistance("intention", "execution")
-print("Edit distance: \(distance)")  // 5
-
-let operations = EditDistance.getOperations("intention", "execution")
-print("Operations: \(operations.map { $0.rawValue })")
-```
-
-## Maximum subarray sum (Kadane's algorithm)
-
-Find the contiguous subarray with the largest sum.
-
-```swift
-struct MaximumSubarray {
-    static func maxSubarraySum(_ nums: [Int]) -> Int {
-        guard !nums.isEmpty else { return 0 }
-
-        var maxSoFar = nums[0]
-        var maxEndingHere = nums[0]
-
-        for i in 1..<nums.count {
-            maxEndingHere = max(nums[i], maxEndingHere + nums[i])
-            maxSoFar = max(maxSoFar, maxEndingHere)
-        }
-
-        return maxSoFar
-    }
-
-    static func maxSubarrayWithIndices(_ nums: [Int]) -> (sum: Int, start: Int, end: Int) {
-        guard !nums.isEmpty else { return (0, 0, 0) }
-
-        var maxSoFar = nums[0]
-        var maxEndingHere = nums[0]
-        var start = 0, end = 0, tempStart = 0
-
-        for i in 1..<nums.count {
-            if maxEndingHere < 0 {
-                maxEndingHere = nums[i]
-                tempStart = i
-            } else {
-                maxEndingHere += nums[i]
-            }
-
-            if maxEndingHere > maxSoFar {
-                maxSoFar = maxEndingHere
-                start = tempStart
-                end = i
-            }
-        }
-
-        return (maxSoFar, start, end)
-    }
-}
-
-// Usage
-let array = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
-let maxSum = MaximumSubarray.maxSubarraySum(array)
-print("Maximum subarray sum: \(maxSum)")  // 6
-
-let result = MaximumSubarray.maxSubarrayWithIndices(array)
-print("Sum: \(result.sum), from index \(result.start) to \(result.end)")
-print("Subarray: \(Array(array[result.start...result.end]))")  // [4, -1, 2, 1]
-```
-
-## Performance analysis
-
-### Time and space complexity
-
-| Problem | Time Complexity | Space Complexity | Optimization Possible |
-|---------|----------------|------------------|----------------------|
-| Fibonacci | O(n) | O(n) → O(1) | Space optimization |
-| Coin Change | O(amount × coins) | O(amount) | None |
-| LCS | O(m × n) | O(m × n) → O(min(m,n)) | Space optimization |
-| Knapsack | O(n × capacity) | O(n × capacity) → O(capacity) | Space optimization |
-| LIS | O(n²) → O(n log n) | O(n) | Binary search |
-| Edit Distance | O(m × n) | O(m × n) → O(min(m,n)) | Space optimization |
-| Max Subarray | O(n) | O(1) | Already optimal |
-
-### Space optimization technique
-
-Many DP problems can be space-optimized when we only need the previous row/column:
-
-```swift
-// Space-optimized LCS
-static func lengthLCSOptimized(_ text1: String, _ text2: String) -> Int {
-    let chars1 = Array(text1)
-    let chars2 = Array(text2)
-    let m = chars1.count
-    let n = chars2.count
-
-    // Use only two rows instead of full table
-    var prev = Array(repeating: 0, count: n + 1)
-    var curr = Array(repeating: 0, count: n + 1)
-
-    for i in 1...m {
-        for j in 1...n {
-            if chars1[i - 1] == chars2[j - 1] {
-                curr[j] = prev[j - 1] + 1
-            } else {
-                curr[j] = max(prev[j], curr[j - 1])
-            }
-        }
-        prev = curr
-        curr = Array(repeating: 0, count: n + 1)
-    }
-
-    return prev[n]
-}
+// Good - returns -1 when impossible
+return dp[amount] == Int.max ? -1 : dp[amount]
 ```
 
 ## Building algorithmic intuition
 
-Dynamic programming demonstrates several key concepts:
+Dynamic programming combines several techniques you've learned:
 
-1. **Problem Decomposition**: We break complex problems into simpler subproblems
-2. **Memoization**: We trade space for time to avoid redundant calculations
-3. **Optimal Substructure**: We use optimal solutions to subproblems
-4. **State Transition**: We define how to move from one state to another
+- **Recursion (Chapter 6)**: Breaking problems into smaller versions of themselves
+- **Arrays (throughout the book)**: Storing intermediate results
+- **Big O analysis (Chapter 2)**: Understanding why DP is faster
 
-### When to use dynamic programming
+The key insight is trading space for time. By using O(n) memory to store results, we reduce time complexity from exponential to linear—a massive improvement.
 
-**Ideal for:**
-- Optimization problems (min/max)
-- Counting problems
-- Decision problems with overlapping subproblems
-- Problems with optimal substructure
+Think of dynamic programming like taking notes in a meeting. Instead of trying to remember everything (naive recursion), you write things down (memoization) so you can look them up later without having to reconstruct your thoughts.
 
-**Recognition patterns:**
-- "Find the optimal (minimum/maximum) way to..."
-- "Count the number of ways to..."
-- "Is it possible to reach..."
-- The problem can be broken into similar subproblems
+## Summary
 
+Dynamic programming is a powerful optimization technique based on a simple idea: remember what you've calculated to avoid doing the same work twice.
+
+**Key takeaways:**
+
+1. **Naive recursion** can lead to exponential time complexity due to repeated calculations
+2. **Memoization (top-down)** adds caching to recursion, reducing redundant work
+3. **Tabulation (bottom-up)** builds solutions iteratively from base cases
+4. **Space optimization** can reduce memory usage when only recent values are needed
+5. DP is ideal for problems with **optimal substructure** and **overlapping subproblems**
+
+**Two essential DP techniques:**
+
+- Start with a working recursive solution
+- Add memoization or convert to tabulation
+- Optimize space if possible
+
+Dynamic programming appears throughout computer science—from optimizing database queries to training machine learning models. While the problems can get complex, the fundamental technique remains the same: break the problem down, store results, and build up to the solution.
+
+The examples in this chapter (Fibonacci and coin change) demonstrate the core concepts. As you encounter more complex problems, you'll recognize the same patterns: define the subproblems, establish base cases, and determine how to combine solutions to subproblems into solutions for larger problems.

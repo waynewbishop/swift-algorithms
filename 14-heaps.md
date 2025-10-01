@@ -34,17 +34,7 @@ For any element at index `i`:
 - **Left Child**: `2 * i + 1`
 - **Right Child**: `2 * i + 2`
 
-```swift
-// Example heap array: [1, 3, 6, 5, 9, 8]
-// Index:              [0, 1, 2, 3, 4, 5]
-//
-// Tree visualization:
-//       1(0)
-//      /    \
-//   3(1)    6(2)
-//   /  \    /
-// 5(3) 9(4) 8(5)
-```
+[diagram: Heap array to tree visualization showing indices and parent-child relationships]
 
 ## Modern heap implementation
 
@@ -472,9 +462,19 @@ print(top3) // [9, 6, 5]
 | Delete Min/Max | O(n) | O(n) | O(log n) | O(log n) | O(n) |
 | Build from Array | O(1) | O(n) | O(n log n) | O(n) | O(n) |
 
+---
+
+# Advanced Topics
+
+*The following sections cover advanced heap concepts. Understanding the core heap operations above is sufficient for most use cases. These advanced topics are optional and intended for readers interested in deeper exploration.*
+
+---
+
 ## Advanced heap concepts
 
-### D-ary heaps
+### D-ary heaps (Optional Advanced Material)
+
+*Note: This section covers an optimization of the basic heap structure. Binary heaps (2-ary) are sufficient for most applications.*
 
 For applications with frequent insertions, d-ary heaps (where each node has d children) can be more efficient:
 
@@ -560,3 +560,57 @@ Heaps demonstrate several important algorithmic concepts:
 - Need to search for arbitrary elements
 - Require ordered traversal
 - Memory is extremely constrained
+
+## Summary
+
+Heaps are specialized tree structures that maintain parent-child ordering, making them ideal for priority-based operations:
+
+**Core concepts:**
+- **Complete binary tree**: Always balanced, stored efficiently in arrays
+- **Heap property**: Min-heap (parent ≤ children) or Max-heap (parent ≥ children)
+- **Array representation**: Parent at (i-1)/2, children at 2i+1 and 2i+2
+
+**Operations (Binary Heap):**
+- **Peek**: O(1) - root is always min/max
+- **Insert**: O(log n) - bubble up through tree height
+- **Extract**: O(log n) - bubble down through tree height
+- **Build heap**: O(n) - heapify from arbitrary array
+- **Search**: O(n) - no ordering for arbitrary elements
+
+**Key algorithms:**
+- **Bubble up**: Restore heap after insertion
+- **Bubble down**: Restore heap after extraction
+- **Heapify**: Build heap from unordered array
+
+**Real-world applications:**
+- **Priority queues**: Process tasks by importance
+- **Heap sort**: O(n log n) sorting algorithm
+- **Top-K problems**: Find k largest/smallest elements efficiently
+- **Dijkstra's algorithm**: Optimize pathfinding with heap-based frontier
+- **Event scheduling**: Process events in chronological order
+
+**When to use heaps:**
+- Need constant-time access to min/max element
+- Priority-based processing (task queues, event schedulers)
+- Finding top-K elements from large datasets
+- Implementing efficient sorting (heap sort)
+- Graph algorithms requiring priority queues
+
+**When to use alternatives:**
+- **Array/List**: Need to search for arbitrary values
+- **BST**: Need sorted traversal or range queries
+- **Hash Table**: Need fast lookup by key
+- **Simple Queue**: FIFO processing (no priorities)
+
+**Performance vs other structures:**
+- Faster than BST for finding min/max: O(1) vs O(log n)
+- Slower than hash table for specific lookups: O(n) vs O(1)
+- Same as BST for insert/delete priority element: O(log n)
+- Faster to build from array than BST: O(n) vs O(n log n)
+
+**Advanced topics (optional):**
+- D-ary heaps: More children per node for insertion-heavy workloads
+- Fibonacci heaps: Better amortized complexity for decrease-key operations
+- Pairing heaps: Simpler implementation than Fibonacci heaps
+
+Understanding heaps is essential for implementing efficient priority queues and optimizing graph algorithms. In Chapter 11, you saw how heap-based priority queues dramatically improve Dijkstra's algorithm from O(V²) to O((V + E) log V).
