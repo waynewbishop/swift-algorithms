@@ -9,8 +9,8 @@ body {
   font-size: 17px !important;
   line-height: 1.47 !important;
   font-weight: 400 !important;
-  letter-spacing: -0.022em !important;
-  color: #000 !important;
+  letter-spacing: 0 !important;
+  color: #1d1d1f !important;
 }
 
 /* Headings */
@@ -20,7 +20,16 @@ h1 {
   font-weight: 700 !important;
   line-height: 1.1 !important;
   letter-spacing: -0.003em !important;
-  color: #000 !important;
+  color: #1d1d1f !important;
+}
+
+/* Subtitle text (first paragraph after h1) */
+h1 + p {
+  font-size: 21px !important;
+  line-height: 1.381 !important;
+  font-weight: 400 !important;
+  color: #86868b !important;
+  margin-top: 0.5em !important;
 }
 
 h2 {
@@ -29,7 +38,7 @@ h2 {
   font-weight: 600 !important;
   line-height: 1.125 !important;
   letter-spacing: -0.009em !important;
-  color: #000 !important;
+  color: #1d1d1f !important;
 }
 
 h3 {
@@ -38,12 +47,12 @@ h3 {
   font-weight: 600 !important;
   line-height: 1.167 !important;
   letter-spacing: -0.019em !important;
-  color: #000 !important;
+  color: #1d1d1f !important;
 }
 
 h4, h5, h6 {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif !important;
-  color: #000 !important;
+  color: #1d1d1f !important;
 }
 
 /* Code and monospace */
