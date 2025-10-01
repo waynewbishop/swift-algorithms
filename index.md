@@ -15,11 +15,24 @@ Whether you're preparing for technical interviews, building performance-critical
 
 ## What You'll Learn
 
-- **Understand** algorithmic complexity through Big O notation and performance analysis
-- **Apply** fundamental algorithms including linear search, binary search, and sorting techniques from bubble sort to quicksort
-- **Create** type-safe, reusable code using Swift's powerful generic system
-- **Analyze** and implement essential data structures: linked lists, stacks, queues, trees, graphs, and hash tables
-- **Evaluate** advanced techniques including tries, heaps, dynamic programming, and graph algorithms like PageRank
+- **Understand** why algorithms matter in development
+- **Apply** Big O notation to analyze efficiency
+- **Implement** linear and binary search algorithms
+- **Create** bubble, insertion, and selection sorts
+- **Analyze** merge sort and quicksort performance
+- **Apply** recursion to solve complex problems
+- **Build** type-safe code with Swift generics
+- **Create** singly and doubly linked lists
+- **Implement** stacks and queues from scratch
+- **Build** binary search trees with traversal
+- **Model** relationships using graph data structures
+- **Create** tries for efficient string operations
+- **Design** hash tables with collision handling
+- **Implement** heaps for priority queue operations
+- **Apply** dynamic programming with memoization techniques
+- **Evaluate** real-world algorithm performance tradeoffs
+- **Calculate** vector operations for spatial data
+- **Analyze** PageRank algorithm for ranking systems
 
 ## Table of Contents
 
