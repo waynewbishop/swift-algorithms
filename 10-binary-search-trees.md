@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 10: Binary Search Trees"
 description: "Build and traverse binary search trees"
 ---

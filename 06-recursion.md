@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 6: Recursion"
 description: "Understanding recursive algorithms and techniques"
 ---

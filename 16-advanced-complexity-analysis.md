@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 16: Practical Performance Analysis"
 description: "Real-world algorithm performance analysis"
 ---

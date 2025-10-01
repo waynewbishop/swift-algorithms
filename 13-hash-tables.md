@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 13: Hash Tables"
 description: "Build hash tables with collision handling"
 ---

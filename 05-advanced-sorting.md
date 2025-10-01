@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 5: Advanced Sorting"
 description: "Implement merge sort and quicksort algorithms"
 ---

@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 8: Linked Lists"
 description: "Implement singly and doubly linked lists"
 ---

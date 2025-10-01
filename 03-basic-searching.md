@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 3: Basic Searching"
 description: "Learn linear and binary search algorithms in Swift"
 ---

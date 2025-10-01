@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 7: Generics"
 description: "Build type-safe, reusable code with Swift generics"
 ---

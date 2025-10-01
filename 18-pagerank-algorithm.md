@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 18: PageRank Algorithm"
 description: "Implement Google's PageRank in Swift"
 ---

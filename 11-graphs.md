@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 11: Graphs"
 description: "Explore graph data structures and algorithms"
 ---

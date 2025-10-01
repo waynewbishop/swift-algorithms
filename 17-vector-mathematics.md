@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 17: Vector Mathematics"
 description: "Linear algebra fundamentals for Swift"
 ---

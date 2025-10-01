@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 4: Basic Sorting"
 description: "Master bubble sort, insertion sort, and selection sort"
 ---

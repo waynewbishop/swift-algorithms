@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 15: Dynamic Programming"
 description: "Solve complex problems with memoization"
 ---

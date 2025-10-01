@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 1: Introduction"
 description: "Understanding algorithms and their importance in Swift development"
 ---

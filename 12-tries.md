@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 12: Tries"
 description: "Implement prefix trees for efficient string operations"
 ---

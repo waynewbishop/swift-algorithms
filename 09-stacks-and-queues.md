@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 9: Stacks and Queues"
 description: "Essential data structures for managing collections"
 ---

@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: chapter
 title: "Chapter 2: Big O Notation"
 description: "Learn to analyze algorithmic complexity and performance"
 ---
