@@ -3,44 +3,6 @@
 
 @import "{{ site.theme }}";
 
-/* Increase base font size */
-body {
-  font-size: 18px !important;
-  line-height: 1.7 !important;
-}
-
-/* Increase heading sizes */
-h1 {
-  font-size: 2.5em !important;
-}
-
-h2 {
-  font-size: 2em !important;
-}
-
-h3 {
-  font-size: 1.6em !important;
-}
-
-h4 {
-  font-size: 1.3em !important;
-}
-
-/* Increase code font size */
-code {
-  font-size: 16px !important;
-}
-
-pre code {
-  font-size: 15px !important;
-  line-height: 1.6 !important;
-}
-
-/* Increase table font size */
-table {
-  font-size: 16px !important;
-}
-
 /* Remove the GitHub Pages footer */
 footer {
   display: none !important;
@@ -54,23 +16,71 @@ footer small {
   display: none !important;
 }
 
-/* Increase paragraph spacing for better readability */
-p {
-  margin-bottom: 1.2em !important;
+/* Sidebar Navigation */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 250px;
+  height: 100vh;
+  background: #2e3440;
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 1000;
 }
 
-/* Increase list item spacing */
-li {
-  margin-bottom: 0.5em !important;
+.sidebar h3 {
+  color: #88c0d0;
+  font-size: 1.2em;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #4c566a;
 }
 
-/* Make code blocks more readable */
-pre {
-  padding: 1.5em !important;
-  margin: 1.5em 0 !important;
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-/* Increase link visibility */
-a {
-  font-weight: 500 !important;
+.sidebar li {
+  margin-bottom: 8px;
+}
+
+.sidebar a {
+  color: #d8dee9;
+  text-decoration: none;
+  display: block;
+  padding: 5px 10px;
+  border-radius: 3px;
+  transition: background 0.2s;
+  font-size: 0.9em;
+}
+
+.sidebar a:hover {
+  background: #3b4252;
+  color: #88c0d0;
+}
+
+.sidebar .active {
+  background: #4c566a;
+  color: #88c0d0;
+  font-weight: bold;
+}
+
+/* Adjust main content to accommodate sidebar */
+.main-content {
+  margin-left: 270px !important;
+  max-width: 900px !important;
+}
+
+/* Mobile: hide sidebar */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+  }
 }
