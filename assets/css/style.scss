@@ -17,3 +17,22 @@ h1, h2, h3, h4, h5, h6 {
 code, pre {
   font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
 }
+
+/* Code blocks - GitHub-style */
+pre {
+  background-color: #f6f8fa !important;
+  border: 1px solid #e1e4e8 !important;
+  border-radius: 6px !important;
+  padding: 16px !important;
+}
+
+code {
+  background-color: #f6f8fa !important;
+  padding: 0.2em 0.4em !important;
+  border-radius: 3px !important;
+}
+
+pre code {
+  background-color: transparent !important;
+  padding: 0 !important;
+}
