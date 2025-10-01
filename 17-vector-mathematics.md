@@ -13,11 +13,11 @@ description: "Linear algebra fundamentals for Swift"
 
 Vector mathematics might sound intimidating, but at its core, it's about working with lists of numbers in ways that make sense for real-world problems. Whether you're building games, working with physics simulations, or analyzing data, vectors provide a powerful way to represent and manipulate spatial information.
 
-In this chapter, we'll explore vector mathematics using **Quiver** - a Swift package that extends native arrays with vector operations, statistical functions, and numerical computing capabilities.
+In this chapter, we'll explore vector mathematics using Quiver - a Swift package that extends native arrays with vector operations, statistical functions, and numerical computing capabilities.
 
 ## Introducing Quiver
 
-**Quiver** is a Swift package designed to bring vector mathematics and numerical computing to Swift in a natural, Swift-first way. Instead of creating custom types that require conversion, Quiver extends Swift's native `Array` type, making it seamless to use in your existing Swift projects.
+Quiver is a Swift package designed to bring vector mathematics and numerical computing to Swift in a natural, Swift-first way. Instead of creating custom types that require conversion, Quiver extends Swift's native `Array` type, making it seamless to use in your existing Swift projects.
 
 ### Installing Quiver
 
@@ -34,7 +34,7 @@ In Xcode: **File → Add Package Dependencies** → paste the URL above.
 1. **Swift-first approach**: Works directly with Swift arrays - no type conversion needed
 2. **Zero conversion overhead**: Native performance without boxing/unboxing
 3. **Educational focus**: Clear implementations that map to mathematical concepts
-4. **Comprehensive**: Vector ops, statistics, linear algebra, and more
+4. Comprehensive: Vector ops, statistics, linear algebra, and more
 5. **Production-ready**: Well-tested, handles edge cases properly
 
 ## Your first vector operations
@@ -248,9 +248,9 @@ print(right.dot(left))  // -1.0 (180° angle)
 ```
 
 **Rule of thumb:**
-- **Positive** = vectors point in similar directions
-- **Zero** = vectors are perpendicular
-- **Negative** = vectors point in opposite directions
+- Positive = vectors point in similar directions
+- Zero = vectors are perpendicular
+- Negative = vectors point in opposite directions
 
 ### Practical use: Finding similar items
 
@@ -600,8 +600,8 @@ Chart(chartData) {
 
 Vector mathematics connects to concepts throughout this book:
 
-- **Arrays** - Vectors extend array capabilities
-- **Algorithms** - Distance-based sorting, nearest neighbor
+- Arrays - Vectors extend array capabilities
+- Algorithms - Distance-based sorting, nearest neighbor
 - **Generics (Chapter 7)** - Quiver uses generic constraints
 - **Performance (Chapter 2)** - Vector operations are O(n)
 
@@ -614,8 +614,8 @@ Quiver brings powerful vector mathematics to Swift in a natural, Swift-first way
 **Key capabilities:**
 
 1. **Vector operations** - magnitude, normalization, dot product
-2. **Arithmetic** - Add, subtract, multiply, divide vectors naturally
-3. **Statistics** - mean, median, standard deviation, and more
+2. Arithmetic - Add, subtract, multiply, divide vectors naturally
+3. Statistics - mean, median, standard deviation, and more
 4. **Array generation** - zeros, ones, linspace, random data
 5. **Matrix operations** - transformations, rotations, scaling
 6. **Data analysis** - filtering, normalization, comparison

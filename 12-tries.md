@@ -252,14 +252,14 @@ extension Trie {
 Tries offer excellent performance characteristics for string operations:
 
 ### Time complexity:
-- **Insert**: O(m) where m is the length of the word
-- **Search**: O(m) where m is the length of the word
-- **Autocomplete**: O(p + n) where p is prefix length and n is number of results
-- **Delete**: O(m) where m is the length of the word
+- Insert: O(m) where m is the length of the word
+- Search: O(m) where m is the length of the word
+- Autocomplete: O(p + n) where p is prefix length and n is number of results
+- Delete: O(m) where m is the length of the word
 
 ### Space complexity:
-- **Overall**: O(ALPHABET_SIZE × N × M) in worst case
-- **Practical**: Much better due to shared prefixes
+- Overall: O(ALPHABET_SIZE × N × M) in worst case
+- Practical: Much better due to shared prefixes
 
 ### Compared to other data structures:
 

@@ -21,7 +21,7 @@ Hash tables solve a fundamental problem in computer science: how do we store and
 
 Compared to other data structures:
 - **Linked Lists**: Flexible but require O(n) search time due to sequential traversal
-- **Arrays**: Fast indexed access but require knowing the exact position
+- Arrays: Fast indexed access but require knowing the exact position
 - **Hash Tables**: Combine the best of both worlds - fast O(1) average case operations with flexible key-based access
 
 A well-designed hash table can achieve constant time O(1) for insertion, deletion, and lookup operations, making it one of the most efficient data structures available.
@@ -42,9 +42,9 @@ The hash function is the heart of any hash table. It takes an input key and prod
 ### Hash function properties
 
 A good hash function should be:
-- **Deterministic**: Same input always produces same output
-- **Fast**: O(1) computation time
-- **Uniform**: Distributes keys evenly across buckets
+- Deterministic: Same input always produces same output
+- Fast: O(1) computation time
+- Uniform: Distributes keys evenly across buckets
 - **Avalanche Effect**: Small input changes create large output changes
 
 ### Bucket storage
@@ -460,7 +460,7 @@ Hash tables offer excellent performance characteristics when properly implemente
 ### Time complexity
 - **Average Case**: O(1) for insert, search, delete
 - **Worst Case**: O(n) when all keys hash to same bucket
-- **Space**: O(n) where n is the number of elements
+- Space: O(n) where n is the number of elements
 
 ### Load factor impact
 

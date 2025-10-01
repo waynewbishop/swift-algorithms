@@ -41,7 +41,7 @@ Heaps are typically implemented using arrays, which provides several advantages:
 ### Index relationships
 
 For any element at index `i`:
-- **Parent**: `(i - 1) / 2`
+- Parent: `(i - 1) / 2`
 - **Left Child**: `2 * i + 1`
 - **Right Child**: `2 * i + 2`
 
@@ -449,11 +449,11 @@ print(top3) // [9, 6, 5]
 ## Performance analysis
 
 ### Time complexity
-- **Insert**: O(log n) - bubble up at most log n levels (worst case when element belongs at root)
+- Insert: O(log n) - bubble up at most log n levels (worst case when element belongs at root)
 - **Extract Root**: O(log n) - bubble down at most log n levels (worst case when replacement element belongs at leaf)
-- **Peek**: O(1) - root is always at index 0, no traversal needed
+- Peek: O(1) - root is always at index 0, no traversal needed
 - **Build Heap**: O(n) - heapify is linear time due to mathematical properties of complete binary trees
-- **Search**: O(n) - no ordering for arbitrary elements, must check all nodes in worst case
+- Search: O(n) - no ordering for arbitrary elements, must check all nodes in worst case
 
 **Important edge cases for extraction complexity:**
 - **Best case**: O(1) when the heap has only one element
@@ -461,8 +461,8 @@ print(top3) // [9, 6, 5]
 - **Worst case**: O(log n) when the replacement element (last element) has the worst priority and must sink to the bottom
 
 ### Space complexity
-- **Storage**: O(n) - just the array
-- **Operations**: O(1) - in-place modifications
+- Storage: O(n) - just the array
+- Operations: O(1) - in-place modifications
 
 ### Comparison with other data structures
 

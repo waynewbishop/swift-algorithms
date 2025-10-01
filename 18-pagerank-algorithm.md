@@ -36,9 +36,9 @@ This probabilistic approach captures something profound about web browsing: impo
 The beauty of PageRank lies in how it transforms the abstract concept of web importance into concrete graph theory:
 
 **Web Structure as a Directed Graph:**
-- **Vertices**: Web pages
-- **Edges**: Hyperlinks between pages
-- **Direction**: Links point from source page to destination page
+- Vertices: Web pages
+- Edges: Hyperlinks between pages
+- Direction: Links point from source page to destination page
 
 ```swift
 // Example web structure:
@@ -117,15 +117,15 @@ PageRank calculation requires multiple iterations because page importance is int
 
 ### Understanding convergence
 
-**Convergence** in PageRank means the algorithm has reached a stable state where further iterations produce negligible changes in PageRank values. This happens because the iterative process eventually balances authority flow throughout the network.
+Convergence in PageRank means the algorithm has reached a stable state where further iterations produce negligible changes in PageRank values. This happens because the iterative process eventually balances authority flow throughout the network.
 
 Think of it like water flowing through a network of pipes—initially there might be turbulence and fluctuation, but eventually the flow reaches a steady state where the amount entering each junction equals the amount leaving. In PageRank, convergence occurs when the authority flowing into each page roughly equals the authority flowing out, creating stable PageRank values.
 
 **Why convergence matters:**
-- **Stability**: Ensures PageRank values represent true long-term probabilities of the random surfer model
-- **Accuracy**: Prevents premature stopping that could yield incorrect rankings
-- **Efficiency**: Avoids unnecessary computation once the stable state is reached
-- **Reliability**: Provides consistent results regardless of the starting conditions
+- Stability: Ensures PageRank values represent true long-term probabilities of the random surfer model
+- Accuracy: Prevents premature stopping that could yield incorrect rankings
+- Efficiency: Avoids unnecessary computation once the stable state is reached
+- Reliability: Provides consistent results regardless of the starting conditions
 
 ### Handling sink nodes
 
@@ -365,7 +365,7 @@ extension Graph {
 1. **Damping factor integration**: Each page gets baseline authority `(1-d)/N` plus link-based authority `d * (incoming contributions)`
 2. **Mathematical accuracy**: Uses 1.0 probability scale internally, converts to your 100-scale for output
 3. **Convergence detection**: Stops when changes become negligible, avoiding unnecessary computation
-4. **Stability**: Damping factor prevents rank accumulation issues and ensures convergence
+4. Stability: Damping factor prevents rank accumulation issues and ensures convergence
 5. **Backward compatibility**: Still populates your three-slot rank array format
 
 ### Choosing the right convergence threshold
@@ -558,7 +558,7 @@ class CitationAnalyzer {
 ### Time complexity
 
 **Our Educational Implementation:**
-- **Initialization**: O(V) where V is the number of vertices
+- Initialization: O(V) where V is the number of vertices
 - **Each iteration**: O(V + E) where E is the number of edges
 - **Total time**: O(k × (V + E)) where k is the number of iterations
 - **Fixed iterations**: O(V + E) since k = 3 is constant
@@ -566,7 +566,7 @@ class CitationAnalyzer {
 **Production PageRank:**
 - **Convergence-based**: O(i × (V + E)) where i is iterations until convergence
 - **Large graphs**: i typically ranges from 50-100 iterations
-- **Optimization**: Sparse matrix operations reduce effective complexity
+- Optimization: Sparse matrix operations reduce effective complexity
 
 ### Space complexity
 

@@ -259,12 +259,12 @@ Imagine you're exploring a cave with multiple tunnels:
 
 **How the frontier works in Dijkstra's:**
 
-1. **Initialize**: Add all paths from the starting vertex to the frontier
-2. **Select**: Pick the shortest path from the frontier (greedy choice)
-3. **Explore**: From that path's destination, discover new possible paths
-4. **Expand**: Add these new paths to the frontier
-5. **Remove**: Take the explored path out of the frontier
-6. **Repeat**: Continue until you've found the destination or explored everything
+1. Initialize: Add all paths from the starting vertex to the frontier
+2. Select: Pick the shortest path from the frontier (greedy choice)
+3. Explore: From that path's destination, discover new possible paths
+4. Expand: Add these new paths to the frontier
+5. Remove: Take the explored path out of the frontier
+6. Repeat: Continue until you've found the destination or explored everything
 
 ### The Path class: Tracking paths in the frontier
 
@@ -540,9 +540,9 @@ if let shortestPath = graph.processDijkstra(sanFrancisco, destination: newYork) 
 Graphs are fundamental data structures that model relationships between objects:
 
 **Key concepts:**
-- **Vertices** represent objects, contain values of generic type T
-- **Edges** connect vertices and have weights representing cost/distance
-- **Canvas** holds all vertices in the graph
+- Vertices represent objects, contain values of generic type T
+- Edges connect vertices and have weights representing cost/distance
+- Canvas holds all vertices in the graph
 - **Adjacency lists** store each vertex's neighbors
 
 **Traversal algorithms:**

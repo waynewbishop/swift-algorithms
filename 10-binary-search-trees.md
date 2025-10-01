@@ -470,9 +470,9 @@ Binary search trees organize data hierarchically, providing efficient search, in
 - **Generic implementation**: Works with any `Comparable` type
 
 **Operations:**
-- **Insert**: O(log n) when balanced, O(n) worst case
-- **Search**: O(log n) when balanced, O(n) worst case
-- **Traversals**: In-order (sorted), pre-order, post-order, level-order
+- Insert: O(log n) when balanced, O(n) worst case
+- Search: O(log n) when balanced, O(n) worst case
+- Traversals: In-order (sorted), pre-order, post-order, level-order
 
 **Tree traversals:**
 - **In-order**: Produces sorted output from BST
@@ -492,7 +492,7 @@ Binary search trees organize data hierarchically, providing efficient search, in
 - Learning tree concepts
 
 **When to use alternatives:**
-- **Array**: Need random access, small dataset
+- Array: Need random access, small dataset
 - **Hash table**: Only need exact matches, not ranges
 - **Swift Dictionary/Set**: Production code—optimized and balanced internally
 

@@ -105,9 +105,9 @@ While Quicksort partitions data in-place, Merge Sort takes a different approach 
 
 The beauty of Merge Sort lies in its systematic approach:
 
-1. **Divide**: Split the array into two halves
-2. **Conquer**: Recursively sort each half
-3. **Combine**: Merge the two sorted halves into a single sorted array
+1. Divide: Split the array into two halves
+2. Conquer: Recursively sort each half
+3. Combine: Merge the two sorted halves into a single sorted array
 
 This approach guarantees O(n log n) performance in all cases - best, average, and worst case.
 
@@ -164,7 +164,7 @@ Merge Sort demonstrates the elegant O(n log n) complexity:
 
 - **Divide phase**: We split the array log n times (each split halves the problem)
 - **Merge phase**: At each level, we examine every element once (n operations per level)
-- **Total**: log n levels × n operations per level = O(n log n)
+- Total: log n levels × n operations per level = O(n log n)
 
 This analysis shows why Merge Sort is so reliable - its performance doesn't depend on the initial arrangement of data.
 
@@ -195,7 +195,7 @@ Merge Sort is preferred when:
 
 Both algorithms demonstrate the power of divide & conquer, but in different ways:
 
-**Quicksort**: Divides the problem by partitioning around a pivot, solving recursively, then combining trivially (no work needed)
+Quicksort: Divides the problem by partitioning around a pivot, solving recursively, then combining trivially (no work needed)
 
 **Merge Sort**: Divides the problem trivially (just split in half), solves recursively, then combines intelligently (merge operation)
 
@@ -234,7 +234,7 @@ measureSortingTime(Array(reversedData), algorithm: { $0.mergeSort() }, name: "Me
 These advanced sorting algorithms demonstrate several key computer science principles:
 
 1. **Divide & Conquer** - Breaking problems into smaller, manageable pieces
-2. **Recursion** - Using functions that call themselves (covered in Chapter 6)
+2. Recursion - Using functions that call themselves (covered in Chapter 6)
 3. **Trade-offs** - Space vs. time, stability vs. performance, worst-case vs. average-case
 4. **Algorithm Analysis** - Understanding when different approaches excel
 

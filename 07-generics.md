@@ -96,7 +96,7 @@ intQueue.enqueue(2)
 **Benefits of this approach:**
 - **Single implementation** - One version of the code to maintain
 - **Type safety** - Swift ensures you can't mix types incorrectly
-- **Reusability** - Works with any type, including types you haven't written yet
+- Reusability - Works with any type, including types you haven't written yet
 - **No runtime overhead** - Generic types are resolved at compile time
 
 This is the foundation that makes data structures in Swift so powerful and flexible.

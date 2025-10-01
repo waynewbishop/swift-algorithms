@@ -278,8 +278,8 @@ When you encounter any algorithm (whether from this book or in your own code), u
 
 Identify what your algorithm does most frequently:
 
-- **Searching**: Comparisons (`if element == target`)
-- **Sorting**: Comparisons and swaps
+- Searching: Comparisons (`if element == target`)
+- Sorting: Comparisons and swaps
 - **Tree operations**: Visiting nodes
 - **Graph algorithms**: Traversing edges
 
@@ -488,10 +488,10 @@ func efficient(_ n: Int) -> Int {
 ### 3. What are my constraints?
 
 **Consider all trade-offs:**
-- **Time**: How fast must it run?
-- **Space**: How much memory can I use?
-- **Simplicity**: Does it need to be maintainable?
-- **Correctness**: Must it handle all edge cases?
+- Time: How fast must it run?
+- Space: How much memory can I use?
+- Simplicity: Does it need to be maintainable?
+- Correctness: Must it handle all edge cases?
 
 ### 4. Is optimization worth it?
 

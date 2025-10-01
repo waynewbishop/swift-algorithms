@@ -80,7 +80,7 @@ Despite their O(n²) complexity, these algorithms have legitimate use cases:
 | Bubble | O(n) | O(n²) | O(n²) | O(n²) | Yes | O(1) |
 | Selection | O(n²) | O(n²) | O(n²) | O(n) | No | O(1) |
 
-**Stability** means equal elements maintain their relative order after sorting. This matters when sorting complex objects.
+Stability means equal elements maintain their relative order after sorting. This matters when sorting complex objects.
 
 **Real-world performance:**
 ```swift
@@ -247,7 +247,7 @@ let results: Array<Int> = numberList.selectionSort()
 You might wonder, "If these are O(n²), why learn them?" Here's why they matter:
 
 **In production code:**
-- Swift's `sort()` uses **Introsort**, which switches to insertion sort for small subarrays (< 20 elements)
+- Swift's `sort()` uses Introsort, which switches to insertion sort for small subarrays (< 20 elements)
 - Many optimized algorithms use insertion sort as a final "polish" step
 - Database systems use them for small result sets
 

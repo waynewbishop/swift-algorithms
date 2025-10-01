@@ -15,24 +15,24 @@ Whether you're preparing for technical interviews, building performance-critical
 
 ## What You'll Learn
 
-- **Understand** why algorithms matter in development
-- **Apply** Big O notation to analyze efficiency
-- **Implement** linear and binary search algorithms
-- **Create** bubble, insertion, and selection sorts
-- **Analyze** merge sort and quicksort performance
-- **Apply** recursion to solve complex problems
-- **Build** type-safe code with Swift generics
-- **Create** singly and doubly linked lists
-- **Implement** stacks and queues from scratch
-- **Build** binary search trees with traversal
-- **Model** relationships using graph data structures
-- **Create** tries for efficient string operations
-- **Design** hash tables with collision handling
-- **Implement** heaps for priority queue operations
-- **Apply** dynamic programming with memoization techniques
-- **Evaluate** real-world algorithm performance tradeoffs
-- **Calculate** vector operations for spatial data
-- **Analyze** PageRank algorithm for ranking systems
+- Understand why algorithms matter in development
+- Apply Big O notation to analyze efficiency
+- Implement linear and binary search algorithms
+- Create bubble, insertion, and selection sorts
+- Analyze merge sort and quicksort performance
+- Apply recursion to solve complex problems
+- Build type-safe code with Swift generics
+- Create singly and doubly linked lists
+- Implement stacks and queues from scratch
+- Build binary search trees with traversal
+- Model relationships using graph data structures
+- Create tries for efficient string operations
+- Design hash tables with collision handling
+- Implement heaps for priority queue operations
+- Apply dynamic programming with memoization techniques
+- Evaluate real-world algorithm performance tradeoffs
+- Calculate vector operations for spatial data
+- Analyze PageRank algorithm for ranking systems
 
 ## Table of Contents
 
@@ -90,11 +90,11 @@ let words = ["apple", "banana", "cherry", "date"]
 words.binarySearch(for: "cherry")  // Returns 2
 ```
 
-This binary search runs in **O(log n)** time—finding an element in a million-item array takes only about 20 comparisons!
+This binary search runs in O(log n) time—finding an element in a million-item array takes only about 20 comparisons!
 
 ## Who This Book Is For
 
-This book is designed for **intermediate Swift developers** who:
+This book is designed for intermediate Swift developers who:
 
 - Are comfortable with Swift basics (variables, functions, classes, structs)
 - Understand common design patterns (MVC, delegation, etc.)
@@ -104,13 +104,13 @@ This book is designed for **intermediate Swift developers** who:
 
 ## Related Projects
 
-- **Production Code**: [Structures Package](https://github.com/waynewbishop/bishop-algorithms-structures) - The Swift package containing all implementations
-- **Quiver Package**: [Vector Mathematics](https://github.com/waynewbishop/bishop-algorithms-quiver-package) - Swift-native vector operations
-- **RunBuddy App**: [iOS Application](https://github.com/waynewbishop/bishop-app-runbuddy-swift) - Real-world app using these algorithms
+- Production Code: [Structures Package](https://github.com/waynewbishop/bishop-algorithms-structures) - The Swift package containing all implementations
+- Quiver Package: [Vector Mathematics](https://github.com/waynewbishop/bishop-algorithms-quiver-package) - Swift-native vector operations
+- RunBuddy App: [iOS Application](https://github.com/waynewbishop/bishop-app-runbuddy-swift) - Real-world app using these algorithms
 
 ## About the Author
 
-**Wayne Bishop** is an iOS developer and educator specializing in Swift and computer science fundamentals. He teaches developers how to master algorithms and data structures through practical implementation.
+Wayne Bishop is an iOS developer and educator specializing in Swift and computer science fundamentals. He teaches developers how to master algorithms and data structures through practical implementation.
 
 - Website: [waynewbishop.com](http://www.waynewbishop.com)
 - LinkedIn: [waynebishop](https://www.linkedin.com/in/waynebishop/)
@@ -122,4 +122,4 @@ This code is available for both commercial and open-source projects. Attribution
 
 ---
 
-**Ready to master algorithms in Swift?** Start with the [Introduction](01-introduction) or jump to any chapter that interests you.
+Ready to master algorithms in Swift? Start with the [Introduction](01-introduction) or jump to any chapter that interests you.
