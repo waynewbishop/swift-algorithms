@@ -2,7 +2,11 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
-# Ignore all publishing content in Resources 
+# Ignore Claude content
+.claude/
+claude.md
+
+# Ignore local Resources 
 /Resources/
 
 # MacOS directory structure
