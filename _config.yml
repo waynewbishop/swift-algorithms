@@ -7,11 +7,11 @@ url: https://waynewbishop.github.io
 baseurl: /swift-algorithms
 
 # Theme
-theme: jekyll-theme-cayman
+theme: jekyll-theme-architect
 # Alternative themes you can try:
+# theme: jekyll-theme-cayman
 # theme: jekyll-theme-minimal
 # theme: jekyll-theme-slate
-# theme: jekyll-theme-architect
 
 # Markdown settings
 markdown: kramdown
