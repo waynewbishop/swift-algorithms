@@ -7,9 +7,9 @@ url: https://waynewbishop.github.io
 baseurl: /swift-algorithms
 
 # Theme
-theme: jekyll-theme-architect
+theme: jekyll-theme-cayman
 # Alternative themes you can try:
-# theme: jekyll-theme-cayman
+# theme: jekyll-theme-architect
 # theme: jekyll-theme-minimal
 # theme: jekyll-theme-slate
 
