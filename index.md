@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: home
 title: Swift Algorithms & Data Structures
 ---
 
