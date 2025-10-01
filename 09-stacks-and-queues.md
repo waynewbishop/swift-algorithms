@@ -427,3 +427,11 @@ Stacks and queues are simple yet powerful data structures that maintain ordering
 
 Understanding stacks and queues is essential for iOS development, as they power many of the frameworks you use daily. In Chapter 11, you'll see queues in action for graph traversal algorithms like Breadth-First Search.
 
+
+---
+
+<div class="chapter-nav">
+  <a href="08-linked-lists" class="prev">Previous Chapter</a>
+  <a href="index">Table of Contents</a>
+  <a href="10-binary-search-trees" class="next">Next Chapter</a>
+</div>

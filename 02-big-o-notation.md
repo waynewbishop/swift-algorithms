@@ -144,3 +144,11 @@ In Chapter 4, we'll explore basic sorting algorithms. Some of these algorithms w
 The goal of understanding Big O Notation isn't to memorize mathematical formulas, but to develop an intuitive sense for algorithm efficiency. When you see nested loops, think "quadratic." When you see a single loop through data, think "linear." When you see direct access to specific positions, think "constant."
 
 This intuition will guide you toward better solutions and help you understand why certain algorithms are preferred over others.
+
+---
+
+<div class="chapter-nav">
+  <a href="01-introduction" class="prev">Previous Chapter</a>
+  <a href="index">Table of Contents</a>
+  <a href="03-basic-searching" class="next">Next Chapter</a>
+</div>

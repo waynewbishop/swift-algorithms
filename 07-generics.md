@@ -1224,3 +1224,11 @@ Generics are one of Swift's most powerful features, enabling you to write flexib
 As you continue through the remaining chapters, you'll see generics in action across every algorithm and data structure. The patterns you've learned here—type parameters, constraints, and protocol conformance—form the foundation for understanding how modern Swift code is designed and implemented.
 
 The power of generics isn't just in writing less code—it's in writing code that's simultaneously more flexible and more safe. This is the essence of Swift's design philosophy, and it will serve you well as you build increasingly sophisticated algorithms and data structures.
+
+---
+
+<div class="chapter-nav">
+  <a href="06-recursion" class="prev">Previous Chapter</a>
+  <a href="index">Table of Contents</a>
+  <a href="08-linked-lists" class="next">Next Chapter</a>
+</div>

@@ -359,3 +359,11 @@ Linked lists are fundamental data structures that trade random access speed for 
 
 Understanding linked lists is essential not just for implementing them directly, but for building more complex data structures and understanding performance trade-offs in your Swift applications. In the next chapter, we'll see how linked lists serve as the foundation for stacks and queues.
 
+
+---
+
+<div class="chapter-nav">
+  <a href="07-generics" class="prev">Previous Chapter</a>
+  <a href="index">Table of Contents</a>
+  <a href="09-stacks-and-queues" class="next">Next Chapter</a>
+</div>

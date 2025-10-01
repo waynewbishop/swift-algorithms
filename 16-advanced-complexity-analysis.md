@@ -516,3 +516,11 @@ Performance analysis helps you make informed decisions about algorithm design an
 Understanding complexity helps you choose the right algorithm and recognize when optimization matters. But always remember: **correct, maintainable code is better than prematurely optimized code**. Optimize only when profiling shows a real need.
 
 This intuition, built through understanding the algorithms in this book and their trade-offs, will serve you well in designing efficient solutions to new problems.
+
+---
+
+<div class="chapter-nav">
+  <a href="15-dynamic-programming" class="prev">Previous Chapter</a>
+  <a href="index">Table of Contents</a>
+  <a href="17-vector-mathematics" class="next">Next Chapter</a>
+</div>

@@ -634,9 +634,11 @@ let distance = nextPosition.magnitude
 
 Vector mathematics isn't just academic - it's a practical tool for solving real problems in game development, graphics, data analysis, and more. With Quiver, these powerful capabilities are just an import away.
 
+
 ---
 
-**Learn more:**
-- GitHub: https://github.com/waynewbishop/bishop-algorithms-quiver-package
-- Documentation: Comprehensive guides and examples
-- Author: Wayne Bishop - https://www.linkedin.com/in/waynebishop/
+<div class="chapter-nav">
+  <a href="16-advanced-complexity-analysis" class="prev">Previous Chapter</a>
+  <a href="index">Table of Contents</a>
+  <a href="18-pagerank-algorithm" class="next">Next Chapter</a>
+</div>

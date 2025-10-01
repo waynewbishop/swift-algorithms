@@ -276,3 +276,11 @@ When to choose tries:
 - **IP routing tables** - Network prefix matching
 - **Text processing** - When prefix operations are frequent
 
+
+---
+
+<div class="chapter-nav">
+  <a href="11-graphs" class="prev">Previous Chapter</a>
+  <a href="index">Table of Contents</a>
+  <a href="13-hash-tables" class="next">Next Chapter</a>
+</div>

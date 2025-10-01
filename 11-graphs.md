@@ -553,3 +553,11 @@ Graphs are fundamental data structures that model relationships between objects:
 - Flight route optimization
 
 Understanding graphs and Dijkstra's frontier concept is fundamental to many algorithms in computer science and powers countless real-world applications from Google Maps to Internet routing.
+
+---
+
+<div class="chapter-nav">
+  <a href="10-binary-search-trees" class="prev">Previous Chapter</a>
+  <a href="index">Table of Contents</a>
+  <a href="12-tries" class="next">Next Chapter</a>
+</div>

@@ -63,3 +63,11 @@ What's nice about stepping away from the computer is that your primary effort is
 
 The advice of bells and whistles goes hand-in-hand with conducting good thought experiments. Even though I work with many students learning Swift, iOS and interview preparation, tools like Xcode, CocoaPods and Git should be seen as secondary tools to maintain and document ideas, not as the primary way to generate new concepts. By seeing your software development tools in this context, you'll be well-positioned if, for some reason, you're asked to express the same ideas in a different programming language, tool or upgraded environment.
 
+
+---
+
+<div class="chapter-nav">
+  <a href="index" class="prev">Previous Chapter</a>
+  <a href="index">Table of Contents</a>
+  <a href="02-big-o-notation" class="next">Next Chapter</a>
+</div>

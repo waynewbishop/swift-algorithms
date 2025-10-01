@@ -334,3 +334,11 @@ When approaching a problem recursively, ask yourself:
 
 This framework will guide you toward elegant recursive solutions.
 
+
+---
+
+<div class="chapter-nav">
+  <a href="05-advanced-sorting" class="prev">Previous Chapter</a>
+  <a href="index">Table of Contents</a>
+  <a href="07-generics" class="next">Next Chapter</a>
+</div>
