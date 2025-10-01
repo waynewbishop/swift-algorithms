@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Chapter 5: Advanced Sorting"
+description: "Implement merge sort and quicksort algorithms"
+---
+
 <div class="top-nav">
   <a href="index">Table of Contents</a>
 </div>

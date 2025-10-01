@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Chapter 7: Generics"
+description: "Build type-safe, reusable code with Swift generics"
+---
+
 <div class="top-nav">
   <a href="index">Table of Contents</a>
 </div>

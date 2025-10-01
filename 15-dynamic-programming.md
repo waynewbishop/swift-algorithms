@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Chapter 15: Dynamic Programming"
+description: "Solve complex problems with memoization"
+---
+
 <div class="top-nav">
   <a href="index">Table of Contents</a>
 </div>

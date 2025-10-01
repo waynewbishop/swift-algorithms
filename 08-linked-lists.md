@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Chapter 8: Linked Lists"
+description: "Implement singly and doubly linked lists"
+---
+
 <div class="top-nav">
   <a href="index">Table of Contents</a>
 </div>

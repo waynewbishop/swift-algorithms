@@ -1,7 +1,12 @@
+---
+layout: default
+title: "Chapter 3: Basic Searching"
+description: "Learn linear and binary search algorithms in Swift"
+---
+
 <div class="top-nav">
   <a href="index">Table of Contents</a>
 </div>
-
 
 # Basic searching
 

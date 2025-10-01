@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Chapter 17: Vector Mathematics"
+description: "Linear algebra fundamentals for Swift"
+---
+
 <div class="top-nav">
   <a href="index">Table of Contents</a>
 </div>

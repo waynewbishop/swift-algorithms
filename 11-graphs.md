@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Chapter 11: Graphs"
+description: "Explore graph data structures and algorithms"
+---
+
 <div class="top-nav">
   <a href="index">Table of Contents</a>
 </div>

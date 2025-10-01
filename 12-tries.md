@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Chapter 12: Tries"
+description: "Implement prefix trees for efficient string operations"
+---
+
 <div class="top-nav">
   <a href="index">Table of Contents</a>
 </div>

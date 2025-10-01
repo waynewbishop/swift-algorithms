@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Chapter 10: Binary Search Trees"
+description: "Build and traverse binary search trees"
+---
+
 <div class="top-nav">
   <a href="index">Table of Contents</a>
 </div>

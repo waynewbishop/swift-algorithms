@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Chapter 13: Hash Tables"
+description: "Build hash tables with collision handling"
+---
+
 <div class="top-nav">
   <a href="index">Table of Contents</a>
 </div>

@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Chapter 16: Practical Performance Analysis"
+description: "Real-world algorithm performance analysis"
+---
+
 <div class="top-nav">
   <a href="index">Table of Contents</a>
 </div>

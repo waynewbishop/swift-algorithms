@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Chapter 9: Stacks and Queues"
+description: "Essential data structures for managing collections"
+---
+
 <div class="top-nav">
   <a href="index">Table of Contents</a>
 </div>

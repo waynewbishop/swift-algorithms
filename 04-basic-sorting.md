@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Chapter 4: Basic Sorting"
+description: "Master bubble sort, insertion sort, and selection sort"
+---
+
 <div class="top-nav">
   <a href="index">Table of Contents</a>
 </div>

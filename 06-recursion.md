@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Chapter 6: Recursion"
+description: "Understanding recursive algorithms and techniques"
+---
+
 <div class="top-nav">
   <a href="index">Table of Contents</a>
 </div>

@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Chapter 18: PageRank Algorithm"
+description: "Implement Google's PageRank in Swift"
+---
+
 <div class="top-nav">
   <a href="index">Table of Contents</a>
 </div>

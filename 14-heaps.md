@@ -1,3 +1,9 @@
+---
+layout: default
+title: "Chapter 14: Heaps"
+description: "Implement priority queues with heap data structures"
+---
+
 <div class="top-nav">
   <a href="index">Table of Contents</a>
 </div>
