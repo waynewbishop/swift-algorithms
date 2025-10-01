@@ -84,3 +84,90 @@ footer small {
     margin-left: 0 !important;
   }
 }
+
+/* GitHub-style code blocks */
+pre {
+  background-color: #f6f8fa !important;
+  border: 1px solid #d0d7de !important;
+  border-radius: 6px !important;
+  padding: 16px !important;
+  overflow: auto !important;
+  font-size: 14px !important;
+  line-height: 1.45 !important;
+  margin-top: 0 !important;
+  margin-bottom: 16px !important;
+}
+
+code {
+  background-color: #f6f8fa !important;
+  padding: 0.2em 0.4em !important;
+  margin: 0 !important;
+  font-size: 85% !important;
+  border-radius: 6px !important;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace !important;
+}
+
+pre code {
+  background-color: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 100% !important;
+  word-break: normal !important;
+  white-space: pre !important;
+  display: inline !important;
+  max-width: auto !important;
+  overflow: visible !important;
+  line-height: inherit !important;
+}
+
+/* Syntax highlighting - GitHub style */
+.highlight {
+  background-color: #f6f8fa !important;
+  border-radius: 6px !important;
+  margin-bottom: 16px !important;
+}
+
+.highlight pre {
+  background-color: transparent !important;
+  border: none !important;
+  margin-bottom: 0 !important;
+}
+
+/* Swift syntax colors (GitHub-style) */
+.highlight .k,  /* keyword */
+.highlight .kd  /* keyword declaration */ {
+  color: #cf222e !important; /* Red for keywords like func, let, var */
+}
+
+.highlight .kt,  /* type */
+.highlight .nc   /* class name */ {
+  color: #0550ae !important; /* Blue for types */
+}
+
+.highlight .s,   /* string */
+.highlight .s1,  /* single-quoted string */
+.highlight .s2   /* double-quoted string */ {
+  color: #0a3069 !important; /* Dark blue for strings */
+}
+
+.highlight .c,   /* comment */
+.highlight .c1,  /* single-line comment */
+.highlight .cm   /* multi-line comment */ {
+  color: #6e7781 !important; /* Gray for comments */
+  font-style: italic !important;
+}
+
+.highlight .m,   /* number */
+.highlight .mi,  /* integer */
+.highlight .mf   /* float */ {
+  color: #0550ae !important; /* Blue for numbers */
+}
+
+.highlight .nf   /* function name */ {
+  color: #8250df !important; /* Purple for functions */
+}
+
+.highlight .o    /* operator */ {
+  color: #24292f !important; /* Black for operators */
+}
