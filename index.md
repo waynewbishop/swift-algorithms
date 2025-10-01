@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Home
+title: Swift Algorithms & Data Structures
 ---
 
 # Swift Algorithms & Data Structures
