@@ -1,0 +1,55 @@
+# Jekyll Configuration for Swift Algorithms & Data Structures
+
+title: Swift Algorithms & Data Structures
+description: A comprehensive guide to algorithms and data structures in Swift
+author: Wayne Bishop
+url: https://waynewbishop.github.io
+baseurl: /swift-algorithms
+
+# Theme
+theme: jekyll-theme-cayman
+# Alternative themes you can try:
+# theme: jekyll-theme-minimal
+# theme: jekyll-theme-slate
+# theme: jekyll-theme-architect
+
+# Markdown settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    default_lang: swift
+
+# Plugins
+plugins:
+  - jekyll-relative-links
+  - jekyll-optional-front-matter
+  - jekyll-readme-index
+  - jekyll-titles-from-headings
+
+# Plugin settings
+relative_links:
+  enabled: true
+  collections: false
+
+titles_from_headings:
+  enabled: true
+  strip_title: true
+  collections: false
+
+# Exclude from processing
+exclude:
+  - Claude.md
+  - COMPLETION-SUMMARY.md
+  - Resources/
+  - .git/
+  - .gitignore
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+
+# Include these files
+include:
+  - README.md
+  - "*.md"
