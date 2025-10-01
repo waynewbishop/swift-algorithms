@@ -1,3 +1,8 @@
+<div class="top-nav">
+  <a href="index">Table of Contents</a>
+</div>
+
+
 # Vector Mathematics with Quiver
 
 Vector mathematics might sound intimidating, but at its core, it's about working with lists of numbers in ways that make sense for real-world problems. Whether you're building games, working with physics simulations, or analyzing data, vectors provide a powerful way to represent and manipulate spatial information.

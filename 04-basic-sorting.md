@@ -1,3 +1,8 @@
+<div class="top-nav">
+  <a href="index">Table of Contents</a>
+</div>
+
+
 # Basic sorting
 
 Sorting is an essential task when managing data. As we saw with Big O notation, sorted data allows us to implement efficient algorithms. Our goal with sorting is to move from disarray to order. This is done by arranging data in a logical sequence so we'll know where to find information.

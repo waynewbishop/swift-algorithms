@@ -1,3 +1,8 @@
+<div class="top-nav">
+  <a href="index">Table of Contents</a>
+</div>
+
+
 # Basic searching
 
 In our exploration of Big O Notation, we introduced the concept of linear search to demonstrate O(n) complexity. Now that you understand how algorithmic efficiency scales with input size, we can dive deeper into the fundamental problem of searching for data. Whether you're building a contact app, a music library, or any system that manages information, search functionality is essential.

@@ -1,3 +1,8 @@
+<div class="top-nav">
+  <a href="index">Table of Contents</a>
+</div>
+
+
 # Recursion
 
 Now that we've explored algorithms and data structures through searching and sorting, it's time to introduce one of the most powerful and elegant programming techniques: recursion. Understanding recursion is crucial as we move forward to more complex data structures like trees and graphs, where recursive thinking becomes essential.

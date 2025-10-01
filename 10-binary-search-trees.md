@@ -1,3 +1,8 @@
+<div class="top-nav">
+  <a href="index">Table of Contents</a>
+</div>
+
+
 # Binary search trees
 
 A binary search tree stores and sorts information in a tree-based hierarchy. As discussed in the Big O notation chapter, algorithms provide the best efficiency with sorted data. Binary search tree (BST) models are built using specific rules. They should not be mistaken for a binary tree or trie. Those structures also store information in a hierarchy, but employ different rules.

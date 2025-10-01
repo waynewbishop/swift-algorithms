@@ -1,3 +1,8 @@
+<div class="top-nav">
+  <a href="index">Table of Contents</a>
+</div>
+
+
 # Introduction
 
 For iOS developers at any level, learning something new can be a time-consuming and challenging process. When discussing career goals of students in my iOS Interview Program, most individuals possess a good understanding of Swift/iOS coding syntax and commonly used design patterns. However, roadblocks are encountered when understanding the ideas behind basic computer science and algorithms. If this describes you, here are four things to consider when learning this new area of development.

@@ -1,3 +1,8 @@
+<div class="top-nav">
+  <a href="index">Table of Contents</a>
+</div>
+
+
 # Generics
 
 Swift brings a powerful series of tools that make coding more expressive and safe. Along with its simplified syntax, Swift borrows from the success of other languages to prevent common programming errors like null pointer exceptions and memory leaks. One of Swift's most powerful features is generics—a design technique that allows you to write flexible, reusable code while maintaining complete type safety.

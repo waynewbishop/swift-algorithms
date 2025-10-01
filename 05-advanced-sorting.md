@@ -1,3 +1,8 @@
+<div class="top-nav">
+  <a href="index">Table of Contents</a>
+</div>
+
+
 # Advanced sorting
 
 The functions introduced in basic sorting all performed with a time complexity of O(n²). While good for interview situations and general academic knowledge, algorithms like insertion sort and bubble sort are seldom used in production code. Advanced sorting algorithms, however, have broader practical application and usage. These algorithms can be found in both code libraries and real-life projects, featuring time complexity of O(n log n) and applying divide & conquer strategies for superior algorithmic performance.

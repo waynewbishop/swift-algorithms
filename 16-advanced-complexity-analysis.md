@@ -1,3 +1,8 @@
+<div class="top-nav">
+  <a href="index">Table of Contents</a>
+</div>
+
+
 # Practical Performance Analysis
 
 Throughout this book, we've encountered various algorithmic complexities as we explored different data structures and algorithms. Now that you've seen Big O Notation in action across searching, sorting, recursion, and data structures, it's time to develop a deeper understanding of how algorithms perform in real-world scenarios.

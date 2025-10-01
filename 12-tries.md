@@ -1,3 +1,8 @@
+<div class="top-nav">
+  <a href="index">Table of Contents</a>
+</div>
+
+
 # Tries
 
 Tries are tree-based data structures that organize information in an hierarchy. Often pronounced "try", the term comes from the English language verb to retrieve. While most algorithms are designed to manipulate generic data, tries are commonly used with Strings. In this essay, we'll review trie structures and will implement our own model with Swift.

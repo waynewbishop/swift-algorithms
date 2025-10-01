@@ -1,3 +1,8 @@
+<div class="top-nav">
+  <a href="index">Table of Contents</a>
+</div>
+
+
 # Heaps
 
 Heaps are specialized tree-based data structures that maintain a specific ordering property, making them ideal for priority queues and efficient sorting algorithms. Unlike binary search trees that maintain left-right ordering, heaps focus on parent-child relationships to ensure the most important element is always accessible in constant time. In this chapter, we'll explore heap fundamentals and build a complete heap implementation in Swift.
