@@ -1,7 +1,7 @@
 ---
 layout: chapter
-title: "Chapter 17: Vector Mathematics"
-description: "Linear algebra fundamentals for Swift"
+title: "Chapter 17: Linear Algebra"
+description: "Vector mathematics and numerical computing"
 ---
 
 <div class="top-nav">
@@ -9,38 +9,156 @@ description: "Linear algebra fundamentals for Swift"
 </div>
 
 
-# Vector Mathematics
+# Linear Algebra
 
-Linear algebra forms the mathematical foundation for many fields including computer graphics, machine learning, data analysis, and physics simulations. This chapter introduces key concepts through practical Swift code examples using Quiver.
+Linear algebra forms the mathematical foundation for many fields including computer graphics, machine learning, data analysis, and physics simulations. At its core, linear algebra deals with vectors, matrices, and the operations we can perform on them. In this chapter, we'll explore these fundamental concepts and demonstrate how to apply them in Swift using Quiver.
 
-You don't need advanced mathematical knowledge to get started. If you can work with Swift arrays, you can begin applying linear algebra concepts in your code.
+## What are vectors?
+
+A vector is a mathematical object that represents both magnitude and direction. Unlike a scalar value, which represents only size (like temperature or weight), a vector captures directional information alongside its size. This dual nature makes vectors ideally suited for representing anything that has both "how much" and "which way" properties.
+
+Consider everyday examples. Wind isn't just "20 miles per hour" - it's "20 miles per hour from the northwest." That's a vector: magnitude (20 mph) and direction (northwest). When a character moves in a video game, we need both how fast they're moving and in which direction. When analyzing customer preferences across multiple product features, each preference profile can be represented as a vector in multidimensional space.
+
+Mathematically, vectors are represented as ordered lists of numbers. A two-dimensional vector might be written as [3, 4], representing movement 3 units in one direction and 4 units in another. Three-dimensional vectors add a third component [x, y, z], and we can extend this to any number of dimensions.
+
+[diagram: 2D vector [3, 4] shown as arrow from origin to point (3,4)]
+
+Vectors can represent many real-world concepts:
+- Positions in space
+- Forces or velocities in physics
+- Features in machine learning
+- RGB color values
+
+## Magnitude and direction
+
+Every vector has two fundamental properties: magnitude and direction.
+
+### Magnitude
+
+Magnitude represents a vector's length or size - how "much" of something we have, independent of direction. For a velocity vector, magnitude is speed. For a force vector, magnitude is strength.
+
+Magnitude is calculated using the Pythagorean theorem extended to any dimension:
+- 2D vector [x, y]: magnitude = √(x² + y²)
+- 3D vector [x, y, z]: magnitude = √(x² + y² + z²)
+
+For vector [3, 4], imagine an arrow from the origin to point (3, 4). This forms a right triangle's hypotenuse with sides 3 and 4. The Pythagorean theorem gives us √(3² + 4²) = √25 = 5.
+
+[diagram: Right triangle showing vector [3, 4] as hypotenuse with legs 3 and 4]
+
+This extends to higher dimensions. A vector [1, 2, 3, 4] has magnitude √(1² + 2² + 3² + 4²) = √30 ≈ 5.48.
+
+### Direction and normalization
+
+Direction is expressed as a unit vector - a vector with magnitude 1 that points in the same direction as the original. This process is called normalization.
+
+To normalize, divide each component by the vector's magnitude. Vector [3, 4] with magnitude 5 becomes [3/5, 4/5] = [0.6, 0.8]. Verify: √(0.6² + 0.8²) = 1.
+
+[diagram: Original vector [3, 4] and its normalized version [0.6, 0.8] showing same direction, different lengths]
+
+Unit vectors separate "how much" from "which way." A game character moving northeast [0.7, 0.7] at 5 units per second: normalize the direction, then multiply by speed to get the exact velocity needed.
+
+The zero vector [0, 0] cannot be normalized because it has no direction - it represents "no movement" or "no force."
+
+## Vector operations
+
+Linear algebra defines several operations on vectors that have geometric meaning.
+
+### Vector addition and subtraction
+
+Vector addition combines vectors by adding corresponding components. [a₁, a₂] + [b₁, b₂] = [a₁ + b₁, a₂ + b₂]. Geometrically, place vectors head-to-tail; their sum is the vector from the start of the first to the end of the second.
+
+A boat with velocity [3, 0] (3 units east) in a current with velocity [0, 2] (2 units north) has actual velocity [3, 0] + [0, 2] = [3, 2].
+
+[diagram: Vector addition shown geometrically with two vectors placed head-to-tail]
+
+Vector subtraction: [a₁, a₂] - [b₁, b₂] = [a₁ - b₁, a₂ - b₂]. This gives displacement between points. Enemy at [130, 170], player at [100, 200]: displacement is [100, 200] - [130, 170] = [-30, 30].
+
+### Scalar multiplication
+
+Multiplying a vector by a scalar scales magnitude without changing direction (negative scalars reverse direction). k × [v₁, v₂] = [k × v₁, k × v₂].
+
+Multiplying [3, 4] by 2 gives [6, 8] - same direction, doubled length. Multiplying by 0.5 gives [1.5, 2] - same direction, half length. Multiplying by -1 gives [-3, -4] - opposite direction.
+
+### The dot product
+
+The dot product takes two vectors and produces a single number. For a = [a₁, a₂] and b = [b₁, b₂], the dot product is a · b = a₁ × b₁ + a₂ × b₂.
+
+The dot product measures how much vectors "agree" - how much they point in the same direction. Mathematically: a · b = |a| × |b| × cos(θ), where θ is the angle between vectors.
+
+[diagram: Three pairs of vectors showing positive (parallel), zero (perpendicular), and negative (opposite) dot products]
+
+The dot product reveals relationships:
+- Dot product = 0: vectors are perpendicular (cos(90°) = 0)
+- Dot product > 0: vectors point in similar directions
+- Dot product < 0: vectors point in opposite directions
+
+Applications include:
+- Physics: calculating work done (force · distance)
+- Graphics: determining if surfaces face light sources
+- Machine learning: measuring similarity between feature vectors (cosine similarity)
+
+## Matrices
+
+Matrices are rectangular arrays of numbers. A 2×3 matrix has 2 rows and 3 columns:
+
+```
+[1  2  3]
+[4  5  6]
+```
+
+Matrices serve two primary purposes:
+1. Organizing data (rows as samples, columns as features)
+2. Representing transformations (rotations, scaling, reflections)
+
+### Matrix-vector multiplication
+
+One of the most powerful applications is transforming vectors with matrices. A 2×2 rotation matrix that rotates vectors 90° counterclockwise:
+
+```
+[0  -1]
+[1   0]
+```
+
+When this matrix transforms vector [1, 0] (pointing right), the result is [0, 1] (pointing up).
+
+[diagram: Vector transformation showing rotation from right-pointing [1,0] to up-pointing [0,1]]
+
+For a matrix to transform a vector, the matrix width must match the vector length.
+
+Common transformations include:
+- Rotation (changes direction)
+- Scaling (changes magnitude)
+- Reflection (mirrors across an axis)
+- Shear (shifts proportionally)
 
 ## Introducing Quiver
 
-Quiver is a lightweight Swift package that provides vector mathematics, numerical computing, and statistical operations. As Swift continues to expand beyond app development into domains like server-side computing, machine learning, and data analysis, the need for robust mathematical tools becomes increasingly important.
+With mathematical foundations established, we need practical tools for working with vectors and matrices in Swift. Quiver is a lightweight Swift package that provides vector mathematics, numerical computing, and statistical operations.
 
 ### Why Quiver?
 
-Quiver expands the Swift ecosystem with a native, Swift-first approach to numerical computing. Unlike libraries ported from other languages, Quiver was designed from the ground up for Swift, extending the standard `Array` type rather than creating custom container types.
+As Swift expands beyond app development into machine learning, data analysis, and scientific computing, robust mathematical tools become essential. Quiver provides a Swift-first approach to numerical computing.
 
-This design offers several key advantages:
+Unlike libraries ported from other languages, Quiver was designed from the ground up for Swift. It extends the standard `Array` type rather than creating custom container types.
 
-**No conversion overhead**: Work directly with Swift arrays without converting between specialized data types. Arrays are vectors - there's no boxing or unboxing of values.
+This design offers several advantages:
 
-**Seamless integration**: Quiver operations integrate into existing codebases that already use Swift arrays. You can chain native Swift operations with Quiver's mathematical capabilities:
+**No conversion overhead**: Work directly with Swift arrays without converting between specialized types. Arrays are vectors - there's no boxing or unboxing.
+
+**Seamless integration**: Quiver operations integrate into existing codebases. You can chain native Swift operations with Quiver's mathematical capabilities:
 
 ```swift
 // Combine Swift's filter with Quiver's vector operations
 let filtered = someArray.filter { $0 > 0 }.normalized
 ```
 
-**Familiar syntax**: By extending the native Array type, Quiver maintains the syntax and behavior Swift developers already know, with full access to the standard library.
+**Familiar syntax**: By extending the native Array type, Quiver maintains Swift's syntax and behavior with full standard library access.
 
-**Educational focus**: The code is written to be readable and understandable. Operations closely match mathematical concepts, making it easy to translate formulas into code.
+**Type safety**: Quiver embraces Swift's type system with generic constraints and compile-time guarantees. Division operations, for example, are only available for floating-point arrays.
 
-**Type safety**: Quiver embraces Swift's strong type system with generic constraints, protocol-based design, and compile-time guarantees. Division operations, for example, are only available for floating-point arrays.
+**Educational focus**: The code is readable and maps closely to mathematical concepts, making it easy to translate formulas into code.
 
-While Quiver takes inspiration from NumPy's powerful API - adopting similar concepts like broadcasting, element-wise operations, and statistical functions - it remains true to Swift's syntax and type system. This helps bridge the gap for developers moving between Python and Swift for numerical computing tasks.
+While Quiver takes inspiration from NumPy's powerful API - adopting concepts like broadcasting, element-wise operations, and statistical functions - it remains true to Swift's syntax and type system.
 
 ### Installing Quiver
 
@@ -52,36 +170,11 @@ https://github.com/waynewbishop/bishop-algorithms-quiver-package
 
 In Xcode: **File → Add Package Dependencies** → paste the URL above.
 
-## Vectors: More than just arrays
+## Working with vectors
 
-In programming, we often use arrays to store collections of values. In linear algebra, these become vectors which represent quantities with both magnitude (size) and direction.
+With Quiver imported, Swift arrays gain vector capabilities. Let's explore the mathematical concepts we've discussed through code.
 
-```swift
-import Quiver
-
-// A 2D vector representing a point or direction
-let v = [3.0, 4.0]
-
-// Find the magnitude (length) of the vector
-let magnitude = v.magnitude  // 5.0
-
-// Create a unit vector (same direction, length of 1)
-let unitVector = v.normalized  // [0.6, 0.8]
-```
-
-[diagram: 2D vector [3, 4] shown as arrow from origin to point (3,4) with magnitude 5]
-
-The Pythagorean theorem is used to calculate vector magnitude: √(3² + 4²) = 5.
-
-Vectors can represent many real-world concepts:
-- Positions in space
-- Forces or velocities in physics
-- Features in machine learning
-- RGB color values
-
-## Understanding magnitude
-
-Magnitude represents a vector's length, independent of direction. For a velocity vector, magnitude is speed. For a force vector, magnitude is strength.
+### Magnitude
 
 ```swift
 import Quiver
@@ -92,18 +185,14 @@ print(position.magnitude)  // 5.0
 
 // 3D velocity vector
 let velocity = [1.0, 2.0, 3.0]
-print(velocity.magnitude)  // √(1² + 2² + 3²) = 3.74
+print(velocity.magnitude)  // √14 ≈ 3.74
 
 // Feature vector (any dimension)
 let features = [0.5, 0.3, 0.8, 0.2]
 print(features.magnitude)  // 1.02
 ```
 
-[diagram: Right triangle showing vector [3, 4] as hypotenuse with legs 3 and 4]
-
-## Normalization: Isolating direction
-
-Normalization creates a unit vector (magnitude of 1) that points in the same direction as the original. This separates "how much" from "which way."
+### Normalization
 
 ```swift
 import Quiver
@@ -120,9 +209,7 @@ let speed = 5.0
 let velocity = direction * speed  // [3.0, 4.0] - exactly 5 units/sec
 ```
 
-[diagram: Original vector [3, 4] and its normalized version [0.6, 0.8] showing same direction, different lengths]
-
-### When to normalize
+**When to normalize**:
 
 ```swift
 import Quiver
@@ -138,7 +225,7 @@ let enemySpeed = 3.0
 let enemyVelocity = direction * enemySpeed  // [1.8, 2.4]
 ```
 
-Important: The zero vector [0, 0] cannot be normalized because it has no direction.
+Important: Handle zero vectors properly:
 
 ```swift
 let zeroVector = [0.0, 0.0]
@@ -150,9 +237,7 @@ if zeroVector.magnitude > 0 {
 }
 ```
 
-## Dot product: Measuring alignment
-
-The dot product measures how parallel two vectors are. It produces a single number from two vectors.
+### Dot product
 
 ```swift
 import Quiver
@@ -166,28 +251,12 @@ v1.dot(v2)  // 0.0
 // Parallel vectors
 let v3 = [2.0, 0.0]  // Also points right
 v1.dot(v3)  // 2.0
-```
 
-[diagram: Three pairs of vectors showing positive (parallel), zero (perpendicular), and negative (opposite) dot products]
-
-The dot product reveals relationships:
-- Dot product = 0: vectors are perpendicular
-- Dot product > 0: vectors point in similar directions
-- Dot product < 0: vectors point in opposite directions
-
-### Calculating the dot product
-
-```swift
-import Quiver
-
+// Calculating the dot product
 let a = [3.0, 4.0]
 let b = [1.0, 2.0]
-
-// Multiply corresponding components and sum
-let result = a.dot(b)  // (3×1) + (4×2) = 3 + 8 = 11
+let result = a.dot(b)  // (3×1) + (4×2) = 11
 ```
-
-### Practical applications
 
 **Physics: Calculate work done**
 
@@ -231,13 +300,11 @@ let song2 = [120.0, 0.8, 0.9, 0.7]
 let similarity = song1.normalized.dot(song2.normalized)  // 0.98 (very similar)
 ```
 
-This technique is fundamental to recommendation systems, search engines, and machine learning.
+This cosine similarity technique is fundamental to recommendation systems, search engines, and machine learning.
 
 ## Vector arithmetic
 
 Quiver provides natural operators for vector operations.
-
-### Addition and subtraction
 
 ```swift
 import Quiver
@@ -251,30 +318,17 @@ let totalForce = force1 + force2  // [4.0, 6.0]
 let playerPos = [100.0, 200.0]
 let enemyPos = [130.0, 170.0]
 let displacement = playerPos - enemyPos  // [-30.0, 30.0]
-```
 
-[diagram: Vector addition shown geometrically with two vectors placed head-to-tail]
-
-### Scalar multiplication
-
-```swift
-import Quiver
-
+// Scalar multiplication
 let velocity = [5.0, 3.0]
-
-// Scale up
-let doubled = velocity * 2.0  // [10.0, 6.0]
-
-// Scale down
-let halved = velocity * 0.5  // [2.5, 1.5]
-
-// Reverse direction
-let opposite = velocity * -1.0  // [-5.0, -3.0]
+let doubled = velocity * 2.0      // [10.0, 6.0]
+let halved = velocity * 0.5       // [2.5, 1.5]
+let opposite = velocity * -1.0    // [-5.0, -3.0]
 ```
 
-## Broadcasting: Scalar operations
+## Broadcasting
 
-Broadcasting applies a scalar operation to every element in an array.
+Broadcasting applies a scalar operation to every element in an array, eliminating explicit loops.
 
 ```swift
 import Quiver
@@ -294,9 +348,7 @@ let decreased = vector.broadcast(subtracting: 1.0)  // [0.0, 1.0, 2.0, 3.0]
 let divided = vector.broadcast(dividingBy: 2.0)  // [0.5, 1.0, 1.5, 2.0]
 ```
 
-### Data normalization
-
-Broadcasting is essential for preparing data for machine learning.
+**Data normalization** is essential for machine learning:
 
 ```swift
 import Quiver
@@ -307,23 +359,9 @@ let ages = [25.0, 32.0, 47.0, 19.0, 56.0, 38.0]
 let minAge = ages.min()!  // 19.0
 let maxAge = ages.max()!  // 56.0
 
-let shifted = ages.broadcast(subtracting: minAge)  // Shift to start at 0
+let shifted = ages.broadcast(subtracting: minAge)
 let normalized = shifted.broadcast(dividingBy: maxAge - minAge)
 // [0.16, 0.35, 0.76, 0.0, 1.0, 0.51]
-```
-
-### Feature scaling
-
-```swift
-import Quiver
-
-// Apply weights to feature vector
-let features = [0.8, 0.6, 0.4, 0.9]
-let weights = [1.5, 2.0, 0.5, 3.0]
-
-// Element-wise multiplication using custom broadcast
-let weightedFeatures = zip(features, weights).map { $0 * $1 }
-// [1.2, 1.2, 0.2, 2.7]
 ```
 
 ## Statistics
@@ -348,7 +386,7 @@ print(scores.min()!)      // 78.0
 print(scores.max()!)      // 95.0
 ```
 
-### Performance analysis
+**Performance analysis**:
 
 ```swift
 import Quiver
@@ -383,25 +421,15 @@ let range = [Double].linspace(0, 10, 5)  // [0.0, 2.5, 5.0, 7.5, 10.0]
 
 // Random values
 let random = [Double].random(count: 100, in: 0...1)
-```
 
-### Generating test data
-
-```swift
-import Quiver
-
-// Create evenly spaced x values for plotting
+// Generating test data for plotting
 let xValues = [Double].linspace(0, 2 * .pi, 100)
-
-// Calculate corresponding y values
 let yValues = xValues.map { sin($0) }
-
-// Use with Swift Charts for visualization
 ```
 
-## Matrices: Organizing data and transformations
+## Working with matrices
 
-Matrices are rectangular arrays of numbers. In Quiver, we represent them as arrays of arrays.
+Matrices are represented as arrays of arrays in Quiver.
 
 ```swift
 import Quiver
@@ -419,13 +447,7 @@ let identity = [Double].identity(3)
 //  [0.0, 0.0, 1.0]]
 ```
 
-Matrices serve two primary purposes:
-1. Organizing data (rows as samples, columns as features)
-2. Representing transformations (rotations, scaling, etc.)
-
-## Matrix transformations
-
-One of the most powerful applications of matrices is transforming vectors.
+### Matrix transformations
 
 ```swift
 import Quiver
@@ -438,16 +460,8 @@ let rotation90 = [
 
 let rightVector = [1.0, 0.0]  // Points right
 let rotated = rotation90.transform(rightVector)  // [0.0, 1.0] - points up!
-```
 
-[diagram: Vector transformation showing rotation from right-pointing [1,0] to up-pointing [0,1]]
-
-### Scaling transformation
-
-```swift
-import Quiver
-
-// Scale matrix (doubles x and y)
+// Scaling transformation
 let scaleMatrix = [
     [2.0, 0.0],
     [0.0, 2.0]
@@ -456,8 +470,6 @@ let scaleMatrix = [
 let point = [3.0, 4.0]
 let scaled = scaleMatrix.transform(point)  // [6.0, 8.0]
 ```
-
-For a matrix to transform a vector, the matrix width must match the vector length.
 
 ## Practical examples
 
@@ -498,7 +510,6 @@ let color = [0.8, 0.5, 0.2]  // Amber
 
 // Brightness adjustment
 let brighter = color.broadcast(multiplyingBy: 1.2)  // [0.96, 0.6, 0.24]
-let darker = color.broadcast(multiplyingBy: 0.8)    // [0.64, 0.4, 0.16]
 
 // Blend two colors
 let red = [1.0, 0.0, 0.0]
@@ -523,9 +534,9 @@ if distance < 30.0 {
 }
 ```
 
-## When to use vectors
+## When to use linear algebra
 
-Vector mathematics excels with spatial, directional, or multidimensional data.
+Linear algebra excels with spatial, directional, or multidimensional data.
 
 **Ideal use cases:**
 - Game development (positions, velocities, forces)
@@ -544,13 +555,13 @@ Vector mathematics excels with spatial, directional, or multidimensional data.
 
 ## Building algorithmic intuition
 
-Vector mathematics connects to concepts throughout this book:
+Linear algebra connects to concepts throughout this book:
 
 - **Arrays (Chapter 3)** - Vectors extend arrays with mathematical operations
 - **Big O Notation (Chapter 2)** - Vector operations are O(n) in dimensionality
 - **Generics (Chapter 7)** - Quiver uses generic constraints for type safety
 
-The key insight: Vector mathematics provides a language for spatial relationships in games, graphics, data analysis, and machine learning.
+The key insight: Linear algebra provides a mathematical language for spatial relationships in games, graphics, data analysis, and machine learning.
 
 ## Summary
 
@@ -558,16 +569,16 @@ Linear algebra forms the foundation for spatial computing and scientific program
 
 **Core concepts:**
 - Vectors represent magnitude and direction
-- Normalization isolates direction (unit vectors)
+- Magnitude measures size; normalization isolates direction
 - Dot product measures alignment and similarity
-- Broadcasting applies operations across arrays
 - Matrices organize data and represent transformations
+- Broadcasting applies operations across arrays
 
 **Quiver capabilities:**
 - Extends native Swift arrays
 - Zero conversion overhead
 - Comprehensive: vectors, statistics, linear algebra
-- Production-ready with proper edge case handling
+- Production-ready with type safety
 
 **Practical applications:**
 - Game physics and AI behaviors
