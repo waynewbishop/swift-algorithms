@@ -11,9 +11,7 @@ description: "Build type-safe, reusable code with Swift generics"
 
 # Generics
 
-Swift brings a powerful series of tools that make coding more expressive and safe. Along with its simplified syntax, Swift borrows from the success of other languages to prevent common programming errors like null pointer exceptions and memory leaks.
-
-One of Swift's most powerful features is generics—a design technique that allows you to write flexible, reusable code while maintaining complete type safety.
+Swift brings a powerful series of tools that make coding more expressive and safe. Along with its simplified syntax, Swift borrows from the success of other languages to prevent common programming errors like null pointer exceptions and memory leaks. One of Swift's most powerful features is generics—a design technique that allows you to write flexible, reusable code while maintaining complete type safety.
 
 In this chapter, we'll explore how generics enable the data structures you'll build throughout this book. Without generics, you'd need to write separate implementations of linked lists for integers, strings, custom objects, and every other type. Generics solve this problem elegantly.
 

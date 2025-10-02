@@ -11,9 +11,7 @@ description: "Implement Google's PageRank in Swift"
 
 # PageRank algorithm
 
-The PageRank algorithm stands as one of the most influential algorithms in modern computing, powering the original Google search engine and fundamentally changing how we navigate information. Conceived at Stanford University in 1996 by Larry Page and Sergey Brin, PageRank introduced a revolutionary approach to determining web page importance through mathematical modeling of human browsing behavior.
-
-In this chapter, we'll explore how PageRank works, implement an educational version in Swift, and understand its broader applications beyond search engines.
+The PageRank algorithm stands as one of the most influential algorithms in modern computing, powering the original Google search engine and fundamentally changing how we navigate information. Conceived at Stanford University in 1996 by Larry Page and Sergey Brin, PageRank introduced a revolutionary approach to determining web page importance through mathematical modeling of human browsing behavior. In this chapter, we'll explore how PageRank works, implement an educational version in Swift, and understand its broader applications beyond search engines.
 
 ## Understanding PageRank
 
@@ -121,9 +119,7 @@ PageRank calculation requires multiple iterations because page importance is int
 
 Convergence in PageRank means the algorithm has reached a stable state where further iterations produce negligible changes in PageRank values. This happens because the iterative process eventually balances authority flow throughout the network.
 
-Think of it like water flowing through a network of pipes—initially there might be turbulence and fluctuation, but eventually the flow reaches a steady state where the amount entering each junction equals the amount leaving.
-
-In PageRank, convergence occurs when the authority flowing into each page roughly equals the authority flowing out, creating stable PageRank values.
+Think of it like water flowing through a network of pipes—initially there might be turbulence and fluctuation, but eventually the flow reaches a steady state where the amount entering each junction equals the amount leaving. In PageRank, convergence occurs when the authority flowing into each page roughly equals the authority flowing out, creating stable PageRank values.
 
 **Why convergence matters:**
 - Stability: Ensures PageRank values represent true long-term probabilities of the random surfer model

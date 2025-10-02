@@ -10,9 +10,7 @@ description: "Learn linear and binary search algorithms in Swift"
 
 # Basic searching
 
-In our exploration of Big O Notation, we introduced the concept of linear search to demonstrate O(n) complexity. Now that you understand how algorithmic efficiency scales with input size, we can dive deeper into the fundamental problem of searching for data.
-
-Whether you're building a contact app, a music library, or any system that manages information, search functionality is essential.
+In our exploration of Big O Notation, we introduced the concept of linear search to demonstrate O(n) complexity. Now that you understand how algorithmic efficiency scales with input size, we can dive deeper into the fundamental problem of searching for data. Whether you're building a contact app, a music library, or any system that manages information, search functionality is essential.
 
 The art of searching efficiently is one of the most important skills in computer science.
 

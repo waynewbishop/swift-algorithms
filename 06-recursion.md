@@ -13,9 +13,7 @@ description: "Understanding recursive algorithms and techniques"
 
 Now that we've explored algorithms and data structures through searching and sorting, it's time to introduce one of the most powerful and elegant programming techniques: recursion. Understanding recursion is crucial as we move forward to more complex data structures like trees and graphs, where recursive thinking becomes essential.
 
-Recursion is a coding technique where a function calls itself to solve smaller versions of the same problem. While this might seem circular at first, recursion provides an elegant way to solve problems that have a naturally recursive structure.
-
-In this chapter, we'll explore how to think recursively and implement recursive solutions in Swift.
+Recursion is a coding technique where a function calls itself to solve smaller versions of the same problem. While this might seem circular at first, recursion provides an elegant way to solve problems that have a naturally recursive structure. In this chapter, we'll explore how to think recursively and implement recursive solutions in Swift.
 
 ## The recursive mindset
 
