@@ -5,6 +5,7 @@
 # Ignore Claude content
 .claude/
 claude.md
+Claude.md
 
 # Ignore local Resources 
 /Resources/
