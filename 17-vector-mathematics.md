@@ -31,11 +31,7 @@ In Xcode: **File → Add Package Dependencies** → paste the URL above.
 
 ### Why Quiver?
 
-1. **Swift-first approach**: Works directly with Swift arrays - no type conversion needed
-2. **Zero conversion overhead**: Native performance without boxing/unboxing
-3. **Educational focus**: Clear implementations that map to mathematical concepts
-4. Comprehensive: Vector ops, statistics, linear algebra, and more
-5. **Production-ready**: Well-tested, handles edge cases properly
+Quiver adopts a Swift-first approach that works directly with Swift arrays, eliminating the need for type conversion and the associated overhead of boxing and unboxing values. This design philosophy ensures native performance while maintaining the educational clarity that makes mathematical concepts accessible. The package provides comprehensive coverage of essential operations including vector mathematics, statistical functions, and linear algebra primitives. All implementations are production-ready, with thorough testing and proper edge case handling to ensure reliability in real-world applications.
 
 ## Your first vector operations
 
