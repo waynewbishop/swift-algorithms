@@ -21,17 +21,13 @@ However, when it comes to learning computer science, you should consider putting
 
 ### A simple example: Finding a book
 
-Consider this everyday scenario: You have a list of 1,000 book titles written on paper, and you need to find "Thinking in Algorithms." How would you approach this?
+Consider an everyday scenario where you must locate "Thinking in Algorithms" within a list of 1,000 book titles written on paper. The approach you select fundamentally affects the efficiency of your search.
 
-**Approach 1: Start from the beginning**
-Read the first title. Is it Thinking in Algorithms? No. Read the second title. Is it Thinking in Algorithms? No. Continue until you find it or reach the end. This is straightforward but potentially slow—you might check all 1,000 titles.
+The first approach involves starting from the beginning and examining each title sequentially. You read the first title and ask whether it matches "Thinking in Algorithms." If not, you proceed to the second title and repeat this process. While this linear search method is straightforward and guaranteed to work, it potentially requires examining all 1,000 titles in the worst case scenario.
 
-**Approach 2: If the list is sorted alphabetically**
-Open to the middle of the list. Are you looking at titles starting with M? Since "Thinking in Algorithms" starts with T, you know it must be in the second half. You've just eliminated 500 titles with one check. Repeat this process, cutting the remaining titles in half each time.
+The second approach assumes the list is sorted alphabetically. You begin by opening to the middle of the list. If you encounter titles beginning with M, you immediately know that "Thinking in Algorithms"—starting with T—must be located in the second half of the list. With this single check, you have eliminated 500 titles from consideration. By repeatedly applying this halving process, you can locate the target title in approximately 10 checks rather than potentially 1,000.
 
-Both approaches work. Both will find Thinking in Algorithms if it's in the list. But Approach 2 demonstrates algorithmic thinking: it finds the answer in roughly 10 checks instead of potentially 1,000.
-
-This is the mindset shift algorithms require—there are multiple valid solutions, but some are fundamentally more efficient than others.
+Both approaches successfully locate the book when it exists in the list. However, the second approach exemplifies algorithmic thinking: recognizing that multiple valid solutions exist, while some demonstrate fundamentally superior efficiency. This represents the essential mindset shift required when studying algorithms—understanding that the choice of approach can transform computational complexity from linear to logarithmic performance.
 
 ## What to exclude
 
