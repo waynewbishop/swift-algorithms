@@ -6,20 +6,14 @@ author: Wayne Bishop
 url: https://waynewbishop.github.io
 baseurl: /swift-algorithms
 
-# Theme
-theme: jekyll-theme-cayman
-# Alternative themes you can try:
-# theme: jekyll-theme-architect
-# theme: jekyll-theme-minimal
-# theme: jekyll-theme-slate
-
-# Markdown settings
+# Build settings
 markdown: kramdown
 kramdown:
   input: GFM
   syntax_highlighter: rouge
   syntax_highlighter_opts:
     default_lang: swift
+    css_class: 'highlight'
 
 # Plugins
 plugins:
@@ -27,6 +21,7 @@ plugins:
   - jekyll-optional-front-matter
   - jekyll-readme-index
   - jekyll-titles-from-headings
+  - jekyll-seo-tag
 
 # Plugin settings
 relative_links:
@@ -38,6 +33,45 @@ titles_from_headings:
   strip_title: true
   collections: false
 
+# Navigation - Auto-generated from chapters
+chapters:
+  - title: "Introduction"
+    url: "01-introduction"
+  - title: "Big O Notation"
+    url: "02-big-o-notation"
+  - title: "Basic Searching"
+    url: "03-basic-searching"
+  - title: "Basic Sorting"
+    url: "04-basic-sorting"
+  - title: "Advanced Sorting"
+    url: "05-advanced-sorting"
+  - title: "Recursion"
+    url: "06-recursion"
+  - title: "Generics"
+    url: "07-generics"
+  - title: "Linked Lists"
+    url: "08-linked-lists"
+  - title: "Stacks and Queues"
+    url: "09-stacks-and-queues"
+  - title: "Binary Search Trees"
+    url: "10-binary-search-trees"
+  - title: "Graphs"
+    url: "11-graphs"
+  - title: "Tries"
+    url: "12-tries"
+  - title: "Hash Tables"
+    url: "13-hash-tables"
+  - title: "Heaps"
+    url: "14-heaps"
+  - title: "Dynamic Programming"
+    url: "15-dynamic-programming"
+  - title: "Practical Performance Analysis"
+    url: "16-advanced-complexity-analysis"
+  - title: "Linear Algebra"
+    url: "17-linear-algebra"
+  - title: "PageRank Algorithm"
+    url: "18-pagerank-algorithm"
+
 # Exclude from processing
 exclude:
   - Claude.md
@@ -48,6 +82,9 @@ exclude:
   - LICENSE
   - Gemfile
   - Gemfile.lock
+  - .idea/
+  - .venv/
+  - .claude/
 
 # Include these files
 include:
