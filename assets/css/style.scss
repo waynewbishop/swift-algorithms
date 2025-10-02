@@ -3,6 +3,9 @@
 
 @import "{{ site.theme }}";
 
+/* Import JetBrains Mono font */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
 /* Body text - matches DocC articles */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif !important;
@@ -57,7 +60,7 @@ h4, h5, h6 {
 
 /* Code and monospace */
 code, pre {
-  font-family: Menlo, "Roboto Mono", Inconsolata, Monaco, "Courier New", monospace !important;
+  font-family: "JetBrains Mono", Menlo, "Roboto Mono", Inconsolata, Monaco, "Courier New", monospace !important;
   font-size: 14.5px !important;
   line-height: 1.6 !important;
   font-weight: 400 !important;
