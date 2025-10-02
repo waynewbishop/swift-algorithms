@@ -501,15 +501,27 @@ tr:last-child td {
 }
 
 .chapter-nav a {
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: var(--spacing-md);
   border-radius: 8px;
   font-size: 14px;
   transition: background-color var(--transition-fast);
+  text-align: left;
+}
+
+.chapter-nav-next {
+  text-align: right;
 }
 
 .chapter-nav a:hover {
   background-color: var(--color-background-secondary);
   text-decoration: none;
+}
+
+.chapter-nav a strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 15px;
+  color: var(--color-text-primary);
 }
 
 /* ========================================

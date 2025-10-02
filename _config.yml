@@ -53,44 +53,58 @@ social:
     - https://www.linkedin.com/in/waynebishop/
     - http://www.waynewbishop.com
 
-# Navigation - Auto-generated from chapters
-chapters:
-  - title: "Introduction"
-    url: "01-introduction"
-  - title: "Big O Notation"
-    url: "02-big-o-notation"
-  - title: "Basic Searching"
-    url: "03-basic-searching"
-  - title: "Basic Sorting"
-    url: "04-basic-sorting"
-  - title: "Advanced Sorting"
-    url: "05-advanced-sorting"
-  - title: "Recursion"
-    url: "06-recursion"
-  - title: "Generics"
-    url: "07-generics"
-  - title: "Linked Lists"
-    url: "08-linked-lists"
-  - title: "Stacks and Queues"
-    url: "09-stacks-and-queues"
-  - title: "Binary Search Trees"
-    url: "10-binary-search-trees"
-  - title: "Graphs"
-    url: "11-graphs"
-  - title: "Tries"
-    url: "12-tries"
-  - title: "Hash Tables"
-    url: "13-hash-tables"
-  - title: "Heaps"
-    url: "14-heaps"
-  - title: "Dynamic Programming"
-    url: "15-dynamic-programming"
-  - title: "Practical Performance Analysis"
-    url: "16-advanced-complexity-analysis"
-  - title: "Linear Algebra"
-    url: "17-linear-algebra"
-  - title: "PageRank Algorithm"
-    url: "18-pagerank-algorithm"
+# Navigation - Auto-generated from chapters with logical grouping
+navigation:
+  - section: "Fundamentals"
+    chapters:
+      - title: "Introduction"
+        url: "01-introduction"
+      - title: "Big O Notation"
+        url: "02-big-o-notation"
+
+  - section: "Algorithms"
+    chapters:
+      - title: "Basic Searching"
+        url: "03-basic-searching"
+      - title: "Basic Sorting"
+        url: "04-basic-sorting"
+      - title: "Advanced Sorting"
+        url: "05-advanced-sorting"
+      - title: "Recursion"
+        url: "06-recursion"
+
+  - section: "Swift Concepts"
+    chapters:
+      - title: "Generics"
+        url: "07-generics"
+
+  - section: "Data Structures"
+    chapters:
+      - title: "Linked Lists"
+        url: "08-linked-lists"
+      - title: "Stacks and Queues"
+        url: "09-stacks-and-queues"
+      - title: "Binary Search Trees"
+        url: "10-binary-search-trees"
+      - title: "Graphs"
+        url: "11-graphs"
+      - title: "Tries"
+        url: "12-tries"
+      - title: "Hash Tables"
+        url: "13-hash-tables"
+      - title: "Heaps"
+        url: "14-heaps"
+
+  - section: "Advanced Topics"
+    chapters:
+      - title: "Dynamic Programming"
+        url: "15-dynamic-programming"
+      - title: "Practical Performance Analysis"
+        url: "16-advanced-complexity-analysis"
+      - title: "Linear Algebra"
+        url: "17-linear-algebra"
+      - title: "PageRank Algorithm"
+        url: "18-pagerank-algorithm"
 
 # Exclude from processing
 exclude:

@@ -6,10 +6,11 @@
   </div>
 
   <nav class="sidebar-nav">
+    {% for section in site.navigation %}
     <div class="nav-section">
-      <h3 class="nav-section-title">Table of Contents</h3>
+      <h3 class="nav-section-title">{{ section.section }}</h3>
       <ul class="nav-list">
-        {% for chapter in site.chapters %}
+        {% for chapter in section.chapters %}
           <li class="nav-item">
             <a href="{{ chapter.url | relative_url }}"
                class="nav-link {% if page.url contains chapter.url %}active{% endif %}">
@@ -19,6 +20,7 @@
         {% endfor %}
       </ul>
     </div>
+    {% endfor %}
 
     <div class="nav-section nav-section-resources">
       <h3 class="nav-section-title">Resources</h3>
