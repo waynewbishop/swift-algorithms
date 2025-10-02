@@ -533,5 +533,5 @@ This intuition, built through understanding the algorithms in this book and thei
 <div class="chapter-nav">
   <a href="15-dynamic-programming" class="prev">Previous Chapter</a>
   <a href="index">Table of Contents</a>
-  <a href="17-vector-mathematics" class="next">Next Chapter</a>
+  <a href="17-linear-algebra" class="next">Next Chapter</a>
 </div>

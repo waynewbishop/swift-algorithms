@@ -31,7 +31,7 @@ Whether you're preparing for technical interviews, building performance-critical
 - Implement heaps for priority queue operations
 - Apply dynamic programming with memoization techniques
 - Evaluate real-world algorithm performance tradeoffs
-- Calculate vector operations for spatial data
+- Apply linear algebra concepts with vector operations
 - Analyze PageRank algorithm for ranking systems
 
 ## Table of Contents
@@ -52,7 +52,7 @@ Whether you're preparing for technical interviews, building performance-critical
 14. [Heaps](14-heaps)
 15. [Dynamic Programming](15-dynamic-programming)
 16. [Practical Performance Analysis](16-advanced-complexity-analysis)
-17. [Vector Mathematics](17-vector-mathematics)
+17. [Linear Algebra](17-linear-algebra)
 18. [PageRank Algorithm](18-pagerank-algorithm)
 
 ## Example: Generic Binary Search
