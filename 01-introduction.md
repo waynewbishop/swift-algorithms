@@ -39,30 +39,13 @@ One of the most powerful concepts in algorithmic thinking is learning to exclude
 
 ### The number guessing game
 
-Think about the classic number guessing game. I'm thinking of a number between 1 and 100, and you need to guess it. I'll tell you if your guess is too high or too low.
+Consider the classic number guessing game where someone thinks of a number between 1 and 100, and you attempt to identify it. After each guess, you receive feedback indicating whether your guess is too high or too low.
 
-**Inefficient approach:**
-- Guess 1. Too low.
-- Guess 2. Too low.
-- Guess 3. Too low.
-- Continue incrementing...
+An inefficient approach would be to start with 1 and increment sequentially—guessing 1, then 2, then 3, and continuing this pattern until reaching the target number. In the worst case scenario, this linear strategy could require up to 100 guesses to identify the correct number.
 
-You might need 100 guesses in the worst case.
+Exclusion thinking offers a dramatically more efficient alternative. By guessing 50 first, you immediately eliminate half of the possible numbers with a single guess. If the feedback indicates "too high," you've eliminated all numbers from 51 to 100. Your next guess of 25 might be "too low," eliminating numbers 1 through 25. Continuing this pattern—guessing 37 eliminates 38-50, guessing 31 eliminates 26-31—you systematically narrow the range of possibilities. With this binary search approach, any number between 1 and 100 can be identified in at most 7 guesses.
 
-**Exclusion thinking:**
-- Guess 50. Too high.
-  - You've just eliminated numbers 51-100 with one guess
-- Guess 25. Too low.
-  - You've eliminated numbers 1-25
-- Guess 37. Too high.
-  - You've eliminated numbers 38-50
-- Guess 31. Too low.
-  - You've eliminated numbers 26-31
-- Continue narrowing...
-
-With exclusion thinking, you can find any number between 1 and 100 in at most 7 guesses.
-
-This principle applies to many algorithms you'll learn in this book. When you encounter searching problems, sorting challenges, or data organization questions, ask yourself: "What can I eliminate?" rather than "What do I need to check?"
+This fundamental principle of exclusion thinking pervades algorithmic design throughout this book. When confronting searching problems, sorting challenges, or data organization questions, the most efficient solutions often emerge from asking "What can I eliminate?" rather than "What do I need to check?" This shift in perspective—from examination to exclusion—represents a cornerstone of computational efficiency.
 
 ## Thought experiments
 
