@@ -6,6 +6,9 @@ author: Wayne Bishop
 url: https://waynewbishop.github.io
 baseurl: /swift-algorithms
 
+# GitHub Pages specific
+repository: waynewbishop/swift-algorithms
+
 # Build settings
 markdown: kramdown
 kramdown:
@@ -15,13 +18,18 @@ kramdown:
     default_lang: swift
     css_class: 'highlight'
 
-# Plugins
+# Sass/SCSS settings (GitHub Pages compatible)
+sass:
+  style: compressed
+
+# Plugins (GitHub Pages whitelist)
 plugins:
   - jekyll-relative-links
   - jekyll-optional-front-matter
   - jekyll-readme-index
   - jekyll-titles-from-headings
   - jekyll-seo-tag
+  - jekyll-sitemap
 
 # Plugin settings
 relative_links:
@@ -32,6 +40,18 @@ titles_from_headings:
   enabled: true
   strip_title: true
   collections: false
+
+# SEO settings
+twitter:
+  username: waynewbishop
+  card: summary
+
+social:
+  name: Wayne Bishop
+  links:
+    - https://github.com/waynewbishop
+    - https://www.linkedin.com/in/waynebishop/
+    - http://www.waynewbishop.com
 
 # Navigation - Auto-generated from chapters
 chapters:
@@ -85,8 +105,25 @@ exclude:
   - .idea/
   - .venv/
   - .claude/
+  - README.md
+  - node_modules/
+  - vendor/
 
 # Include these files
 include:
-  - README.md
-  - "*.md"
+  - _pages
+
+# Defaults for front matter
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "chapter"
+  - scope:
+      path: "index.md"
+    values:
+      layout: "home"
+
+# Timezone
+timezone: America/Los_Angeles
