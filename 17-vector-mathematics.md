@@ -15,6 +15,43 @@ Linear algebra forms the mathematical foundation for many fields including compu
 
 You don't need advanced mathematical knowledge to get started. If you can work with Swift arrays, you can begin applying linear algebra concepts in your code.
 
+## Introducing Quiver
+
+Quiver is a lightweight Swift package that provides vector mathematics, numerical computing, and statistical operations. As Swift continues to expand beyond app development into domains like server-side computing, machine learning, and data analysis, the need for robust mathematical tools becomes increasingly important.
+
+### Why Quiver?
+
+Quiver expands the Swift ecosystem with a native, Swift-first approach to numerical computing. Unlike libraries ported from other languages, Quiver was designed from the ground up for Swift, extending the standard `Array` type rather than creating custom container types.
+
+This design offers several key advantages:
+
+**No conversion overhead**: Work directly with Swift arrays without converting between specialized data types. Arrays are vectors - there's no boxing or unboxing of values.
+
+**Seamless integration**: Quiver operations integrate into existing codebases that already use Swift arrays. You can chain native Swift operations with Quiver's mathematical capabilities:
+
+```swift
+// Combine Swift's filter with Quiver's vector operations
+let filtered = someArray.filter { $0 > 0 }.normalized
+```
+
+**Familiar syntax**: By extending the native Array type, Quiver maintains the syntax and behavior Swift developers already know, with full access to the standard library.
+
+**Educational focus**: The code is written to be readable and understandable. Operations closely match mathematical concepts, making it easy to translate formulas into code.
+
+**Type safety**: Quiver embraces Swift's strong type system with generic constraints, protocol-based design, and compile-time guarantees. Division operations, for example, are only available for floating-point arrays.
+
+While Quiver takes inspiration from NumPy's powerful API - adopting similar concepts like broadcasting, element-wise operations, and statistical functions - it remains true to Swift's syntax and type system. This helps bridge the gap for developers moving between Python and Swift for numerical computing tasks.
+
+### Installing Quiver
+
+Add Quiver to your project via Swift Package Manager:
+
+```
+https://github.com/waynewbishop/bishop-algorithms-quiver-package
+```
+
+In Xcode: **File → Add Package Dependencies** → paste the URL above.
+
 ## Vectors: More than just arrays
 
 In programming, we often use arrays to store collections of values. In linear algebra, these become vectors which represent quantities with both magnitude (size) and direction.
@@ -504,16 +541,6 @@ Vector mathematics excels with spatial, directional, or multidimensional data.
 - Database queries
 
 **Key question:** Does your data represent positions, directions, measurements, or relationships in space?
-
-## Installing Quiver
-
-Add Quiver to your project via Swift Package Manager:
-
-```
-https://github.com/waynewbishop/bishop-algorithms-quiver-package
-```
-
-In Xcode: **File → Add Package Dependencies** → paste the URL above.
 
 ## Building algorithmic intuition
 
