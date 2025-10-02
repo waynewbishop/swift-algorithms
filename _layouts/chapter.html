@@ -2,59 +2,6 @@
 layout: default
 ---
 
-{% assign current_chapter_index = nil %}
-{% assign prev_chapter = nil %}
-{% assign next_chapter = nil %}
-
-{% for section in site.navigation %}
-  {% for chapter in section.chapters %}
-    {% if page.url contains chapter.url %}
-      {% assign current_chapter_index = forloop.index %}
-      {% assign current_section_index = forloop.parentloop.index %}
-    {% endif %}
-  {% endfor %}
-{% endfor %}
-
-{% assign found_current = false %}
-{% for section in site.navigation %}
-  {% for chapter in section.chapters %}
-    {% if found_current and next_chapter == nil %}
-      {% assign next_chapter = chapter %}
-    {% endif %}
-    {% if page.url contains chapter.url %}
-      {% assign found_current = true %}
-    {% elsif found_current == false %}
-      {% assign prev_chapter = chapter %}
-    {% endif %}
-  {% endfor %}
-{% endfor %}
-
-{% if prev_chapter %}
-<div class="top-nav">
-  <a href="{{ prev_chapter.url | relative_url }}">← {{ prev_chapter.title }}</a>
-</div>
-{% endif %}
-
 <article class="chapter-content">
   {{ content }}
 </article>
-
-{% if prev_chapter or next_chapter %}
-<nav class="chapter-nav">
-  {% if prev_chapter %}
-  <a href="{{ prev_chapter.url | relative_url }}" class="chapter-nav-prev">
-    ← Previous<br>
-    <strong>{{ prev_chapter.title }}</strong>
-  </a>
-  {% else %}
-  <span></span>
-  {% endif %}
-
-  {% if next_chapter %}
-  <a href="{{ next_chapter.url | relative_url }}" class="chapter-nav-next">
-    Next →<br>
-    <strong>{{ next_chapter.title }}</strong>
-  </a>
-  {% endif %}
-</nav>
-{% endif %}

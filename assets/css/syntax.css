@@ -1,23 +1,24 @@
 /* ========================================
    Swift Syntax Highlighting
-   Based on Xcode Light Theme
+   Based on Xcode Default (Light) Theme
    ======================================== */
 
 .highlight {
   background: transparent;
 }
 
-/* Comments */
+/* Comments - Green */
 .highlight .c,
 .highlight .cm,
 .highlight .cp,
 .highlight .c1,
 .highlight .cs {
-  color: #6e6e73;
-  font-style: italic;
+  color: #5d6c79;
+  font-style: normal;
+  font-weight: 300;
 }
 
-/* Keywords */
+/* Keywords - Magenta/Pink */
 .highlight .k,
 .highlight .kc,
 .highlight .kd,
@@ -26,10 +27,10 @@
 .highlight .kr,
 .highlight .kt {
   color: #ad3da4;
-  font-weight: 500;
+  font-weight: 300;
 }
 
-/* Strings */
+/* Strings - Red */
 .highlight .s,
 .highlight .sb,
 .highlight .sc,
@@ -43,9 +44,10 @@
 .highlight .s1,
 .highlight .ss {
   color: #d12f1b;
+  font-weight: 300;
 }
 
-/* Numbers */
+/* Numbers - Blue */
 .highlight .m,
 .highlight .mf,
 .highlight .mh,
@@ -54,9 +56,10 @@
 .highlight .mb,
 .highlight .il {
   color: #272ad8;
+  font-weight: 300;
 }
 
-/* Function/Method names */
+/* Function/Method names - Black */
 .highlight .n,
 .highlight .na,
 .highlight .nc,
@@ -66,46 +69,54 @@
 .highlight .nl,
 .highlight .nn,
 .highlight .nx {
-  color: #1d1d1f;
+  color: #000000;
+  font-weight: 300;
 }
 
-/* Variables, properties */
+/* Variables, properties - Teal */
 .highlight .nv,
 .highlight .vc,
 .highlight .vg,
 .highlight .vi {
-  color: #326d74;
+  color: #3e8087;
+  font-weight: 300;
 }
 
-/* Operators */
+/* Operators - Black */
 .highlight .o,
 .highlight .ow {
-  color: #1d1d1f;
+  color: #000000;
+  font-weight: 300;
 }
 
-/* Punctuation */
+/* Punctuation - Black */
 .highlight .p {
-  color: #1d1d1f;
+  color: #000000;
+  font-weight: 300;
 }
 
-/* Generic (types in angle brackets) */
+/* Generic (types in angle brackets) - Purple */
 .highlight .gh {
-  color: #4b21b0;
+  color: #703daa;
+  font-weight: 300;
 }
 
-/* Built-in types */
+/* Built-in types - Purple */
 .highlight .bp {
-  color: #4b21b0;
+  color: #703daa;
+  font-weight: 300;
 }
 
-/* Language constants (true, false, nil) */
+/* Language constants (true, false, nil) - Magenta */
 .highlight .kc {
   color: #ad3da4;
+  font-weight: 300;
 }
 
-/* Error */
+/* Error - Red */
 .highlight .err {
   color: #d12f1b;
+  font-weight: 300;
 }
 
 /* Line numbers (if enabled) */
