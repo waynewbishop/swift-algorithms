@@ -11,7 +11,9 @@ description: "Implement merge sort and quicksort algorithms"
 
 # Advanced sorting
 
-The functions introduced in basic sorting all performed with a time complexity of O(n²). While good for interview situations and general academic knowledge, algorithms like insertion sort and bubble sort are seldom used in production code. Advanced sorting algorithms, however, have broader practical application and usage. These algorithms can be found in both code libraries and real-life projects, featuring time complexity of O(n log n) and applying divide & conquer strategies for superior algorithmic performance.
+The functions introduced in basic sorting all performed with a time complexity of O(n²). While good for interview situations and general academic knowledge, algorithms like insertion sort and bubble sort are seldom used in production code.
+
+Advanced sorting algorithms, however, have broader practical application and usage. These algorithms can be found in both code libraries and real-life projects, featuring time complexity of O(n log n) and applying divide & conquer strategies for superior algorithmic performance.
 
 In this chapter, we'll explore two fundamental advanced sorting algorithms that demonstrate different approaches to the divide & conquer strategy: Quicksort and Merge Sort.
 
@@ -31,13 +33,17 @@ In this step, the current value (e.g., 2) is again compared with the pivot. Sinc
 
 ### Conquering the divide
 
-The process of comparing and swapping occurs until the current index meets the pivot. Once complete, the pivot is swapped with the wall index value. Interestingly, once the pivot is swapped, it's considered sorted. Even though most values remain unsorted (at this phase), all values less than 4 are now positioned to the left. Conversely, all values greater than 4 are positioned to the right.
+The process of comparing and swapping occurs until the current index meets the pivot. Once complete, the pivot is swapped with the wall index value. Interestingly, once the pivot is swapped, it's considered sorted.
+
+Even though most values remain unsorted (at this phase), all values less than 4 are now positioned to the left. Conversely, all values greater than 4 are positioned to the right.
 
 The initial pivot value of 4 has been used to show how Quicksort can divide a collection into relatively equal segments. This process is called partitioning. To sort the remaining values, each value left or right of the initial pivot is also treated as a pivot and the process is repeated.
 
 ### The Quicksort code
 
-In Swift, the complete algorithm is expressed as two functions. The main quickSort function manages the overall execution - specifically, the selection of each pivot value. Similar to our other sorting algorithms, the quickSort implementation is written as an Array extension. However, the nested function applies recursion as its main control structure:
+In Swift, the complete algorithm is expressed as two functions. The main quickSort function manages the overall execution - specifically, the selection of each pivot value. Similar to our other sorting algorithms, the quickSort implementation is written as an Array extension.
+
+However, the nested function applies recursion as its main control structure:
 
 ```swift
 extension Array where Element: Comparable {

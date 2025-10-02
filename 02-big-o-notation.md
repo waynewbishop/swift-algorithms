@@ -11,9 +11,17 @@ description: "Learn to analyze algorithmic complexity and performance"
 
 # Big O Notation
 
-As someone reading this series, you're probably familiar with the basics of Swift/iOS Development and may be in the process of writing your next app. When building software, a question we often ask ourselves is what should be our definition of done. As an individual contributor working on a large project, features in your application may be determined by business stakeholders or a project lead. However, it takes more than requirements to build software users will love. Great systems combine detailed analysis, stellar features and performance.
+As someone reading this series, you're probably familiar with the basics of Swift/iOS Development and may be in the process of writing your next app. When building software, a question we often ask ourselves is what should be our definition of done.
 
-As we start our journey understanding algorithms and data structures, an idea that unites each concept is the theme of Asymptotic Analysis. Often viewed as a complex topic, asymptotics is the process of describing the efficiency of algorithms as their input size grows. The notion of tracking algorithmic performance can reveal much about a solution's effectiveness. Ironically, this area of study was primarily developed before the introduction of modern computing. Today, this provides an advantage when testing new ideas and communicating with other developers. In computer science, asymptotics is expressed in a standard format known as Big O Notation.
+As an individual contributor working on a large project, features in your application may be determined by business stakeholders or a project lead. However, it takes more than requirements to build software users will love.
+
+Great systems combine detailed analysis, stellar features and performance.
+
+As we start our journey understanding algorithms and data structures, an idea that unites each concept is the theme of Asymptotic Analysis. Often viewed as a complex topic, asymptotics is the process of describing the efficiency of algorithms as their input size grows.
+
+The notion of tracking algorithmic performance can reveal much about a solution's effectiveness. Ironically, this area of study was primarily developed before the introduction of modern computing. Today, this provides an advantage when testing new ideas and communicating with other developers.
+
+In computer science, asymptotics is expressed in a standard format known as Big O Notation.
 
 ## The performance detective
 
@@ -25,7 +33,9 @@ This is the essence of algorithmic thinking - understanding how our solutions sc
 
 ## Linear time - O(n)
 
-Even though we sometimes think of algorithms as complex systems, in essence, they are merely recipes for completing a series of operations. For example, a simple algorithm shared across all programming languages is a loop. In Swift, we can write a simple algorithm to find a specific number in a list:
+Even though we sometimes think of algorithms as complex systems, in essence, they are merely recipes for completing a series of operations. For example, a simple algorithm shared across all programming languages is a loop.
+
+In Swift, we can write a simple algorithm to find a specific number in a list:
 
 ```swift
 let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -44,7 +54,9 @@ func findNumber(_ target: Int, in list: [Int]) -> Bool {
 let found = findNumber(8, in: numbers)  // true
 ```
 
-When evaluating this function, we say that it works in linear time - O(n) because the effectiveness of its main action (searching) is directly related to the size of its input (the list). As a result, we can conclude that it would take longer for the function to find the value of 10 than 2 or 3. To summarize, the algorithm will have to iterate through the complete set of values when searching for a non-present value like 16.
+When evaluating this function, we say that it works in linear time - O(n) because the effectiveness of its main action (searching) is directly related to the size of its input (the list). As a result, we can conclude that it would take longer for the function to find the value of 10 than 2 or 3.
+
+To summarize, the algorithm will have to iterate through the complete set of values when searching for a non-present value like 16.
 
 ### Counting operations
 
@@ -63,9 +75,13 @@ In most cases, linear time operations are referred to as being "brute force" bec
 
 ## Constant time - O(1)
 
-When evaluating algorithms, it's often ideal to code a solution where the size of the data input has no direct relationship to performance. Consider successful search algorithms like Google, or machine learning solutions used on websites like Netflix and Amazon. These systems run in constant time and are represented with the symbol O(1).
+When evaluating algorithms, it's often ideal to code a solution where the size of the data input has no direct relationship to performance. Consider successful search algorithms like Google, or machine learning solutions used on websites like Netflix and Amazon.
 
-A significant difference between a linear and constant operation is logic. In the case of Google, many hardware and software complexities are put into place to ensure things work as quickly as possible. However, not all constant time operations need to be complicated. Consider these simple examples:
+These systems run in constant time and are represented with the symbol O(1).
+
+A significant difference between a linear and constant operation is logic. In the case of Google, many hardware and software complexities are put into place to ensure things work as quickly as possible.
+
+However, not all constant time operations need to be complicated. Consider these simple examples:
 
 ```swift
 //constant time operations - O(1)
@@ -86,7 +102,9 @@ func addToEnd(_ value: Int, to list: inout [Int]) {
 }
 ```
 
-What makes these operations constant time? They don't need to look through the data. Whether your list contains 10 items or 10,000 items, accessing the first element, last element, or adding to the end takes the same amount of time. The computer knows exactly where these positions are in memory, so it can jump directly to them.
+What makes these operations constant time? They don't need to look through the data. Whether your list contains 10 items or 10,000 items, accessing the first element, last element, or adding to the end takes the same amount of time.
+
+The computer knows exactly where these positions are in memory, so it can jump directly to them.
 
 Think of it like a bookmark in a physical book. Finding the bookmarked page takes the same amount of time whether the book has 100 pages or 1,000 pages—you just open to the bookmark.
 

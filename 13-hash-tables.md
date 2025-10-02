@@ -11,7 +11,9 @@ description: "Build hash tables with collision handling"
 
 # Hash tables
 
-Hash tables are fundamental data structures that provide extremely fast insertion, deletion, and lookup operations through clever use of hash functions. While Swift's built-in `Dictionary` type implements hash table functionality, understanding how to build your own hash table from scratch is essential for mastering computer science fundamentals. In this chapter, we'll explore hash table design principles and implement a robust, modern hash table in Swift.
+Hash tables are fundamental data structures that provide extremely fast insertion, deletion, and lookup operations through clever use of hash functions. While Swift's built-in `Dictionary` type implements hash table functionality, understanding how to build your own hash table from scratch is essential for mastering computer science fundamentals.
+
+In this chapter, we'll explore hash table design principles and implement a robust, modern hash table in Swift.
 
 ## Understanding hash tables
 

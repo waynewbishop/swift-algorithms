@@ -11,7 +11,9 @@ description: "Build and traverse binary search trees"
 
 # Binary search trees
 
-A binary search tree stores and sorts information in a tree-based hierarchy. As discussed in the Big O notation chapter, algorithms provide the best efficiency with sorted data. Binary search tree (BST) models are built using specific rules. They should not be mistaken for a binary tree or trie. Those structures also store information in a hierarchy, but employ different rules.
+A binary search tree stores and sorts information in a tree-based hierarchy. As discussed in the Big O notation chapter, algorithms provide the best efficiency with sorted data. Binary search tree (BST) models are built using specific rules.
+
+They should not be mistaken for a binary tree or trie. Those structures also store information in a hierarchy, but employ different rules.
 
 ## How it works
 
@@ -151,9 +153,13 @@ func contains(_ key: T) -> Bool {
 
 ## Efficiency
 
-BST's are powerful due to their consistent rules. However, their greatest advantage is speed. Since data is organized at the time of insertion, a clear pattern emerges. Values less than the root node (e.g 8) will naturally filter to the left. Conversely, all values greater than the root will filter to the right.
+BST's are powerful due to their consistent rules. However, their greatest advantage is speed. Since data is organized at the time of insertion, a clear pattern emerges. Values less than the root node (e.g 8) will naturally filter to the left.
 
-As a result, our understanding of the data allows us to create an effective algorithm. So, for example, if we were searching for the value 7, it's only required that we traverse the left side of the BST. This is due to our search value being smaller than our root node (e.g 8). Binary Search Trees typically provide O(log n) for insertion and lookup. Algorithms with an efficiency of O(log n) are said to run in logarithmic time.
+Conversely, all values greater than the root will filter to the right.
+
+As a result, our understanding of the data allows us to create an effective algorithm. So, for example, if we were searching for the value 7, it's only required that we traverse the left side of the BST.
+
+This is due to our search value being smaller than our root node (e.g 8). Binary Search Trees typically provide O(log n) for insertion and lookup. Algorithms with an efficiency of O(log n) are said to run in logarithmic time.
 
 ## Tree traversals
 

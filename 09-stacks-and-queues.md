@@ -11,9 +11,13 @@ description: "Essential data structures for managing collections"
 
 # Stacks & queues
 
-Stacks and queues are structures that help organize data in a particular order. Their concept is based on the idea that information can be organized similarly to how things interact in the real world. For example, a stack of dinner plates can be represented by placing a single plate on a group of existing plates. Similarly, a queue can be easily understood by observing groups of people waiting in a line at a concert or grand opening.
+Stacks and queues are structures that help organize data in a particular order. Their concept is based on the idea that information can be organized similarly to how things interact in the real world. For example, a stack of dinner plates can be represented by placing a single plate on a group of existing plates.
 
-These structures can be implemented in various ways. Any app that makes use of a shopping cart, waiting list or playlist makes use of a stack or queue. In software development, a call stack is often used as an essential debugging / analytics tool. For this essay, we'll discuss and implement a stack and queue data structures in Swift.
+Similarly, a queue can be easily understood by observing groups of people waiting in a line at a concert or grand opening.
+
+These structures can be implemented in various ways. Any app that makes use of a shopping cart, waiting list or playlist makes use of a stack or queue. In software development, a call stack is often used as an essential debugging / analytics tool.
+
+For this essay, we'll discuss and implement a stack and queue data structures in Swift.
 
 ## Real-world applications: When to use stacks vs queues
 
@@ -313,7 +317,9 @@ public var isEmpty: Bool {
 
 ## How stacks work
 
-To contrast, Stack structures process elements on a "last-in, first-out" (e.g. LIFO) technique. This distinction allows it to perform basic operations such as element insertion and retrieval in constant time - O(1). As an iOS Developer, the concept of stacking two or more views to create a view hierarchy is common. As we'll see in Chapter 10 (Binary Search Trees), Stacks also come in handy when supporting other data structures and algorithms.
+To contrast, Stack structures process elements on a "last-in, first-out" (e.g. LIFO) technique. This distinction allows it to perform basic operations such as element insertion and retrieval in constant time - O(1).
+
+As an iOS Developer, the concept of stacking two or more views to create a view hierarchy is common. As we'll see in Chapter 10 (Binary Search Trees), Stacks also come in handy when supporting other data structures and algorithms.
 
 ```swift
 public class Stack<T> {

@@ -155,7 +155,9 @@ let results: Array<Int> = numberList.insertionSort()
 
 ## Bubble sort
 
-The bubble sort is another common sorting technique. Like insertion sort, the bubble sort algorithm combines a series of steps with an invariant. The function works by evaluating pairs of values. Once compared, the position of the largest value is swapped with the smaller value. Completed enough times, this "bubbling" effect eventually sorts all elements in the list.
+The bubble sort is another common sorting technique. Like insertion sort, the bubble sort algorithm combines a series of steps with an invariant. The function works by evaluating pairs of values. Once compared, the position of the largest value is swapped with the smaller value.
+
+Completed enough times, this "bubbling" effect eventually sorts all elements in the list.
 
 ```swift
 extension Array where Element: Comparable {

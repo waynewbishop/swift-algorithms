@@ -11,7 +11,9 @@ description: "Implement singly and doubly linked lists"
 
 # Linked lists
 
-A linked list is a basic data structure that provides a way to associate related content. At a basic level, linked lists provide the same functionality as an Array. That is, the ability to insert, retrieve, update and remove related items. However, if properly implemented, linked lists can provide enhanced flexibility. Since objects are managed independently (instead of contiguously - as with an array), lists can prove useful when dealing with large datasets and complex algorithms.
+A linked list is a basic data structure that provides a way to associate related content. At a basic level, linked lists provide the same functionality as an Array. That is, the ability to insert, retrieve, update and remove related items.
+
+However, if properly implemented, linked lists can provide enhanced flexibility. Since objects are managed independently (instead of contiguously - as with an array), lists can prove useful when dealing with large datasets and complex algorithms.
 
 ## Arrays vs linked lists: Understanding the trade-offs
 
@@ -154,13 +156,17 @@ However, understanding linked lists is crucial for:
 
 ## How it works
 
-In its basic form, a linked list is comprised of a key and indicator. The key represents the data you would like to store such as a String or scalar value. Typically represented by a pointer, the indicator stores the location (e.g. memory address) of where the next item can be found. Using this technique, you can chain seemingly independent objects together.
+In its basic form, a linked list is comprised of a key and indicator. The key represents the data you would like to store such as a String or scalar value. Typically represented by a pointer, the indicator stores the location (e.g. memory address) of where the next item can be found.
+
+Using this technique, you can chain seemingly independent objects together.
 
 [diagram: A linked list with three keys and three indicators]
 
 ## The data structure
 
-Here's an example of a "doubly" linked list structure written in Swift. The term doubly refers to the idea that the structure contains two pointers that refer to the previous and next items. With generics applied, the structure can also store any type and also supports optional nil values. The concept of combining keys and pointers to create structures not only applies to linked lists, but to other types like tries, queues and graphs.
+Here's an example of a "doubly" linked list structure written in Swift. The term doubly refers to the idea that the structure contains two pointers that refer to the previous and next items. With generics applied, the structure can also store any type and also supports optional nil values.
+
+The concept of combining keys and pointers to create structures not only applies to linked lists, but to other types like tries, queues and graphs.
 
 ```swift
 //linked list structure
@@ -173,7 +179,9 @@ class LLNode<T> {
 
 ## Using optionals
 
-When creating algorithms its good practice to set your class properties to nil before they are used. Like with app development, nil can be used to determine missing values or to predict the end of a list. Swift helps enforce this best-practice at compile time through a paradigm called optionals. For example, the function printAllKeys employs an optional (e.g., current) to iterate through linked list items.
+When creating algorithms its good practice to set your class properties to nil before they are used. Like with app development, nil can be used to determine missing values or to predict the end of a list.
+
+Swift helps enforce this best-practice at compile time through a paradigm called optionals. For example, the function printAllKeys employs an optional (e.g., current) to iterate through linked list items.
 
 ```swift
 //print keys for the class
