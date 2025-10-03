@@ -133,3 +133,134 @@
   border-right: 1px solid #d2d2d7;
   margin-right: 1em;
 }
+
+/* ========================================
+   Dark Mode Syntax Highlighting
+   Based on Xcode Default (Dark) Theme
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Default text color for plain code in dark mode */
+  .highlight pre code {
+    color: #ffffff;
+    font-weight: 300;
+  }
+
+  /* Comments - Gray/Green */
+  .highlight .c,
+  .highlight .cm,
+  .highlight .cp,
+  .highlight .c1,
+  .highlight .cs {
+    color: #6c7986;
+    font-style: normal;
+    font-weight: 300;
+  }
+
+  /* Keywords - Pink/Magenta */
+  .highlight .k,
+  .highlight .kc,
+  .highlight .kd,
+  .highlight .kn,
+  .highlight .kp,
+  .highlight .kr,
+  .highlight .kt {
+    color: #ff7ab2;
+    font-weight: 300;
+  }
+
+  /* Strings - Red/Orange */
+  .highlight .s,
+  .highlight .sb,
+  .highlight .sc,
+  .highlight .sd,
+  .highlight .s2,
+  .highlight .se,
+  .highlight .sh,
+  .highlight .si,
+  .highlight .sx,
+  .highlight .sr,
+  .highlight .s1,
+  .highlight .ss {
+    color: #ff8170;
+    font-weight: 300;
+  }
+
+  /* Numbers - Yellow/Tan */
+  .highlight .m,
+  .highlight .mf,
+  .highlight .mh,
+  .highlight .mi,
+  .highlight .mo,
+  .highlight .mb,
+  .highlight .il {
+    color: #d9c97c;
+    font-weight: 300;
+  }
+
+  /* Function/Method names - White */
+  .highlight .n,
+  .highlight .na,
+  .highlight .nc,
+  .highlight .nd,
+  .highlight .ne,
+  .highlight .nf,
+  .highlight .nl,
+  .highlight .nn,
+  .highlight .nx {
+    color: #ffffff;
+    font-weight: 300;
+  }
+
+  /* Variables, properties - Teal/Cyan */
+  .highlight .nv,
+  .highlight .vc,
+  .highlight .vg,
+  .highlight .vi {
+    color: #6bdfff;
+    font-weight: 300;
+  }
+
+  /* Operators - White */
+  .highlight .o,
+  .highlight .ow {
+    color: #ffffff;
+    font-weight: 300;
+  }
+
+  /* Punctuation - White */
+  .highlight .p {
+    color: #ffffff;
+    font-weight: 300;
+  }
+
+  /* Generic (types in angle brackets) - Light Purple */
+  .highlight .gh {
+    color: #dabaff;
+    font-weight: 300;
+  }
+
+  /* Built-in types - Light Purple */
+  .highlight .bp {
+    color: #dabaff;
+    font-weight: 300;
+  }
+
+  /* Language constants (true, false, nil) - Pink */
+  .highlight .kc {
+    color: #ff7ab2;
+    font-weight: 300;
+  }
+
+  /* Error - Red */
+  .highlight .err {
+    color: #ff8170;
+    font-weight: 300;
+  }
+
+  /* Line numbers (if enabled) */
+  .highlight .lineno {
+    color: #6e6e73;
+    border-right: 1px solid #38383a;
+  }
+}
