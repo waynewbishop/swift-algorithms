@@ -7,6 +7,12 @@
   background: transparent;
 }
 
+/* Default text color for plain code */
+.highlight pre code {
+  color: #000000;
+  font-weight: 300;
+}
+
 /* Comments - Green */
 .highlight .c,
 .highlight .cm,
