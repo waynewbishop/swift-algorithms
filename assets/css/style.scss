@@ -165,13 +165,13 @@ li {
 pre {
   background-color: #f5f5f7;
   border: none;
-  border-radius: 8px;
-  padding: 20px;
+  border-radius: 12px;
+  padding: 24px;
   margin: 1.5rem 0;
   overflow-x: auto;
   font-family: "SF Mono", Menlo, Monaco, "Courier New", monospace;
   font-size: 15px;
-  line-height: 1.42857;
+  line-height: 1.5;
   font-weight: 400;
   color: #1d1d1f;
 }
@@ -197,27 +197,82 @@ code {
   font-weight: 400;
 }
 
-/* Syntax highlighting - minimal with purple keywords */
-.highlight .k, .highlight .kd, .highlight .kt {
+/* Syntax highlighting - Apple documentation colors */
+
+/* Keywords (extension, func, for, if, return, struct, var, let, private, etc.) */
+.highlight .k,
+.highlight .kd,
+.highlight .kt,
+.highlight .kn,
+.highlight .kp,
+.highlight .kr {
   color: #ad3da4;
   font-weight: 400;
 }
 
-.highlight .s, .highlight .s1, .highlight .s2 {
-  color: #1d1d1f;
+/* Types and Classes (Array, Element, Scene, Int, String, etc.) */
+.highlight .nc,
+.highlight .nb,
+.highlight .bp {
+  color: #0068d6;
+  font-weight: 400;
 }
 
-.highlight .n, .highlight .nf, .highlight .nc {
-  color: #1d1d1f;
+/* Strings */
+.highlight .s,
+.highlight .s1,
+.highlight .s2,
+.highlight .sb,
+.highlight .sc,
+.highlight .sd,
+.highlight .sh,
+.highlight .si,
+.highlight .sx {
+  color: #d12f1b;
+  font-weight: 400;
 }
 
-.highlight .o, .highlight .p {
-  color: #1d1d1f;
+/* Numbers */
+.highlight .m,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .mo {
+  color: #0068d6;
+  font-weight: 400;
 }
 
-.highlight .c, .highlight .c1, .highlight .cm {
-  color: #6e6e73;
+/* Comments */
+.highlight .c,
+.highlight .c1,
+.highlight .cm,
+.highlight .cp,
+.highlight .cs {
+  color: #008f00;
   font-style: italic;
+  font-weight: 400;
+}
+
+/* Function names */
+.highlight .nf {
+  color: #1d1d1f;
+  font-weight: 400;
+}
+
+/* Variables and identifiers */
+.highlight .n,
+.highlight .nv,
+.highlight .vi,
+.highlight .vg {
+  color: #1d1d1f;
+  font-weight: 400;
+}
+
+/* Operators and punctuation */
+.highlight .o,
+.highlight .p {
+  color: #1d1d1f;
+  font-weight: 400;
 }
 
 /* Tables */
