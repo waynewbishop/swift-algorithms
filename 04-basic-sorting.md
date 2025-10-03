@@ -311,10 +311,3 @@ Basic sorting algorithms provide a foundation for understanding how sorting work
 In Chapter 5, we'll explore advanced sorting algorithms like merge sort and quick sort that achieve **O(n log n)** complexity—dramatically faster for large datasets. But understanding these basic sorts provides the foundation for appreciating why those advanced algorithms matter.
 
 Besides insertion, selection and bubble sort, there are many other sorting algorithms. As we'll see, data structures such as Binary Search Trees, Tries and Heaps also aid in sorting elements, but do so as part of their insertion process.
----
-
-<div class="chapter-nav">
-  <a href="03-basic-searching" class="prev">Previous Chapter</a>
-  <a href="index">Table of Contents</a>
-  <a href="05-advanced-sorting" class="next">Next Chapter</a>
-</div>

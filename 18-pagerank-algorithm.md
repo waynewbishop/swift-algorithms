@@ -861,10 +861,3 @@ protocol DistributedPageRankNode {
 // Process continues until global convergence
 ```
 
-
----
-
-<div class="chapter-nav">
-  <a href="17-linear-algebra" class="prev">Previous Chapter</a>
-  <a href="index">Table of Contents</a>
-</div>

@@ -251,11 +251,3 @@ When choosing a sorting algorithm, consider:
 
 This analytical approach to algorithm selection will serve you well throughout your career in software development.
 
-
----
-
-<div class="chapter-nav">
-  <a href="04-basic-sorting" class="prev">Previous Chapter</a>
-  <a href="index">Table of Contents</a>
-  <a href="06-recursion" class="next">Next Chapter</a>
-</div>

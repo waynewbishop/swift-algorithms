@@ -473,11 +473,3 @@ print(top3) // [9, 6, 5]
 | Delete Min/Max | O(n) | O(n) | O(log n) | O(log n) | O(n) |
 | Build from Array | O(1) | O(n) | O(n log n) | O(n) | O(n) |
 
-
----
-
-<div class="chapter-nav">
-  <a href="13-hash-tables" class="prev">Previous Chapter</a>
-  <a href="index">Table of Contents</a>
-  <a href="15-dynamic-programming" class="next">Next Chapter</a>
-</div>

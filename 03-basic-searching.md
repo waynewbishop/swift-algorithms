@@ -352,11 +352,3 @@ As you encounter searching problems in your own projects, ask yourself:
 These questions will help you choose the most appropriate searching strategy for your specific use case.
 
 
-
----
-
-<div class="chapter-nav">
-  <a href="02-big-o-notation" class="prev">Previous Chapter</a>
-  <a href="index">Table of Contents</a>
-  <a href="04-basic-sorting" class="next">Next Chapter</a>
-</div>

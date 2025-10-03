@@ -505,11 +505,3 @@ Binary search trees organize data hierarchically, providing efficient search, in
 
 Understanding BSTs is fundamental to computer science and provides the foundation for more complex tree structures like heaps (Chapter 14) and tries (Chapter 12).
 
-
----
-
-<div class="chapter-nav">
-  <a href="09-stacks-and-queues" class="prev">Previous Chapter</a>
-  <a href="index">Table of Contents</a>
-  <a href="11-graphs" class="next">Next Chapter</a>
-</div>

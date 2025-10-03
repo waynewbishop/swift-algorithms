@@ -588,11 +588,3 @@ Linear algebra forms the foundation for spatial computing and scientific program
 
 The best way to learn is by applying these concepts in real projects. Start small and build intuition through practice.
 
-
----
-
-<div class="chapter-nav">
-  <a href="16-advanced-complexity-analysis" class="prev">Previous Chapter</a>
-  <a href="index">Table of Contents</a>
-  <a href="18-pagerank-algorithm" class="next">Next Chapter</a>
-</div>

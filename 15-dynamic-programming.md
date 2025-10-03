@@ -319,11 +319,3 @@ Dynamic programming is a powerful optimization technique based on a simple idea:
 Dynamic programming appears throughout computer science—from optimizing database queries to training machine learning models. While the problems can get complex, the fundamental technique remains the same: break the problem down, store results, and build up to the solution.
 
 The examples in this chapter (Fibonacci and coin change) demonstrate the core concepts. As you encounter more complex problems, you'll recognize the same patterns: define the subproblems, establish base cases, and determine how to combine solutions to subproblems into solutions for larger problems.
-
----
-
-<div class="chapter-nav">
-  <a href="14-heaps" class="prev">Previous Chapter</a>
-  <a href="index">Table of Contents</a>
-  <a href="16-advanced-complexity-analysis" class="next">Next Chapter</a>
-</div>

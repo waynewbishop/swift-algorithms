@@ -540,11 +540,3 @@ Hash tables demonstrate several key algorithmic concepts:
 3. **Hash Function Design**: The quality of the hash function affects performance dramatically
 4. **Load Factor Management**: We must balance between space and time efficiency
 
-
----
-
-<div class="chapter-nav">
-  <a href="12-tries" class="prev">Previous Chapter</a>
-  <a href="index">Table of Contents</a>
-  <a href="14-heaps" class="next">Next Chapter</a>
-</div>
