@@ -824,4 +824,16 @@ tr:last-child td {
   pre {
     border: 1px solid var(--color-border);
   }
+
+  /* Default code text, operators, and punctuation - white in dark mode */
+  .highlight .n,
+  .highlight .nf,
+  .highlight .nv,
+  .highlight .vi,
+  .highlight .vg,
+  .highlight .o,
+  .highlight .p,
+  .highlight pre code {
+    color: #ffffff;
+  }
 }
