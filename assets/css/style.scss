@@ -549,6 +549,17 @@ pre code > span {
   font-weight: 400;
 }
 
+/* Jekyll syntax highlighting wrapper */
+.highlight {
+  background-color: var(--color-code-bg);
+  border-radius: 12px;
+}
+
+.highlight pre {
+  background-color: transparent;
+  border: none;
+}
+
 /* ========================================
    Tables
    ======================================== */
