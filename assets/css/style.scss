@@ -604,6 +604,13 @@ tr:last-child td {
   text-decoration: underline;
 }
 
+/* Hide Table of Contents link on desktop - sidebar provides navigation */
+@media (min-width: 1025px) {
+  .top-nav {
+    display: none;
+  }
+}
+
 .chapter-nav {
   display: flex;
   justify-content: space-between;
