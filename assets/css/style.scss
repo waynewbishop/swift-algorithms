@@ -1,12 +1,40 @@
 ---
 ---
 
-/* Complete custom stylesheet - Apple documentation style */
-/* No theme imports - complete control */
+/* GitHub Primer Design System Style */
+/* Based on GitHub documentation styling */
+
+:root {
+  /* Colors - GitHub Primer Light Theme */
+  --color-fg-default: #1f2328;
+  --color-fg-muted: #59636e;
+  --color-fg-accent: #0969da;
+  --color-bg-default: #ffffff;
+  --color-bg-muted: #f6f8fa;
+  --color-border-default: #d0d7de;
+  --color-border-muted: #d8dee4;
+
+  /* Spacing - Base-8 Scale */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 16px;
+  --spacing-4: 24px;
+  --spacing-5: 32px;
+  --spacing-6: 40px;
+  --spacing-7: 48px;
+  --spacing-8: 64px;
+
+  /* Typography */
+  --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+
+  /* Line Heights */
+  --lineHeight-condensed: 1.25;
+  --lineHeight-default: 1.5;
+  --lineHeight-code: 1.45;
+}
 
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -17,44 +45,23 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-  font-size: 17px;
-  line-height: 1.47;
-  font-weight: 400;
-  letter-spacing: 0;
-  color: #424245;
-  background-color: #fff;
-  padding: 0;
+  font-family: var(--font-system);
+  font-size: 16px;
+  line-height: var(--lineHeight-default);
+  color: var(--color-fg-default);
+  background-color: var(--color-bg-default);
+  word-wrap: break-word;
   margin: 0;
+  padding: 0;
 }
 
-/* Main content container */
-.main-content {
-  max-width: 64rem;
-  padding: 2rem 4rem;
-  margin: 0 auto;
-  font-size: 17px;
-}
-
-@media screen and (max-width: 64em) {
-  .main-content {
-    padding: 2rem;
-  }
-}
-
-@media screen and (max-width: 42em) {
-  .main-content {
-    padding: 1rem;
-  }
-}
-
-/* Page header */
+/* Page header - GitHub style gradient */
 .page-header {
   color: #fff;
   text-align: center;
   background-color: #159957;
   background-image: linear-gradient(120deg, #155799, #159957);
-  padding: 3rem 4rem;
+  padding: 3rem 2rem;
 }
 
 .project-name {
@@ -74,15 +81,17 @@ body {
 .btn {
   display: inline-block;
   margin-bottom: 1rem;
+  margin-right: 0.5rem;
   color: rgba(255, 255, 255, 0.7);
   background-color: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.2);
   border-style: solid;
   border-width: 1px;
-  border-radius: 0.3rem;
+  border-radius: 6px;
   transition: color 0.2s, background-color 0.2s, border-color 0.2s;
   padding: 0.75rem 1rem;
   text-decoration: none;
+  font-size: 1rem;
 }
 
 .btn:hover {
@@ -92,57 +101,80 @@ body {
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Headings */
+/* Main content container */
+.main-content {
+  max-width: 1012px;
+  margin: 0 auto;
+  padding: 45px;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 768px) {
+  .main-content {
+    padding: 15px;
+    font-size: 16px;
+  }
+}
+
+/* Headings - GitHub Primer style */
 h1, h2, h3, h4, h5, h6 {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
   font-weight: 600;
-  color: #1d1d1f;
+  line-height: var(--lineHeight-condensed);
+  margin-top: var(--spacing-4);
+  margin-bottom: var(--spacing-3);
 }
 
 h1 {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-  font-size: 40px;
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.003em;
-}
-
-h1 + p {
-  font-size: 21px;
-  line-height: 1.381;
-  font-weight: 400;
-  color: #86868b;
-  margin-top: 0.5em;
+  font-size: 2em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--color-border-default);
 }
 
 h2 {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-  font-size: 32px;
-  font-weight: 600;
-  line-height: 1.125;
-  letter-spacing: -0.009em;
+  font-size: 1.5em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--color-border-default);
 }
 
 h3 {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 1.167;
-  letter-spacing: -0.019em;
+  font-size: 1.25em;
 }
 
-h4, h5, h6 {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
+h4 {
+  font-size: 1em;
+}
+
+h5 {
+  font-size: 0.875em;
+}
+
+h6 {
+  font-size: 0.85em;
+  color: var(--color-fg-muted);
+}
+
+@media screen and (max-width: 768px) {
+  h1 { font-size: 26px; }
+  h2 { font-size: 22px; }
+  h3 { font-size: 18px; }
+}
+
+/* First paragraph after h1 - subtitle style */
+h1 + p {
+  font-size: 1.1em;
+  color: var(--color-fg-muted);
+  margin-top: 0;
 }
 
 /* Paragraphs and text */
 p {
-  margin-bottom: 1em;
+  margin-top: 0;
+  margin-bottom: 16px;
 }
 
+/* Links */
 a {
-  color: #007aff;
+  color: var(--color-fg-accent);
   text-decoration: none;
 }
 
@@ -153,103 +185,134 @@ a:hover {
 /* Lists */
 ul, ol {
   margin-top: 0;
-  margin-bottom: 1rem;
-  padding-left: 2rem;
+  margin-bottom: 16px;
+  padding-left: 2em;
 }
 
 li {
   margin-bottom: 0.25rem;
 }
 
-/* Code blocks - Apple documentation style */
+li + li {
+  margin-top: 0.25em;
+}
+
+/* Code blocks - GitHub Primer style */
 pre {
-  background-color: #f5f5f7;
-  border: none;
-  border-radius: 8px;
-  padding: 20px;
-  margin: 1.5rem 0;
-  overflow-x: auto;
-  font-family: "SF Mono", Menlo, Monaco, "Courier New", monospace;
-  font-size: 15px;
-  line-height: 1.42857;
-  font-weight: 400;
-  color: #1d1d1f;
+  font-family: var(--font-mono);
+  font-size: 85%;
+  line-height: var(--lineHeight-code);
+  background-color: var(--color-bg-muted);
+  color: var(--color-fg-default);
+  padding: var(--spacing-3);
+  margin-top: 0;
+  margin-bottom: 16px;
+  border-radius: 6px;
+  overflow: auto;
+  word-wrap: normal;
 }
 
 pre code {
-  background: transparent;
+  background-color: transparent;
+  border: 0;
   padding: 0;
+  font-size: 100%;
+  line-height: inherit;
   color: inherit;
   font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  border: none;
+  white-space: pre;
+  word-break: normal;
 }
 
-/* Inline code */
+/* Inline code - GitHub Primer style */
 code {
-  font-family: "SF Mono", Menlo, Monaco, "Courier New", monospace;
-  background-color: #f5f5f7;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.94em;
-  color: #1d1d1f;
-  font-weight: 400;
+  font-family: var(--font-mono);
+  font-size: 85%;
+  background-color: rgba(129, 139, 152, 0.12);
+  padding: 0.2em 0.4em;
+  margin: 0;
+  border-radius: 6px;
+  white-space: break-spaces;
 }
 
-/* Syntax highlighting - minimal with purple keywords */
-.highlight .k, .highlight .kd, .highlight .kt {
-  color: #ad3da4;
-  font-weight: 400;
+/* Syntax highlighting - GitHub style */
+.highlight .k,
+.highlight .kd,
+.highlight .kt {
+  color: #cf222e;
+  font-weight: 600;
 }
 
-.highlight .s, .highlight .s1, .highlight .s2 {
-  color: #1d1d1f;
+.highlight .s,
+.highlight .s1,
+.highlight .s2 {
+  color: #0a3069;
 }
 
-.highlight .n, .highlight .nf, .highlight .nc {
-  color: #1d1d1f;
+.highlight .n,
+.highlight .nf,
+.highlight .nc {
+  color: var(--color-fg-default);
 }
 
-.highlight .o, .highlight .p {
-  color: #1d1d1f;
+.highlight .o,
+.highlight .p {
+  color: var(--color-fg-default);
 }
 
-.highlight .c, .highlight .c1, .highlight .cm {
-  color: #6e6e73;
+.highlight .c,
+.highlight .c1,
+.highlight .cm {
+  color: #59636e;
   font-style: italic;
 }
 
-/* Tables */
+.highlight .m,
+.highlight .mi,
+.highlight .mf {
+  color: #0550ae;
+}
+
+/* Tables - GitHub Primer style */
 table {
   display: block;
   width: 100%;
+  width: max-content;
+  max-width: 100%;
   overflow: auto;
-  word-break: normal;
-  word-break: keep-all;
-  border-collapse: collapse;
   border-spacing: 0;
-  margin: 1.5rem 0;
+  border-collapse: collapse;
+  margin-top: 0;
+  margin-bottom: 16px;
 }
 
 table th {
   font-weight: 600;
-  background-color: #f5f5f7;
-  border: 1px solid #e5e5e5;
-  padding: 0.5rem 1rem;
+  padding: 6px 13px;
+  border: 1px solid var(--color-border-default);
+  background-color: var(--color-bg-muted);
 }
 
 table td {
-  border: 1px solid #e5e5e5;
-  padding: 0.5rem 1rem;
+  padding: 6px 13px;
+  border: 1px solid var(--color-border-default);
 }
 
-/* Blockquotes */
+table tr {
+  background-color: var(--color-bg-default);
+  border-top: 1px solid var(--color-border-muted);
+}
+
+table tr:nth-child(2n) {
+  background-color: var(--color-bg-muted);
+}
+
+/* Blockquotes - GitHub style */
 blockquote {
-  padding: 0 1rem;
-  margin-left: 0;
-  color: #6e6e73;
-  border-left: 0.3rem solid #e5e5e5;
+  margin: 0 0 16px 0;
+  padding: 0 1em;
+  color: var(--color-fg-muted);
+  border-left: 0.25em solid var(--color-border-default);
 }
 
 blockquote > :first-child {
@@ -262,24 +325,30 @@ blockquote > :last-child {
 
 /* Horizontal rule */
 hr {
-  height: 1px;
+  height: 0.25em;
   padding: 0;
-  margin: 2rem 0;
-  background-color: #e5e5e5;
+  margin: 24px 0;
+  background-color: var(--color-border-default);
   border: 0;
+}
+
+/* Images */
+img {
+  max-width: 100%;
+  box-sizing: content-box;
 }
 
 /* Top navigation - home button */
 .top-nav {
   margin-bottom: 30px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid var(--color-border-default);
 }
 
 .top-nav a {
-  color: #007aff;
+  color: var(--color-fg-accent);
   text-decoration: none;
-  font-size: 15px;
+  font-size: 14px;
   padding: 8px 16px;
   border-radius: 6px;
   transition: background-color 0.2s;
@@ -287,7 +356,8 @@ hr {
 }
 
 .top-nav a:hover {
-  background-color: #f5f5f7;
+  background-color: var(--color-bg-muted);
+  text-decoration: none;
 }
 
 .top-nav a::before {
@@ -298,15 +368,16 @@ hr {
 .chapter-nav {
   margin-top: 60px;
   padding-top: 30px;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid var(--color-border-default);
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 16px;
+  flex-wrap: wrap;
 }
 
 .chapter-nav a {
-  color: #007aff;
+  color: var(--color-fg-accent);
   text-decoration: none;
   padding: 10px 20px;
   border-radius: 6px;
@@ -314,7 +385,8 @@ hr {
 }
 
 .chapter-nav a:hover {
-  background-color: #f5f5f7;
+  background-color: var(--color-bg-muted);
+  text-decoration: none;
 }
 
 .chapter-nav .prev::before {
@@ -329,16 +401,37 @@ hr {
 .site-footer {
   padding-top: 2rem;
   margin-top: 2rem;
-  border-top: solid 1px #e5e5e5;
-  font-size: 0.9rem;
-  color: #6e6e73;
+  border-top: 1px solid var(--color-border-default);
+  font-size: 0.875rem;
+  color: var(--color-fg-muted);
 }
 
 .site-footer-owner {
   display: block;
   font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
 .site-footer-credits {
-  color: #6e6e73;
+  color: var(--color-fg-muted);
+}
+
+/* Strong/bold text */
+strong {
+  font-weight: 600;
+}
+
+/* Emphasis */
+em {
+  font-style: italic;
+}
+
+/* Details/summary */
+details {
+  margin-bottom: 16px;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 600;
 }
