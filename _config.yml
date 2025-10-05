@@ -105,6 +105,8 @@ navigation:
         url: "17-linear-algebra"
       - title: "PageRank Algorithm"
         url: "18-pagerank-algorithm"
+      - title: "Semantic Search"
+        url: "19-semantic-search"
 
 # Exclude from processing
 exclude:
