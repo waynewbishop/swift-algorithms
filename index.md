@@ -112,9 +112,9 @@ This book is designed for intermediate Swift developers who:
 
 Wayne Bishop is an iOS developer and educator specializing in Swift and computer science fundamentals. He teaches developers how to master algorithms and data structures through practical implementation.
 
-- Website: [waynewbishop.com](http://www.waynewbishop.com)
-- LinkedIn: [waynebishop](https://www.linkedin.com/in/waynebishop/)
+- LinkedIn: [waynebishop](https://www.linkedin.com/in/waynebishop)
 - GitHub: [@waynewbishop](https://github.com/waynewbishop)
+- Medium: [waynewbishop.com](https://waynewbishop.medium.com)
 
 ## License
 
