@@ -4,16 +4,16 @@
 
 ## Overview
 
-Since its introdution in 2014, Swift has become the cornerstone of Apple development, powering solutions for iPhone, WatchOS, VisionOS, server-based solutions and beyond. This book provides complete implementations of essential algorithms and data structures in modern Swift, going beyond pseudocode to show you how these concepts work in production code.
+Since its introduction in 2014, Swift has become the cornerstone of Apple development, powering solutions for iPhone, WatchOS, VisionOS, server-based solutions and beyond. This book provides complete implementations of essential algorithms, data structures and mathematics in modern Swift, going beyond pseudocode to show you how these concepts work in production code.
 
 ## What you'll learn
 
 - Master Big O notation and learn to evaluate algorithmic efficiency
-- Implement linear search, binary search, constant time operations and sorting algorithm
+- Implement linear search, binary search, constant time operations and sorting algorithms
 - Build type-safe, reusable code using Swift's powerful generic system
 - Create linked lists, stacks, queues, trees, graphs, and hash tables from scratch
 - Explore tries, heaps, dynamic programming, and graph algorithms like PageRank
-- Learn linear algebra fundamentals, including working with vectors and matracies. 
+- Learn linear algebra fundamentals, including working with vectors and matrices. 
 
 ## Who this book is for
 
@@ -24,13 +24,14 @@ This book is designed for:
 - Interview candidates preparing for technical coding interviews
 - Educators looking for teaching materials related to computer science or vector mathematics
 
-## Prerequsites
+## Prerequisites
 
 You should be comfortable with Swift basics (variables, functions, classes, structs) and familiar with common design patterns. No prior algorithms experience required.
 
-## Related projects
+## Related Projects
 
-- [bishop-algorithms-swift-package](https://github.com/waynewbishop/bishop-algorithms-swift-package) - Swift Package with reusable algorithm implementations
+- [Quiver Package](https://github.com/waynewbishop/bishop-algorithms-quiver-package) - Swift-native vector operations
+- [Structures Package](https://github.com/waynewbishop/bishop-algorithms-structures) - The Swift package containing all implementations
 
 ## Usage
 
