@@ -101,10 +101,10 @@ navigation:
         url: "15-dynamic-programming"
       - title: "Practical Performance Analysis"
         url: "16-advanced-complexity-analysis"
-      - title: "Linear Algebra"
-        url: "17-linear-algebra"
       - title: "PageRank Algorithm"
         url: "18-pagerank-algorithm"
+      - title: "Linear Algebra"
+        url: "17-linear-algebra"
       - title: "Semantic Search"
         url: "19-semantic-search"
 
