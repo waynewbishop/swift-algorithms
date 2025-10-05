@@ -432,7 +432,7 @@ pre {
   padding: 20px 24px;
   margin: var(--spacing-lg) 0;
   overflow-x: auto;
-  line-height: 1.4;
+  line-height: 1.5;
   border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
@@ -444,7 +444,7 @@ pre code {
   font-size: 14.5px;
   font-weight: 400;
   letter-spacing: 0;
-  line-height: 1.4;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   display: block;
@@ -456,7 +456,7 @@ pre code {
 }
 
 .highlight pre code {
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .highlight .highlight {
@@ -467,7 +467,7 @@ pre code {
 pre code .line,
 pre code > span {
   display: inline;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 /* ========================================
