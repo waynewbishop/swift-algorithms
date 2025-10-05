@@ -53,6 +53,7 @@ You can download GloVe embeddings from the Stanford NLP website at `https://nlp.
 Loading GloVe embeddings requires parsing the text format into a dictionary mapping words to their vector representations:
 
 ```swift
+// Parse GloVe text file into word-to-vector dictionary
 func loadGloVe(from filePath: String) throws -> [String: [Double]] {
     let content = try String(contentsOfFile: filePath)
     var embeddings: [String: [Double]] = [:]
@@ -76,11 +77,14 @@ func loadGloVe(from filePath: String) throws -> [String: [Double]] {
 
 This function reads the entire file, splits it into lines, and parses each line into a word and its corresponding vector. The validation step ensures that all numeric components converted successfully before storing the embedding. For the 50-dimensional version, this produces a dictionary with 400,000 entries, each mapping a word to a 50-element array.
 
+## Exploring word relationships
+
 Once loaded, you can explore the semantic relationships captured by the embeddings using Quiver's vector operations. Words with similar meanings have vectors that point in similar directions:
 
 ```swift
 import Quiver
 
+// Explore semantic relationships between words using cosine similarity
 let embeddings = try loadGloVe(from: "glove.6B.50d.txt")
 
 let king = embeddings["king"]!
@@ -118,6 +122,7 @@ This averaging preserves semantic properties. If a document contains words like 
 The implementation requires tokenizing text into words, looking up each word's embedding, and computing the element-wise average:
 
 ```swift
+// Convert text to vector by averaging word embeddings
 func embedText(_ text: String, embeddings: [String: [Double]]) -> [Double] {
     // Tokenize: split text into lowercase words
     let words = text.lowercased()
@@ -154,6 +159,7 @@ The `embedText` function handles the full pipeline from text to vector. Tokeniza
 Consider a concrete example with three-word documents and simplified 3-dimensional embeddings:
 
 ```swift
+// Example: averaging word vectors to create document vectors
 // Simplified embeddings for illustration
 let embeddings = [
     "chocolate": [0.8, 0.2, 0.1],
@@ -217,6 +223,7 @@ Using Quiver, comparing two document vectors becomes a single method call:
 ```swift
 import Quiver
 
+// Compare document vectors using Quiver's cosine similarity
 let doc1Vector = embedText("chocolate chip cookies", embeddings: embeddings)
 let doc2Vector = embedText("baking desserts", embeddings: embeddings)
 let doc3Vector = embedText("machine learning algorithms", embeddings: embeddings)
@@ -237,6 +244,18 @@ The geometric interpretation provides intuition for how semantic search works. I
 
 This geometric view extends to 50 dimensions, though we cannot visualize it directly. Each dimension captures some aspect of meaning learned from word co-occurrence patterns. Documents with similar meaning align along similar directions through this high-dimensional space, producing high cosine similarity scores.
 
+## Similarity score interpretation
+
+The similarity scores provide a quantitative measure of semantic relatedness that enables ranking and filtering search results. Understanding what different score ranges mean helps calibrate expectations and set appropriate thresholds for different applications.
+
+Scores above 0.7 typically indicate strong topical similarity. Documents in this range discuss the same subject matter, use related terminology, and likely satisfy the user's search intent. In a recipe search system, a query for "chocolate chip cookies" might return "cookie baking instructions" at 0.85 similarity and "brownie recipes" at 0.72—both clearly relevant results.
+
+Scores between 0.3 and 0.7 suggest moderate relatedness. These documents share some semantic overlap but may address different aspects of a topic or use less directly related vocabulary. They might be useful as "related content" or secondary results. A query for "cookie baking" might find "cake frosting techniques" at 0.55—related through the broader "baking" concept but not directly matching the query intent.
+
+Scores below 0.3 generally indicate low semantic relevance. These documents use different terminology, discuss different topics, and rarely satisfy user intent. The "cookie baking" query finding "machine learning algorithms" at 0.12 exemplifies this—the documents share no meaningful semantic connection despite both being technical content.
+
+These thresholds vary by domain and application. Academic paper search might use stricter thresholds (0.8+) to ensure high relevance, while broad content discovery might accept lower scores (0.4+) to surface serendipitous connections. E-commerce product search often tunes thresholds based on user engagement metrics, finding the sweet spot between precision and recall for their specific catalog and user base.
+
 ## Similarity search algorithm
 
 Semantic search requires finding the most similar documents to a query from a collection. Given a query vector and a database of document vectors, we need to identify the top k most similar documents. This is the k-nearest neighbors problem in high-dimensional space.
@@ -246,6 +265,7 @@ The brute-force algorithm compares the query vector against every document vecto
 ```swift
 import Quiver
 
+// Find k most similar vectors using brute-force comparison
 func findSimilar(
     query: [Double],
     database: [[Double]],
@@ -277,6 +297,7 @@ Consider a concrete example with a small document collection:
 ```swift
 import Quiver
 
+// Complete example: building and searching a document database
 let embeddings = try loadGloVe(from: "glove.6B.50d.txt")
 
 // Build document database
@@ -320,6 +341,7 @@ A complete semantic search system combines text embedding, vector storage, and s
 The core data structures represent documents and search results:
 
 ```swift
+// Data models for semantic search system
 struct Document {
     let id: String
     let text: String
@@ -340,6 +362,7 @@ The main search system encapsulates the embeddings and document collection:
 ```swift
 import Quiver
 
+// Complete semantic search implementation
 struct SemanticSearch {
     private var documents: [Document] = []
     private let embeddings: [String: [Double]]
@@ -383,6 +406,7 @@ Using the search system requires only a few lines of code:
 ```swift
 import Quiver
 
+// Example: using the semantic search system
 // Initialize with GloVe embeddings
 var search = try SemanticSearch(glovePath: "glove.6B.50d.txt")
 
@@ -412,9 +436,12 @@ for result in results {
 
 The system finds semantically related content even when exact keywords differ. The query mentions "cookie baking," and the top result mentions "chocolate chip cookie recipe"—related but not identical words. The second result about brownies shares semantic similarity through baking and desserts. The ice cream result ranks lower but still relates through the dessert connection.
 
+## Metadata filtering strategies
+
 Adding metadata filtering extends the basic search with structured constraints. Many applications need to combine semantic similarity with categorical filters:
 
 ```swift
+// Adding metadata to enable filtered search
 struct Document {
     let id: String
     let text: String
@@ -459,6 +486,7 @@ This allows queries like "cookie baking" restricted to the "desserts" category, 
 Batch operations improve efficiency when adding multiple documents:
 
 ```swift
+// Batch add documents for better performance
 mutating func addBatch(_ items: [(id: String, text: String)]) {
     let newDocuments = items.map { id, text in
         let vector = embedText(text, embeddings: embeddings)
@@ -490,13 +518,35 @@ For collections exceeding 100,000 documents, approximate nearest neighbor algori
 
 The choice between exact and approximate search depends on application requirements. E-commerce product search might tolerate 95% accuracy for 100× speedup. Academic paper search might require exact results to ensure important related work isn't missed. Customer support systems might prefer exact search on smaller, curated document sets. Understanding these tradeoffs informs architectural decisions.
 
-Semantic search applications span numerous domains. E-commerce platforms use it to find products matching customer intent rather than exact keywords. Content recommendation systems find articles similar to what users recently read. Customer support systems route questions to relevant documentation. Research tools find related papers. Code search finds similar functions across large codebases. Question-answering systems retrieve context relevant to user questions.
+## Semantic search applications
+
+Semantic search applications span numerous domains, demonstrating the versatility of vector-based similarity. E-commerce platforms use semantic search to find products matching customer intent rather than exact keywords. When a shopper searches for "comfortable running shoes," the system surfaces results for "athletic footwear" and "jogging sneakers" that keyword matching would miss. This improves discovery and reduces zero-result searches.
+
+Content recommendation systems leverage semantic similarity to find articles similar to what users recently read. News applications suggest related stories based on topic overlap rather than manual categorization. Educational platforms recommend learning materials that build on concepts a student just studied. These systems create personalized content journeys by understanding semantic relationships between documents.
+
+Customer support systems route questions to relevant documentation using semantic search. When a user asks "How do I reset my password," the system finds help articles about "account recovery" and "security settings" even without exact keyword matches. This reduces support ticket volume and improves self-service success rates by surfacing relevant answers regardless of how questions are phrased.
+
+Research tools employ semantic search to find related academic papers. Scholars searching for work on "neural network optimization" discover papers about "deep learning training techniques" and "gradient descent improvements." Citation networks complement semantic similarity to surface foundational work and recent advances, accelerating literature review and identifying research gaps.
+
+Code search systems find similar functions across large codebases using semantic embeddings of code and comments. Developers can search for "parse JSON response" and find relevant parsing utilities even if they're named "deserializeHTTPPayload." This accelerates code reuse, helps onboard new team members, and reveals existing implementations before writing duplicates.
+
+Question-answering systems retrieve context relevant to user questions before generating responses. Given the question "What causes the seasons," the system retrieves paragraphs about Earth's axial tilt and orbital mechanics. This retrieved context guides the answer generation, grounding responses in factual sources rather than relying solely on model parameters.
 
 The fundamental algorithmic pattern remains consistent across these applications: convert text to vectors using embeddings, store vectors alongside documents, compute query vectors, find nearest neighbors, return ranked results. Domain-specific variations add metadata filtering, different similarity thresholds, hybrid scoring combining semantic and keyword signals, or multi-stage retrieval pipelines. But the core semantic search algorithm provides the foundation.
 
-Modern production systems build on these fundamentals with additional sophistication. They might combine GloVe or similar static embeddings with contextualized embeddings from transformer models. They might use learned re-ranking models to refine initial similarity scores. They might incorporate user interaction signals to personalize results. Yet the basic principles—vectors capture meaning, similarity measures relatedness, nearest neighbors find matches—remain central.
+## Advanced techniques
 
-For interview preparation, semantic search problems test multiple skills. You might be asked to implement cosine similarity, design a document retrieval system, optimize search latency, or explain tradeoffs between exact and approximate methods. Understanding the complete pipeline from embeddings through similarity search provides the foundation to reason about these problems and their variations.
+Modern production systems build on these fundamentals with additional sophistication. They might combine GloVe or similar static embeddings with contextualized embeddings from transformer models like BERT. While GloVe assigns each word a single vector regardless of context, transformers generate different vectors for "bank" in "river bank" versus "savings bank." This context-awareness improves semantic precision for ambiguous terms.
+
+Learned re-ranking models refine initial similarity scores by analyzing query-document pairs with neural networks. The semantic search provides candidate documents, then the re-ranker examines features like keyword overlap, document structure, and user interaction signals to reorder results. This two-stage approach balances the efficiency of vector search with the accuracy of complex relevance models.
+
+User interaction signals personalize results based on individual preferences and behavior. Click-through rates, dwell time, and explicit feedback inform which similarity scores indicate genuine relevance for each user. A system might learn that one user prefers technical documentation while another prefers beginner tutorials, adjusting result rankings accordingly even for identical queries.
+
+Hybrid scoring combines semantic similarity with traditional keyword matching to handle both concept-based and specific-term queries. Searching for "iPhone 15 Pro" benefits from exact keyword matching, while "smartphone with good camera" requires semantic understanding. Weighted combinations of BM25 keyword scores and vector similarity provide robust performance across query types.
+
+Multi-stage retrieval pipelines use cheap approximate search to identify candidates, then apply expensive re-ranking to a small subset. This architecture enables semantic search over billions of documents by constraining costly operations to promising results. The first stage might return 100 candidates in milliseconds, then sophisticated models spend seconds analyzing just those 100 to select the final 10.
+
+For interview preparation, semantic search problems test multiple skills. Implement cosine similarity efficiently. Design a document retrieval system with specified latency and accuracy requirements. Optimize search for millions of documents. Explain tradeoffs between exact and approximate nearest neighbor methods. Discuss how to handle vocabulary mismatch and rare terms. These questions assess both algorithmic understanding and system design thinking.
 
 The algorithms in this chapter demonstrate how vector mathematics from Chapter 17 enables practical AI applications. Cosine similarity, originally an abstract geometric concept, becomes a semantic relatedness measure. k-nearest neighbors, originally a classification algorithm, becomes a semantic search engine. Pre-trained embeddings eliminate machine learning complexity while still capturing semantic meaning. Together, these pieces create systems that understand text meaning rather than just matching characters.
 
