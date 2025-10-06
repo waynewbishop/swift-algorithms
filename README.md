@@ -13,7 +13,7 @@ Swift has become the cornerstone of Apple development, powering solutions for iP
 - Build type-safe, reusable code using Swift's powerful generic system
 - Create linked lists, stacks, queues, trees, graphs, and hash tables from scratch
 - Explore tries, heaps, dynamic programming, and graph algorithms like PageRank
-- Learn linear algebra fundamentals for data science, including working with vectors and matrices. 
+- Learn linear algebra fundamentals for data science, including working with vectors and matrices
 
 ## Who this book is for
 
@@ -31,8 +31,8 @@ You should be comfortable with Swift basics (variables, functions, classes, stru
 
 ## Related Projects
 
-- [Quiver Package](https://github.com/waynewbishop/bishop-algorithms-quiver-package) - Swift-native vector operations
-- [Structures Package](https://github.com/waynewbishop/bishop-algorithms-structures) - The Swift package containing all implementations
+- [Quiver Package](https://github.com/waynewbishop/bishop-algorithms-quiver-package) - A Swift package that provides vector mathematics, numerical computing, and statistical operations.
+- [Structures Package](https://github.com/waynewbishop/bishop-algorithms-structures) - TExamples of commonly used algorithms and data structures in Swift Package format.
 
 ## Usage
 

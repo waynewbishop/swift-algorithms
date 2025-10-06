@@ -5,10 +5,6 @@ title: Swift Algorithms & Data Structures
 
 # Swift Algorithms & Data Structures
 
-A comprehensive guide to algorithms and data structures in Swift, designed for iOS developers who want to master computer science fundamentals while building practical, type-safe implementations.
-
-## Overview
-
 Swift has become the cornerstone of Apple development, powering solutions for iPhone, WatchOS, VisionOS, server-based solutions and beyond. This book provides complete implementations of essential algorithms, data structures and mathematics in modern Swift, going beyond pseudocode to show you how these concepts work in production code.
 
 ## What you'll learn
@@ -18,7 +14,7 @@ Swift has become the cornerstone of Apple development, powering solutions for iP
 - Build type-safe, reusable code using Swift's powerful generic system
 - Create linked lists, stacks, queues, trees, graphs, and hash tables from scratch
 - Explore tries, heaps, dynamic programming, and graph algorithms like PageRank
-- Learn linear algebra fundamentals for data science, including working with vectors and matrices. 
+- Learn linear algebra fundamentals for data science, including working with vectors and matrices
 
 ## Who this book is for
 
@@ -32,8 +28,8 @@ This book is designed for:
 
 ## Related Projects
 
-- [Quiver Package](https://github.com/waynewbishop/bishop-algorithms-quiver-package) - Swift-native vector operations
-- [Structures Package](https://github.com/waynewbishop/bishop-algorithms-structures) - The Swift package containing all implementations
+- [Quiver Package](https://github.com/waynewbishop/bishop-algorithms-quiver-package) - A Swift package that provides vector mathematics, numerical computing, and statistical operations.
+- [Structures Package](https://github.com/waynewbishop/bishop-algorithms-structures) - TExamples of commonly used algorithms and data structures in Swift Package format.
 
 ## About the Author
 
@@ -41,4 +37,4 @@ Wayne Bishop is an iOS developer and educator specializing in Swift and computer
 
 - LinkedIn: [waynebishop](https://www.linkedin.com/in/waynebishop)
 - GitHub: [@waynewbishop](https://github.com/waynewbishop)
-- Medium: [waynewbishop](https://waynewbishop.medium.com)
+- Medium: [@waynewbishop](https://waynewbishop.medium.com)
