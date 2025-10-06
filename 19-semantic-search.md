@@ -17,15 +17,26 @@ Semantic search solves this problem by understanding the meaning behind words ra
 
 The foundation of semantic search rests on a mathematical representation of meaning: vectors. By converting text into high-dimensional numerical arrays, we can use mathematical operations to measure how similar two pieces of text are in meaning. This chapter explores the algorithms that power semantic search, from converting text to vectors through finding the most similar documents in a collection.
 
-## Understanding word embeddings
+## Introducing word embeddings
 
-Word embeddings transform words from symbolic representations into numerical vectors that capture semantic meaning. Rather than treating "king" and "queen" as arbitrary symbols with no mathematical relationship, embeddings represent them as points in a high-dimensional space where their proximity reflects their semantic similarity.
+Represented as a series of `Dictionary` values, **Word embeddings** transform words from symbolic representations into numerical vectors that capture semantic meaning. Rather than treating "king" and "queen" as arbitrary symbols with no mathematical relationship, embeddings represent them as points in a high-dimensional space where their proximity reflects their semantic similarity.
 
-The key insight behind embeddings is distributional semantics: words that appear in similar contexts tend to have similar meanings. If "king" and "queen" both frequently appear near words like "throne," "crown," and "reign," their vector representations will be similar. This principle, often summarized as "you shall know a word by the company it keeps," forms the mathematical foundation for capturing meaning in numbers.
+```swift
+// Word embeddings represent semantic relationships numerically
+let embeddings = [
+    "running":  [0.8, 0.7, 0.9, 0.2],  // Athletic activity
+    "jogging":  [0.8, 0.7, 0.8, 0.2],  // Similar to running
+    "shoes":    [0.1, 0.9, 0.2, 0.1],  // Footwear
+    "sneakers": [0.1, 0.9, 0.3, 0.1]   // Similar to shoes
+]
 
-Consider three words and their relationships. "King" and "queen" share semantic properties related to royalty and leadership. "Man" and "woman" share properties related to gender. In a well-trained embedding space, these relationships manifest as geometric patterns. The vector difference between "king" and "queen" points in roughly the same direction as the difference between "man" and "woman." This geometric consistency enables mathematical operations that preserve semantic relationships.
+// Similar words have similar vectors
+// "running" ≈ "jogging", "shoes" ≈ "sneakers"
+```
 
-A word embedding maps each word to a fixed-length array of numbers. A 50-dimensional embedding might represent "apple" as `[0.2345, -0.1234, 0.5678, ...]` with 50 total values. Each dimension captures some aspect of the word's meaning, though individual dimensions are not directly interpretable. The embedding for "banana" might be `[0.2156, -0.1089, 0.5234, ...]`, similar to "apple" because both are fruits. Meanwhile "computer" would have a very different vector because it appears in entirely different contexts.
+The key insight behind embeddings is distributional semantics: words that appear in similar contexts tend to have similar meanings. If "running" and "jogging" both frequently appear near words like "exercise," "fitness," and "cardio," their vector representations will be similar. This principle, often summarized as "you shall know a word by the company it keeps," forms the mathematical foundation for capturing meaning in numbers.
+
+Consider the relationships in a footwear search system. "Running" and "jogging" share semantic properties related to athletic activity. "Shoes" and "sneakers" share properties related to footwear. In a well-trained embedding space, these relationships manifest as geometric patterns. The vector representing "running shoes" combines aspects of both athletic activity and footwear, enabling the system to match queries like "comfortable jogging sneakers" even when the exact words differ.
 
 The power of embeddings comes from this numerical representation. Once words are vectors, we can use standard mathematical operations to reason about meaning. We can measure similarity with cosine distance, find analogies through vector arithmetic, and cluster related concepts using geometric algorithms. Semantic search builds on these fundamental operations.
 
@@ -38,13 +49,14 @@ Unlike modern transformer-based models that require significant computational re
 The GloVe data comes in a simple text format where each line contains a word followed by its vector components:
 
 ```
-apple 0.2345 -0.1234 0.5678 0.3456 -0.9012 ... (50 numbers)
-banana 0.2156 -0.1089 0.5234 0.3789 -0.8734 ... (50 numbers)
-fruit 0.2234 -0.1156 0.5456 0.3623 -0.8891 ... (50 numbers)
+running 0.2345 -0.1234 0.5678 0.3456 -0.9012 ... (50 numbers)
+jogging 0.2156 -0.1089 0.5234 0.3789 -0.8734 ... (50 numbers)
+athletic 0.2234 -0.1156 0.5456 0.3623 -0.8891 ... (50 numbers)
+cushioned 0.2410 -0.1201 0.5312 0.3702 -0.8623 ... (50 numbers)
 computer 0.8734 0.5621 -0.3421 0.1289 0.4512 ... (50 numbers)
 ```
 
-Notice how the first three words (fruits) have somewhat similar numbers, while "computer" differs significantly. This similarity emerges from co-occurrence patterns in the training data. Sentences about "apples" and "bananas" share common words like "fruit," "eat," "sweet," and "grocery," leading to similar vector representations.
+Notice how the first four words (athletic/fitness terms) have somewhat similar numbers, while "computer" differs significantly. This similarity emerges from co-occurrence patterns in the training data. Sentences about "running" and "jogging" share common words like "athletic," "exercise," "fitness," and "training," leading to similar vector representations.
 
 GloVe offers embeddings in multiple dimensions. The 50-dimensional version (50d) uses 50 numbers per word and occupies roughly 171 MB for 400,000 words. Higher-dimensional versions (100d, 200d, 300d) provide more expressive power at the cost of larger file sizes and increased computational requirements. For many applications, 50-dimensional embeddings provide an effective balance between semantic expressiveness and practical efficiency.
 
@@ -87,20 +99,20 @@ import Quiver
 // Explore semantic relationships between words using cosine similarity
 let embeddings = try loadGloVe(from: "glove.6B.50d.txt")
 
-let king = embeddings["king"]!
-let queen = embeddings["queen"]!
-let man = embeddings["man"]!
-let woman = embeddings["woman"]!
+let running = embeddings["running"]!
+let jogging = embeddings["jogging"]!
+let shoes = embeddings["shoes"]!
+let sneakers = embeddings["sneakers"]!
 
 // Measure similarity using Quiver's cosineOfAngle (from Chapter 17)
-king.cosineOfAngle(with: queen)     // ~0.75 (both royalty)
-man.cosineOfAngle(with: woman)      // ~0.72 (both people)
-king.cosineOfAngle(with: man)       // ~0.61 (both male)
-queen.cosineOfAngle(with: woman)    // ~0.59 (both female)
+running.cosineOfAngle(with: jogging)     // ~0.78 (both athletic activities)
+shoes.cosineOfAngle(with: sneakers)      // ~0.82 (both footwear)
+running.cosineOfAngle(with: shoes)       // ~0.45 (related: running shoes)
+jogging.cosineOfAngle(with: sneakers)    // ~0.43 (related: jogging sneakers)
 
 // Unrelated words have low similarity
-let pizza = embeddings["pizza"]!
-king.cosineOfAngle(with: pizza)     // ~0.12 (unrelated)
+let computer = embeddings["computer"]!
+running.cosineOfAngle(with: computer)    // ~0.08 (unrelated)
 ```
 
 The cosine similarity values range from -1 to 1, where 1 indicates identical direction (same meaning), 0 indicates orthogonality (unrelated), and -1 indicates opposite direction (antonyms). Most real similarities fall between 0 and 1, with higher values indicating stronger semantic relationships.
@@ -117,7 +129,7 @@ The simplest effective approach averages the word vectors. Given a document with
 document_vector = (v₁ + v₂ + ... + vₙ) / n
 ```
 
-This averaging preserves semantic properties. If a document contains words like "chocolate," "baking," "dessert," and "sweet," the averaged vector will point toward the general region of "baked goods" in the embedding space. The individual words contribute their semantic information, and the average represents their combined meaning.
+This averaging preserves semantic properties. If a document contains words like "lightweight," "cushioned," "running," and "athletic," the averaged vector will point toward the general region of "athletic footwear" in the embedding space. The individual words contribute their semantic information, and the average represents their combined meaning.
 
 The implementation requires tokenizing text into words, looking up each word's embedding, and computing the element-wise average:
 
@@ -162,25 +174,25 @@ Consider a concrete example with three-word documents and simplified 3-dimension
 // Example: averaging word vectors to create document vectors
 // Simplified embeddings for illustration
 let embeddings = [
-    "chocolate": [0.8, 0.2, 0.1],
-    "chip": [0.6, 0.3, 0.2],
-    "cookies": [0.7, 0.4, 0.3],
-    "baking": [0.6, 0.5, 0.4],
-    "desserts": [0.7, 0.3, 0.2]
+    "lightweight": [0.8, 0.2, 0.1],
+    "running": [0.7, 0.3, 0.2],
+    "shoes": [0.6, 0.4, 0.3],
+    "cushioned": [0.7, 0.3, 0.2],
+    "sneakers": [0.6, 0.5, 0.3]
 ]
 
-let doc1 = embedText("chocolate chip cookies", embeddings: embeddings)
-// doc1 = [(0.8+0.6+0.7)/3, (0.2+0.3+0.4)/3, (0.1+0.2+0.3)/3]
+let doc1 = embedText("lightweight running shoes", embeddings: embeddings)
+// doc1 = [(0.8+0.7+0.6)/3, (0.2+0.3+0.4)/3, (0.1+0.2+0.3)/3]
 //      = [0.70, 0.30, 0.20]
 
-let doc2 = embedText("baking desserts", embeddings: embeddings)
-// doc2 = [(0.6+0.7)/2, (0.5+0.3)/2, (0.4+0.2)/2]
-//      = [0.65, 0.40, 0.30]
+let doc2 = embedText("cushioned sneakers", embeddings: embeddings)
+// doc2 = [(0.7+0.6)/2, (0.3+0.5)/2, (0.2+0.3)/2]
+//      = [0.65, 0.40, 0.25]
 ```
 
 These two documents have similar vectors because they contain semantically related words. Computing their cosine similarity would yield a high value, indicating they discuss related topics. This is exactly the property semantic search exploits: documents about similar topics have similar vector representations.
 
-The averaging approach has limitations. It treats all words equally, ignoring the fact that some words ("chocolate") carry more semantic weight than others ("the," "and"). It also loses word order information—"dog bites man" and "man bites dog" produce identical vectors. More sophisticated approaches like TF-IDF weighting or sequential models address these issues, but simple averaging provides a surprisingly effective baseline for many semantic search applications.
+The averaging approach has limitations. It treats all words equally, ignoring the fact that some words ("cushioned") carry more semantic weight than others ("the," "and"). It also loses word order information—"shoes for running" and "running for shoes" produce identical vectors. More sophisticated approaches like TF-IDF weighting or sequential models address these issues, but simple averaging provides a surprisingly effective baseline for many semantic search applications.
 
 For unknown words not in the GloVe vocabulary, the `compactMap` operation silently drops them. If a document contains only unknown words, the function returns a zero vector. This graceful degradation ensures the algorithm always produces output, though the semantic quality degrades when too many words are missing from the vocabulary.
 
@@ -224,23 +236,23 @@ Using Quiver, comparing two document vectors becomes a single method call:
 import Quiver
 
 // Compare document vectors using Quiver's cosine similarity
-let doc1Vector = embedText("chocolate chip cookies", embeddings: embeddings)
-let doc2Vector = embedText("baking desserts", embeddings: embeddings)
+let doc1Vector = embedText("lightweight running shoes", embeddings: embeddings)
+let doc2Vector = embedText("cushioned athletic sneakers", embeddings: embeddings)
 let doc3Vector = embedText("machine learning algorithms", embeddings: embeddings)
 
 // Use Quiver's cosineOfAngle method for similarity
 let similarity1 = doc1Vector.cosineOfAngle(with: doc2Vector)
-// ~0.85 - high similarity, both about baking/sweets
+// ~0.87 - high similarity, both about athletic footwear
 
 let similarity2 = doc1Vector.cosineOfAngle(with: doc3Vector)
-// ~0.15 - low similarity, different topics
+// ~0.12 - low similarity, different topics
 ```
 
 The similarity scores provide a quantitative measure of semantic relatedness. Scores above 0.7 typically indicate strong topical similarity, scores between 0.3 and 0.7 suggest some relationship, and scores below 0.3 indicate largely unrelated content. These thresholds vary by application and domain, but they provide useful intuition for interpreting results.
 
 Cosine similarity has several properties that make it ideal for semantic search. It is symmetric: the similarity of A to B equals the similarity of B to A. It is bounded between -1 and 1, providing a normalized scale. It handles high-dimensional vectors efficiently—the dot product and magnitude calculations scale linearly with dimensionality. For 50-dimensional GloVe vectors, computing one similarity requires 50 multiplications, 49 additions, one square root, and one division—fast enough to compare thousands of documents per second.
 
-The geometric interpretation provides intuition for how semantic search works. Imagine a three-dimensional space where each axis represents a semantic dimension like "food-related," "sweet-related," and "baked-related." Documents about cookies cluster in one region of this space, documents about machine learning cluster in another region, and documents about pizza cluster in yet another region. Cosine similarity measures how close documents are within this semantic space, with nearby documents receiving high scores.
+The geometric interpretation provides intuition for how semantic search works. Imagine a three-dimensional space where each axis represents a semantic dimension like "athletic," "footwear," and "comfort." Documents about running shoes cluster in one region of this space, documents about machine learning cluster in another region, and documents about casual dress shoes cluster in yet another region. Cosine similarity measures how close documents are within this semantic space, with nearby documents receiving high scores.
 
 This geometric view extends to 50 dimensions, though we cannot visualize it directly. Each dimension captures some aspect of meaning learned from word co-occurrence patterns. Documents with similar meaning align along similar directions through this high-dimensional space, producing high cosine similarity scores.
 
@@ -248,11 +260,11 @@ This geometric view extends to 50 dimensions, though we cannot visualize it dire
 
 The similarity scores provide a quantitative measure of semantic relatedness that enables ranking and filtering search results. Understanding what different score ranges mean helps calibrate expectations and set appropriate thresholds for different applications.
 
-Scores above 0.7 typically indicate strong topical similarity. Documents in this range discuss the same subject matter, use related terminology, and likely satisfy the user's search intent. In a recipe search system, a query for "chocolate chip cookies" might return "cookie baking instructions" at 0.85 similarity and "brownie recipes" at 0.72—both clearly relevant results.
+Scores above 0.7 typically indicate strong topical similarity. Documents in this range discuss the same subject matter, use related terminology, and likely satisfy the user's search intent. In a footwear search system, a query for "cushioned running shoes" might return "lightweight athletic sneakers" at 0.85 similarity and "comfortable jogging footwear" at 0.72—both clearly relevant results.
 
-Scores between 0.3 and 0.7 suggest moderate relatedness. These documents share some semantic overlap but may address different aspects of a topic or use less directly related vocabulary. They might be useful as "related content" or secondary results. A query for "cookie baking" might find "cake frosting techniques" at 0.55—related through the broader "baking" concept but not directly matching the query intent.
+Scores between 0.3 and 0.7 suggest moderate relatedness. These documents share some semantic overlap but may address different aspects of a topic or use less directly related vocabulary. They might be useful as "related content" or secondary results. A query for "running shoes" might find "athletic training gear" at 0.55—related through the broader "athletic equipment" concept but not directly matching the query intent.
 
-Scores below 0.3 generally indicate low semantic relevance. These documents use different terminology, discuss different topics, and rarely satisfy user intent. The "cookie baking" query finding "machine learning algorithms" at 0.12 exemplifies this—the documents share no meaningful semantic connection despite both being technical content.
+Scores below 0.3 generally indicate low semantic relevance. These documents use different terminology, discuss different topics, and rarely satisfy user intent. The "running shoes" query finding "machine learning algorithms" at 0.12 exemplifies this—the documents share no meaningful semantic connection despite both being technical content.
 
 These thresholds vary by domain and application. Academic paper search might use stricter thresholds (0.8+) to ensure high relevance, while broad content discovery might accept lower scores (0.4+) to surface serendipitous connections. E-commerce product search often tunes thresholds based on user engagement metrics, finding the sweet spot between precision and recall for their specific catalog and user base.
 
@@ -302,17 +314,17 @@ let embeddings = try loadGloVe(from: "glove.6B.50d.txt")
 
 // Build document database
 let documents = [
-    "chocolate chip cookie recipe with butter",
-    "homemade fudge brownie baking instructions",
-    "best pizza restaurants in san francisco",
-    "machine learning classification algorithms",
-    "vanilla ice cream dessert recipes"
+    "lightweight cushioned running shoes for marathons",
+    "durable trail running sneakers with grip",
+    "comfortable athletic footwear for jogging",
+    "casual leather dress shoes for work",
+    "machine learning classification algorithms"
 ]
 
 let database = documents.map { embedText($0, embeddings: embeddings) }
 
 // Search for similar documents using Quiver for similarity
-let query = "cookie baking tips"
+let query = "best running shoes for training"
 let queryVector = embedText(query, embeddings: embeddings)
 let results = findSimilar(query: queryVector, database: database, topK: 3)
 
@@ -321,12 +333,12 @@ for (index, score) in results {
 }
 
 // Expected output (approximate scores):
-// 0.87: chocolate chip cookie recipe with butter
-// 0.72: homemade fudge brownie baking instructions
-// 0.61: vanilla ice cream dessert recipes
+// 0.89: lightweight cushioned running shoes for marathons
+// 0.84: comfortable athletic footwear for jogging
+// 0.76: durable trail running sneakers with grip
 ```
 
-The first result has high similarity because it directly mentions cookies and contains baking-related words. The second result scores well due to shared baking and dessert vocabulary. The third result has moderate similarity through the dessert connection. The pizza and machine learning documents receive low scores and don't appear in the top 3.
+The first result has high similarity because it directly mentions running shoes and training-related attributes. The second result scores well due to shared athletic footwear vocabulary. The third result has good similarity through the running and athletic connection. The dress shoes and machine learning documents receive low scores and don't appear in the top 3.
 
 For larger databases, performance becomes a concern. Computing similarity for 10,000 documents with 50-dimensional vectors requires 10,000 × 50 = 500,000 multiplication operations plus sorting 10,000 scores. Modern CPUs handle this in tens of milliseconds. Scaling to 100,000 documents pushes into hundreds of milliseconds. At millions of documents, brute-force search becomes impractical.
 
@@ -411,14 +423,14 @@ import Quiver
 var search = try SemanticSearch(glovePath: "glove.6B.50d.txt")
 
 // Add documents
-search.add(id: "recipe_001", text: "chocolate chip cookie recipe")
-search.add(id: "recipe_002", text: "homemade brownie baking")
-search.add(id: "recipe_003", text: "vanilla ice cream dessert")
+search.add(id: "shoe_001", text: "lightweight running shoes for marathons")
+search.add(id: "shoe_002", text: "cushioned athletic sneakers for jogging")
+search.add(id: "shoe_003", text: "trail running shoes with grip")
+search.add(id: "shoe_004", text: "casual leather dress shoes")
 search.add(id: "tech_001", text: "machine learning algorithms")
-search.add(id: "travel_001", text: "best pizza restaurants")
 
 // Search for similar documents
-let results = search.search("cookie baking tips", topK: 3)
+let results = search.search("comfortable jogging footwear", topK: 3)
 
 for result in results {
     print("\(result.id): \(result.similarity)")
@@ -426,15 +438,15 @@ for result in results {
 }
 
 // Output (approximate similarities):
-// recipe_001: 0.89
-//   chocolate chip cookie recipe
-// recipe_002: 0.74
-//   homemade brownie baking
-// recipe_003: 0.62
-//   vanilla ice cream dessert
+// shoe_002: 0.91
+//   cushioned athletic sneakers for jogging
+// shoe_001: 0.86
+//   lightweight running shoes for marathons
+// shoe_003: 0.73
+//   trail running shoes with grip
 ```
 
-The system finds semantically related content even when exact keywords differ. The query mentions "cookie baking," and the top result mentions "chocolate chip cookie recipe"—related but not identical words. The second result about brownies shares semantic similarity through baking and desserts. The ice cream result ranks lower but still relates through the dessert connection.
+The system finds semantically related content even when exact keywords differ. The query mentions "comfortable jogging footwear," and the top result mentions "cushioned athletic sneakers"—related but not identical words. The second result about marathon running shoes shares semantic similarity through running and athletic activity. The trail shoes result ranks third through the running connection.
 
 ## Metadata filtering strategies
 
@@ -481,7 +493,7 @@ struct SemanticSearch {
 }
 ```
 
-This allows queries like "cookie baking" restricted to the "desserts" category, combining semantic understanding with structured filtering.
+This allows queries like "running shoes" restricted to the "athletic" category, combining semantic understanding with structured filtering.
 
 Batch operations improve efficiency when adding multiple documents:
 
