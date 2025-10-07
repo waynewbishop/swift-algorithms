@@ -15,7 +15,7 @@ Linear algebra forms the mathematical foundation for many fields including compu
 
 ## What are vectors?
 
-A vector is a mathematical object that represents both magnitude and direction. Unlike a scalar value, which represents only size (like temperature or weight), a vector captures directional information alongside its size. This dual nature makes vectors ideally suited for representing anything that has both "how much" and "which way" properties.
+A vector is a mathematical object that represents both magnitude and direction. Unlike a scalar value, which represents only size (like temperature or weight), a vector captures directional information alongside its size. This dual nature makes vectors ideally suited for representing anything that has both how much and which way properties.
 
 Consider everyday examples. Wind isn't just "20 miles per hour" - it's "20 miles per hour from the northwest." That's a vector: magnitude (20 mph) and direction (northwest). When a character moves in a video game, we need both how fast they're moving and in which direction. When analyzing customer preferences across multiple product features, each preference profile can be represented as a vector in multidimensional space.
 
@@ -35,7 +35,7 @@ Every vector has two fundamental properties: magnitude and direction.
 
 ### Magnitude
 
-Magnitude represents a vector's length or size - how "much" of something we have, independent of direction. For a velocity vector, magnitude is speed. For a force vector, magnitude is strength.
+Magnitude represents a vector's length or size - how much of something we have, independent of direction. For a velocity vector, magnitude is speed. For a force vector, magnitude is strength.
 
 Magnitude is calculated using the Pythagorean theorem extended to any dimension:
 - 2D vector [x, y]: magnitude = √(x² + y²)
@@ -55,9 +55,9 @@ To normalize, divide each component by the vector's magnitude. Vector [3, 4] wit
 
 [diagram: Original vector [3, 4] and its normalized version [0.6, 0.8] showing same direction, different lengths]
 
-Unit vectors separate "how much" from "which way." A game character moving northeast [0.7, 0.7] at 5 units per second: normalize the direction, then multiply by speed to get the exact velocity needed.
+Unit vectors separate how much from which way. A game character moving northeast [0.7, 0.7] at 5 units per second: normalize the direction, then multiply by speed to get the exact velocity needed.
 
-The zero vector [0, 0] cannot be normalized because it has no direction - it represents "no movement" or "no force."
+The zero vector [0, 0] cannot be normalized because it has no direction - it represents no movement or no force.
 
 ## Vector operations
 
@@ -83,7 +83,7 @@ Multiplying [3, 4] by 2 gives [6, 8] - same direction, doubled length. Multiplyi
 
 The dot product takes two vectors and produces a single number. For a = [a₁, a₂] and b = [b₁, b₂], the dot product is a · b = a₁ × b₁ + a₂ × b₂.
 
-The dot product measures how much vectors "agree" - how much they point in the same direction. Mathematically: a · b = |a| × |b| × cos(θ), where θ is the angle between vectors.
+The dot product measures how much vectors agree - how much they point in the same direction. Mathematically: a · b = |a| × |b| × cos(θ), where θ is the angle between vectors.
 
 [diagram: Three pairs of vectors showing positive (parallel), zero (perpendicular), and negative (opposite) dot products]
 

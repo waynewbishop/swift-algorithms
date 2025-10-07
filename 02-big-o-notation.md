@@ -14,7 +14,7 @@ When you write code, you're creating instructions for the computer to follow. Bu
 
 ## Why performance matters
 
-Consider Netflix. They serve over 200 million users worldwide. When someone searches for "science fiction," the system must quickly find relevant titles among hundreds of thousands of options. An inefficient search algorithm that works fine with 100 movies becomes unusable with 100,000. This isn't a hypothetical problem—it's the reality of modern software development.
+Consider Netflix. They serve over 200 million users worldwide. When someone searches for science fiction, the system must quickly find relevant titles among hundreds of thousands of options. An inefficient search algorithm that works fine with 100 movies becomes unusable with 100,000. This isn't a hypothetical problem—it's the reality of modern software development.
 
 Or think about Instagram's photo feed. Every time you scroll, the app must determine which photos to show next, in what order, and load them seamlessly. With billions of photos and millions of active users, even small inefficiencies multiply into serious problems. The algorithms that power these decisions must scale efficiently.
 

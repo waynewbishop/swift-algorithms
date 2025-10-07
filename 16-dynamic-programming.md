@@ -42,7 +42,7 @@ The time complexity is O(2^n)—exponential. For larger numbers, this approach b
 
 Dynamic programming solves this problem with a simple insight: **store the results of subproblems so you can reuse them instead of recalculating**.
 
-The technique we'll focus on is called **memoization**: start with the big problem and recursively break it down, storing (or "memoizing") results along the way so you can reuse them.
+The technique we'll focus on is called **memoization**: start with the big problem and recursively break it down, storing (or memoizing) results along the way so you can reuse them.
 
 **Note:** There's another approach called tabulation (bottom-up) that builds solutions iteratively from base cases, but memoization is often more intuitive because it follows the natural recursive structure of problems.
 

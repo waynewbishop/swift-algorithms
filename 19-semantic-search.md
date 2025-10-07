@@ -33,7 +33,7 @@ let embeddings = [
 // "running" ≈ "jogging", "shoes" ≈ "sneakers"
 ```
 
-The key insight behind embeddings is distributional semantics: words that appear in similar contexts tend to have similar meanings. If "running" and "jogging" both frequently appear near words like "exercise," "fitness," and "cardio," their vector representations will be similar. This principle, often summarized as "you shall know a word by the company it keeps," forms the mathematical foundation for capturing meaning in numbers.
+The key insight behind embeddings is distributional semantics: words that appear in similar contexts tend to have similar meanings. If running and jogging both frequently appear near words like exercise, fitness, and cardio, their vector representations will be similar. This principle, often summarized as "you shall know a word by the company it keeps," forms the mathematical foundation for capturing meaning in numbers.
 
 Consider the relationships in a footwear search system. "Running" and "jogging" share semantic properties related to athletic activity. "Shoes" and "sneakers" share properties related to footwear. In a well-trained embedding space, these relationships manifest as geometric patterns. The vector representing "running shoes" combines aspects of both athletic activity and footwear, enabling the system to match queries like "comfortable jogging sneakers" even when the exact words differ.
 
