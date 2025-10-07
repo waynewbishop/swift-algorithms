@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 12: Tries"
+title: "Chapter 13: Tries"
 description: "Implement prefix trees for efficient string operations"
 ---
 

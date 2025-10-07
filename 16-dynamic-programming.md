@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 15: Dynamic Programming"
+title: "Chapter 16: Dynamic Programming"
 description: "Solve complex problems with memoization"
 ---
 
@@ -292,7 +292,7 @@ Dynamic programming combines several techniques you've learned:
 
 - **Recursion (Chapter 6)**: Breaking problems into smaller versions of themselves
 - **Arrays (throughout the book)**: Storing intermediate results
-- **Big O analysis (Chapter 2)**: Understanding why DP is faster
+- **Big O analysis (Chapter 8)**: Understanding why DP is faster
 
 The key insight is trading space for time. By using O(n) memory to store results, we reduce time complexity from exponential to linear—a massive improvement.
 

@@ -189,7 +189,7 @@ Let's implement an educational PageRank algorithm that demonstrates core concept
 
 ### Graph structure design
 
-Our implementation builds on the graph structures from Chapter 11, extending vertices to support PageRank calculations:
+Our implementation builds on the graph structures from Chapter 12, extending vertices to support PageRank calculations:
 
 ```swift
 // Enhanced Vertex class for PageRank
@@ -727,7 +727,7 @@ func checkConvergence(_ oldRanks: [Float], _ newRanks: [Float]) -> Bool {
 
 PageRank enhances many algorithms covered in previous chapters:
 
-#### Enhanced graph traversal (Chapter 11)
+#### Enhanced graph traversal (Chapter 12)
 ```swift
 // Priority-guided traversal using PageRank
 func pageRankGuidedTraversal(_ graph: Graph<String>) {

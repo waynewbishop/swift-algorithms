@@ -8,7 +8,6 @@ description: "Understanding meaning through vector similarity"
   <a href="index">Table of Contents</a>
 </div>
 
-
 # Semantic Search
 
 Traditional search systems rely on exact keyword matching. When you search for "comfortable running shoes," these systems look for documents containing those exact words. This approach works well when queries and documents use identical terminology, but it fails to capture meaning. A product description using "athletic footwear" or "jogging sneakers" might be exactly what you're looking for, yet keyword matching would miss it entirely.
@@ -19,7 +18,7 @@ The foundation of semantic search rests on a mathematical representation of mean
 
 ## Introducing word embeddings
 
-Represented as a series of `Dictionary` values, **Word embeddings** transform words from symbolic representations into numerical vectors that capture semantic meaning. Rather than treating "king" and "queen" as arbitrary symbols with no mathematical relationship, embeddings represent them as points in a high-dimensional space where their proximity reflects their semantic similarity.
+Represented as a series of `Dictionary` values, **word embeddings** transform words from symbolic representations into numerical vectors that capture semantic meaning. Rather than treating "king" and "queen" as arbitrary symbols with no mathematical relationship, embeddings represent them as points in a high-dimensional space where their proximity reflects their semantic similarity.
 
 ```swift
 // Word embeddings represent semantic relationships numerically
@@ -210,7 +209,7 @@ cosine_similarity = (a · b) / (||a|| × ||b||)
 
 The numerator is the dot product: the sum of element-wise products. The denominator normalizes by the magnitudes of both vectors. This normalization makes cosine similarity independent of vector length—it measures direction, not magnitude.
 
-The Quiver framework, introduced in Chapter 17, provides the complete implementation of cosine similarity and the underlying vector operations. Rather than implementing dot product, magnitude, and cosine calculations ourselves, we leverage Quiver's battle-tested implementations:
+The Quiver framework, introduced in Chapter 17, provides the complete implementation of cosine similarity and the underlying vector operations:
 
 ```swift
 import Quiver

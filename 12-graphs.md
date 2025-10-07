@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 11: Graphs"
+title: "Chapter 12: Graphs"
 description: "Explore graph data structures and algorithms"
 ---
 
@@ -445,7 +445,7 @@ extension Graph {
 | Array-based | O(V) per iteration | O(V²) |
 | Heap-based | O(1) peek, O(log V) enqueue | O((V + E) log V) |
 
-The heap-based version is significantly faster for large graphs, as discussed in Chapter 14.
+The heap-based version is significantly faster for large graphs, as discussed in Chapter 15.
 
 ### Reversing the path
 
@@ -494,7 +494,7 @@ extension Graph {
 }
 ```
 
-This reversal technique is analogous to reversing a linked list (Chapter 8), using the same three-pointer approach.
+This reversal technique is analogous to reversing a linked list (Chapter 9), using the same three-pointer approach.
 
 ### Practical example: Finding shortest routes
 

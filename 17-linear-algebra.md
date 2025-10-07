@@ -558,7 +558,7 @@ Linear algebra excels with spatial, directional, or multidimensional data.
 Linear algebra connects to concepts throughout this book:
 
 - **Arrays (Chapter 3)** - Vectors extend arrays with mathematical operations
-- **Big O Notation (Chapter 2)** - Vector operations are O(n) in dimensionality
+- **Big O Notation (Chapter 8)** - Vector operations are O(n) in dimensionality
 - **Generics (Chapter 7)** - Quiver uses generic constraints for type safety
 
 The key insight: Linear algebra provides a mathematical language for spatial relationships in games, graphics, data analysis, and machine learning.

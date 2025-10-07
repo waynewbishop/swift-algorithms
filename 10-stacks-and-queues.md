@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 9: Stacks and Queues"
+title: "Chapter 10: Stacks and Queues"
 description: "Essential data structures for managing collections"
 ---
 
@@ -135,7 +135,7 @@ class PrintQueue {
 
 **3. Breadth-First Search (BFS) in graphs**
 ```swift
-// From Chapter 11
+// From Chapter 12
 func traverse(_ startingVertex: Vertex<T>) {
     let queue = Queue<Vertex<T>>()
     queue.enqueue(startingVertex)
@@ -313,7 +313,7 @@ public var isEmpty: Bool {
 
 ## How stacks work
 
-To contrast, Stack structures process elements on a "last-in, first-out" (e.g. LIFO) technique. This distinction allows it to perform basic operations such as element insertion and retrieval in constant time - O(1). As an iOS Developer, the concept of stacking two or more views to create a view hierarchy is common. As we'll see in Chapter 10 (Binary Search Trees), Stacks also come in handy when supporting other data structures and algorithms.
+To contrast, Stack structures process elements on a "last-in, first-out" (e.g. LIFO) technique. This distinction allows it to perform basic operations such as element insertion and retrieval in constant time - O(1). As an iOS Developer, the concept of stacking two or more views to create a view hierarchy is common. As we'll see in Chapter 11 (Binary Search Trees), Stacks also come in handy when supporting other data structures and algorithms.
 
 ```swift
 public class Stack<T> {
@@ -436,5 +436,5 @@ Stacks and queues are simple yet powerful data structures that maintain ordering
 - Queue: When fairness and order preservation matter (scheduling, buffering)
 - Array: When you need random access or bidirectional iteration
 
-Understanding stacks and queues is essential for iOS development, as they power many of the frameworks you use daily. In Chapter 11, you'll see queues in action for graph traversal algorithms like Breadth-First Search.
+Understanding stacks and queues is essential for iOS development, as they power many of the frameworks you use daily. In Chapter 12, you'll see queues in action for graph traversal algorithms like Breadth-First Search.
 

@@ -773,7 +773,7 @@ case .failure(let error):
 
 Throughout this book, you'll see generics powering every data structure. Understanding generics is essential for implementing and using these structures effectively.
 
-### Linked lists (Chapter 8)
+### Linked lists (Chapter 9)
 
 ```swift
 //node in a linked list
@@ -816,7 +816,7 @@ names.append("Alice")
 names.append("Bob")
 ```
 
-### Binary search trees (Chapter 10)
+### Binary search trees (Chapter 11)
 
 ```swift
 //tree node
@@ -860,7 +860,7 @@ tree.insert(3)
 tree.insert(7)
 ```
 
-### Graphs (Chapter 11)
+### Graphs (Chapter 12)
 
 ```swift
 //vertex in a graph
@@ -895,7 +895,7 @@ let oakland = cityGraph.addVertex("Oakland")
 cityGraph.addEdge(from: sanFrancisco, to: oakland)
 ```
 
-### Stacks and queues (Chapter 9)
+### Stacks and queues (Chapter 10)
 
 ```swift
 //generic stack using an array
@@ -1204,13 +1204,13 @@ func filter<T>(_ array: [T], matching: (T) -> Bool) -> [T] {
 
 As you progress through this book, notice how generics enable each data structure:
 
-- **Chapter 8 (Linked Lists)**: Generic nodes store any type
-- **Chapter 9 (Stacks & Queues)**: Generic containers enable flexible data management
-- **Chapter 10 (Binary Search Trees)**: Comparable constraint enables ordering
-- **Chapter 11 (Graphs)**: Generic vertices represent any domain
-- **Chapter 12 (Tries)**: Generic character-based structures
-- **Chapter 13 (Hash Tables)**: Hashable constraint enables fast lookups
-- **Chapter 14 (Heaps)**: Comparable constraint enables priority ordering
+- **Chapter 9 (Linked Lists)**: Generic nodes store any type
+- **Chapter 10 (Stacks & Queues)**: Generic containers enable flexible data management
+- **Chapter 11 (Binary Search Trees)**: Comparable constraint enables ordering
+- **Chapter 12 (Graphs)**: Generic vertices represent any domain
+- **Chapter 13 (Tries)**: Generic character-based structures
+- **Chapter 14 (Hash Tables)**: Hashable constraint enables fast lookups
+- **Chapter 15 (Heaps)**: Comparable constraint enables priority ordering
 
 Understanding generics now will make these advanced topics much more accessible.
 

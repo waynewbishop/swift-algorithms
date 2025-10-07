@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 13: Hash Tables"
+title: "Chapter 14: Hash Tables"
 description: "Build hash tables with collision handling"
 ---
 

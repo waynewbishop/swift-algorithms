@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 10: Binary Search Trees"
+title: "Chapter 11: Binary Search Trees"
 description: "Build and traverse binary search trees"
 ---
 
@@ -503,5 +503,5 @@ Binary search trees organize data hierarchically, providing efficient search, in
 - Auto-complete systems
 - Game AI decision trees
 
-Understanding BSTs is fundamental to computer science and provides the foundation for more complex tree structures like heaps (Chapter 14) and tries (Chapter 12).
+Understanding BSTs is fundamental to computer science and provides the foundation for more complex tree structures like heaps (Chapter 15) and tries (Chapter 13).
 

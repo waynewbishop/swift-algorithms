@@ -327,10 +327,10 @@ Very deep recursion can exhaust the call stack. Consider iterative alternatives 
 
 Understanding recursion is essential for the data structures we'll explore next:
 
-- **Chapter 8 (Linked Lists)**: Recursive insertion and deletion
-- **Chapter 10 (Binary Search Trees)**: Recursive tree operations
-- **Chapter 11 (Graphs)**: Recursive graph traversal algorithms
-- **Chapter 15 (Dynamic Programming)**: Recursive problem decomposition
+- **Chapter 9 (Linked Lists)**: Recursive insertion and deletion
+- **Chapter 11 (Binary Search Trees)**: Recursive tree operations
+- **Chapter 12 (Graphs)**: Recursive graph traversal algorithms
+- **Chapter 16 (Dynamic Programming)**: Recursive problem decomposition
 
 The recursive thinking patterns you learn here will make these advanced topics much more approachable.
 

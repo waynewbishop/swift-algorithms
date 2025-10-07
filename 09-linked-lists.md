@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 8: Linked Lists"
+title: "Chapter 9: Linked Lists"
 description: "Implement singly and doubly linked lists"
 ---
 
