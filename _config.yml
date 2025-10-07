@@ -108,14 +108,6 @@ navigation:
       - title: "Semantic Search"
         url: "19-semantic-search"
 
-  - section: "Resources"
-    chapters:
-      - title: "Quiver Package"
-        url: "https://github.com/waynewbishop/bishop-algorithms-quiver-package"
-        external: true
-      - title: "Glossary"
-        url: "glossary"
-
 # Exclude from processing
 exclude:
   - Claude.md
