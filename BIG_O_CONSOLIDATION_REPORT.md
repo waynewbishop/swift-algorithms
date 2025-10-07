@@ -38,7 +38,7 @@ Successfully restructured the Swift Algorithms book to improve pedagogical flow 
 
 ---
 
-### 2. Created New Chapter 8: "Performance Analysis & Big O Notation"
+### 2. Created New Chapter 8: "Analyzing Algorithms"
 
 **File**: `08-performance-analysis.md`
 
@@ -244,7 +244,7 @@ Successfully restructured the Swift Algorithms book to improve pedagogical flow 
   chapters:
     - title: "Generics"
       url: "07-generics"
-    - title: "Performance Analysis & Big O"  # ← NEW
+    - title: "Analyzing Algorithms"  # ← NEW
       url: "08-performance-analysis"
 ```
 
@@ -322,7 +322,7 @@ Successfully restructured the Swift Algorithms book to improve pedagogical flow 
 5. **Advanced Sorting** - Merge sort, quicksort
 6. **Recursion** - Base cases, recursive thinking, optimization
 7. **Generics** - Type parameters, constraints, protocols
-8. **Performance Analysis & Big O** - Comprehensive analysis (NEW POSITION)
+8. **Analyzing Algorithms** - Comprehensive analysis (NEW POSITION)
 9. **Linked Lists** - Singly, doubly linked lists
 10. **Stacks and Queues** - LIFO, FIFO data structures
 11. **Binary Search Trees** - Tree traversal, balancing
@@ -370,7 +370,7 @@ Successfully restructured the Swift Algorithms book to improve pedagogical flow 
 - ✅ Students experience performance differences firsthand
 - ✅ Students build intuition before formalization
 
-**Chapter 8: Performance Analysis & Big O**
+**Chapter 8: Analyzing Algorithms**
 - ✅ NOW has context (students seen 5 algorithm chapters)
 - ✅ Explains patterns students already noticed
 - ✅ Motivation is clear: "Why was binary search faster?"
@@ -584,7 +584,7 @@ git rm 16-advanced-complexity-analysis.md
 git commit -m "Restructure: Consolidate Big O & Performance into cohesive learning progression
 
 - Replace Chapter 2 with lightweight 'Measuring Performance' (vocabulary only)
-- Create new Chapter 8 'Performance Analysis & Big O' (comprehensive, with context)
+- Create new Chapter 8 'Analyzing Algorithms' (comprehensive, with context)
 - Merge old Chapter 2 + old Chapter 16 into new Chapter 8
 - Renumber Chapters 8-15 to 9-16
 - Update 30+ cross-references across 15 chapters

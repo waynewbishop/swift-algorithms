@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 8: Performance Analysis & Big O Notation"
+title: "Chapter 8: Analyzing Algorithms"
 description: "Understanding algorithmic efficiency, complexity analysis, and real-world performance"
 ---
 
@@ -8,7 +8,7 @@ description: "Understanding algorithmic efficiency, complexity analysis, and rea
   <a href="index">Table of Contents</a>
 </div>
 
-# Performance Analysis & Big O Notation
+# Analyzing Algorithms
 
 You've now explored five chapters of algorithms: searching techniques that locate values in collections, sorting methods that organize data, recursion that breaks problems into smaller pieces, and the power of generics to write flexible code. Along the way, you've noticed patterns—some algorithms feel faster than others, some scale better as data grows, and some trade simplicity for performance.
 

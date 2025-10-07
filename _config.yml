@@ -77,7 +77,7 @@ navigation:
     chapters:
       - title: "Generics"
         url: "07-generics"
-      - title: "Performance Analysis & Big O"
+      - title: "Analyzing Algorithms"
         url: "08-performance-analysis"
 
   - section: "Data Structures"
