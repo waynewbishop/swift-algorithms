@@ -22,11 +22,11 @@ The difference between a slow algorithm and a fast one isn't always obvious with
 
 ## The language of performance
 
-To discuss algorithm efficiency, developers use a common vocabulary: Big O Notation. Rather than saying "this algorithm checks every element," we say "this is O(n)." Rather than explaining "this eliminates half the data with each step," we write "O(log n)." This notation provides a shorthand for describing how algorithms scale.
+To discuss algorithm efficiency, developers use a common vocabulary: Big O Notation. Rather than saying this algorithm checks every element, we say this is O(n). Rather than explaining this eliminates half the data with each step, we write O(log n). This notation provides a shorthand for describing how algorithms scale.
 
-Think of Big O notation as a way to classify algorithms into performance categories. Just as we might describe a car as "fuel-efficient" or "gas-guzzler" without specifying exact miles per gallon, Big O notation categorizes algorithms by their growth patterns without getting lost in implementation details.
+Think of Big O notation as a way to classify algorithms into performance categories. Just as we might describe a car as fuel-efficient or gas-guzzler without specifying exact miles per gallon, Big O notation categorizes algorithms by their growth patterns without getting lost in implementation details.
 
-The "O" stands for "order of magnitude"—it tells us the scale of how an algorithm's performance grows as input size increases. The expression in parentheses describes the relationship between input size (usually called n) and the number of operations.
+The O stands for order of magnitude—it tells us the scale of how an algorithm's performance grows as input size increases. The expression in parentheses describes the relationship between input size (usually called n) and the number of operations.
 
 ## Common performance patterns
 
@@ -42,13 +42,13 @@ Think of it like using a bookmark in a book. Finding the bookmarked page takes t
 
 Binary search demonstrates logarithmic performance. Each comparison eliminates half the remaining possibilities. For 1,000 items, you need about 10 comparisons. For 1 million items, only about 20 comparisons. Doubling the data size only adds one more step.
 
-This "halving" pattern appears throughout computer science. Balanced binary search trees (Chapter 11) maintain O(log n) operations by keeping data organized in a way that allows cutting the search space in half repeatedly.
+This halving pattern appears throughout computer science. Balanced binary search trees (Chapter 11) maintain O(log n) operations by keeping data organized in a way that allows cutting the search space in half repeatedly.
 
 ### Linear time: O(n)
 
 When an algorithm must examine each element once, we call it linear time or O(n). Searching an unsorted list works this way—in the worst case, you check every element. The time grows in direct proportion to the input size: twice the data means roughly twice the time.
 
-Linear time operations are sometimes called "brute force" because they make no assumptions about the data organization. They're often the simplest solution but not always the fastest. Chapter 3 explores searching, including when linear search is appropriate.
+Linear time operations are sometimes called brute force because they make no assumptions about the data organization. They're often the simplest solution but not always the fastest. Chapter 3 explores searching, including when linear search is appropriate.
 
 ### Linearithmic time: O(n log n)
 
@@ -85,7 +85,7 @@ For now, understanding these basic categories prepares you to discuss the algori
 
 ## Building intuition
 
-The goal isn't to memorize formulas but to develop an intuitive sense for algorithm efficiency. When you see nested loops, think "quadratic—this might slow down quickly." When you see a single loop through data, think "linear—performance scales with size." When you see direct access to specific positions, think "constant—size doesn't matter."
+The goal isn't to memorize formulas but to develop an intuitive sense for algorithm efficiency. When you see nested loops, think quadratic—this might slow down quickly. When you see a single loop through data, think linear—performance scales with size. When you see direct access to specific positions, think constant—size doesn't matter.
 
 In the chapters ahead, you'll see these patterns in action:
 
