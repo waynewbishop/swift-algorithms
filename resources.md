@@ -94,18 +94,6 @@ Apple's interactive environment for learning Swift on iPad and Mac. Perfect for 
 
 [Princeton Algorithms Course](https://www.coursera.org/learn/algorithms-part1) - Coursera course by Robert Sedgewick covering fundamental algorithms and data structures.
 
-## Practice and Interview Preparation
-
-**Coding Challenge Platforms**
-
-[LeetCode](https://leetcode.com) - Extensive collection of algorithm problems with difficulty ratings, company tags, and discussion forums.
-
-[HackerRank](https://www.hackerrank.com) - Practice data structures, algorithms, and prepare for technical interviews with real company challenges.
-
-[Exercism Swift Track](https://exercism.org/tracks/swift) - Free coding exercises with mentor feedback to improve your Swift skills.
-
-[Project Euler](https://projecteuler.net) - Mathematical and computational problems requiring algorithmic thinking and optimization.
-
 ## Graph Algorithms
 
 **Theory and Tutorials**
