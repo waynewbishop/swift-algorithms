@@ -59,7 +59,7 @@ navigation:
     chapters:
       - title: "Introduction"
         url: "01-introduction"
-      - title: "Thinking About Performance"
+      - title: "Measuring Performance"
         url: "02-big-o-notation"
 
   - section: "Algorithms"

@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 2: Thinking About Performance"
+title: "Chapter 2: Measuring Performance"
 description: "Understanding algorithmic efficiency and the language of performance"
 ---
 
@@ -8,7 +8,7 @@ description: "Understanding algorithmic efficiency and the language of performan
   <a href="index">Table of Contents</a>
 </div>
 
-# Thinking About Performance
+# Measuring Performance
 
 When you write code, you're creating instructions for the computer to follow. But have you ever wondered: how does your code behave when the amount of data changes? Does it slow down gracefully, or does it grind to a halt? Understanding this relationship between data size and performance is essential to building software users will love.
 

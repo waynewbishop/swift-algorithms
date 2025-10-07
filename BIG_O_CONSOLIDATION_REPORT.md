@@ -13,7 +13,7 @@ Successfully restructured the Swift Algorithms book to improve pedagogical flow 
 
 ## What Was Done
 
-### 1. Created New Chapter 2: "Thinking About Performance"
+### 1. Created New Chapter 2: "Measuring Performance"
 
 **File**: `02-big-o-notation.md`
 
@@ -234,7 +234,7 @@ Successfully restructured the Swift Algorithms book to improve pedagogical flow 
 ```yaml
 - title: "Introduction"
   url: "01-introduction"
-- title: "Thinking About Performance"  # ← Changed from "Big O Notation"
+- title: "Measuring Performance"  # ← Changed from "Big O Notation"
   url: "02-big-o-notation"
 ```
 
@@ -316,7 +316,7 @@ Successfully restructured the Swift Algorithms book to improve pedagogical flow 
 ### Complete 19-Chapter Sequence
 
 1. **Introduction** - Algorithm lineage theme, Swift as platform, Quiver framework
-2. **Thinking About Performance** - Big O vocabulary (lightweight)
+2. **Measuring Performance** - Big O vocabulary (lightweight)
 3. **Basic Searching** - Linear search, binary search
 4. **Basic Sorting** - Bubble, insertion, selection sort
 5. **Advanced Sorting** - Merge sort, quicksort
@@ -358,7 +358,7 @@ Successfully restructured the Swift Algorithms book to improve pedagogical flow 
 
 ### After Restructuring
 
-**Chapter 2: Thinking About Performance**
+**Chapter 2: Measuring Performance**
 - ✅ Just the vocabulary (O(n), O(log n), etc.)
 - ✅ Brief examples without deep analysis
 - ✅ Students can discuss algorithms in Chapters 3-7
@@ -583,7 +583,7 @@ git rm 16-advanced-complexity-analysis.md
 # Commit with descriptive message
 git commit -m "Restructure: Consolidate Big O & Performance into cohesive learning progression
 
-- Replace Chapter 2 with lightweight 'Thinking About Performance' (vocabulary only)
+- Replace Chapter 2 with lightweight 'Measuring Performance' (vocabulary only)
 - Create new Chapter 8 'Performance Analysis & Big O' (comprehensive, with context)
 - Merge old Chapter 2 + old Chapter 16 into new Chapter 8
 - Renumber Chapters 8-15 to 9-16
