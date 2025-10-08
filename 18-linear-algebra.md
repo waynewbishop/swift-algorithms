@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 17: Linear Algebra"
+title: "Chapter 18: Linear Algebra"
 description: "Vector mathematics and numerical computing"
 ---
 

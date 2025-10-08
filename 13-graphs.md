@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 12: Graphs"
+title: "Chapter 13: Graphs"
 description: "Explore graph data structures and algorithms"
 ---
 

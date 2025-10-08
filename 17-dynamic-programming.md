@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 16: Dynamic Programming"
+title: "Chapter 17: Dynamic Programming"
 description: "Solve complex problems with memoization"
 ---
 

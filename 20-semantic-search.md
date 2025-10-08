@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 19: Semantic Search"
+title: "Chapter 20: Semantic Search"
 description: "Understanding meaning through vector similarity"
 ---
 

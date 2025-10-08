@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 18: PageRank Algorithm"
+title: "Chapter 19: PageRank Algorithm"
 description: "Implement Google's PageRank in Swift"
 ---
 

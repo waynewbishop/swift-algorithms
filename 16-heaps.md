@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 15: Heaps"
+title: "Chapter 16: Heaps"
 description: "Implement priority queues with heap data structures"
 ---
 
