@@ -11,13 +11,13 @@ description: "Explore graph data structures and algorithms"
 
 # Graphs
 
-A graph is a data structure that shows a relationship (e.g., connection) between two or more objects. Because of their flexibility, graphs are one of the most widely used structures in modern computing. Popular tools and services like online maps, social networks, and even the Internet as a whole are based on how objects relate to one another. In this chapter, we'll highlight the key features of graphs and will demonstrate how to create a basic graph with Swift.
+A [graph](glossary#graph) is a data structure that shows a relationship (e.g., connection) between two or more objects. Because of their flexibility, graphs are one of the most widely used structures in modern computing. Popular tools and services like online maps, social networks, and even the Internet as a whole are based on how objects relate to one another. In this chapter, we'll highlight the key features of graphs and will demonstrate how to create a basic graph with Swift.
 
 ## The basics
 
-As discussed, a graph is a model that shows how objects relate to one another. Graph objects are usually referred to as nodes or vertices. While it would be possible to build and graph a single node, models that contain multiple vertices better represent real-world applications.
+As discussed, a graph is a model that shows how objects relate to one another. Graph objects are usually referred to as nodes or [vertices](glossary#vertex). While it would be possible to build and graph a single node, models that contain multiple vertices better represent real-world applications.
 
-Graph objects relate to one another through connections called edges. Depending on your requirements, a vertex could be linked to one or more objects through a series of edges. It's also possible to create a vertex without edges. Here are some basic graph configurations:
+Graph objects relate to one another through connections called [edges](glossary#edge). Depending on your requirements, a vertex could be linked to one or more objects through a series of edges. It's also possible to create a vertex without edges. Here are some basic graph configurations:
 
 [diagram: Examples of undirected graphs with varying vertices and edges]
 
@@ -35,7 +35,7 @@ Regardless of graph type, it's common to represent the level of connectedness be
 
 ## The vertex
 
-With our understanding of graphs in place, let's build a graph using generics. This allows the graph to work with any data type. Here's the data structure for a vertex:
+With our understanding of graphs in place, let's build a graph using [generics](glossary#generic). This allows the graph to work with any data type. Here's the data structure for a vertex:
 
 ```swift
 public class Vertex<T>: Equatable {
@@ -129,7 +129,7 @@ Graph traversal is the process of visiting every vertex in a graph exactly once.
 
 ### Breadth-first search (BFS)
 
-Breadth-First Search explores all vertices at the current depth before moving to vertices at the next depth level. It uses a queue data structure:
+Breadth-First Search explores all vertices at the current depth before moving to vertices at the next depth level. It uses a [queue](glossary#queue) data structure:
 
 ```swift
 extension Graph {
@@ -232,7 +232,7 @@ BFS has the following complexity:
 
 ## Finding shortest paths with Dijkstra's algorithm
 
-While BFS finds the shortest path in terms of the number of edges (hops), many real-world problems require finding the shortest path when edges have different weights or costs. This is where Dijkstra's algorithm becomes essential.
+While BFS finds the shortest path in terms of the number of edges (hops), many real-world problems require finding the shortest path when edges have different weights or costs. This is where [Dijkstra's algorithm](glossary#dijkstras-algorithm) becomes essential.
 
 ### The shortest path problem
 

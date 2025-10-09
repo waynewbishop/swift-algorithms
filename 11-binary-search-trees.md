@@ -10,7 +10,7 @@ description: "Build and traverse binary search trees"
 
 # Binary Search Trees
 
-A binary search tree (BST) is a data structure that stores information in a logical hierarchy. As demonstrated with Big O Notation, algorithms provide the best results with sorted data. Binary Search Trees extend this idea by using specific rules. A binary search tree (BST) should not be mistaken for a binary tree or trie. Those structures also store information in a hierarchy but employ different rules.
+A [binary search tree](glossary#binary-search-tree-bst) (BST) is a data structure that stores information in a logical hierarchy. As demonstrated with Big O Notation, [algorithms](glossary#algorithm) provide the best results with sorted data. Binary Search Trees extend this idea by using specific rules. A binary search tree (BST) should not be mistaken for a binary tree or trie. Those structures also store information in a hierarchy but employ different rules.
 
 ## How it works
 
@@ -18,7 +18,7 @@ A binary search tree comprises a key and two indicators. The key represents the 
 
 ## The data structure
 
-Here's an example of a BST written in Swift. Using generics, the structure also stores any type of object and supports optional values. The concept of combining keys and pointers to create hierarchies not only applies to binary search trees but to other structures like tries and binary trees.
+Here's an example of a BST written in Swift. Using [generics](glossary#generic), the structure also stores any type of object and supports optional values. The concept of combining keys and pointers to create hierarchies not only applies to binary search trees but to other structures like tries and binary trees.
 
 ```swift
 public class BST<T: Comparable> {
@@ -38,7 +38,7 @@ Here's an example of a simple array written in Swift. We'll use this data to bui
 let numberList: [Int] = [8, 2, 10, 9, 11, 1, 7]
 ```
 
-Here's the same list visualized as a balanced binary search tree. It does not matter that the values are unsorted. Rules governing the BST will place each node in its correct position accordingly.
+Here's the same list visualized as a balanced binary search tree. It does not matter that the values are unsorted. Rules governing the BST will place each [node](glossary#node) in its correct position accordingly.
 
 ## The model
 
@@ -76,7 +76,7 @@ public class BST<T: Comparable> {
 }
 ```
 
-The `append` method applies sorting logic using recursion. While not required, recursion is a powerful enabler as each child becomes another instance of a BST. As a result, inserting data becomes a straightforward process of iterating through the array.
+The `append` method applies sorting logic using [recursion](glossary#recursion). While not required, recursion is a powerful enabler as each child becomes another instance of a BST. As a result, inserting data becomes a straightforward process of iterating through the array.
 
 ```swift
 let numberList: [Int] = [8, 2, 10, 9, 11, 1, 7]
@@ -92,7 +92,7 @@ for number in numberList {
 
 BSTs are powerful due to their consistent rules. However, their greatest advantage is speed. Since data is organized at the time of insertion, a clear pattern emerges. Values less than the root node (e.g., 8) will naturally filter to the left. Conversely, all values greater than the root will filter to the right.
 
-As we saw with Big O Notation, our understanding of the data allows us to create an effective algorithm. So, for example, if we were searching for the value 7, it's only required that we traverse the left side of the BST. This is due to our search value being smaller than our root node (e.g., 8). Binary Search Trees typically provide O(log n) for insertion and lookup. Algorithms with an efficiency of O(log n) are said to run in logarithmic time.
+As we saw with Big O Notation, our understanding of the data allows us to create an effective algorithm. So, for example, if we were searching for the value 7, it's only required that we traverse the left side of the BST. This is due to our search value being smaller than our root node (e.g., 8). Binary Search Trees typically provide O(log n) for insertion and lookup. Algorithms with an efficiency of O(log n) are said to run in [logarithmic time](glossary#logarithmic-time-o-log-n).
 
 ## Searching the BST
 

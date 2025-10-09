@@ -11,13 +11,13 @@ description: "Build type-safe, reusable code with Swift generics"
 
 # Generics
 
-Swift brings a powerful series of tools that make coding more expressive and safe. Along with its simplified syntax, Swift borrows from the success of other languages to prevent common programming errors like null pointer exceptions and memory leaks. One of Swift's most powerful features is generics—a design technique that allows you to write flexible, reusable code while maintaining complete type safety.
+Swift brings a powerful series of tools that make coding more expressive and safe. Along with its simplified syntax, Swift borrows from the success of other languages to prevent common programming errors like null pointer exceptions and memory leaks. One of Swift's most powerful features is [generics](glossary#generic)—a design technique that allows you to write flexible, reusable code while maintaining complete type safety.
 
 In this chapter, we'll explore how generics enable the data structures you'll build throughout this book. Without generics, you'd need to write separate implementations of linked lists for integers, strings, custom objects, and every other type. Generics solve this problem elegantly.
 
 ## The code reuse problem
 
-As developers building data structures and algorithms, we face a fundamental challenge: how do we create components that work with any type while maintaining type safety? Let's examine this problem through a concrete example.
+As developers building data structures and [algorithms](glossary#algorithm), we face a fundamental challenge: how do we create components that work with any type while maintaining type safety? Let's examine this problem through a concrete example.
 
 Imagine you're building a simple queue system to manage different types of data in your application. You might start with a queue for processing user names:
 
@@ -273,7 +273,7 @@ func areEqual<T: Equatable>(_ first: T, _ second: T) -> Bool {
 }
 ```
 
-The constraint `T: Equatable` means "T can be any type, as long as that type conforms to the Equatable protocol."
+The constraint `T: Equatable` means "T can be any type, as long as that type conforms to the [Equatable](glossary#equatable) protocol."
 
 ## The essential protocols
 
@@ -351,7 +351,7 @@ findMax([3, 1, 4, 1, 5])  // returns 5
 findMax(["zebra", "apple", "mango"])  // returns "zebra"
 ```
 
-**Making custom types Comparable:**
+**Making custom types [Comparable](glossary#comparable):**
 
 ```swift
 struct Temperature: Comparable {
@@ -420,7 +420,7 @@ func uniqueElements<T: Hashable>(_ array: [T]) -> [T] {
 uniqueElements([1, 2, 2, 3, 1, 4])  // [1, 2, 3, 4]
 ```
 
-**Making custom types Hashable:**
+**Making custom types [Hashable](glossary#hashable):**
 
 ```swift
 struct Coordinate: Hashable {

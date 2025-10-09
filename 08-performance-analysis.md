@@ -10,7 +10,7 @@ description: "Understanding algorithmic efficiency, complexity analysis, and rea
 
 # Analyzing Algorithms
 
-You've now explored five chapters of algorithms: searching techniques that locate values in collections, sorting methods that organize data, recursion that breaks problems into smaller pieces, and the power of generics to write flexible code. Along the way, you've noticed patterns—some algorithms feel faster than others, some scale better as data grows, and some trade simplicity for performance.
+You've now explored five chapters of [algorithms](glossary#algorithm): searching techniques that locate values in collections, sorting methods that organize data, [recursion](glossary#recursion) that breaks problems into smaller pieces, and the power of generics to write flexible code. Along the way, you've noticed patterns—some algorithms feel faster than others, some scale better as data grows, and some trade simplicity for performance.
 
 It's time to formalize these observations. In this chapter, we'll develop the tools to analyze algorithm efficiency systematically, understand how code behaves at scale, and make informed decisions about which approaches fit which problems. This isn't abstract theory—it's the foundation for building software that users love because it's fast, responsive, and handles real-world data gracefully.
 
@@ -99,7 +99,7 @@ When discussing performance, developers need a common language. Rather than sayi
 
 The "O" stands for "order of magnitude"—it tells us the scale of how an algorithm's performance grows as input size increases. The expression in parentheses describes the relationship between input size (usually called n) and the number of operations.
 
-Big O Notation focuses on the dominant factor. As data grows large, constants and smaller terms become irrelevant. An algorithm that does 3n + 5 operations simplifies to O(n) because the n term dominates as n grows. An algorithm that does n² + 100n simplifies to O(n²) because n² overwhelms everything else at scale.
+[Big O Notation](glossary#big-o-notation) focuses on the dominant factor. As data grows large, constants and smaller terms become irrelevant. An algorithm that does 3n + 5 operations simplifies to O(n) because the n term dominates as n grows. An algorithm that does n² + 100n simplifies to O(n²) because n² overwhelms everything else at scale.
 
 ### The fundamental complexities
 
@@ -159,7 +159,7 @@ The logarithm reflects a simple question: "How many times can I cut this in half
 
 #### Linear time: O(n)
 
-When an algorithm must examine each element once, we call it linear time or O(n). Linear search from Chapter 3 works this way—in the worst case, you check every element. The time grows in direct proportion to the input size: twice the data means roughly twice the time.
+When an algorithm must examine each element once, we call it linear time or O(n). Linear search from Chapter 3 works this way—in the [worst case](glossary#worst-case), you check every element. The time grows in direct proportion to the input size: twice the data means roughly twice the time.
 
 ```swift
 // Linear search - O(n)
@@ -234,7 +234,7 @@ This is often the best we can achieve for comparison-based sorting. No compariso
 
 #### Quadratic time: O(n²)
 
-Nested loops often produce quadratic time complexity. Bubble sort, insertion sort, and selection sort from Chapter 4 all exhibit O(n²) behavior because they use nested iterations over the data.
+Nested loops often produce quadratic [time complexity](glossary#time-complexity). Bubble sort, insertion sort, and selection sort from Chapter 4 all exhibit O(n²) behavior because they use nested iterations over the data.
 
 ```swift
 // Bubble sort - O(n²)
@@ -461,7 +461,7 @@ When we say "insertion sort is O(n²)", we typically refer to the worst case unl
 
 ### Step 5: Consider space complexity
 
-Time complexity measures operations. Space complexity measures memory usage.
+Time complexity measures operations. [Space complexity](glossary#space-complexity) measures memory usage.
 
 ```swift
 // Insertion sort: O(1) space

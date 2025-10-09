@@ -11,11 +11,11 @@ description: "Solve complex problems with memoization"
 
 # Dynamic Programming
 
-Dynamic programming is a technique for solving problems by breaking them into smaller, overlapping subproblems and storing the results to avoid repeating work. It's one of the most powerful optimization techniques in computer science, and while the name sounds intimidating, the core concept is straightforward: remember what you've already calculated so you don't have to calculate it again.
+[Dynamic programming](glossary#dynamic-programming) is a technique for solving problems by breaking them into smaller, overlapping subproblems and storing the results to avoid repeating work. It's one of the most powerful optimization techniques in computer science, and while the name sounds intimidating, the core concept is straightforward: remember what you've already calculated so you don't have to calculate it again.
 
 In this chapter, we'll explore dynamic programming through practical examples that demonstrate why this technique matters and how to apply it in Swift.
 
-## The problem with naive recursion
+## The problem with naive [recursion](glossary#recursion)
 
 Let's start with a simple question: what's wrong with this Fibonacci implementation?
 
@@ -42,7 +42,7 @@ The time complexity is O(2^n)—exponential. For larger numbers, this approach b
 
 Dynamic programming solves this problem with a simple insight: **store the results of subproblems so you can reuse them instead of recalculating**.
 
-The technique we'll focus on is called **memoization**: start with the big problem and recursively break it down, storing (or memoizing) results along the way so you can reuse them.
+The technique we'll focus on is called **[memoization](glossary#memoization)**: start with the big problem and recursively break it down, storing (or memoizing) results along the way so you can reuse them.
 
 **Note:** There's another approach called tabulation (bottom-up) that builds solutions iteratively from base cases, but memoization is often more intuitive because it follows the natural recursive structure of problems.
 
@@ -87,8 +87,8 @@ print(fibonacci(40))  // Completes instantly!
 
 Now `fibonacci(5)` makes only 9 function calls instead of 15, and each value is calculated exactly once.
 
-**Time Complexity:** O(n) - we calculate each value from 0 to n exactly once
-**Space Complexity:** O(n) - we store n values in the cache plus the recursion stack
+**[Time Complexity](glossary#time-complexity):** O(n) - we calculate each value from 0 to n exactly once
+**[Space Complexity](glossary#space-complexity):** O(n) - we store n values in the cache plus the recursion stack
 
 This simple change transforms an exponential algorithm into a linear one—a massive improvement!
 

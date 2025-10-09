@@ -10,9 +10,9 @@ description: "Learn linear and binary search algorithms in Swift"
 
 # Basic Searching
 
-In [Chapter 2](02-measuring-performance.md) you learned the vocabulary of performance—Big O notation provides a common language for discussing algorithmic efficiency. Now it's time to apply that knowledge to your first concrete algorithms. Whether you're building a contact app, a music library, or any system that manages information, search functionality is essential.
+In [Chapter 2](02-measuring-performance.md) you learned the vocabulary of performance—Big O notation provides a common language for discussing algorithmic efficiency. Now it's time to apply that knowledge to your first concrete [algorithms](glossary#algorithm). Whether you're building a contact app, a music library, or any system that manages information, search functionality is essential.
 
-In this chapter, we'll explore two fundamental approaches to searching: linear search and binary search. You'll learn how each algorithm works, when to use it, and why the choice between `O(n)` and `O(log n)` makes such a dramatic difference as data grows.
+In this chapter, we'll explore two fundamental approaches to searching: linear search and [binary search](glossary#binary-search). You'll learn how each algorithm works, when to use it, and why the choice between `O(n)` and `O(log n)` makes such a dramatic difference as data grows.
 
 ## The search problem
 
@@ -28,7 +28,7 @@ Each scenario involves the same fundamental challenge, but the optimal approach 
 
 ## The brute force approach
 
-We've already encountered linear search in our Big O chapter, but let's examine it more thoroughly. Linear search represents the most straightforward approach to finding data: check every item until you find what you're looking for.
+We've already encountered [linear search](glossary#linear-search) in our Big O chapter, but let's examine it more thoroughly. Linear search represents the most straightforward approach to finding data: check every item until you find what you're looking for.
 
 ```swift
 extension Array where Element: Equatable {
@@ -101,7 +101,7 @@ This analysis reveals that while linear search is `O(n)` in the worst case, real
 
 ## Divide and conquer
 
-When the data is sorted, you can employ a much more efficient strategy. Binary search uses the divide and conquer approach, eliminating half of the remaining possibilities with each comparison.
+When the data is sorted, you can employ a much more efficient strategy. Binary search uses the [divide and conquer](glossary#divide-and-conquer) approach, eliminating half of the remaining possibilities with each comparison.
 
 ### The phone book analogy
 
@@ -153,7 +153,7 @@ if let index = sortedNumbers.binarySearch(for: 17) {
 
 ### Understanding binary search performance
 
-Binary search achieves `O(log n)` time complexity. This logarithmic performance means that doubling the data size only adds one more step to the search process.
+Binary search achieves `O(log n)` [time complexity](glossary#time-complexity). This logarithmic performance means that doubling the data size only adds one more step to the search process.
 
 ```swift
 // Perform binary search while tracking comparisons and printing each step
