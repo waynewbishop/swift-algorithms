@@ -10,7 +10,7 @@ description: "Learn linear and binary search algorithms in Swift"
 
 # Basic searching
 
-In Chapter 2, you learned the vocabulary of performance—Big O notation provides a common language for discussing algorithmic efficiency. Now it's time to apply that knowledge to your first concrete algorithms. Whether you're building a contact app, a music library, or any system that manages information, search functionality is essential.
+In [Chapter 2](02-measuring-performance.md) you learned the vocabulary of performance—Big O notation provides a common language for discussing algorithmic efficiency. Now it's time to apply that knowledge to your first concrete algorithms. Whether you're building a contact app, a music library, or any system that manages information, search functionality is essential.
 
 In this chapter, we'll explore two fundamental approaches to searching: linear search and binary search. You'll learn how each algorithm works, when to use it, and why the choice between `O(n)` and `O(log n)` makes such a dramatic difference as data grows.
 
