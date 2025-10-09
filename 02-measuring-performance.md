@@ -82,11 +82,11 @@ Similarly, an algorithm performing n + 5 operations is `O(n)`. The constant 5 be
 
 When an algorithm contains multiple components with different growth rates, we keep only the fastest-growing term. Consider an algorithm that performs `n² + 5n + 3` operations:
 
-``swift
+```swift
 For n = 10: 100 + 50 + 3 = 153 operations
 For n = 100: 10,000 + 500 + 3 = 10,503 operations
 For n = 1,000: 1,000,000 + 5,000 + 3 = 1,005,003 operations
-``
+```
 
 As n grows, the n² term dominates completely. The linear term (5n) and constant (3) become rounding errors. Therefore, we simplify n² + 5n + 3 to `O(n²)`.
 
