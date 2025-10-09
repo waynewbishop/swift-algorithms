@@ -11,7 +11,7 @@ description: "Understanding recursive algorithms and techniques"
 
 # Recursion
 
-Now that we've explored algorithms and data structures through searching and sorting, it's time to introduce one of the most powerful and elegant programming techniques: recursion. Understanding recursion is crucial as we move forward to more complex data structures like trees and graphs, where recursive thinking becomes essential.
+In [Chapter 5](05-advanced-sorting.md), we saw how Quicksort uses recursion to partition and sort arrays. Now it's time to explore recursion more deeply as a fundamental programming technique. Understanding recursion is crucial as we move forward to more complex data structures like trees and graphs, where recursive thinking becomes essential.
 
 Recursion is a coding technique where a function calls itself to solve smaller versions of the same problem. While this might seem circular at first, recursion provides an elegant way to solve problems that have a naturally recursive structure. In this chapter, we'll explore how to think recursively and implement recursive solutions in Swift.
 
@@ -19,25 +19,16 @@ Recursion is a coding technique where a function calls itself to solve smaller v
 
 Recursion is best understood when compared to the iterative approaches we've seen so far. With traditional loops, we explicitly manage the progression through our data. With recursion, we break down a problem into smaller, similar subproblems, solve each subproblem, and combine the results.
 
-Consider how you might explain your family tree to someone:
-- **Iterative approach**: List every person, generation by generation
-- **Recursive approach**: "My family tree consists of me, plus my parents' family trees"
-
-This recursive definition is both more concise and mirrors how family trees naturally work.
+Consider how you might explain your family tree to someone. An iterative approach would require listing every person, generation by generation. A recursive approach, however, is more elegant: "My family tree consists of me, plus my parents' family trees." This recursive definition is both more concise and mirrors how family trees naturally work.
 
 ## Understanding recursive structure
 
-Every recursive solution has two essential components:
-
-### 1. Base case
-The condition that stops the recursion. Without a base case, your function would call itself indefinitely.
-
-### 2. Recursive case
-The part where the function calls itself with a modified version of the original problem.
+Every recursive solution has two essential components. The base case provides the condition that stops the recursion—without it, your function would call itself indefinitely. The recursive case is where the function calls itself with a modified version of the original problem, gradually moving toward the base case.
 
 Let's see this in action with a simple example - calculating factorial:
 
 ```swift
+// Calculate factorial using recursion (n! = n × (n-1)!)
 func factorial(_ n: Int) -> Int {
     //base case: factorial of 0 or 1 is 1
     if n <= 1 {
@@ -117,6 +108,7 @@ Let's compare iterative and recursive approaches:
 ### Iterative Fibonacci
 
 ```swift
+// Generate first n Fibonacci numbers using iteration
 func fibonacciIterative(_ n: Int) -> [Int] {
     guard n > 0 else { return [] }
     guard n > 1 else { return [0] }
@@ -139,6 +131,7 @@ print("Iterative: \(iterativeResult)")
 ### Recursive Fibonacci (simple version)
 
 ```swift
+// Calculate nth Fibonacci number using simple recursion
 func fibonacci(_ n: Int) -> Int {
     //base cases
     if n <= 1 {
@@ -150,6 +143,7 @@ func fibonacci(_ n: Int) -> Int {
 }
 
 //generate sequence using recursive function
+// Generate sequence of Fibonacci numbers using recursive calculation
 func fibonacciSequence(_ count: Int) -> [Int] {
     var sequence: [Int] = []
     for i in 0..<count {
@@ -164,9 +158,10 @@ print("Recursive: \(recursiveResult)")
 
 ### Understanding recursive complexity
 
-The simple recursive Fibonacci has a serious performance problem. Each call spawns two more calls, creating an exponential number of function calls:
+The simple recursive Fibonacci has a serious performance problem. Each call spawns two more calls, creating an exponential number of function calls with `O(2^n)` time complexity:
 
 ```swift
+// Calculate Fibonacci while counting recursive calls to show exponential complexity
 func fibonacciWithCounting(_ n: Int, callCount: inout Int) -> Int {
     callCount += 1
 
@@ -184,13 +179,14 @@ let result = fibonacciWithCounting(10, callCount: &calls)
 print("fibonacci(10) = \(result) required \(calls) function calls")
 ```
 
-This demonstrates why understanding algorithm complexity (from Chapter 2) is crucial when designing recursive solutions.
+This demonstrates why understanding algorithm complexity (from Chapter 2) is crucial when designing recursive solutions. The naive recursive approach runs in `O(2^n)` time, while the memoized version improves to `O(n)`.
 
 ## Optimizing recursion with memoization
 
 We can dramatically improve recursive performance using memoization - storing previously computed results:
 
 ```swift
+// Calculate Fibonacci using memoization to avoid redundant calculations
 func fibonacciMemoized(_ n: Int, memo: inout [Int: Int]) -> Int {
     //check if we've already computed this value
     if let cached = memo[n] {
@@ -224,6 +220,7 @@ Recursion shines when processing arrays and other collections. Here are some com
 ### Recursive sum
 
 ```swift
+// Calculate sum of array elements using recursion
 func recursiveSum(_ array: [Int]) -> Int {
     //base case: empty array
     guard !array.isEmpty else { return 0 }
@@ -241,6 +238,7 @@ print("Sum: \(recursiveSum(numbers))")
 ### Recursive maximum
 
 ```swift
+// Find maximum value in array using recursion
 func recursiveMax(_ array: [Int]) -> Int? {
     //base case: empty array
     guard !array.isEmpty else { return nil }
@@ -267,12 +265,14 @@ print("Maximum: \(recursiveMax(numbers) ?? 0)")
 A special form of recursion where the recursive call is the last operation in the function. While Swift doesn't automatically optimize tail recursion, understanding it is important:
 
 ```swift
+// Calculate factorial - not tail recursive (multiplication after recursive call)
 //not tail recursive - multiplication happens after recursive call
 func factorial(_ n: Int) -> Int {
     if n <= 1 { return 1 }
     return n * factorial(n - 1)  //multiplication after recursive call
 }
 
+// Calculate factorial using tail recursion with accumulator pattern
 //tail recursive version - accumulator pattern
 func factorialTailRecursive(_ n: Int, accumulator: Int = 1) -> Int {
     if n <= 1 {
@@ -284,22 +284,7 @@ func factorialTailRecursive(_ n: Int, accumulator: Int = 1) -> Int {
 
 ## When to use recursion
 
-Recursion is particularly well-suited for:
-
-### 1. Problems with recursive structure
-- Tree traversals
-- Graph searches
-- Divide and conquer algorithms
-
-### 2. Mathematical sequences
-- Fibonacci numbers
-- Factorials
-- Combinatorics
-
-### 3. Processing nested data
-- JSON parsing
-- File system traversal
-- Nested arrays or dictionaries
+Recursion is particularly well-suited for problems with naturally recursive structure. Tree traversals and graph searches become elegant when expressed recursively, as do divide and conquer algorithms like the quicksort we explored in Chapter 5. Mathematical sequences such as Fibonacci numbers, factorials, and combinatorics problems often have simple recursive definitions that mirror their mathematical formulas. Finally, recursion excels at processing nested data, whether parsing JSON, traversing file systems, or navigating nested arrays and dictionaries. The key is recognizing when a problem can be naturally decomposed into smaller instances of itself.
 
 ## Recursion pitfalls to avoid
 
@@ -325,23 +310,9 @@ Very deep recursion can exhaust the call stack. Consider iterative alternatives 
 
 ## Looking ahead
 
-Understanding recursion is essential for the data structures we'll explore next:
-
-- **Chapter 9 (Linked Lists)**: Recursive insertion and deletion
-- **Chapter 11 (Binary Search Trees)**: Recursive tree operations
-- **Chapter 12 (Graphs)**: Recursive graph traversal algorithms
-- **Chapter 16 (Dynamic Programming)**: Recursive problem decomposition
-
-The recursive thinking patterns you learn here will make these advanced topics much more approachable.
+Understanding recursion is essential for the data structures we'll explore next. In Chapter 9, you'll see how linked lists use recursive insertion and deletion. Chapter 11 introduces binary search trees, where recursive tree operations become fundamental. Chapter 12 explores graphs with recursive traversal algorithms. Finally, Chapter 16 covers dynamic programming, which relies on recursive problem decomposition combined with memoization techniques. The recursive thinking patterns you learn here will make these advanced topics much more approachable.
 
 ## Building recursive intuition
 
-When approaching a problem recursively, ask yourself:
-
-1. **What's the simplest version of this problem?** (base case)
-2. **How can I break the problem into smaller, similar problems?** (recursive case)
-3. **How do I combine the results from subproblems?** (return value)
-4. **Is this approach efficient enough?** (complexity analysis)
-
-This framework will guide you toward elegant recursive solutions.
+When approaching a problem recursively, start by identifying the simplest version of the problem—this becomes your base case. Then consider how to break the problem into smaller, similar subproblems that move toward that base case. Next, determine how to combine the results from these subproblems into your final answer. Finally, analyze whether this recursive approach is efficient enough, or if you need optimizations like memoization to avoid redundant calculations. This framework will guide you toward elegant recursive solutions.
 
