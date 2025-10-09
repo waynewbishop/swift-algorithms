@@ -62,7 +62,7 @@ Some algorithms' performance explodes exponentially. The naive recursive Fibonac
 
 ## Visualizing the difference
 
-Let's see how these complexities compare with actual numbers:
+Let's see how these complexities compare with actual numbers. This table reveals why algorithmic efficiency matters. An `O(n²)` algorithm that works fine with 100 elements becomes painfully slow with 10,000 elements. But an `O(log n)` algorithm barely notices the difference:
 
 | Input Size | `O(1)` | `O(log n)` | `O(n)` | `O(n log n)` | `O(n²)` |
 |------------|--------|------------|--------|--------------|---------|
@@ -71,25 +71,22 @@ Let's see how these complexities compare with actual numbers:
 | 1,000      | 1      | 10         | 1,000  | 10,000       | 1,000,000|
 | 10,000     | 1      | 13         | 10,000 | 130,000      | 100,000,000|
 
-This table reveals why algorithmic efficiency matters. An `O(n²)` algorithm that works fine with 100 elements becomes painfully slow with 10,000 elements. But an `O(log n)` algorithm barely notices the difference.
 
 ## Simplification rules
 
-When determining Big O notation, we follow two essential rules that focus on how algorithms scale rather than their exact operation counts.
-
-### Drop constants
-
-Consider an algorithm that performs 3n operations. We express this as `O(n)`, not `O(3n)`. Why? Because Big O notation describes growth patterns, not precise timings. Whether your algorithm takes 3 steps per item or 300 steps per item, it still grows linearly with input size. The constant factor matters for real-world performance, but not for classifying the algorithm's scalability.
+When determining Big O notation, we follow two essential rules that focus on how algorithms scale rather than their exact operation counts. Consider an algorithm that performs 3n operations. We express this as `O(n)`, not `O(3n)`. Why? Because Big O notation describes growth patterns, not precise timings. Whether your algorithm takes 3 steps per item or 300 steps per item, it still grows linearly with input size. The constant factor matters for real-world performance, but not for classifying the algorithm's scalability.
 
 Similarly, an algorithm performing n + 5 operations is `O(n)`. The constant 5 becomes insignificant as n grows large. For n = 1,000,000, the difference between n and n + 5 is negligible.
 
-### Keep only the dominant term
+### Keeping the dominant term
 
-When an algorithm contains multiple components with different growth rates, we keep only the fastest-growing term. Consider an algorithm that performs n² + 5n + 3 operations:
+When an algorithm contains multiple components with different growth rates, we keep only the fastest-growing term. Consider an algorithm that performs `n² + 5n + 3` operations:
 
-- For n = 10: 100 + 50 + 3 = 153 operations
-- For n = 100: 10,000 + 500 + 3 = 10,503 operations
-- For n = 1,000: 1,000,000 + 5,000 + 3 = 1,005,003 operations
+``swift
+For n = 10: 100 + 50 + 3 = 153 operations
+For n = 100: 10,000 + 500 + 3 = 10,503 operations
+For n = 1,000: 1,000,000 + 5,000 + 3 = 1,005,003 operations
+``
 
 As n grows, the n² term dominates completely. The linear term (5n) and constant (3) become rounding errors. Therefore, we simplify n² + 5n + 3 to `O(n²)`.
 
