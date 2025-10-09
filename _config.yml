@@ -103,10 +103,10 @@ navigation:
     chapters:
       - title: "Dynamic Programming"
         url: "17-dynamic-programming"
-      - title: "Linear Algebra"
-        url: "18-linear-algebra"
       - title: "PageRank"
-        url: "19-pagerank-algorithm"
+        url: "18-pagerank-algorithm"
+      - title: "Linear Algebra"
+        url: "19-linear-algebra"
       - title: "Semantic Search"
         url: "20-semantic-search"
 
