@@ -53,6 +53,15 @@ __pycache__/
 venv/
 env/
 
+# PDF Extraction Scripts (Node.js)
+extract-chapters.js
+package.json
+package-lock.json
+node_modules/
+
+# PDF Files
+*.pdf
+
 ## User settings
 xcuserdata/
 

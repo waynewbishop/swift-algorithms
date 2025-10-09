@@ -77,28 +77,79 @@ Let's see how these complexities compare with actual numbers:
 
 This table reveals why algorithmic efficiency matters. An O(n²) algorithm that works fine with 100 elements becomes painfully slow with 10,000 elements. But an O(log n) algorithm barely notices the difference.
 
-## What we're not covering yet
+## Simplification rules
 
-Big O notation is just the vocabulary—the language we use to discuss performance. In Chapter 8, we'll dive deep into how to analyze code, measure real-world performance, and optimize strategically. You'll learn techniques for determining an algorithm's complexity, profiling actual performance, and understanding when optimization matters.
+When determining Big O notation, we follow two essential rules that focus on how algorithms scale rather than their exact operation counts.
 
-For now, understanding these basic categories prepares you to discuss the algorithms we'll encounter in the coming chapters. When Chapter 4 describes insertion sort as O(n²), you'll understand that means it slows down quadratically with data size. When Chapter 12 shows Dijkstra's algorithm as O((V + E) log V), you'll recognize the logarithmic component.
+### Drop constants
 
-## Building intuition
+Consider an algorithm that performs 3n operations. We express this as O(n), not O(3n). Why? Because Big O notation describes growth patterns, not precise timings. Whether your algorithm takes 3 steps per item or 300 steps per item, it still grows linearly with input size. The constant factor matters for real-world performance, but not for classifying the algorithm's scalability.
 
-The goal isn't to memorize formulas but to develop an intuitive sense for algorithm efficiency. When you see nested loops, think quadratic—this might slow down quickly. When you see a single loop through data, think linear—performance scales with size. When you see direct access to specific positions, think constant—size doesn't matter.
+Similarly, an algorithm performing n + 5 operations is O(n). The constant 5 becomes insignificant as n grows large. For n = 1,000,000, the difference between n and n + 5 is negligible.
 
-In the chapters ahead, you'll see these patterns in action:
+### Keep only the dominant term
 
-**Searching (Chapter 3):** Linear search checks every element. Binary search eliminates half with each step.
+When an algorithm contains multiple components with different growth rates, we keep only the fastest-growing term. Consider an algorithm that performs n² + 5n + 3 operations:
 
-**Sorting (Chapters 4-5):** Basic sorts use nested loops. Advanced sorts use divide-and-conquer strategies.
+- For n = 10: 100 + 50 + 3 = 153 operations
+- For n = 100: 10,000 + 500 + 3 = 10,503 operations
+- For n = 1,000: 1,000,000 + 5,000 + 3 = 1,005,003 operations
 
-**Data Structures (Chapters 9-15):** Each structure optimizes different operations. Hash tables provide O(1) lookup. Binary search trees balance O(log n) operations.
+As n grows, the n² term dominates completely. The linear term (5n) and constant (3) become rounding errors. Therefore, we simplify n² + 5n + 3 to O(n²).
 
-**Graph Algorithms (Chapter 12):** Traversing graphs efficiently requires understanding how nodes and edges contribute to complexity.
+This principle applies to any combination of terms. An algorithm with n log n + n² operations is O(n²) because quadratic growth eventually overwhelms linearithmic growth.
 
-**Advanced Topics (Chapters 16-19):** Dynamic programming, PageRank, and semantic search all leverage these fundamental performance patterns.
+**Common simplifications:**
+- 5n + 3 → O(n)
+- n² + n → O(n²)
+- 2n log n + n → O(n log n)
+- n³ + n² + n → O(n³)
+- log n + 5 → O(log n)
 
-As you work through these algorithms, refer back to this chapter's performance categories. The notation provides a common language for discussing efficiency, comparing approaches, and making informed decisions about which algorithm fits your needs.
+## A worked example
 
-In Chapter 8, we'll build on this foundation with comprehensive performance analysis techniques. But for now, this vocabulary gives you the tools to understand and discuss the algorithms ahead.
+Let's analyze a real Swift function to determine its Big O complexity. This function finds the maximum value in an array:
+
+```swift
+func findMaximum(in numbers: [Int]) -> Int? {
+    // Handle empty array
+    guard !numbers.isEmpty else {
+        return nil
+    }
+
+    // Start with first element
+    var maximum = numbers[0]
+
+    // Compare with remaining elements
+    for number in numbers {
+        if number > maximum {
+            maximum = number
+        }
+    }
+
+    return maximum
+}
+```
+
+**Step 1: Identify the input size**
+
+The input size n is the number of elements in the array.
+
+**Step 2: Count operations**
+
+- The guard statement: 1 operation (constant time)
+- Accessing `numbers[0]`: 1 operation (constant time)
+- The for loop: executes n times
+- Inside the loop: 2 operations (comparison and potential assignment)
+
+Total operations: 1 + 1 + (n × 2) = 2n + 2
+
+**Step 3: Apply simplification rules**
+
+Starting with 2n + 2:
+- Drop the constant 2: leaves us with 2n
+- Drop the coefficient 2: leaves us with n
+
+**Result:** This function is **O(n)**
+
+The algorithm must examine each element once to find the maximum. Doubling the array size doubles the number of comparisons. This is the hallmark of linear time complexity.

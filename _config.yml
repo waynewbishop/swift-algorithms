@@ -60,7 +60,7 @@ navigation:
       - title: "Introduction"
         url: "01-introduction"
       - title: "Measuring Performance"
-        url: "02-big-o-notation"
+        url: "02-measuring-performance"
 
   - section: "Algorithms"
     chapters:
