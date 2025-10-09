@@ -22,7 +22,7 @@ The difference between a slow algorithm and a fast one isn't always obvious with
 
 ## The language of performance
 
-To discuss algorithm efficiency, developers use a common vocabulary: Big O Notation. Rather than saying this algorithm checks every element, we say this is O(n). Rather than explaining this eliminates half the data with each step, we write O(log n). This notation provides a shorthand for describing how algorithms scale.
+To discuss algorithm efficiency, developers use a common vocabulary: Big O Notation. Rather than saying this algorithm checks every element, we say this is `O(n)`. Rather than explaining this eliminates half the data with each step, we write `O(log n)`. This notation provides a shorthand for describing how algorithms scale.
 
 Think of Big O notation as a way to classify algorithms into performance categories. Just as we might describe a car as fuel-efficient or gas-guzzler without specifying exact miles per gallon, Big O notation categorizes algorithms by their growth patterns without getting lost in implementation details.
 
@@ -32,35 +32,35 @@ The O stands for order of magnitude—it tells us the scale of how an algorithm'
 
 As you work through the algorithms in this book, you'll encounter these fundamental patterns:
 
-### Constant time: O(1)
+### Constant time
 
-Some operations take the same amount of time regardless of data size. Accessing a specific array index is O(1)—whether your array has 10 items or 10 million items, getting `array[5]` is instant. The computer knows exactly where to find that position in memory.
+Some operations take the same amount of time regardless of data size. Accessing a specific array index is `O(1)`—whether your array has 10 items or 10 million items, getting `array[5]` is instant. The computer knows exactly where to find that position in memory.
 
 Think of it like using a bookmark in a book. Finding the bookmarked page takes the same amount of time whether the book has 100 pages or 1,000 pages—you just open to the bookmark. Hash table lookups (Chapter 14) work this way: they jump directly to the answer without searching.
 
-### Logarithmic time: O(log n)
+### Logarithmic time
 
 Binary search demonstrates logarithmic performance. Each comparison eliminates half the remaining possibilities. For 1,000 items, you need about 10 comparisons. For 1 million items, only about 20 comparisons. Doubling the data size only adds one more step.
 
-This halving pattern appears throughout computer science. Balanced binary search trees (Chapter 11) maintain O(log n) operations by keeping data organized in a way that allows cutting the search space in half repeatedly.
+This halving pattern appears throughout computer science. Balanced binary search trees (Chapter 11) maintain `O(log n)` operations by keeping data organized in a way that allows cutting the search space in half repeatedly.
 
-### Linear time: O(n)
+### Linear time
 
-When an algorithm must examine each element once, we call it linear time or O(n). Searching an unsorted list works this way—in the worst case, you check every element. The time grows in direct proportion to the input size: twice the data means roughly twice the time.
+When an algorithm must examine each element once, we call it linear time or `O(n)`. Searching an unsorted list works this way—in the worst case, you check every element. The time grows in direct proportion to the input size: twice the data means roughly twice the time.
 
 Linear time operations are sometimes called brute force because they make no assumptions about the data organization. They're often the simplest solution but not always the fastest. Chapter 3 explores searching, including when linear search is appropriate.
 
-### Linearithmic time: O(n log n)
+### Linearithmic time
 
-This pattern combines linear and logarithmic behavior. Merge sort and quicksort (Chapter 5) demonstrate O(n log n) performance. They divide data recursively (the log n part) and process each piece (the n part). This is often the best we can achieve for comparison-based sorting.
+This pattern combines linear and logarithmic behavior. Merge sort and quicksort (Chapter 5) demonstrate `O(n log n)` performance. They divide data recursively (the log n part) and process each piece (the n part). This is often the best we can achieve for comparison-based sorting.
 
-### Quadratic time: O(n²)
+### Quadratic time
 
-Nested loops often produce quadratic time complexity. Bubble sort, insertion sort, and selection sort (Chapter 4) all exhibit O(n²) behavior. The performance degrades dramatically: doubling the data size roughly quadruples the time. For 100 items, you might do 10,000 operations. For 1,000 items, about 1,000,000 operations.
+Nested loops often produce quadratic time complexity. Bubble sort, insertion sort, and selection sort (Chapter 4) all exhibit `O(n²)` behavior. The performance degrades dramatically: doubling the data size roughly quadruples the time. For 100 items, you might do 10,000 operations. For 1,000 items, about 1,000,000 operations.
 
-Quadratic algorithms work fine for small datasets but become impractical as data grows. Understanding why they're O(n²) helps you recognize when to choose a different approach.
+Quadratic algorithms work fine for small datasets but become impractical as data grows. Understanding why they're `O(n²)` helps you recognize when to choose a different approach.
 
-### Exponential time: O(2ⁿ)
+### Exponential time
 
 Some algorithms' performance explodes exponentially. The naive recursive Fibonacci calculation (Chapter 16) demonstrates this—calculating fib(40) requires over a billion operations. These algorithms are typically unusable for n larger than about 30-40.
 
@@ -68,14 +68,14 @@ Some algorithms' performance explodes exponentially. The naive recursive Fibonac
 
 Let's see how these complexities compare with actual numbers:
 
-| Input Size | O(1) | O(log n) | O(n) | O(n log n) | O(n²) |
-|------------|------|----------|------|------------|-------|
-| 10         | 1    | 3        | 10   | 30         | 100   |
-| 100        | 1    | 7        | 100  | 700        | 10,000|
-| 1,000      | 1    | 10       | 1,000| 10,000     | 1,000,000|
-| 10,000     | 1    | 13       | 10,000| 130,000   | 100,000,000|
+| Input Size | `O(1)` | `O(log n)` | `O(n)` | `O(n log n)` | `O(n²)` |
+|------------|--------|------------|--------|--------------|---------|
+| 10         | 1      | 3          | 10     | 30           | 100     |
+| 100        | 1      | 7          | 100    | 700          | 10,000  |
+| 1,000      | 1      | 10         | 1,000  | 10,000       | 1,000,000|
+| 10,000     | 1      | 13         | 10,000 | 130,000      | 100,000,000|
 
-This table reveals why algorithmic efficiency matters. An O(n²) algorithm that works fine with 100 elements becomes painfully slow with 10,000 elements. But an O(log n) algorithm barely notices the difference.
+This table reveals why algorithmic efficiency matters. An `O(n²)` algorithm that works fine with 100 elements becomes painfully slow with 10,000 elements. But an `O(log n)` algorithm barely notices the difference.
 
 ## Simplification rules
 
@@ -83,9 +83,9 @@ When determining Big O notation, we follow two essential rules that focus on how
 
 ### Drop constants
 
-Consider an algorithm that performs 3n operations. We express this as O(n), not O(3n). Why? Because Big O notation describes growth patterns, not precise timings. Whether your algorithm takes 3 steps per item or 300 steps per item, it still grows linearly with input size. The constant factor matters for real-world performance, but not for classifying the algorithm's scalability.
+Consider an algorithm that performs 3n operations. We express this as `O(n)`, not `O(3n)`. Why? Because Big O notation describes growth patterns, not precise timings. Whether your algorithm takes 3 steps per item or 300 steps per item, it still grows linearly with input size. The constant factor matters for real-world performance, but not for classifying the algorithm's scalability.
 
-Similarly, an algorithm performing n + 5 operations is O(n). The constant 5 becomes insignificant as n grows large. For n = 1,000,000, the difference between n and n + 5 is negligible.
+Similarly, an algorithm performing n + 5 operations is `O(n)`. The constant 5 becomes insignificant as n grows large. For n = 1,000,000, the difference between n and n + 5 is negligible.
 
 ### Keep only the dominant term
 
@@ -95,22 +95,23 @@ When an algorithm contains multiple components with different growth rates, we k
 - For n = 100: 10,000 + 500 + 3 = 10,503 operations
 - For n = 1,000: 1,000,000 + 5,000 + 3 = 1,005,003 operations
 
-As n grows, the n² term dominates completely. The linear term (5n) and constant (3) become rounding errors. Therefore, we simplify n² + 5n + 3 to O(n²).
+As n grows, the n² term dominates completely. The linear term (5n) and constant (3) become rounding errors. Therefore, we simplify n² + 5n + 3 to `O(n²)`.
 
-This principle applies to any combination of terms. An algorithm with n log n + n² operations is O(n²) because quadratic growth eventually overwhelms linearithmic growth.
+This principle applies to any combination of terms. An algorithm with n log n + n² operations is `O(n²)` because quadratic growth eventually overwhelms linearithmic growth.
 
 **Common simplifications:**
-- 5n + 3 → O(n)
-- n² + n → O(n²)
-- 2n log n + n → O(n log n)
-- n³ + n² + n → O(n³)
-- log n + 5 → O(log n)
+- 5n + 3 → `O(n)`
+- n² + n → `O(n²)`
+- 2n log n + n → `O(n log n)`
+- n³ + n² + n → `O(n³)`
+- log n + 5 → `O(log n)`
 
 ## A worked example
 
 Let's analyze a real Swift function to determine its Big O complexity. This function finds the maximum value in an array:
 
 ```swift
+// Find the maximum value in an array of integers
 func findMaximum(in numbers: [Int]) -> Int? {
     // Handle empty array
     guard !numbers.isEmpty else {
@@ -150,6 +151,6 @@ Starting with 2n + 2:
 - Drop the constant 2: leaves us with 2n
 - Drop the coefficient 2: leaves us with n
 
-**Result:** This function is **O(n)**
+**Result:** This function is **`O(n)`**
 
 The algorithm must examine each element once to find the maximum. Doubling the array size doubles the number of comparisons. This is the hallmark of linear time complexity.
