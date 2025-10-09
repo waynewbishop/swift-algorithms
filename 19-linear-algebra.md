@@ -21,11 +21,11 @@ A vector is a mathematical object that represents both magnitude and direction. 
 
 Consider everyday examples. Wind isn't just "20 miles per hour" - it's "20 miles per hour from the northwest." That's a vector: magnitude (20 mph) and direction (northwest). When a character moves in a video game, we need both how fast they're moving and in which direction. When analyzing customer preferences across multiple product features, each preference profile can be represented as a vector in multidimensional space.
 
-Mathematically, vectors are represented as ordered lists of numbers. A two-dimensional vector might be written as [3, 4], representing movement 3 units in one direction and 4 units in another. Three-dimensional vectors add a third component [x, y, z], and we can extend this to any number of dimensions.
+Mathematically, vectors are represented as ordered lists of numbers. A two-dimensional vector might be written as `[3, 4]`, representing movement 3 units in one direction and 4 units in another. Three-dimensional vectors add a third component `[x, y, z]`, and we can extend this to any number of dimensions.
 
-[diagram: 2D vector [3, 4] shown as arrow from origin to point (3,4)]
+[diagram: 2D vector `[3, 4]` shown as arrow from origin to point (3,4)]
 
-Vectors can represent many real-world concepts. In physics simulations and game development, they represent positions in space, forces acting on objects, and velocities of moving entities. In machine learning, feature vectors capture multiple attributes of data points—a song might be represented as [tempo, energy, danceability, loudness]. Even RGB color values are vectors, with each component representing intensity on a scale from 0 to 1.
+Vectors can represent many real-world concepts. In physics simulations and game development, they represent positions in space, forces acting on objects, and velocities of moving entities. In machine learning, feature vectors capture multiple attributes of data points—a song might be represented as `[tempo, energy, danceability, loudness]`. Even RGB color values are vectors, with each component representing intensity on a scale from 0 to 1.
 
 ## Magnitude and direction
 
@@ -39,7 +39,7 @@ Magnitude is calculated using the Pythagorean theorem extended to any dimension.
 
 For vector `[3, 4]`, imagine an arrow from the origin to point `(3, 4)`. This forms a right triangle's hypotenuse with sides 3 and 4. The Pythagorean theorem gives us `√(3² + 4²) = √25 = 5`.
 
-[diagram: Right triangle showing vector [3, 4] as hypotenuse with legs 3 and 4]
+[diagram: Right triangle showing vector `[3, 4]` as hypotenuse with legs 3 and 4]
 
 This extends to higher dimensions. A vector `[1, 2, 3, 4]` has magnitude `√(1² + 2² + 3² + 4²) = √30 ≈ 5.48`.
 
@@ -49,11 +49,11 @@ Direction is expressed as a unit vector - a vector with magnitude 1 that points 
 
 To normalize, divide each component by the vector's magnitude. Vector `[3, 4]` with magnitude 5 becomes `[3/5, 4/5] = [0.6, 0.8]`. Verify: `√(0.6² + 0.8²) = 1`.
 
-[diagram: Original vector [3, 4] and its normalized version [0.6, 0.8] showing same direction, different lengths]
+[diagram: Original vector `[3, 4]` and its normalized version `[0.6, 0.8]` showing same direction, different lengths]
 
-Unit vectors separate how much from which way. A game character moving northeast [0.7, 0.7] at 5 units per second: normalize the direction, then multiply by speed to get the exact velocity needed.
+Unit vectors separate how much from which way. A game character moving northeast `[0.7, 0.7]` at 5 units per second: normalize the direction, then multiply by speed to get the exact velocity needed.
 
-The zero vector [0, 0] cannot be normalized because it has no direction - it represents no movement or no force.
+The zero vector `[0, 0]` cannot be normalized because it has no direction - it represents no movement or no force.
 
 ## Vector operations
 
@@ -109,7 +109,7 @@ One of the most powerful applications is transforming vectors with matrices. A `
 
 When this matrix transforms vector `[1, 0]` (pointing right), the result is `[0, 1]` (pointing up).
 
-[diagram: Vector transformation showing rotation from right-pointing [1,0] to up-pointing [0,1]]
+[diagram: Vector transformation showing rotation from right-pointing `[1,0]` to up-pointing `[0,1]`]
 
 For a matrix to transform a vector, the matrix width must match the vector length.
 
@@ -123,7 +123,7 @@ Measures of central tendency describe where data clusters. The mean (average) pr
 
 Measures of spread quantify data variability. Standard deviation measures how far values typically deviate from the mean. Variance, the square of standard deviation, provides a mathematically convenient form for many calculations. Range simply captures the difference between maximum and minimum values.
 
-These statistical operations treat data as vectors, applying mathematical transformations to extract insights. A vector of test scores [85, 92, 78, 88, 95, 82, 90] can be analyzed for mean performance, consistency through standard deviation, and outliers through range analysis. This mathematical approach to data forms the foundation for more advanced techniques in machine learning and data science.
+These statistical operations treat data as vectors, applying mathematical transformations to extract insights. A vector of test scores `[85, 92, 78, 88, 95, 82, 90]` can be analyzed for mean performance, consistency through standard deviation, and outliers through range analysis. This mathematical approach to data forms the foundation for more advanced techniques in machine learning and data science.
 
 ## Introducing Quiver
 
