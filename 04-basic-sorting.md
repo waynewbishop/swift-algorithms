@@ -11,7 +11,7 @@ description: "Master bubble sort, insertion sort, and selection sort"
 
 # Basic sorting
 
-Sorting is an essential task when managing data. As we saw in [Chapter 2](02-measuring-performance.md), sorted data allows us to implement efficient algorithms. Our goal with sorting is to move from disarray to order. This is done by arranging data in a logical sequence so we'll know where to find information.
+Sorting is an essential task when managing data. As we saw in [Chapter 2](02-measuring-performance.md), sorted data allows us to implement efficient [algorithms](glossary#algorithm). Our goal with sorting is to move from disarray to order. This is done by arranging data in a logical sequence so we'll know where to find information.
 
 Sequences can be easily implemented with integers, but can also be achieved with characters (e.g., alphabets), and other sets like binary and hexadecimal numbers. In the examples below, we'll use various techniques to sort the following array:
 
@@ -161,7 +161,7 @@ Now that you've seen the three algorithms in action, let's analyze what makes th
 
 ### Why O(n²)
 
-The three algorithms in this chapter—insertion sort, bubble sort, and selection sort—all have **`O(n²)` time complexity** in their average and worst cases. This means that as your data doubles in size, the sorting time roughly quadruples.
+The three algorithms in this chapter—insertion sort, bubble sort, and selection sort—all have **`O(n²)` [time complexity](glossary#time-complexity)** in their average and [worst cases](glossary#worst-case). This means that as your data doubles in size, the sorting time roughly quadruples.
 
 **Why does this happen?**
 
@@ -185,7 +185,7 @@ For 8 elements, you'd need about 40 comparisons—quadrupling the work for doubl
 
 Despite their `O(n²)` complexity, these algorithms have legitimate use cases. Understanding when to apply each algorithm requires considering the characteristics of your data and the constraints of your environment.
 
-Insertion sort excels when working with small datasets of fewer than 10-20 elements, particularly when the data is already nearly sorted. In such cases, it achieves its best-case performance of `O(n)` time complexity. The algorithm is also valuable when you need a simple, stable sort or when memory is extremely limited, since it sorts in-place. Perhaps surprisingly, Swift's standard sort implementation uses insertion sort for small subarrays as part of its hybrid Introsort algorithm, demonstrating that even basic algorithms have a place in production code.
+Insertion sort excels when working with small datasets of fewer than 10-20 elements, particularly when the data is already nearly sorted. In such cases, it achieves its [best-case](glossary#best-case) performance of `O(n)` time complexity. The algorithm is also valuable when you need a simple, stable sort or when memory is extremely limited, since it sorts in-place. Perhaps surprisingly, Swift's standard sort implementation uses insertion sort for small subarrays as part of its hybrid Introsort algorithm, demonstrating that even basic algorithms have a place in production code.
 
 Bubble sort, while pedagogically valuable for teaching sorting concepts due to its intuitive operation, has limited practical applications. Its primary advantage lies in the ability to detect if data is already sorted and exit early. However, its use should generally be restricted to very small datasets or educational contexts where understanding the algorithm's mechanics is more important than performance.
 

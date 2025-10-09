@@ -11,7 +11,7 @@ description: "Essential data structures for managing collections"
 
 # Stacks & queues
 
-Stacks and queues are structures that help organize data in a particular order. Their concept is based on the idea that information can be organized similarly to how things interact in the real world. For example, a stack of dinner plates can be represented by placing a single plate on a group of existing plates. Similarly, a queue can be easily understood by observing groups of people waiting in a line at a concert or grand opening.
+[Stacks](glossary#stack) and [queues](glossary#queue) are structures that help organize data in a particular order. Their concept is based on the idea that information can be organized similarly to how things interact in the real world. For example, a stack of dinner plates can be represented by placing a single plate on a group of existing plates. Similarly, a queue can be easily understood by observing groups of people waiting in a line at a concert or grand opening.
 
 These structures can be implemented in various ways. Any app that makes use of a shopping cart, waiting list or playlist makes use of a stack or queue. In software development, a call stack is often used as an essential debugging / analytics tool. For this essay, we'll discuss and implement a stack and queue data structures in Swift.
 

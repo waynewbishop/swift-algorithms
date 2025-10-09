@@ -11,7 +11,7 @@ description: "Implement prefix trees for efficient string operations"
 
 # Tries
 
-Tries are tree-based data structures that organize information in an hierarchy. Often pronounced "try", the term comes from the English language verb to retrieve. While most algorithms are designed to manipulate generic data, tries are commonly used with Strings. In this essay, we'll review trie structures and will implement our own model with Swift.
+[Tries](glossary#trie) are [tree](glossary#tree)-based data structures that organize information in an hierarchy. Often pronounced "try", the term comes from the English language verb to retrieve. While most [algorithms](glossary#algorithm) are designed to manipulate generic data, tries are commonly used with Strings. In this essay, we'll review trie structures and will implement our own model with Swift.
 
 ## How it works
 
@@ -31,7 +31,7 @@ Tries involve building hierarchies, storing phrases along the way until a word i
 
 ## The data structure
 
-Here's an example of a trie data structure written in Swift. In addition to storing a key, the structure also includes an array for identifying its children. Unlike a binary search tree, a trie can store an unlimited number of leaf nodes. The boolean value isFinal will allow us to distinguish words and phrases. Finally, the level will indicate the node's level in the tree hierarchy.
+Here's an example of a trie data structure written in Swift. In addition to storing a key, the structure also includes an array for identifying its children. Unlike a [binary search tree](glossary#binary-search-tree-bst), a trie can store an unlimited number of leaf [nodes](glossary#node). The boolean value isFinal will allow us to distinguish words and phrases. Finally, the level will indicate the node's level in the tree hierarchy.
 
 ```swift
 //enhanced trie data structure

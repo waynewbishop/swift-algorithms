@@ -11,7 +11,7 @@ description: "Implement singly and doubly linked lists"
 
 # Linked lists
 
-A linked list is a basic data structure that provides a way to associate related content. At a basic level, linked lists provide the same functionality as an Array. That is, the ability to insert, retrieve, update and remove related items. However, if properly implemented, linked lists can provide enhanced flexibility. Since objects are managed independently (instead of contiguously - as with an array), lists can prove useful when dealing with large datasets and complex algorithms.
+A [linked list](glossary#linked-list) is a basic data structure that provides a way to associate related content. At a basic level, linked lists provide the same functionality as an Array. That is, the ability to insert, retrieve, update and remove related items. However, if properly implemented, linked lists can provide enhanced flexibility. Since objects are managed independently (instead of contiguously - as with an [array](glossary#array)), lists can prove useful when dealing with large datasets and complex algorithms.
 
 ## Arrays vs linked lists: Understanding the trade-offs
 
@@ -92,8 +92,8 @@ Before diving into implementation, it's important to understand when you'd choos
    ```
 
 4. **Building other data structures**
-   - Implementing your own Stack or Queue
-   - Creating a Hash Table with chaining for collisions
+   - Implementing your own [Stack](glossary#stack) or [Queue](glossary#queue)
+   - Creating a [Hash Table](glossary#hash-table) with chaining for collisions
    - Building a Graph with adjacency lists
 
 ### When to use arrays

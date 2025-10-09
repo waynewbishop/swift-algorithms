@@ -14,7 +14,7 @@ When you write code you're creating instructions for the computer to follow. But
 
 ## Why performance matters
 
-Consider Netflix. They serve over 200 million users worldwide. When someone searches for science fiction, the system must quickly find relevant titles among hundreds of thousands of options. An inefficient search algorithm that works fine with 100 movies becomes unusable with 100,000. This isn't a hypothetical problem—it's the reality of modern software development.
+Consider Netflix. They serve over 200 million users worldwide. When someone searches for science fiction, the system must quickly find relevant titles among hundreds of thousands of options. An inefficient search [algorithm](glossary#algorithm) that works fine with 100 movies becomes unusable with 100,000. This isn't a hypothetical problem—it's the reality of modern software development.
 
 Or think about Instagram's photo feed. Every time you scroll, the app must determine which photos to show next, in what order, and load them seamlessly. With billions of photos and millions of active users, even small inefficiencies multiply into serious problems. The algorithms that power these decisions must scale efficiently.
 
@@ -22,7 +22,7 @@ The difference between a slow algorithm and a fast one isn't always obvious with
 
 ## The language of performance
 
-To discuss algorithm efficiency, developers use a common vocabulary: Big O Notation. Rather than saying this algorithm checks every element, we say this is `O(n)`. Rather than explaining this eliminates half the data with each step, we write `O(log n)`. This notation provides a shorthand for describing how algorithms scale.
+To discuss algorithm efficiency, developers use a common vocabulary: [Big O Notation](glossary#big-o-notation). Rather than saying this algorithm checks every element, we say this is `O(n)`. Rather than explaining this eliminates half the data with each step, we write `O(log n)`. This notation provides a shorthand for describing how algorithms scale.
 
 Consider Big O notation as a way to classify algorithms into performance categories. Just as we might describe a car as fuel-efficient or gas-guzzler without specifying exact miles per gallon, Big O notation categorizes algorithms by their growth patterns without getting lost in implementation details.
 
@@ -32,13 +32,13 @@ The `O` stands for order of magnitude—it tells us the scale of how an algorith
 
 Some operations take the same amount of time regardless of data size. Accessing a specific array index is `O(1)`—whether your array has 10 items or 10 million items, getting `array[5]` is instant. The computer knows exactly where to find that position in memory.
 
-Think of it like using a bookmark in a book. Finding the bookmarked page takes the same amount of time whether the book has 100 pages or 1,000 pages—you just open to the bookmark. Hash table lookups (Chapter 14) work this way: they jump directly to the answer without searching.
+Think of it like using a bookmark in a book. Finding the bookmarked page takes the same amount of time whether the book has 100 pages or 1,000 pages—you just open to the bookmark. [Hash table](glossary#hash-table) lookups (Chapter 14) work this way: they jump directly to the answer without searching.
 
 ## Logarithmic time
 
-Binary search demonstrates logarithmic performance. Each comparison eliminates half the remaining possibilities. For 1,000 items, you need about 10 comparisons. For 1 million items, only about 20 comparisons. Doubling the data size only adds one more step.
+[Binary search](glossary#binary-search) demonstrates logarithmic performance. Each comparison eliminates half the remaining possibilities. For 1,000 items, you need about 10 comparisons. For 1 million items, only about 20 comparisons. Doubling the data size only adds one more step.
 
-This halving pattern appears throughout computer science. Balanced binary search trees (Chapter 11) maintain `O(log n)` operations by keeping data organized in a way that allows cutting the search space in half repeatedly.
+This halving pattern appears throughout computer science. Balanced [binary search trees](glossary#binary-search-tree-bst) (Chapter 11) maintain `O(log n)` operations by keeping data organized in a way that allows cutting the search space in half repeatedly.
 
 ## Linear time
 
@@ -48,7 +48,7 @@ Linear time operations are sometimes called brute force because they make no ass
 
 ## Linearithmic time
 
-This pattern combines linear and logarithmic behavior. Merge sort and quicksort (Chapter 5) demonstrate `O(n log n)` performance. They divide data recursively (the log n part) and process each piece (the n part). This is often the best we can achieve for comparison-based sorting.
+This pattern combines linear and logarithmic behavior. [Merge sort](glossary#merge-sort) and [quicksort](glossary#quicksort) (Chapter 5) demonstrate `O(n log n)` performance. They divide data recursively (the log n part) and process each piece (the n part). This is often the best we can achieve for comparison-based sorting.
 
 ## Quadratic time
 

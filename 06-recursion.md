@@ -11,7 +11,7 @@ description: "Understanding recursive algorithms and techniques"
 
 # Recursion
 
-In [Chapter 5](05-advanced-sorting.md), we saw how Quicksort uses recursion to partition and sort arrays. Now it's time to explore recursion more deeply as a fundamental programming technique. Understanding recursion is crucial as we move forward to more complex data structures like trees and graphs, where recursive thinking becomes essential.
+In [Chapter 5](05-advanced-sorting.md), we saw how Quicksort uses [recursion](glossary#recursion) to partition and sort arrays. Now it's time to explore recursion more deeply as a fundamental programming technique. Understanding recursion is crucial as we move forward to more complex data structures like trees and graphs, where recursive thinking becomes essential.
 
 Recursion is a coding technique where a function calls itself to solve smaller versions of the same problem. While this might seem circular at first, recursion provides an elegant way to solve problems that have a naturally recursive structure. In this chapter, we'll explore how to think recursively and implement recursive solutions in Swift.
 
@@ -23,7 +23,7 @@ Consider how you might explain your family tree to someone. An iterative approac
 
 ## Understanding recursive structure
 
-Every recursive solution has two essential components. The base case provides the condition that stops the recursion—without it, your function would call itself indefinitely. The recursive case is where the function calls itself with a modified version of the original problem, gradually moving toward the base case.
+Every recursive solution has two essential components. The [base case](glossary#base-case) provides the condition that stops the recursion—without it, your function would call itself indefinitely. The recursive case is where the function calls itself with a modified version of the original problem, gradually moving toward the base case.
 
 Let's see this in action with a simple example - calculating factorial:
 
@@ -103,7 +103,7 @@ class TreeNode<T> {
 
 Now that we understand the technical requirement for using classes, let's explore why recursive data structures are so powerful in software design. The TreeNode example above isn't just a quirk of Swift's type system—it represents a fundamental pattern for modeling hierarchical and sequential data.
 
-Recursive data structures shine when representing relationships where each element connects to similar elements. Consider a linked list, where each node points to another node of the same type. Or a binary tree, where each node has left and right children that are also nodes. These structures naturally express "this thing contains more things like itself," which mirrors how many real-world systems work.
+Recursive data structures shine when representing relationships where each element connects to similar elements. Consider a [linked list](glossary#linked-list), where each [node](glossary#node) points to another node of the same type. Or a binary [tree](glossary#tree), where each node has left and right children that are also nodes. These structures naturally express "this thing contains more things like itself," which mirrors how many real-world systems work.
 
 The elegance of recursive structures becomes clear when you pair them with recursive algorithms. When you traverse a binary tree, you process the current node, then recursively traverse the left subtree, then recursively traverse the right subtree. The structure and the algorithm have the same shape—both are recursive. This symmetry makes the code remarkably concise and intuitive.
 

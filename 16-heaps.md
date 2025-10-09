@@ -11,11 +11,11 @@ description: "Implement priority queues with heap data structures"
 
 # Heaps
 
-Heaps are specialized tree-based data structures that maintain a specific ordering property, making them ideal for priority queues and efficient sorting algorithms. Unlike binary search trees that maintain left-right ordering, heaps focus on parent-child relationships to ensure the most important element is always accessible in constant time. In this chapter, we'll explore heap fundamentals and build a complete heap implementation in Swift.
+[Heaps](glossary#heap) are specialized [tree](glossary#tree)-based data structures that maintain a specific ordering property, making them ideal for [priority queues](glossary#priority-queue) and efficient sorting [algorithms](glossary#algorithm). Unlike [binary search trees](glossary#binary-search-tree-bst) that maintain left-right ordering, heaps focus on parent-child relationships to ensure the most important element is always accessible in constant time. In this chapter, we'll explore heap fundamentals and build a complete heap implementation in Swift.
 
 ## Understanding heaps
 
-A heap is a complete binary tree that satisfies the heap property:
+A heap is a complete [binary tree](glossary#binary-tree) that satisfies the heap property:
 - **Min-Heap**: Every parent node is smaller than or equal to its children
 - **Max-Heap**: Every parent node is greater than or equal to its children
 
