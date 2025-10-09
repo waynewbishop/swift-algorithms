@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 5: Advanced Sorting"
-description: "Implement merge sort and quicksort algorithms"
+description: "Master the Quicksort algorithm and divide & conquer strategy"
 ---
 
 <div class="top-nav">
@@ -11,39 +11,41 @@ description: "Implement merge sort and quicksort algorithms"
 
 # Advanced sorting
 
-The functions introduced in basic sorting all performed with a time complexity of O(n²). While good for interview situations and general academic knowledge, algorithms like insertion sort and bubble sort are seldom used in production code. Advanced sorting algorithms, however, have broader practical application and usage. These algorithms can be found in both code libraries and real-life projects, featuring time complexity of O(n log n) and applying divide & conquer strategies for superior algorithmic performance.
+In [Chapter 4](04-basic-sorting.md), we explored insertion sort, bubble sort, and selection sort—all performing with a time complexity of `O(n²)`. While valuable for understanding sorting fundamentals and useful for small datasets, these algorithms are seldom used in production code when dealing with larger collections.
 
-In this chapter, we'll explore two fundamental advanced sorting algorithms that demonstrate different approaches to the divide & conquer strategy: Quicksort and Merge Sort.
+The Quicksort algorithm, however, has broad practical application and usage. This commonly used algorithm appears in code libraries, production systems, and even forms part of many standard library sorting implementations. Quicksort features a time complexity of `O(n log n)` in average cases and applies a divide & conquer strategy that results in superior performance.
 
-## Quicksort - In-place partitioning
+## How Quicksort works
 
-Quicksort applies a series of rules to "swap" pairs of values. Swap events are performed in place so no additional structures are needed to process data. In our implementation, special variables named wall and pivot will help manage the swapping process.
+Quicksort applies a series of rules to swap pairs of values. Swap events are performed in place so no additional structures are needed to process data. In our implementation, special variables named wall and pivot will help manage the swapping process.
 
-### How Quicksort works
-
-The algorithm begins by comparing each index value to a "comparison" value (e.g., pivot). The wall represents the position of values that have been swapped or evaluated. Since we've just started the sorting process, the current and wall indices are shown as the same value.
+At the start of the sorting process, the algorithm begins by comparing each index value to a comparison value called the pivot. The wall represents the position of values that have been swapped or evaluated. Since we've just started the sorting process, the current and wall indices are shown as the same value.
 
 ### Making comparisons
 
-The next step compares the current and pivot values. Since the current value (e.g., 7) is greater than the pivot (e.g., 4), no swap occurs. However, the current index advances to the next position.
+The next step compares the current and pivot values. Since the current value (such as 7) is greater than the pivot (such as 4), no swap occurs. However, the current index advances to the next position.
 
-In this step, the current value (e.g., 2) is again compared with the pivot. Since 2 is less than 4, the wall is swapped with the current index value. Once complete, the wall advances to the next index position.
+In this step, the current value (such as 2) is again compared with the pivot. Since 2 is less than 4, the wall is swapped with the current index value. Once complete, the wall advances to the next index position.
 
 ### Conquering the divide
 
-The process of comparing and swapping occurs until the current index meets the pivot. Once complete, the pivot is swapped with the wall index value. Interestingly, once the pivot is swapped, it's considered sorted. Even though most values remain unsorted (at this phase), all values less than 4 are now positioned to the left. Conversely, all values greater than 4 are positioned to the right.
+The process of comparing and swapping occurs until the current index meets the pivot. Once complete, the pivot is swapped with the wall index value. Interestingly, once the pivot is swapped, it's considered sorted. Even though most values remain unsorted at this phase, all values less than 4 are now positioned to the left. Conversely, all values greater than 4 are positioned to the right.
 
 The initial pivot value of 4 has been used to show how Quicksort can divide a collection into relatively equal segments. This process is called partitioning. To sort the remaining values, each value left or right of the initial pivot is also treated as a pivot and the process is repeated.
 
-### The Quicksort code
+> **DIVIDE & CONQUER**: The process of deconstructing a single, complex system into a series of sub-systems. In computer science, divide & conquer strategies can be found in search and sorting algorithms, graphs, and dynamic programming.
 
-In Swift, the complete algorithm is expressed as two functions. The main quickSort function manages the overall execution - specifically, the selection of each pivot value. Similar to our other sorting algorithms, the quickSort implementation is written as an Array extension. However, the nested function applies recursion as its main control structure:
+## Implementing Quicksort in Swift
+
+In Swift, the complete algorithm is expressed as two functions. The main quickSort function manages the overall execution, specifically the selection of each pivot value. Similar to our other sorting algorithms, the quickSort implementation is written as an Array extension. However, the nested function applies recursion as its main control structure:
 
 ```swift
 extension Array where Element: Comparable {
 
-  mutating func quickSort() -> Array<Element> {
+    // Sort array using quicksort with in-place partitioning
+    mutating func quickSort() -> Array<Element> {
 
+        // Recursively partition array segments around pivot values
         func qSort(start startIndex: Int, _ pivot: Int) {
 
             if (startIndex < pivot) {
@@ -58,196 +60,74 @@ extension Array where Element: Comparable {
 
     }
 }
-```
 
-Finally, the qPartition process sorts a selected pivot value to its correct index position:
-
-```swift
-//sorts selected pivot
-mutating func qPartition(start startIndex: Int, _ pivot: Int) -> Int {
-
-   var wallIndex: Int = startIndex
-
-   //compare range with pivot
-   for currentIndex in wallIndex..<pivot {
-
-       if self[currentIndex] <= self[pivot] {
-             if wallIndex != currentIndex {
-                self.swapAt(currentIndex, wallIndex)
-             }
-
-            //advance wall
-            wallIndex += 1
-       }
-   }
-
-   //move pivot to final position
-   if wallIndex != pivot {
-     self.swapAt(wallIndex, pivot)
-   }
-      return wallIndex
-   }
-```
-
-Execute the quicksort:
-
-```swift
 //execute sort
 var sequence: Array<Int> = [7, 2, 1, 6, 8, 5, 3, 4]
 let results = sequence.quickSort()
 ```
 
-## Merge sort - Divide and conquer
-
-While Quicksort partitions data in-place, Merge Sort takes a different approach to the divide & conquer strategy. Instead of partitioning around a pivot, Merge Sort recursively divides the array into smaller pieces until each piece contains only one element, then merges these pieces back together in sorted order.
-
-### Understanding the merge sort strategy
-
-The beauty of Merge Sort lies in its systematic approach:
-
-1. Divide: Split the array into two halves
-2. Conquer: Recursively sort each half
-3. Combine: Merge the two sorted halves into a single sorted array
-
-This approach guarantees O(n log n) performance in all cases - best, average, and worst case.
-
-### The merge sort implementation
+Finally, the qPartition process sorts a selected pivot value to its correct index position:
 
 ```swift
-extension Array where Element: Comparable {
-    func mergeSort() -> [Element] {
-        //base case: arrays with 0 or 1 element are already sorted
-        guard count > 1 else { return self }
+// Partition array segment around pivot, returning final pivot position
+mutating func qPartition(start startIndex: Int, _ pivot: Int) -> Int {
 
-        //divide: split array into two halves
-        let middleIndex = count / 2
-        let leftArray = Array(self[0..<middleIndex]).mergeSort()
-        let rightArray = Array(self[middleIndex..<count]).mergeSort()
+    var wallIndex: Int = startIndex
 
-        //combine: merge the sorted halves
-        return merge(leftArray, rightArray)
-    }
+    //compare range with pivot
+    for currentIndex in wallIndex..<pivot {
 
-    private func merge(_ left: [Element], _ right: [Element]) -> [Element] {
-        var leftIndex = 0
-        var rightIndex = 0
-        var mergedArray: [Element] = []
-
-        //merge elements in sorted order
-        while leftIndex < left.count && rightIndex < right.count {
-            if left[leftIndex] <= right[rightIndex] {
-                mergedArray.append(left[leftIndex])
-                leftIndex += 1
-            } else {
-                mergedArray.append(right[rightIndex])
-                rightIndex += 1
+        if self[currentIndex] <= self[pivot] {
+            if wallIndex != currentIndex {
+                self.swapAt(currentIndex, wallIndex)
             }
+
+            //advance wall
+            wallIndex += 1
         }
-
-        //append any remaining elements
-        mergedArray.append(contentsOf: left[leftIndex...])
-        mergedArray.append(contentsOf: right[rightIndex...])
-
-        return mergedArray
     }
-}
 
-//execute merge sort
-let numbers = [64, 34, 25, 12, 22, 11, 90, 5]
-let sortedNumbers = numbers.mergeSort()
-print("Sorted: \(sortedNumbers)")
+    //move pivot to final position
+    if wallIndex != pivot {
+        self.swapAt(wallIndex, pivot)
+    }
+
+    return wallIndex
+}
 ```
 
-### Understanding merge sort performance
+## Performance characteristics
 
-Merge Sort demonstrates the elegant O(n log n) complexity:
+Quicksort achieves `O(n log n)` time complexity in its average case through the power of partitioning. Each partitioning operation divides the array into two segments, ideally of roughly equal size. This creates a recursion tree with log n levels, where each level halves the problem size. At each level, the algorithm examines every element once during partitioning, resulting in n operations per level. The total complexity is therefore log n levels multiplied by n operations per level, yielding `O(n log n)`.
 
-- **Divide phase**: We split the array log n times (each split halves the problem)
-- **Merge phase**: At each level, we examine every element once (n operations per level)
-- Total: log n levels × n operations per level = O(n log n)
+However, Quicksort can degrade to `O(n²)` in its worst case when the pivot selection consistently creates unbalanced partitions. This occurs when the array is already sorted or contains all identical values, causing each partition to contain only one element. Modern implementations use techniques like random pivot selection or median-of-three to mitigate this risk.
 
-This analysis shows why Merge Sort is so reliable - its performance doesn't depend on the initial arrangement of data.
+The space complexity of Quicksort is `O(log n)` due to the recursion stack. Each recursive call stores information about the current partition being processed. In a balanced partition scenario, the maximum depth of recursion is log n, which determines the space required.
 
-## Comparing advanced sorting algorithms
+## Practical applications
 
-| Algorithm | Best Case | Average Case | Worst Case | Space Complexity | Stable? |
-|-----------|-----------|--------------|------------|------------------|---------|
-| Quicksort | O(n log n) | O(n log n) | O(n²) | O(log n) | No |
-| Merge Sort | O(n log n) | O(n log n) | O(n log n) | O(n) | Yes |
+Quicksort excels in situations where memory is limited, since it uses minimal additional space through its in-place partitioning strategy. The algorithm typically runs faster than other `O(n log n)` algorithms in practice when average-case performance matters more than worst-case guarantees. Since Quicksort modifies the original array rather than creating copies, it's preferred when in-place sorting is required.
 
-### When to use Quicksort
+Many programming languages use Quicksort or hybrid algorithms based on it. Swift's standard library uses Introsort, which begins with Quicksort and switches to heapsort if recursion depth exceeds a threshold. This approach guarantees `O(n log n)` worst-case performance while maintaining Quicksort's excellent average-case speed. The algorithm's widespread adoption in production systems demonstrates its practical value despite the theoretical possibility of worst-case behavior.
 
-Quicksort excels when:
-- **Memory is limited** - Uses minimal additional space
-- **Average case matters more** - Typically faster than merge sort in practice
-- **In-place sorting is preferred** - Modifies the original array
-- **Stability isn't required** - Doesn't preserve relative order of equal elements
+The algorithm proves particularly effective for general-purpose sorting where the input data has no particular pattern. Random or pseudo-random data produces the balanced partitions that allow Quicksort to achieve its optimal performance. Database systems, operating system utilities, and application frameworks frequently rely on Quicksort or its variants for their sorting operations.
 
-### When to use merge sort
+## Divide and conquer in action
 
-Merge Sort is preferred when:
-- **Predictable performance is crucial** - Guaranteed O(n log n) in all cases
-- **Stability is required** - Preserves relative order of equal elements
-- **Working with large datasets** - Consistent performance regardless of input
-- **External sorting** - Can sort data that doesn't fit in memory
+Quicksort exemplifies the divide and conquer strategy by breaking the sorting problem into smaller subproblems. The partitioning phase divides the array around a pivot, creating two segments where all elements in the left segment are smaller than the pivot, and all elements in the right segment are larger. Each segment then becomes its own sorting problem, solved recursively using the same strategy.
 
-## The divide & conquer insight
+Unlike some divide and conquer algorithms that require significant work to combine solutions, Quicksort's combination phase is trivial. Once both segments are sorted, the entire array is sorted with no additional work needed. This efficient combination is possible because the partitioning phase does the heavy lifting of positioning elements relative to the pivot.
 
-Both algorithms demonstrate the power of divide & conquer, but in different ways:
+The divide and conquer approach appears throughout computer science, from binary search to merge sort to the graph algorithms we'll explore later in this book. Understanding how Quicksort applies this strategy provides a foundation for recognizing the pattern in other contexts. The key insight is that many complex problems become tractable when broken into smaller instances of the same problem.
 
-Quicksort: Divides the problem by partitioning around a pivot, solving recursively, then combining trivially (no work needed)
+We'll explore recursion more deeply in [Chapter 6](06-recursion.md), where you'll see how functions that call themselves enable elegant solutions to complex problems. Quicksort serves as an excellent introduction to recursive thinking, demonstrating how a few lines of code can express a powerful algorithm through self-reference.
 
-**Merge Sort**: Divides the problem trivially (just split in half), solves recursively, then combines intelligently (merge operation)
+## Summary
 
-This insight shows that divide & conquer is not a single technique, but a family of approaches that can be applied differently depending on the problem structure.
+Quicksort represents a significant advancement over the `O(n²)` algorithms from the previous chapter. Its `O(n log n)` average-case performance makes it suitable for production use with large datasets, while its in-place partitioning keeps memory requirements minimal.
 
-## Practical performance considerations
+The algorithm demonstrates several key computer science principles. The divide and conquer strategy shows how complex problems can be broken into manageable pieces. The partitioning technique illustrates how clever data arrangement can eliminate unnecessary comparisons. The recursive implementation previews the power of functions that call themselves, a topic we'll explore thoroughly in the next chapter.
 
-While both algorithms are O(n log n), their real-world performance can vary:
+When choosing Quicksort, consider your data characteristics and performance requirements. For general-purpose sorting where average-case performance matters and memory is limited, Quicksort excels. When worst-case guarantees are essential, hybrid approaches like Swift's Introsort provide the benefits of Quicksort while eliminating its worst-case risks.
 
-```swift
-//performance testing framework
-func measureSortingTime<T: Comparable>(_ array: [T], algorithm: ([T]) -> [T], name: String) {
-    let startTime = CFAbsoluteTimeGetCurrent()
-    let _ = algorithm(array)
-    let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
-    print("\(name): \(String(format: "%.4f", timeElapsed)) seconds")
-}
-
-//test with different data patterns
-let randomData = (1...10000).map { _ in Int.random(in: 1...1000) }
-let sortedData = Array(1...10000)
-let reversedData = Array(1...10000).reversed()
-
-print("Random data:")
-measureSortingTime(randomData, algorithm: { $0.mergeSort() }, name: "Merge Sort")
-
-print("\nAlready sorted data:")
-measureSortingTime(sortedData, algorithm: { $0.mergeSort() }, name: "Merge Sort")
-
-print("\nReversed data:")
-measureSortingTime(Array(reversedData), algorithm: { $0.mergeSort() }, name: "Merge Sort")
-```
-
-## Looking back and forward
-
-These advanced sorting algorithms demonstrate several key computer science principles:
-
-1. **Divide & Conquer** - Breaking problems into smaller, manageable pieces
-2. Recursion - Using functions that call themselves (covered in Chapter 6)
-3. **Trade-offs** - Space vs. time, stability vs. performance, worst-case vs. average-case
-4. **Algorithm Analysis** - Understanding when different approaches excel
-
-As you continue through this series, you'll see these same principles applied to data structures like binary search trees and graphs, where divide & conquer strategies enable efficient operations.
-
-## Building sorting intuition
-
-When choosing a sorting algorithm, consider:
-
-1. **Data characteristics** - Size, initial order, duplicate values
-2. **Performance requirements** - Best case, worst case, or average case priority
-3. **Memory constraints** - In-place vs. additional space requirements
-4. **Stability needs** - Whether relative order of equal elements matters
-
-This analytical approach to algorithm selection will serve you well throughout your career in software development.
-
+As you continue through this book, you'll see divide and conquer strategies applied to data structures like binary search trees and graphs, where breaking problems into smaller pieces enables efficient operations. The analytical approach developed here—understanding when and why an algorithm excels—will serve you well throughout your career in software development.

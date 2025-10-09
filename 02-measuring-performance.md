@@ -28,39 +28,35 @@ Consider Big O notation as a way to classify algorithms into performance categor
 
 The `O` stands for order of magnitude—it tells us the scale of how an algorithm's performance grows as input size increases. The expression in parentheses describes the relationship between input size (usually called n) and the number of operations.
 
-## Common performance patterns
-
-As you work through the algorithms in this book, you'll encounter these fundamental patterns:
-
-### Constant time
+## Constant time
 
 Some operations take the same amount of time regardless of data size. Accessing a specific array index is `O(1)`—whether your array has 10 items or 10 million items, getting `array[5]` is instant. The computer knows exactly where to find that position in memory.
 
 Think of it like using a bookmark in a book. Finding the bookmarked page takes the same amount of time whether the book has 100 pages or 1,000 pages—you just open to the bookmark. Hash table lookups (Chapter 14) work this way: they jump directly to the answer without searching.
 
-### Logarithmic time
+## Logarithmic time
 
 Binary search demonstrates logarithmic performance. Each comparison eliminates half the remaining possibilities. For 1,000 items, you need about 10 comparisons. For 1 million items, only about 20 comparisons. Doubling the data size only adds one more step.
 
 This halving pattern appears throughout computer science. Balanced binary search trees (Chapter 11) maintain `O(log n)` operations by keeping data organized in a way that allows cutting the search space in half repeatedly.
 
-### Linear time
+## Linear time
 
 When an algorithm must examine each element once, we call it linear time or `O(n)`. Searching an unsorted list works this way—in the worst case, you check every element. The time grows in direct proportion to the input size: twice the data means roughly twice the time.
 
 Linear time operations are sometimes called brute force because they make no assumptions about the data organization. They're often the simplest solution but not always the fastest. Chapter 3 explores searching, including when linear search is appropriate.
 
-### Linearithmic time
+## Linearithmic time
 
 This pattern combines linear and logarithmic behavior. Merge sort and quicksort (Chapter 5) demonstrate `O(n log n)` performance. They divide data recursively (the log n part) and process each piece (the n part). This is often the best we can achieve for comparison-based sorting.
 
-### Quadratic time
+## Quadratic time
 
 Nested loops often produce quadratic time complexity. Bubble sort, insertion sort, and selection sort (Chapter 4) all exhibit `O(n²)` behavior. The performance degrades dramatically: doubling the data size roughly quadruples the time. For 100 items, you might do 10,000 operations. For 1,000 items, about 1,000,000 operations.
 
 Quadratic algorithms work fine for small datasets but become impractical as data grows. Understanding why they're `O(n²)` helps you recognize when to choose a different approach.
 
-### Exponential time
+## Exponential time
 
 Some algorithms' performance explodes exponentially. The naive recursive Fibonacci calculation (Chapter 16) demonstrates this—calculating fib(40) requires over a billion operations. These algorithms are typically unusable for n larger than about 30-40.
 
