@@ -10,11 +10,9 @@ description: "Learn linear and binary search algorithms in Swift"
 
 # Basic searching
 
-In our exploration of Big O Notation, we introduced the concept of linear search to demonstrate O(n) complexity. Now that you understand how algorithmic efficiency scales with input size, we can dive deeper into the fundamental problem of searching for data. Whether you're building a contact app, a music library, or any system that manages information, search functionality is essential.
+In Chapter 2, you learned the vocabulary of performance—Big O notation provides a common language for discussing algorithmic efficiency. Now it's time to apply that knowledge to your first concrete algorithms. Whether you're building a contact app, a music library, or any system that manages information, search functionality is essential.
 
-The art of searching efficiently is one of the most important skills in computer science.
-
-In this chapter, we'll explore two fundamental approaches to finding data and understand when each method is most appropriate.
+In this chapter, we'll explore two fundamental approaches to searching: linear search and binary search. You'll learn how each algorithm works, when to use it, and why the choice between `O(n)` and `O(log n)` makes such a dramatic difference as data grows.
 
 ## The search problem
 
@@ -28,12 +26,13 @@ Consider these real-world scenarios:
 
 Each scenario involves the same fundamental challenge, but the optimal approach depends on how the data is organized.
 
-## Linear search - The brute force approach
+## The brute force approach
 
 We've already encountered linear search in our Big O chapter, but let's examine it more thoroughly. Linear search represents the most straightforward approach to finding data: check every item until you find what you're looking for.
 
 ```swift
 extension Array where Element: Equatable {
+    // Search for an element using linear search, returning its index if found
     func linearSearch(for target: Element) -> Int? {
 
         for (index, element) in enumerated() {
@@ -66,9 +65,10 @@ Linear search has several advantages that make it valuable in certain situations
 
 ### Linear search performance analysis
 
-As we learned in the Big O chapter, linear search operates in O(n) time. But let's break down what this means in practice:
+As we learned in the Big O chapter, linear search operates in `O(n)` time. But let's break down what this means in practice:
 
 ```swift
+// Perform linear search while tracking the number of comparisons made
 func analyzedLinearSearch<T: Equatable>(for target: T, in array: [T]) -> (index: Int?, comparisons: Int) {
     var comparisons = 0
 
@@ -97,9 +97,9 @@ let (_, worstCase) = analyzedLinearSearch(for: 15, in: testData)
 print("Worst case: \(worstCase) comparisons")
 ```
 
-This analysis reveals that while linear search is O(n) in the worst case, real-world performance varies significantly based on where the target is located.
+This analysis reveals that while linear search is `O(n)` in the worst case, real-world performance varies significantly based on where the target is located.
 
-## Binary search - The divide and conquer strategy
+## Divide and conquer
 
 When the data is sorted, you can employ a much more efficient strategy. Binary search uses the divide and conquer approach, eliminating half of the remaining possibilities with each comparison.
 
@@ -118,6 +118,7 @@ This intuitive process is exactly how binary search works.
 
 ```swift
 extension Array where Element: Comparable {
+    // Search for an element using binary search on a sorted array
     func binarySearch(for target: Element) -> Int? {
         var leftIndex = 0
         var rightIndex = count - 1
@@ -152,9 +153,10 @@ if let index = sortedNumbers.binarySearch(for: 17) {
 
 ### Understanding binary search performance
 
-Binary search achieves O(log n) time complexity. This logarithmic performance means that doubling the data size only adds one more step to the search process.
+Binary search achieves `O(log n)` time complexity. This logarithmic performance means that doubling the data size only adds one more step to the search process.
 
 ```swift
+// Perform binary search while tracking comparisons and printing each step
 func analyzedBinarySearch<T: Comparable>(for target: T, in array: [T]) -> (index: Int?, comparisons: Int) {
     var comparisons = 0
     var leftIndex = 0
@@ -199,7 +201,7 @@ The efficiency of binary search becomes remarkable with large datasets.
 
 This table demonstrates why binary search is preferred for large, sorted datasets. The logarithmic growth means that even massive collections can be searched in a reasonable number of steps.
 
-## The crucial requirement: Sorted data
+## Sorted data
 
 Binary search's efficiency comes with an important prerequisite: the data must be sorted. This requirement influences how you design your data management strategy.
 
@@ -242,8 +244,6 @@ The decision between linear and binary search depends on several factors:
 
 ## Practical considerations
 
-### When sorting pays off
-
 Consider a contact application where users frequently search for names but rarely add new contacts. Sorting the contacts once and using binary search for all subsequent lookups would be more efficient than using linear search repeatedly.
 
 ```swift
@@ -266,12 +266,14 @@ extension Contact: Comparable {
 class ContactManager {
     private var contacts: [Contact] = []
 
+    // Add a new contact and maintain sorted order for efficient searching
     func addContact(_ contact: Contact) {
         contacts.append(contact)
         //keep contacts sorted for efficient searching
         contacts.sort { $0.name < $1.name }
     }
 
+    // Find a contact by name using binary search
     func findContact(named name: String) -> Contact? {
         let searchContact = Contact(name: name, phone: "")
 
@@ -293,6 +295,7 @@ class OptimizedDataStore<T: Comparable> {
     private var insertionOrder: [T] = []  //for maintaining order of addition
     private var sortedData: [T] = []      //for fast searching
 
+    // Add an item to both insertion-order and sorted arrays
     func add(_ item: T) {
         insertionOrder.append(item)
 
@@ -301,16 +304,19 @@ class OptimizedDataStore<T: Comparable> {
         sortedData.insert(item, at: insertIndex)
     }
 
+    // Search for an item using binary search on the sorted array
     func search(for item: T) -> Bool {
         return sortedData.binarySearch(for: item) != nil
     }
 
+    // Return items in their original insertion order
     func itemsInOrder() -> [T] {
         return insertionOrder
     }
 }
 
 extension Array where Element: Comparable {
+    // Find the correct insertion point to maintain sorted order
     func binarySearchInsertionPoint(for target: Element) -> Int {
         var leftIndex = 0
         var rightIndex = count
@@ -329,26 +335,3 @@ extension Array where Element: Comparable {
     }
 }
 ```
-
-## Looking ahead
-
-Understanding linear and binary search provides the foundation for more advanced searching techniques. In upcoming chapters, we'll explore:
-
-- **Hash tables** - Achieving average O(1) search time
-- **Tree structures** - Combining the benefits of sorted data with efficient insertions
-- **Graph algorithms** - Searching through connected data structures
-
-The principles you've learned here - understanding the trade-offs between different approaches, analyzing performance characteristics, and choosing the right tool for the job - will guide you through these more complex topics.
-
-## Building search intuition
-
-As you encounter searching problems in your own projects, ask yourself:
-
-1. **How often will I search compared to modify?** - Frequent searches favor sorted data
-2. **How large is my dataset?** - Larger datasets benefit more from binary search
-3. **Can I maintain sorted order efficiently?** - Consider the cost of keeping data sorted
-4. **What are my performance requirements?** - Sometimes "good enough" is actually good enough
-
-These questions will help you choose the most appropriate searching strategy for your specific use case.
-
-
