@@ -11,7 +11,7 @@ description: "Master bubble sort, insertion sort, and selection sort"
 
 # Basic sorting
 
-Sorting is an essential task when managing data. As we saw with Big O notation, sorted data allows us to implement efficient algorithms. Our goal with sorting is to move from disarray to order. This is done by arranging data in a logical sequence so we'll know where to find information.
+Sorting is an essential task when managing data. As we saw in [Chapter 2](02-measuring-performance.md), sorted data allows us to implement efficient algorithms. Our goal with sorting is to move from disarray to order. This is done by arranging data in a logical sequence so we'll know where to find information.
 
 Sequences can be easily implemented with integers, but can also be achieved with characters (e.g., alphabets), and other sets like binary and hexadecimal numbers. In the examples below, we'll use various techniques to sort the following array:
 
@@ -19,94 +19,6 @@ Sequences can be easily implemented with integers, but can also be achieved with
 //array of unsorted integers
 let numberList : Array<Int> = [8, 2, 10, 9, 7, 5]
 ```
-
-## Understanding basic sorting algorithms
-
-Before diving into the implementations, let's understand what makes these algorithms "basic" and when you might use them.
-
-### Why O(n²)?
-
-The three algorithms in this chapter—insertion sort, bubble sort, and selection sort—all have **O(n²) time complexity** in their average and worst cases. This means that as your data doubles in size, the sorting time roughly quadruples.
-
-**Why does this happen?**
-
-Each algorithm uses nested loops:
-- The **outer loop** goes through the entire array (n iterations)
-- The **inner loop** also processes multiple elements (up to n iterations)
-- Total operations: n × n = n²
-
-**Visual example with 4 elements:**
-```
-Pass 1: Compare 4 pairs
-Pass 2: Compare 3 pairs
-Pass 3: Compare 2 pairs
-Pass 4: Compare 1 pair
-Total: 10 comparisons for 4 elements
-```
-
-For 8 elements, you'd need about 40 comparisons—quadrupling the work for double the data.
-
-### When to use basic sorting algorithms
-
-Despite their O(n²) complexity, these algorithms have legitimate use cases:
-
-**Choose insertion sort when:**
-- Working with small datasets (< 10-20 elements)
-- Data is already nearly sorted (best case: O(n))
-- You need a simple, stable sort
-- Memory is extremely limited (sorts in-place)
-- You're building Swift's standard sort (it uses insertion sort for small subarrays!)
-
-**Choose bubble sort when:**
-- Teaching sorting concepts (very intuitive)
-- You need to detect if data is already sorted (can exit early)
-- Working with very small datasets
-
-**Choose selection sort when:**
-- Minimizing the number of swaps is important (only n-1 swaps maximum)
-- Memory writes are expensive
-- Working with small datasets
-
-**Don't use these when:**
-- Sorting large datasets (use merge sort, quick sort, or Swift's built-in `sorted()`)
-- Performance is critical
-- You have more than 50-100 elements
-
-### Comparison of the three algorithms
-
-| Algorithm | Best Case | Average Case | Worst Case | Swaps | Stable? | Space |
-|-----------|-----------|--------------|------------|-------|---------|-------|
-| Insertion | O(n) | O(n²) | O(n²) | O(n²) | Yes | O(1) |
-| Bubble | O(n) | O(n²) | O(n²) | O(n²) | Yes | O(1) |
-| Selection | O(n²) | O(n²) | O(n²) | O(n) | No | O(1) |
-
-Stability means equal elements maintain their relative order after sorting. This matters when sorting complex objects.
-
-**Real-world performance:**
-```swift
-let small = [5, 2, 8, 1, 9]        // All three work fine
-let medium = Array(1...100).shuffled()  // Noticeable slowdown
-let large = Array(1...10000).shuffled()  // Too slow - use merge/quick sort
-```
-
-### Visualizing how they work
-
-**Insertion sort:** Like sorting playing cards in your hand
-- Pick each card one by one
-- Insert it into its correct position among already-sorted cards
-- Shift other cards to make room
-
-**Bubble sort:** Largest values "bubble" to the end
-- Compare adjacent pairs
-- Swap if they're in wrong order
-- After each pass, the largest unsorted element reaches its final position
-
-**Selection sort:** Find the minimum, move it to the front
-- Find the smallest element in the unsorted portion
-- Swap it with the first unsorted position
-- Repeat for the rest of the array
-
-With this understanding, let's explore each algorithm in detail.
 
 ## Insertion sort
 
@@ -116,6 +28,7 @@ The set is divided into sorted and unsorted halves and repeats until all element
 
 ```swift
 extension Array where Element: Comparable {
+    // Sort array using insertion sort - efficient for nearly-sorted data
     func insertionSort() -> Array<Element> {
 
         //check for trivial case
@@ -159,6 +72,7 @@ The bubble sort is another common sorting technique. Like insertion sort, the bu
 
 ```swift
 extension Array where Element: Comparable {
+    // Sort array using bubble sort - repeatedly swaps adjacent elements
     func bubbleSort() -> Array<Element> {
 
         //check for trivial case
@@ -200,6 +114,7 @@ Similar to bubble sort, the selection sort algorithm ranks elements by iterating
 
 ```swift
 extension Array where Element: Comparable {
+    // Sort array using selection sort - minimizes swap operations
     func selectionSort() -> Array<Element> {
 
         //check for trivial case
@@ -240,74 +155,57 @@ extension Array where Element: Comparable {
 let results: Array<Int> = numberList.selectionSort()
 ```
 
-## Practical considerations
+## Comparing the three approaches
 
-### When basic sorting is actually used
+Now that you've seen the three algorithms in action, let's analyze what makes them similar and different.
 
-You might wonder, "If these are O(n²), why learn them?" Here's why they matter:
+### Why O(n²)
 
-**In production code:**
-- Swift's `sort()` uses Introsort, which switches to insertion sort for small subarrays (< 20 elements)
-- Many optimized algorithms use insertion sort as a final "polish" step
-- Database systems use them for small result sets
+The three algorithms in this chapter—insertion sort, bubble sort, and selection sort—all have **`O(n²)` time complexity** in their average and worst cases. This means that as your data doubles in size, the sorting time roughly quadruples.
 
-**In interviews:**
-- Common warm-up questions
-- Test your understanding of loops and invariants
-- Foundation for understanding advanced sorts
+**Why does this happen?**
 
-**In practice:**
-```swift
-// Bad: Sorting large dataset with basic sort
-let thousandItems = Array(1...1000).shuffled()
-let sorted = thousandItems.bubbleSort()  // Slow! ~500,000 comparisons
+Each algorithm uses nested loops:
+- The **outer loop** goes through the entire array (n iterations)
+- The **inner loop** also processes multiple elements (up to n iterations)
+- Total operations: `n × n = n²`
 
-// Good: Use Swift's built-in sort
-let sorted = thousandItems.sorted()  // Fast! Uses Introsort
-
-// Good: Basic sort for small data
-let fewItems = [5, 2, 8, 1]
-let sorted = fewItems.insertionSort()  // Fine! Only 10 comparisons
+**Visual example with 4 elements:**
+```
+Pass 1: Compare 4 pairs
+Pass 2: Compare 3 pairs
+Pass 3: Compare 2 pairs
+Pass 4: Compare 1 pair
+Total: 10 comparisons for 4 elements
 ```
 
-### Performance in context
+For 8 elements, you'd need about 40 comparisons—quadrupling the work for double the data.
 
-**Sorting 10 elements:**
-- Insertion/Bubble/Selection: ~50 comparisons ⚡ Instant
-- All perform similarly
+### When to use basic sorting algorithms
 
-**Sorting 100 elements:**
-- Basic sorts: ~5,000 comparisons ⏱️ Noticeable
-- Still acceptable for one-time sorts
+Despite their `O(n²)` complexity, these algorithms have legitimate use cases. Understanding when to apply each algorithm requires considering the characteristics of your data and the constraints of your environment.
 
-**Sorting 1,000 elements:**
-- Basic sorts: ~500,000 comparisons 🐌 Slow
-- Use merge sort or quick sort instead
+Insertion sort excels when working with small datasets of fewer than 10-20 elements, particularly when the data is already nearly sorted. In such cases, it achieves its best-case performance of `O(n)` time complexity. The algorithm is also valuable when you need a simple, stable sort or when memory is extremely limited, since it sorts in-place. Perhaps surprisingly, Swift's standard sort implementation uses insertion sort for small subarrays as part of its hybrid Introsort algorithm, demonstrating that even basic algorithms have a place in production code.
 
-**Sorting 10,000 elements:**
-- Basic sorts: ~50,000,000 comparisons 💀 Unusably slow
-- Advanced sorts: ~130,000 comparisons ⚡ Fast
+Bubble sort, while pedagogically valuable for teaching sorting concepts due to its intuitive operation, has limited practical applications. Its primary advantage lies in the ability to detect if data is already sorted and exit early. However, its use should generally be restricted to very small datasets or educational contexts where understanding the algorithm's mechanics is more important than performance.
 
-## Summary
+Selection sort offers a unique advantage when minimizing the number of swap operations is critical. The algorithm performs at most n-1 swaps regardless of the initial arrangement of data, making it valuable in situations where memory writes are expensive. Like insertion sort, selection sort is best suited for small datasets where its `O(n²)` time complexity remains acceptable.
 
-Basic sorting algorithms provide a foundation for understanding how sorting works:
+These algorithms become inappropriate when dealing with large datasets, when performance is critical, or when you have more than 50-100 elements to sort. In such cases, advanced algorithms like merge sort and quick sort, or Swift's built-in `sorted()` method, provide dramatically better performance through their `O(n log n)` time complexity.
 
-**Key takeaways:**
+### Comparison table
 
-1. **All three are O(n²)** due to nested loops
-2. **Insertion sort** is best for nearly-sorted data (O(n) best case)
-3. **Selection sort** minimizes swaps (good for expensive writes)
-4. **Bubble sort** is most intuitive for teaching
-5. **Use them for small datasets** (< 20 elements) or teaching
-6. **Switch to advanced sorts** for large datasets
+| Algorithm | Best Case | Average Case | Worst Case | Swaps | Stable? | Space |
+|-----------|-----------|--------------|------------|-------|---------|-------|
+| Insertion | `O(n)` | `O(n²)` | `O(n²)` | `O(n²)` | Yes | `O(1)` |
+| Bubble | `O(n)` | `O(n²)` | `O(n²)` | `O(n²)` | Yes | `O(1)` |
+| Selection | `O(n²)` | `O(n²)` | `O(n²)` | `O(n)` | No | `O(1)` |
 
-**When you need to sort in production:**
-- **Small data (< 20 items)**: Insertion sort or Swift's `sorted()`
-- **Large data**: Always use Swift's built-in `sorted()` (uses Introsort)
-- **Custom comparison**: Use `sorted(by:)` with your closure
+Stability means equal elements maintain their relative order after sorting. This matters when sorting complex objects.
 
-**Looking ahead:**
-
-In Chapter 5, we'll explore advanced sorting algorithms like merge sort and quick sort that achieve **O(n log n)** complexity—dramatically faster for large datasets. But understanding these basic sorts provides the foundation for appreciating why those advanced algorithms matter.
-
-Besides insertion, selection and bubble sort, there are many other sorting algorithms. As we'll see, data structures such as Binary Search Trees, Tries and Heaps also aid in sorting elements, but do so as part of their insertion process.
+**Real-world performance:**
+```swift
+let small = [5, 2, 8, 1, 9]        // All three work fine
+let medium = Array(1...100).shuffled()  // Noticeable slowdown
+let large = Array(1...10000).shuffled()  // Too slow - use merge/quick sort
+```
