@@ -372,6 +372,22 @@ After pushing changes:
 **Problem:** Default gray/black colors instead of iOS colors
 **Solution:** Add style declarations for each node
 
+### Escaped Brackets Causing Parse Errors
+
+**Problem:** Diagram won't render, console shows parsing error
+**Solution:** Don't escape square brackets in HTML divs - use `array[mid]` not `array\[mid\]`
+
+**Why:** In `<div class="mermaid">` tags, brackets don't need escaping (only in markdown code blocks)
+
+**Example:**
+```
+✅ CORRECT:
+Compare{Compare array[mid] with target}
+
+❌ WRONG:
+Compare{Compare array\[mid\] with target}
+```
+
 ---
 
 ## Quick Reference Card
