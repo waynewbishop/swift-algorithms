@@ -11,15 +11,18 @@ description: "Solve complex problems with memoization"
 
 # Dynamic Programming
 
-[Dynamic programming](glossary#dynamic-programming) is a technique for solving problems by breaking them into smaller, overlapping subproblems and storing the results to avoid repeating work. It's one of the most powerful optimization techniques in computer science, and while the name sounds intimidating, the core concept is straightforward: remember what you've already calculated so you don't have to calculate it again.
+[Dynamic programming](https://en.wikipedia.org/wiki/Dynamic_programming) is a technique for solving problems by breaking them into smaller, overlapping subproblems and storing the results to avoid repeating work. It's one of the most powerful optimization techniques in computer science, and while the name sounds intimidating, the core concept is straightforward: remember what you've already calculated so you don't have to calculate it again.
+
+Dynamic programming builds on recursion from Chapter 6, but adds memoization—storing results in a cache (typically a Dictionary from Chapter 15 or an Array) to avoid redundant calculations. This transforms exponential O(2^n) algorithms into linear O(n) solutions, demonstrating the dramatic space-time tradeoffs analyzed in Chapter 8. Where naive recursion uses the call stack (Chapter 10's stack concept), dynamic programming uses explicit arrays to track subproblem solutions. Some advanced DP problems even use heaps (Chapter 16) to efficiently track optimal values.
 
 In this chapter, we'll explore dynamic programming through practical examples that demonstrate why this technique matters and how to apply it in Swift.
 
-## The problem with naive [recursion](glossary#recursion)
+## The problem with naive [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science))
 
 Let's start with a simple question: what's wrong with this Fibonacci implementation?
 
 ```swift
+// Naive Fibonacci with exponential time complexity - O(2^n) due to repeated calculations
 func fibonacci(_ n: Int) -> Int {
     if n <= 1 {
         return n
@@ -42,7 +45,7 @@ The time complexity is O(2^n)—exponential. For larger numbers, this approach b
 
 Dynamic programming solves this problem with a simple insight: **store the results of subproblems so you can reuse them instead of recalculating**.
 
-The technique we'll focus on is called **[memoization](glossary#memoization)**: start with the big problem and recursively break it down, storing (or memoizing) results along the way so you can reuse them.
+The technique we'll focus on is called **[memoization](https://en.wikipedia.org/wiki/Memoization)**: start with the big problem and recursively break it down, storing (or memoizing) results along the way so you can reuse them.
 
 **Note:** There's another approach called tabulation (bottom-up) that builds solutions iteratively from base cases, but memoization is often more intuitive because it follows the natural recursive structure of problems.
 
@@ -51,6 +54,7 @@ The technique we'll focus on is called **[memoization](glossary#memoization)**: 
 Memoization means storing computed results in a cache (usually a dictionary or array). Before calculating a value, check if you've already computed it.
 
 ```swift
+// Fibonacci with memoization reduces O(2^n) to O(n) by caching results in dictionary
 func fibonacciMemo(_ n: Int, cache: inout [Int: Int]) -> Int {
     // Check if we've already calculated this
     if let cached = cache[n] {
@@ -87,8 +91,8 @@ print(fibonacci(40))  // Completes instantly!
 
 Now `fibonacci(5)` makes only 9 function calls instead of 15, and each value is calculated exactly once.
 
-**[Time Complexity](glossary#time-complexity):** O(n) - we calculate each value from 0 to n exactly once
-**[Space Complexity](glossary#space-complexity):** O(n) - we store n values in the cache plus the recursion stack
+**[Time Complexity](https://en.wikipedia.org/wiki/Time_complexity):** O(n) - we calculate each value from 0 to n exactly once
+**[Space Complexity](https://en.wikipedia.org/wiki/Space_complexity):** O(n) - we store n values in the cache plus the recursion stack
 
 This simple change transforms an exponential algorithm into a linear one—a massive improvement!
 
@@ -106,6 +110,7 @@ Here's a real-world problem where dynamic programming shines: given coins of dif
 For each amount from 1 to our target, we calculate the minimum coins needed by trying each coin denomination.
 
 ```swift
+// Find minimum coins needed using dynamic programming array - O(amount × coins.count)
 func minCoins(amount: Int, coins: [Int]) -> Int {
     // dp[i] represents minimum coins needed for amount i
     var dp = Array(repeating: Int.max, count: amount + 1)
@@ -169,6 +174,7 @@ dp[11] = 3 // 5 + 5 + 1 ✓
 If you need to know which coins to use (not just the count), track the parent coins:
 
 ```swift
+// Track which coins were used by storing parent choices during DP computation
 func minCoinsWithPath(amount: Int, coins: [Int]) -> (count: Int, coins: [Int]) {
     var dp = Array(repeating: Int.max, count: amount + 1)
     var usedCoin = Array(repeating: -1, count: amount + 1)
@@ -256,6 +262,7 @@ The trade-off is simple: use O(n) extra memory to reduce time complexity from O(
 
 **1. Forgetting base cases**
 ```swift
+// Common pitfall: missing base case causes infinite recursion and stack overflow
 // Bad - what if n is 0 or 1?
 func fib(_ n: Int) -> Int {
     return fib(n - 1) + fib(n - 2)  // Infinite recursion!
@@ -270,6 +277,7 @@ func fib(_ n: Int) -> Int {
 
 **2. Off-by-one errors in array sizes**
 ```swift
+// Common pitfall: array too small causes index out of bounds crash
 // Bad - crashes when accessing dp[n]
 var dp = Array(repeating: 0, count: n)
 
@@ -279,6 +287,7 @@ var dp = Array(repeating: 0, count: n + 1)
 
 **3. Not checking if a solution exists**
 ```swift
+// Common pitfall: returning sentinel value instead of indicating no solution exists
 // Bad - returns Int.max when no solution
 return dp[amount]
 
@@ -302,20 +311,80 @@ Think of dynamic programming like taking notes in a meeting. Instead of trying t
 
 Dynamic programming is a powerful optimization technique based on a simple idea: remember what you've calculated to avoid doing the same work twice.
 
-**Key takeaways:**
+**Key characteristics:**
+- Solves problems with overlapping subproblems and optimal substructure
+- Trades space (O(n) memory) for time (O(2^n) → O(n) reduction)
+- Two approaches: memoization (top-down) and tabulation (bottom-up)
+- Cache stores intermediate results (Dictionary or Array)
+- Dramatically faster than naive recursion for many problems
 
-1. **Naive recursion** can lead to exponential time complexity due to repeated calculations
-2. **Memoization (top-down)** adds caching to recursion, reducing redundant work
-3. **Tabulation (bottom-up)** builds solutions iteratively from base cases
-4. **Space optimization** can reduce memory usage when only recent values are needed
-5. DP is ideal for problems with **optimal substructure** and **overlapping subproblems**
+**Core techniques:**
+- Memoization: Add caching to recursive solutions
+- Tabulation: Build solutions iteratively from base cases
+- State definition: Identify what dp[i] represents
+- Base cases: Establish starting values (usually dp[0])
+- Recurrence relation: How to compute dp[i] from smaller values
+- Result extraction: Where the final answer lives (often dp[n])
 
-**Two essential DP techniques:**
+**Common problem patterns:**
+- "Find minimum/maximum way to..." (coin change, shortest path)
+- "Count number of ways to..." (ways to climb stairs, partition sums)
+- "What's the longest/shortest..." (longest increasing subsequence)
+- Problems that break into similar smaller subproblems
+- Optimization problems with overlapping calculations
 
-- Start with a working recursive solution
-- Add memoization or convert to tabulation
-- Optimize space if possible
+**Performance comparison:**
+- Naive Fibonacci(40): 331 million calls, ~5 seconds, O(2^n)
+- Memoized Fibonacci(40): 79 calls, instant, O(n)
+- Space tradeoff: O(n) cache storage vs O(n) recursion stack
 
-Dynamic programming appears throughout computer science—from optimizing database queries to training machine learning models. While the problems can get complex, the fundamental technique remains the same: break the problem down, store results, and build up to the solution.
+**Implementation patterns:**
+- Dictionary cache for sparse state spaces (fibonacci)
+- Array cache for dense state spaces (coin change)
+- Wrapper functions to hide cache from caller
+- Sentinel values (Int.max) to indicate impossible states
+- Tracking parent choices to reconstruct solutions
 
-The examples in this chapter (Fibonacci and coin change) demonstrate the core concepts. As you encounter more complex problems, you'll recognize the same patterns: define the subproblems, establish base cases, and determine how to combine solutions to subproblems into solutions for larger problems.
+**Common pitfalls:**
+- Forgetting base cases (causes infinite recursion)
+- Off-by-one errors in array sizes (crashes)
+- Not checking if solution exists (returns sentinel value)
+- Using wrong data structure for cache (sparse vs dense)
+
+**When to use dynamic programming:**
+- Problem has overlapping subproblems (same calculations repeated)
+- Problem has optimal substructure (optimal solution contains optimal subsolutions)
+- Naive recursion is too slow (exponential time)
+- Space-time tradeoff is acceptable (O(n) memory for O(n) time)
+
+**When to avoid dynamic programming:**
+- No overlapping subproblems (use plain recursion or iteration)
+- Greedy algorithm works (simpler and faster)
+- Problem is already O(n) or better
+- Memory constraints prohibit O(n) storage
+
+**Connections:**
+- Builds on recursion from Chapter 6 (adds caching to recursive solutions)
+- Uses generic types from Chapter 7 (Dictionary<Int, Int>, Array<Int>)
+- Demonstrates space-time tradeoffs from Chapter 8 (O(n) space for O(2^n) → O(n) time)
+- Cache is conceptually similar to stacks from Chapter 10 (both store intermediate computation)
+- Dictionary cache uses hash tables from Chapter 15 (O(1) lookup)
+- Some problems use heaps from Chapter 16 (track optimal subproblem values)
+
+**Real-world applications:**
+- Resource allocation (coin change, knapsack problems)
+- Sequence analysis (longest common subsequence, edit distance)
+- Graph algorithms (shortest paths with negative edges - Bellman-Ford)
+- Game strategy (optimal play in two-player games)
+- Bioinformatics (DNA sequence alignment)
+- Compiler optimization (instruction scheduling)
+
+Understanding dynamic programming is essential for solving optimization problems efficiently. The key insight—store results to avoid recalculation—applies far beyond these examples, from database query optimization to training machine learning models. In Chapter 18, you'll see PageRank, which uses iterative computation similar to DP's tabulation approach to calculate web page importance scores.
+
+<div class="bottom-nav">
+  <div class="nav-container">
+    <a href="16-heaps" class="nav-link prev">← Chapter 16: Heaps</a>
+    <a href="index" class="nav-link toc">Table of Contents</a>
+    <a href="18-pagerank-algorithm" class="nav-link next">Chapter 18: PageRank →</a>
+  </div>
+</div>
