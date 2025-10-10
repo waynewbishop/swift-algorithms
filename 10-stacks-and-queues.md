@@ -8,216 +8,31 @@ description: "Essential data structures for managing collections"
   <a href="index">Table of Contents</a>
 </div>
 
-
 # Stacks & queues
 
-[Stacks](glossary#stack) and [queues](glossary#queue) are structures that help organize data in a particular order. Their concept is based on the idea that information can be organized similarly to how things interact in the real world. For example, a stack of dinner plates can be represented by placing a single plate on a group of existing plates. Similarly, a queue can be easily understood by observing groups of people waiting in a line at a concert or grand opening.
+In [Chapter 9](09-linked-lists.md), you built linked lists—collections where elements connect through pointers rather than contiguous memory. Stacks and queues extend this concept by adding ordering rules: stacks process elements last-in, first-out (LIFO), while queues process elements first-in, first-out (FIFO). Both structures achieve [O(1)](glossary#big-o-notation) insertion and removal (from Chapter 8), making them ideal building blocks for algorithms requiring consistent, fast access patterns.
 
-These structures can be implemented in various ways. Any app that makes use of a shopping cart, waiting list or playlist makes use of a stack or queue. In software development, a call stack is often used as an essential debugging / analytics tool. For this essay, we'll discuss and implement a stack and queue data structures in Swift.
+These structures power critical systems you use daily. Navigation controllers use stacks to manage view hierarchies (push a view, pop to go back). Task queues schedule operations fairly (DispatchQueue, OperationQueue). Understanding stacks and queues is essential for iOS development and algorithm design.
 
-## Real-world applications: When to use stacks vs queues
+## Real-world applications
 
-Before diving into implementation, let's understand where you'll encounter these structures in real applications.
+Stacks reverse order—the last item added is first removed. This makes them perfect for undo/redo systems (track history, pop to undo), navigation (push views, pop to go back), and function call tracking (debugger shows call stack). iOS uses stacks extensively: UINavigationController maintains a view stack, the responder chain propagates touches through a stack, and modal presentations form a stack.
 
-### Stack applications (LIFO - Last In, First Out)
-
-**1. Undo/Redo functionality**
-```swift
-class TextEditor {
-    private var undoStack = Stack<String>()
-    private var redoStack = Stack<String>()
-
-    func type(_ text: String) {
-        undoStack.push(currentText)  // Save current state
-        currentText += text
-        redoStack = Stack<String>()  // Clear redo history
-    }
-
-    func undo() {
-        guard let previousText = undoStack.pop() else { return }
-        redoStack.push(currentText)  // Save for redo
-        currentText = previousText
-    }
-
-    func redo() {
-        guard let nextText = redoStack.pop() else { return }
-        undoStack.push(currentText)
-        currentText = nextText
-    }
-}
-```
-
-**2. iOS Navigation (UINavigationController)**
-```swift
-// UINavigationController internally uses a stack
-navigationController.pushViewController(detailVC, animated: true)  // Push
-navigationController.popViewController(animated: true)              // Pop
-
-// View hierarchy: [RootVC] → [ListVC] → [DetailVC]
-// Back button pops the stack
-```
-
-**3. Function call stack (debugging)**
-
-[diagram: Thread call stack showing execution order]
-
-**4. Browser history**
-```swift
-class BrowserHistory {
-    private var backStack = Stack<URL>()
-    private var forwardStack = Stack<URL>()
-
-    func navigate(to url: URL) {
-        backStack.push(currentURL)
-        currentURL = url
-        forwardStack = Stack<URL>()  // Clear forward history
-    }
-
-    func back() {
-        guard let previousURL = backStack.pop() else { return }
-        forwardStack.push(currentURL)
-        currentURL = previousURL
-    }
-}
-```
-
-**5. Expression evaluation (parsing)**
-```swift
-// Evaluating: 3 + 4 * 2
-// Stack handles operator precedence
-func evaluate(_ expression: String) -> Int {
-    let operands = Stack<Int>()
-    let operators = Stack<Character>()
-    // Process tokens, maintaining precedence via stack
-}
-```
-
-### Queue applications (FIFO - First In, First Out)
-
-**1. Task scheduling (OperationQueue, DispatchQueue)**
-```swift
-class TaskScheduler {
-    private var tasks = Queue<Task>()
-
-    func schedule(_ task: Task) {
-        tasks.enqueue(task)  // Add to back
-    }
-
-    func executeNext() {
-        guard let task = tasks.dequeue() else { return }  // Remove from front
-        task.execute()
-    }
-}
-
-// Real iOS example
-DispatchQueue.main.async {
-    // Tasks execute in order they're added
-    updateUI()
-}
-```
-
-**2. Print job spooling**
-```swift
-class PrintQueue {
-    private var jobs = Queue<PrintJob>()
-
-    func submitJob(_ job: PrintJob) {
-        jobs.enqueue(job)
-        print("Job queued. Position: \(jobs.count)")
-    }
-
-    func processNext() {
-        guard let job = jobs.dequeue() else { return }
-        print("Printing: \(job.document)")
-    }
-}
-```
-
-**3. Breadth-First Search (BFS) in graphs**
-```swift
-// From Chapter 12
-func traverse(_ startingVertex: Vertex<T>) {
-    let queue = Queue<Vertex<T>>()
-    queue.enqueue(startingVertex)
-
-    while !queue.isEmpty {
-        let vertex = queue.dequeue()!
-        // Process neighbors in order discovered
-        for neighbor in vertex.neighbors {
-            queue.enqueue(neighbor)
-        }
-    }
-}
-```
-
-**4. Network request buffering**
-```swift
-class APIClient {
-    private var requestQueue = Queue<URLRequest>()
-
-    func fetch(_ request: URLRequest) {
-        requestQueue.enqueue(request)
-        processQueueIfNeeded()
-    }
-
-    private func processQueueIfNeeded() {
-        guard !isProcessing, let request = requestQueue.dequeue() else { return }
-        // Process oldest request first
-        executeRequest(request)
-    }
-}
-```
-
-**5. Streaming data buffers**
-```swift
-class VideoStreamBuffer {
-    private var frames = Queue<VideoFrame>()
-
-    func receiveFrame(_ frame: VideoFrame) {
-        frames.enqueue(frame)  // Buffer incoming frames
-    }
-
-    func nextFrameForPlayback() -> VideoFrame? {
-        return frames.dequeue()  // Play frames in order received
-    }
-}
-```
-
-### Choosing between stack and queue
+Queues preserve order—the first item added is first removed. This ensures fairness in task scheduling (process requests in order received), breadth-first graph traversal (Chapter 12 uses queues to explore graphs level-by-level), and buffering (network requests, print jobs, video frames). Foundation frameworks rely on queues: DispatchQueue schedules tasks, OperationQueue manages concurrent operations, and NotificationCenter posts notifications in order.
 
 | Use Stack When | Use Queue When |
 |----------------|----------------|
 | Need to reverse order | Need to preserve order |
 | Undo/redo functionality | Task scheduling |
-| Navigation history | Print spooling |
-| Parsing expressions | BFS traversal |
-| Function call tracking | Request buffering |
-| Matching parentheses | Fair resource allocation |
+| Navigation history | Breadth-first search |
+| Backtracking algorithms | Fair resource allocation |
 
-### iOS-specific examples
+## The node structure
 
-**UIKit uses stacks:**
-- `UINavigationController` view stack
-- Responder chain (touches propagate through stack)
-- Modal presentation stack
-
-**Foundation uses queues:**
-- `OperationQueue` for concurrent tasks
-- `DispatchQueue` for GCD
-- `NotificationCenter` post order
-
-**CoreData uses both:**
-- Undo manager (stack)
-- Save operation queuing (queue)
-
-## How queues work
-
-Queues are based on the concept of "first-in, first-out". As new elements are created, they are added to the back of the queue. Items are preserved in order until requested. When a new element is requested, the top level item is removed and is sent to the receiver.
-
-Similar to a linked list, we'll create a generic Node class to manage stack and queue items:
+Both stacks and queues use a simple singly-linked node structure. Unlike the doubly-linked `LLNode<T>` from Chapter 9 (which needs `previous` pointers for bidirectional traversal), stacks and queues only traverse in one direction:
 
 ```swift
-//generic node structure
+// Simple singly-linked node for stacks and queues
 public class Node<T> {
     var key: T?
     var next: Node?
@@ -228,11 +43,14 @@ public class Node<T> {
 }
 ```
 
-## Enqueuing objects
+This minimalist structure is sufficient because stacks only access the top element and queues only access the front element. The simpler design reduces memory overhead compared to doubly-linked nodes.
 
-The process of adding items is often referred to as "enqueuing". Here, we define the method used to enqueue objects and identify the property top that will serve as our starting point:
+## Building a queue
+
+Queues follow "first-in, first-out" ordering. Elements enter at the back and exit from the front, like a line at a store. The `Queue<T>` class maintains a `top` pointer to the front element:
 
 ```swift
+// Generic queue implementation with FIFO ordering
 public class Queue<T> {
     private var top: Node<T>?
 
@@ -240,9 +58,9 @@ public class Queue<T> {
         top = Node<T>()
     }
 
-    //enqueue the specified object
+    // Add element to back of queue - O(n)
     public func enqueue(_ key: T) {
-        //trivial case
+        // Handle empty queue
         guard top?.key != nil else {
             top?.key = key
             return
@@ -251,71 +69,56 @@ public class Queue<T> {
         let childToUse = Node<T>()
         var current = top
 
-        //cycle through the list
+        // Traverse to end of queue
         while current?.next != nil {
             current = current?.next
         }
 
-        //append new item
+        // Append new node
         childToUse.key = key
         current?.next = childToUse
     }
-}
-```
 
-The process to enqueue items is similar to building a generic linked list. However, since queued items can be removed as well as added, we must ensure that our structure supports the absence of values (e.g. nil). As a result, the class property top is defined as an optional.
+    // Remove element from front of queue - O(1)
+    public func dequeue() -> T? {
+        // Check if queue is empty
+        guard top?.key != nil else {
+            return nil
+        }
 
-To keep the queue generic, the enQueue method signature also has a parameter that is declared as type T. With Swift, generics usage not only preserves type information, but also ensures objects conform to various protocols.
+        // Retrieve front item
+        let queueItem: T? = top?.key
 
-## Dequeuing objects
+        // Move top pointer to next item
+        if let nextItem = top?.next {
+            top = nextItem
+        } else {
+            top = Node<T>()
+        }
 
-Removing items from the queue is called dequeuing. As shown, dequeuing is a two-step process that involves returning the top-level item and reorganizing the queue.
-
-```swift
-//retrieve items - O(1) constant time
-public func dequeue() -> T? {
-    //determine key instance
-    guard top?.key != nil else {
-        return nil
+        return queueItem
     }
 
-    //retrieve and queue the next item
-    let queueItem: T? = top?.key
-
-    //use optional binding
-    if let nextItem = top?.next {
-        top = nextItem
-    } else {
-        top = Node<T>()
+    // View front element without removing - O(1)
+    public func peek() -> T? {
+        return top?.key
     }
 
-    return queueItem
+    // Check if queue is empty - O(1)
+    public var isEmpty: Bool {
+        return top?.key == nil
+    }
 }
 ```
 
-When dequeuing, it is vital to know when values are absent. With deQueue, we account for the potential absence of a key in addition to an empty queue. In Swift, one must use specific techniques like optional chaining to check for nil values.
+Enqueuing is O(n) because we must traverse to the end. A production implementation might maintain a `tail` pointer to make enqueuing O(1). Dequeuing is O(1)—just update the `top` pointer.
 
-## Supporting functions
+## Building a stack
 
-Along with adding and removing items, supporting functions also include checking for an empty queue as well as retrieving the top level item.
-
-```swift
-//retrieve the top most item
-public func peek() -> T? {
-    return top?.key
-}
-
-//check for the presence of a value
-public var isEmpty: Bool {
-    return top?.key == nil
-}
-```
-
-## How stacks work
-
-To contrast, Stack structures process elements on a "last-in, first-out" (e.g. LIFO) technique. This distinction allows it to perform basic operations such as element insertion and retrieval in constant time - O(1). As an iOS Developer, the concept of stacking two or more views to create a view hierarchy is common. As we'll see in Chapter 11 (Binary Search Trees), Stacks also come in handy when supporting other data structures and algorithms.
+Stacks follow "last-in, first-out" ordering. Elements are added and removed from the same end (the top), like a stack of plates. This enables O(1) insertion and removal:
 
 ```swift
+// Generic stack implementation with LIFO ordering
 public class Stack<T> {
     private var top: Node<T>
     private var counter: Int = 0
@@ -324,33 +127,32 @@ public class Stack<T> {
         top = Node<T>()
     }
 
-    //the number of items - O(1)
+    // Number of elements in stack - O(1)
     public var count: Int {
         return counter
     }
 
-    //add item to the stack - O(1)
+    // Add element to top of stack - O(1)
     public func push(_ key: T) {
-        //return trivial case
+        // Handle empty stack
         guard top.key != nil else {
             top.key = key
             counter += 1
             return
         }
 
-        //create new item
+        // Create new node
         let childToUse = Node<T>()
         childToUse.key = key
 
-        //set new created item at top
+        // Insert at top (new node points to current top)
         childToUse.next = top
         top = childToUse
 
-        //set counter
         counter += 1
     }
 
-    //remove item from the stack - O(1)
+    // Remove element from top of stack - O(1)
     @discardableResult
     public func pop() -> T? {
         guard let key = top.key else { return nil }
@@ -366,75 +168,79 @@ public class Stack<T> {
         return key
     }
 
-    //retrieve the top most item - O(1)
+    // View top element without removing - O(1)
     public func peek() -> T? {
         return top.key
     }
 
-    //check for value - O(1)
+    // Check if stack is empty - O(1)
     public var isEmpty: Bool {
         return count == 0
     }
 }
 ```
 
+Unlike queues (which add at the back and remove from the front), stacks add and remove from the same location. This makes all stack operations O(1)—no traversal needed.
+
 ## Performance characteristics
 
-Both stacks and queues offer excellent performance for their core operations:
+Both structures excel at their core operations:
 
 | Operation | Stack | Queue | Notes |
 |-----------|-------|-------|-------|
-| Push/Enqueue | O(1) | O(1) | Add element |
+| Push/Enqueue | O(1) | O(1)* | Add element |
 | Pop/Dequeue | O(1) | O(1) | Remove element |
 | Peek | O(1) | O(1) | View top/front |
 | isEmpty check | O(1) | O(1) | Check if empty |
 | Search | O(n) | O(n) | Not their purpose |
 
-**Why O(1) is important:**
+\* This implementation's enqueue is O(n). With a tail pointer, it becomes O(1).
+
+The O(1) performance means these operations take constant time regardless of size. Adding the millionth element takes the same time as adding the first:
 
 ```swift
-// Stack: Add 1 million items
+// Process 1 million items with consistent performance
 for i in 0..<1_000_000 {
-    stack.push(i)  // Each push is O(1) - consistently fast
+    stack.push(i)           // Each push: O(1)
+    queue.enqueue(i)        // Each enqueue: O(1)*
 }
 
-// Queue: Process 1 million tasks
-for i in 0..<1_000_000 {
-    queue.enqueue(Task(i))  // Each enqueue is O(1)
-    if shouldProcess {
-        queue.dequeue()  // Also O(1)
-    }
+for _ in 0..<1_000_000 {
+    stack.pop()             // Each pop: O(1)
+    queue.dequeue()         // Each dequeue: O(1)
 }
 ```
 
-No matter how many items are in the structure, adding or removing takes the same amount of time.
+This predictable performance makes stacks and queues ideal for systems requiring consistent response times.
 
 ## Summary
 
-Stacks and queues are simple yet powerful data structures that maintain ordering through different strategies:
+Stacks and queues are specialized linked structures that enforce ordering rules:
 
 **Stacks (LIFO):**
-- Last item added is first removed
-- Perfect for reversing order or backtracking
-- Real uses: undo/redo, navigation, function calls, expression parsing
-- iOS examples: UINavigationController, responder chain
+- Last element added is first removed
+- O(1) push and pop operations
+- Use for: undo/redo, navigation, backtracking, function calls
+- iOS examples: UINavigationController, responder chain, modal presentations
 
 **Queues (FIFO):**
-- First item added is first removed
-- Perfect for preserving order and fair scheduling
-- Real uses: task scheduling, BFS traversal, request buffering
+- First element added is first removed
+- O(1) dequeue, O(1) enqueue with tail pointer
+- Use for: task scheduling, breadth-first search, buffering
 - iOS examples: DispatchQueue, OperationQueue, NotificationCenter
 
-**Key benefits:**
-- All core operations are O(1)
-- Simple to implement (built on linked lists)
-- Fundamental building blocks for other algorithms
-- Direct mapping to real-world concepts
+**Key differences from Chapter 9:**
+- Linked lists allow insertion/removal anywhere (O(n) to find position)
+- Stacks restrict access to top only (O(1) operations)
+- Queues restrict access to front/back only (O(1) operations)
+- Simpler node structure (singly-linked vs doubly-linked)
 
-**When to use:**
-- Stack: When order reversal matters (navigation, undo, backtracking)
-- Queue: When fairness and order preservation matter (scheduling, buffering)
-- Array: When you need random access or bidirectional iteration
+Both structures build on linked list concepts while adding constraints that enable faster operations and clearer semantics. In Chapter 11, you'll see how stacks help implement tree traversal algorithms. In Chapter 12, queues will power breadth-first graph searches.
 
-Understanding stacks and queues is essential for iOS development, as they power many of the frameworks you use daily. In Chapter 12, you'll see queues in action for graph traversal algorithms like Breadth-First Search.
-
+<div class="bottom-nav">
+  <div class="nav-container">
+    <a href="09-linked-lists" class="nav-link prev">← Chapter 9: Linked Lists</a>
+    <a href="index" class="nav-link toc">Table of Contents</a>
+    <a href="11-binary-search-trees" class="nav-link next">Chapter 11: Binary Search Trees →</a>
+  </div>
+</div>
