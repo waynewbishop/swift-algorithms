@@ -11,7 +11,11 @@ description: "Explore graph data structures and algorithms"
 
 # Graphs
 
-A [graph](glossary#graph) is a data structure that shows a relationship (e.g., connection) between two or more objects. Because of their flexibility, graphs are one of the most widely used structures in modern computing. Popular tools and services like online maps, social networks, and even the Internet as a whole are based on how objects relate to one another. In this chapter, we'll highlight the key features of graphs and will demonstrate how to create a basic graph with Swift.
+A [graph](glossary#graph) is a data structure that shows a relationship (e.g., connection) between two or more objects. Because of their flexibility, graphs are one of the most widely used structures in modern computing. Popular tools and services like online maps, social networks, and even the Internet as a whole are based on how objects relate to one another.
+
+Graphs generalize the tree structures from [Chapters 11-12](11-binary-search-trees.md). While trees enforce a strict parent-child hierarchy, graphs allow any vertex to connect to any other vertex, creating cycles and multiple paths between nodes. This flexibility makes graphs perfect for modeling real-world networks where relationships are more complex than simple hierarchies.
+
+In this chapter, we'll highlight the key features of graphs and demonstrate how to create graph structures with Swift. You'll also learn Dijkstra's shortest path algorithm—one of the most important algorithms in computer science, powering everything from GPS navigation to Internet routing.
 
 ## The basics
 
@@ -35,9 +39,10 @@ Regardless of graph type, it's common to represent the level of connectedness be
 
 ## The vertex
 
-With our understanding of graphs in place, let's build a graph using [generics](glossary#generic). This allows the graph to work with any data type. Here's the data structure for a vertex:
+With our understanding of graphs in place, let's build a graph using [generics](glossary#generic) from Chapter 7. This allows the graph to work with any data type. Here's the data structure for a vertex:
 
 ```swift
+// Generic vertex with neighbors array and traversal tracking
 public class Vertex<T>: Equatable {
     var tvalue: T?
     var neighbors = Array<Edge<T>>()
@@ -73,6 +78,7 @@ The `Equatable` conformance allows us to compare vertices using `==`. Two vertic
 The neighbors property is an array that represents connections a vertex may have with other vertices. As discussed, a vertex can be associated with one or more items. This list of neighboring items is sometimes called an adjacency list and can be used to solve a variety of problems. Here's a basic data structure that represents an edge:
 
 ```swift
+// Edge connecting vertex to neighbor with weighted cost
 public class Edge<T> {
     var neighbor: Vertex<T>
     var weight: Int
@@ -91,6 +97,7 @@ Each edge contains a reference to a neighboring vertex and a weight representing
 With our vertex and edge objects built, we can use these structures to construct a graph:
 
 ```swift
+// Graph structure with canvas holding all vertices
 public class Graph<T> {
     var canvas: Array<Vertex<T>>
 
@@ -125,15 +132,15 @@ public class Graph<T> {
 
 ## Graph traversals
 
-Graph traversal is the process of visiting every vertex in a graph exactly once. Unlike trees, graphs can contain cycles, so we need to track which vertices we've already visited to avoid infinite loops.
+Graph traversal is the process of visiting every vertex in a graph exactly once. Unlike trees (Chapters 11-12), graphs can contain cycles, so we need to track which vertices we've already visited to avoid infinite loops. This is where the `visited` property becomes essential.
 
 ### Breadth-first search (BFS)
 
-Breadth-First Search explores all vertices at the current depth before moving to vertices at the next depth level. It uses a [queue](glossary#queue) data structure:
+Breadth-First Search explores all vertices at the current depth before moving to vertices at the next depth level. It uses a [queue](glossary#queue) data structure from Chapter 10. Recall that queues maintain first-in, first-out (FIFO) ordering, which ensures we process vertices level by level:
 
 ```swift
+// BFS traversal using queue for level-by-level exploration - O(V + E)
 extension Graph {
-    // BFS traversal
     public func traverse(_ startingv: Vertex<T>) {
         // Establish a new queue
         let graphQueue: Queue<Vertex<T>> = Queue<Vertex<T>>()
@@ -168,8 +175,8 @@ extension Graph {
 A more flexible version allows you to execute custom logic on each vertex using a closure with an `inout` parameter:
 
 ```swift
+// BFS traversal with custom closure logic on each vertex - O(V + E)
 extension Graph {
-    // BFS traversal with inout closure function
     public func traverse(_ startingv: Vertex<T>, formula: (_ node: inout Vertex<T>) -> ()) {
         // Establish a new queue
         let graphQueue: Queue<Vertex<T>> = Queue<Vertex<T>>()
@@ -203,8 +210,12 @@ extension Graph {
         print("graph traversal complete..")
     }
 }
+```
 
-// Example usage
+Example usage showing custom traversal logic:
+
+```swift
+// Build sample graph and traverse with custom logic
 let graph = Graph<String>()
 let vertexA = Vertex(with: "A")
 let vertexB = Vertex(with: "B")
@@ -226,7 +237,7 @@ graph.traverse(vertexA) { vertex in
 
 ### Understanding traversal complexity
 
-BFS has the following complexity:
+BFS has the following complexity from [Chapter 8](08-performance-analysis.md):
 - **Time Complexity**: O(V + E) where V is the number of vertices and E is the number of edges
 - **Space Complexity**: O(V) for storing visited vertices and the queue
 
@@ -297,8 +308,8 @@ Without the `Path` class, we'd only track vertices. But we need to know:
 Here's the complete algorithm as it appears in the production code:
 
 ```swift
+// Dijkstra's shortest path using array-based frontier - O(V²)
 extension Graph {
-    // Process Dijkstra's shortest path algorithm
     public func processDijkstra(_ source: Vertex<T>, destination: Vertex<T>) -> Path<T>? {
 
         var frontier: Array<Path<T>> = Array<Path<T>>()
@@ -379,11 +390,11 @@ extension Graph {
 
 ### Optimized Dijkstra with heap
 
-The array-based frontier requires O(n) time to find the minimum path. Using a heap improves this to O(log n):
+The array-based frontier requires O(n) time to find the minimum path. Using a heap (Chapter 15) improves this to O(log n):
 
 ```swift
+// Dijkstra's shortest path using heap-based frontier - O((V + E) log V)
 extension Graph {
-    /// An optimized version of Dijkstra's shortest path algorithm
     public func processDijkstraWithHeap(_ source: Vertex<T>, destination: Vertex<T>) -> Path<T>? {
 
         let frontier: PathHeap = PathHeap<T>()
@@ -449,9 +460,10 @@ The heap-based version is significantly faster for large graphs, as discussed in
 
 ### Reversing the path
 
-Once we have the shortest path, we can reverse it to get the sequence from source to destination:
+Once we have the shortest path, we can reverse it to get the sequence from source to destination. This uses the same three-pointer technique from [Chapter 9](09-linked-lists.md):
 
 ```swift
+// Reverse path sequence using linked-list reversal technique - O(n)
 extension Graph {
     /**
      Reverse the sequence of paths given the shortest path. Process analogous to reversing a linked list.
@@ -499,7 +511,7 @@ This reversal technique is analogous to reversing a linked list (Chapter 9), usi
 ### Practical example: Finding shortest routes
 
 ```swift
-// Build a graph representing cities and distances
+// Build graph representing cities and find shortest route
 let graph = Graph<String>()
 
 let sanFrancisco = Vertex(with: "San Francisco")
@@ -537,30 +549,49 @@ if let shortestPath = graph.processDijkstra(sanFrancisco, destination: newYork) 
 
 ## Summary
 
-Graphs are fundamental data structures that model relationships between objects:
+Graphs are fundamental data structures that model relationships between objects, generalizing the tree hierarchies from Chapters 11-12 to support arbitrary connections and cycles.
 
 **Key concepts:**
 - Vertices represent objects, contain values of generic type T
 - Edges connect vertices and have weights representing cost/distance
 - Canvas holds all vertices in the graph
-- **Adjacency lists** store each vertex's neighbors
+- Adjacency lists store each vertex's neighbors
+- Directed vs undirected graphs model different relationship types
 
-**Traversal algorithms:**
-- **BFS** explores level-by-level using a queue
-- **Closure support** allows custom logic during traversal
-- Time complexity: O(V + E)
+**Graph traversal:**
+- BFS explores level-by-level using a queue (Chapter 10)
+- Closure support allows custom logic during traversal
+- Time complexity: O(V + E) from Chapter 8 analysis
+- Visited flag prevents infinite loops in cyclic graphs
 
 **Shortest path finding:**
-- **Dijkstra's algorithm** finds minimum cost paths in weighted graphs
-- **The frontier** maintains the set of paths being explored
-- **Path objects** track route, cost, and previous steps
-- **Array-based**: O(V²) time complexity
-- **Heap-optimized**: O((V + E) log V) time complexity
+- Dijkstra's algorithm finds minimum cost paths in weighted graphs
+- The frontier maintains the set of paths being explored
+- Path objects track route, cost, and previous steps
+- Array-based: O(V²) time complexity
+- Heap-optimized: O((V + E) log V) time complexity (Chapter 15)
+- Greedy selection always chooses lowest-cost path from frontier
 
 **Real-world applications:**
-- GPS navigation systems
-- Network routing protocols
-- Social network analysis
-- Flight route optimization
+- GPS navigation systems (route planning)
+- Network routing protocols (Internet traffic)
+- Social network analysis (connections, recommendations)
+- Flight route optimization (cheapest/fastest routes)
 
-Understanding graphs and Dijkstra's frontier concept is fundamental to many algorithms in computer science and powers countless real-world applications from Google Maps to Internet routing.
+**Connections:**
+- Builds on generics (Chapter 7) for flexible type support
+- Uses queues (Chapter 10) for BFS traversal
+- Applies O(V + E) complexity analysis from Chapter 8
+- Generalizes tree structures (Chapters 11-12) to allow cycles
+- Linked-list reversal technique (Chapter 9) for path reconstruction
+- Heap optimization (Chapter 15) improves Dijkstra performance
+
+Understanding graphs and Dijkstra's frontier concept is fundamental to many algorithms in computer science and powers countless real-world applications from Google Maps to Internet routing. In Chapter 14, you'll see tries—a specialized tree structure that combines aspects of both trees and graphs for efficient string operations. In Chapter 15, you'll learn about heaps, which optimize Dijkstra's algorithm from O(V²) to O((V + E) log V).
+
+<div class="bottom-nav">
+  <div class="nav-container">
+    <a href="12-tree-balancing" class="nav-link prev">← Chapter 12: Tree Balancing</a>
+    <a href="index" class="nav-link toc">Table of Contents</a>
+    <a href="14-tries" class="nav-link next">Chapter 14: Tries →</a>
+  </div>
+</div>
