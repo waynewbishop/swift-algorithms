@@ -10,19 +10,30 @@ description: "Maintain balanced binary search trees with AVL rotations"
 
 # Tree Balancing
 
-In the previous chapter, we saw how [binary search trees](glossary#binary-search-tree-bst) (BST) are used to manage data. With basic logic, an [algorithm](glossary#algorithm) can easily traverse a model, searching data in O(log n) [time](glossary#time-complexity). However, there are occasions when navigating a tree becomes inefficient, in some cases working at O(n) time. In this chapter, we will review those scenarios and introduce the concept of tree balancing.
+In [Chapter 11](11-binary-search-trees.md), you built binary search trees that achieve O(log n) search performance—but only when the tree remains balanced. When a tree becomes unbalanced, performance degrades to O(n), no better than searching a linked list. This chapter introduces AVL trees, a self-balancing BST variant that guarantees O(log n) performance regardless of insertion order.
 
-## New models
+The key insight: by tracking the height of each subtree and performing rotations when imbalances occur, we can maintain balance automatically. This transforms BSTs from good-on-average structures into guaranteed-efficient data structures suitable for production systems.
+
+## The balance problem
+
+Consider inserting sorted data into a BST from Chapter 11. Building a tree from `[1, 2, 3, 4, 5]` creates a degenerate case—every node has only a right child, forming a linked list. Searching for 5 requires examining all 5 nodes (O(n)), not the 3 comparisons (O(log 5) ≈ 2.3) a balanced tree would need.
+
+This scenario isn't rare. Any monotonically increasing sequence (timestamps, auto-increment IDs, sorted imports) triggers worst-case behavior. Without balancing, BSTs become unreliable in real systems.
+
+## AVL trees: Self-balancing BSTs
+
+AVL trees extend BSTs with height tracking and automatic rebalancing. Named after inventors Adelson-Velsky and Landis (1962), AVL trees maintain a balance invariant: the height difference between left and right subtrees never exceeds 1.
 
 To start, let's revisit our original example. Array values from `numberList` were used to build a tree. As shown, all elements had either one or two children - otherwise called leaf elements. This is known as a [balanced binary search tree](glossary#balanced-tree).
 
 Our model achieved balance not only through usage of the BST append algorithm but also by the way keys were inserted. In reality, there could be numerous ways to populate a tree. Without considering other factors, this can produce unexpected results.
 
-## New heights
+## Tracking height
 
 To compensate for these imbalances, we need to expand the scope of our algorithm. In addition to left/right logic, we'll add a new property called `height`. Coupled with specific rules, we can use `height` to detect tree imbalances. To see how this works, let's create a new [AVL tree](glossary#avl-tree):
 
 ```swift
+// AVL tree node with height tracking for balance detection
 class AVLTree<T: Comparable> {
     var key: T?
     var left: AVLTree?
@@ -38,13 +49,14 @@ To start, we add the root element. As the first item, left/right leaves don't ye
 With a model in place, we can calculate the element's [height](glossary#height-tree). This is done by comparing the height of each leaf, finding the largest value, then increasing that value by +1. For the root element, this equates to 0. In Swift, these rules can be represented as follows:
 
 ```swift
+// Height calculation for AVL balance checking
 extension AVLTree {
-    // Retrieve height
+    // Retrieve height of a node (nil nodes have height -1)
     func getElementHeight(of element: AVLTree?) -> Int {
         element?.height ?? -1
     }
 
-    // Calculate height
+    // Calculate and set height based on children's heights
     mutating func setElementHeight() {
         guard key != nil else {
             print("No key provided.")
@@ -71,6 +83,7 @@ let leafVal = abs((-1) - (-1)) // equals 0 (balanced)
 In Swift, these elements can be checked with the `isTreeBalanced` method:
 
 ```swift
+// Check if node maintains AVL balance property
 extension AVLTree {
     func isTreeBalanced() -> Bool {
         guard key != nil else {
@@ -83,7 +96,7 @@ extension AVLTree {
 }
 ```
 
-## Adjusting the model
+## Restoring balance through rotation
 
 With 29 and 26 added, we can proceed to insert the final value (i.e., 23). Like before, we continue to traverse the left side of the tree. However, upon insertion, the math reveals node 29 violates the BST property. In other words, its subtree is no longer balanced.
 
@@ -97,6 +110,7 @@ For the tree to maintain its BST property, we need to change its performance fro
 As shown, we've been able to rebalance the BST by rotating the model to the right. Originally set as the root, node 29 is now positioned as the right leaf. In addition, node 26 has been moved to the root. In Swift, these changes can be achieved with the following:
 
 ```swift
+// Right rotation to fix left-heavy imbalance - O(1) time
 extension AVLTree {
     mutating func rightRotate() {
         guard let leftChild = left else { return }
@@ -120,13 +134,71 @@ extension AVLTree {
 
 Even though we undergo a series of steps, the process occurs in O(1) time. Meaning, its performance is unaffected by other factors such as number of leaf nodes, descendants, or tree height. In addition, even though we've completed a right rotation, similar steps could be implemented to resolve both left and right imbalances.
 
-## The results
+## Sort order preservation
 
 With tree balancing, it is important to note that techniques like rotations improve performance but do not change tree output. For example, even though a right rotation changes the connections between nodes, the overall BST sort order is preserved. As a test, one can traverse a balanced and unbalanced BST comparing the same values and receive the same results. In our case, a simple depth-first search will produce the following:
 
 ```swift
-// Sorted values from a traversal
+// Sorted values from in-order traversal (same before and after rotation)
 23, 26, 29
 ```
 
 By implementing tree balancing techniques, we ensure that our binary search tree maintains its efficiency, providing consistent O(log n) [performance](glossary#logarithmic-time-o-log-n) for insertions, deletions, and searches, even as the tree grows and changes over time.
+
+## Summary
+
+Tree balancing transforms BSTs from average-case efficient structures into guaranteed-efficient data structures suitable for production use.
+
+**The balance problem:**
+- Unbalanced trees degrade to O(n) performance
+- Sorted insertion creates worst case (linked list structure)
+- Height imbalance causes one subtree to become much deeper than the other
+- Without balancing, BSTs are unreliable for real systems
+
+**AVL tree solution:**
+- Track height at each node (max child height + 1)
+- Balance property: left and right subtree heights differ by at most 1
+- Detect imbalance when height difference exceeds 1
+- Restore balance through rotations
+
+**Height tracking:**
+- Nil nodes have height -1 (by convention)
+- Leaf nodes have height 0
+- Internal nodes: max(left height, right height) + 1
+- Updated after every insertion or rotation
+
+**Rotation operations:**
+- Right rotation fixes left-heavy imbalance
+- Left rotation fixes right-heavy imbalance (mirror of right rotation)
+- Rotations take O(1) time—independent of tree size
+- Preserve BST sort order (in-order traversal unchanged)
+- Restructure connections to reduce tree height
+
+**Performance guarantees:**
+- AVL trees guarantee O(log n) for search, insert, delete
+- Balance maintenance adds constant overhead per operation
+- Worst-case height: 1.44 × log₂(n) (tighter than general balanced trees)
+- Critical for systems requiring predictable response times
+
+**When to use AVL trees:**
+- Need guaranteed O(log n) performance
+- Insertion order unknown or potentially sorted
+- Search-heavy workloads (AVL more balanced than Red-Black trees)
+- Can't afford worst-case O(n) degradation
+
+**Connections:**
+- Builds on BST foundations from Chapter 11
+- Uses recursion from Chapter 6 for height calculation
+- Achieves guaranteed O(log n) from Chapter 8 analysis
+- More complex than basic BSTs but same interface
+- Alternative to hash tables (Chapter 14) when ordered iteration needed
+
+Understanding tree balancing is essential for building production-ready search structures. While basic BSTs work well for random data, AVL trees provide the guarantees necessary for systems where performance predictability matters. The rotation techniques introduced here also appear in other self-balancing trees like Red-Black trees and B-trees used in databases.
+
+<div class="bottom-nav">
+  <div class="nav-container">
+    <a href="11-binary-search-trees" class="nav-link prev">← Chapter 11: Binary Search Trees</a>
+    <a href="index" class="nav-link toc">Table of Contents</a>
+    <a href="13-graphs" class="nav-link next">Chapter 13: Graphs →</a>
+  </div>
+</div>
