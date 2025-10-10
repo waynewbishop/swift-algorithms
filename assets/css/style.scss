@@ -24,6 +24,10 @@
   --color-number: #272ad8;
   --color-comment: #6e6e73;
 
+  /* Mermaid Diagram Colors */
+  --mermaid-bg: #fafafa;
+  --mermaid-border: rgba(0, 0, 0, 0.06);
+
   /* Typography */
   --font-family-base: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --font-family-mono: "SF Mono", Monaco, Menlo, Consolas, "Courier New", monospace;
@@ -846,5 +850,55 @@ tr:last-child td {
   .highlight .p,
   .highlight pre code {
     color: #ffffff;
+  }
+}
+
+/* ============================================
+   Mermaid Diagram Styling
+   ============================================ */
+
+.mermaid {
+  background: var(--mermaid-bg);
+  text-align: center;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--mermaid-border);
+  overflow-x: auto;
+}
+
+/* Ensure diagrams are responsive */
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+}
+
+/* Mermaid text styling */
+.mermaid .nodeLabel,
+.mermaid .edgeLabel {
+  font-family: var(--font-family-base);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Subgraph styling for step-by-step visualizations */
+.mermaid .cluster rect {
+  fill: var(--color-background-secondary) !important;
+  stroke: var(--color-border) !important;
+  stroke-width: 2px;
+  rx: 8px;
+}
+
+.mermaid .cluster text {
+  fill: var(--color-text-primary) !important;
+  font-weight: 600;
+}
+
+/* Dark mode support for diagrams */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --mermaid-bg: #1c1c1e;
+    --mermaid-border: rgba(255, 255, 255, 0.1);
   }
 }
