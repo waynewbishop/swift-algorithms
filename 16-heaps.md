@@ -552,7 +552,7 @@ Heaps are specialized tree structures optimized for fast access to the minimum o
 - Alternative to hash tables from Chapter 15 for priority-based access
 - Provides O(n log n) sorting (compare to Chapter 5 algorithms)
 
-Understanding heaps is essential for building efficient priority-based systems and optimizing algorithms that repeatedly access extreme elements. The heap property creates a sweet spot between simple arrays and complex trees—fast enough for most priority queue needs, simple enough to implement with just an array. In Chapter 17, you'll learn about dynamic programming, which sometimes uses heaps to efficiently track optimal subproblem solutions.
+Understanding heaps is essential for building efficient priority-based systems and optimizing algorithms that repeatedly access extreme elements. The heap property creates a sweet spot between simple arrays and complex trees—fast enough for most priority queue needs, simple enough to implement with just an array. In Chapter 17, we'll learn about dynamic programming, which sometimes uses heaps to efficiently track optimal subproblem solutions.
 
 <div class="bottom-nav">
   <div class="nav-container">

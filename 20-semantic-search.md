@@ -10,7 +10,7 @@ description: "Understanding meaning through vector similarity"
 
 # Semantic Search
 
-Traditional search systems rely on exact keyword matching. When you search for "comfortable running shoes," these systems look for documents containing those exact words. This approach works well when queries and documents use identical terminology, but it fails to capture meaning. A product description using "athletic footwear" or "jogging sneakers" might be exactly what you're looking for, yet keyword matching would miss it entirely.
+Traditional search systems rely on exact keyword matching. When you search for "comfortable running shoes," these systems look for documents containing those exact words. This approach works well when queries and documents use identical terminology, but it fails to capture meaning. A product description using "athletic footwear" or "jogging sneakers" might be exactly what we're looking for, yet keyword matching would miss it entirely.
 
 Semantic search solves this problem by understanding the meaning behind words rather than matching their literal characters. Instead of asking "do these words appear in the document," semantic search asks "does this document mean something similar to what I'm looking for." This shift from syntax to semantics enables search systems to find relevant content even when the exact words differ.
 
@@ -94,7 +94,7 @@ This function reads the entire file, splits it into lines, and parses each line 
 
 ## Exploring word relationships
 
-Once loaded, you can explore the semantic relationships captured by the embeddings using Quiver's vector operations. Words with similar meanings have vectors that point in similar directions:
+Once loaded, we can explore the semantic relationships captured by the embeddings using Quiver's vector operations. Words with similar meanings have vectors that point in similar directions:
 
 ```swift
 import Quiver

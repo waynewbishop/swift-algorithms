@@ -973,7 +973,7 @@ PageRank is a graph-based algorithm that measures importance in networked system
 - Influenced attention mechanisms in modern AI (Transformers)
 - Remains fundamental to understanding network importance
 
-Understanding PageRank is essential for working with networked data and building systems that measure importance. The algorithm demonstrates how elegant mathematical modeling—treating web browsing as a Markov chain—can solve practical large-scale problems. Its influence extends far beyond search engines, providing a general framework for analyzing any system where importance emerges from consensus and connection patterns. In Chapter 19, you'll learn about linear algebra and vector operations, which provide the mathematical foundation for modern implementations of PageRank at web scale.
+Understanding PageRank is essential for working with networked data and building systems that measure importance. The algorithm demonstrates how elegant mathematical modeling—treating web browsing as a Markov chain—can solve practical large-scale problems. Its influence extends far beyond search engines, providing a general framework for analyzing any system where importance emerges from consensus and connection patterns. In Chapter 19, we'll learn about linear algebra and vector operations, which provide the mathematical foundation for modern implementations of PageRank at web scale.
 
 <div class="bottom-nav">
   <div class="nav-container">

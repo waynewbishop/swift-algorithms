@@ -10,9 +10,9 @@ description: "Learn linear and binary search algorithms in Swift"
 
 # Basic Searching
 
-In [Chapter 2](02-measuring-performance.md) you learned the vocabulary of performance—Big O notation provides a common language for discussing algorithmic efficiency. Now it's time to apply that knowledge to your first concrete [algorithms](https://en.wikipedia.org/wiki/Algorithm). Whether you're building a contact app, a music library, or any system that manages information, search functionality is essential.
+In [Chapter 2](02-measuring-performance.md) we learned the vocabulary of performance—Big O notation provides a common language for discussing algorithmic efficiency. Now it's time to apply that knowledge to your first concrete [algorithms](https://en.wikipedia.org/wiki/Algorithm). Whether we're building a contact app, a music library, or any system that manages information, search functionality is essential.
 
-In this chapter, we'll explore two fundamental approaches to searching: linear search and [binary search](https://en.wikipedia.org/wiki/Binary_search_algorithm). You'll learn how each algorithm works, when to use it, and why the choice between `O(n)` and `O(log n)` makes such a dramatic difference as data grows.
+In this chapter, we'll explore two fundamental approaches to searching: linear search and [binary search](https://en.wikipedia.org/wiki/Binary_search_algorithm). We'll learn how each algorithm works, when to use it, and why the choice between `O(n)` and `O(log n)` makes such a dramatic difference as data grows.
 
 ## The search problem
 
@@ -28,7 +28,7 @@ Each scenario involves the same fundamental challenge, but the optimal approach 
 
 ## The brute force approach
 
-We've already encountered [linear search](https://en.wikipedia.org/wiki/Linear_search) in our Big O chapter, but let's examine it more thoroughly. Linear search represents the most straightforward approach to finding data: check every item until you find what you're looking for.
+We've already encountered [linear search](https://en.wikipedia.org/wiki/Linear_search) in our Big O chapter, but let's examine it more thoroughly. Linear search represents the most straightforward approach to finding data: check every item until we find what we're looking for.
 
 ```swift
 extension Array where Element: Equatable {
@@ -101,16 +101,16 @@ This analysis reveals that while linear search is `O(n)` in the worst case, real
 
 ## Divide and conquer
 
-When the data is sorted, you can employ a much more efficient strategy. Binary search uses the [divide and conquer](https://en.wikipedia.org/wiki/Divide-and-conquer_algorithm) approach, eliminating half of the remaining possibilities with each comparison.
+When the data is sorted, we can employ a much more efficient strategy. Binary search uses the [divide and conquer](https://en.wikipedia.org/wiki/Divide-and-conquer_algorithm) approach, eliminating half of the remaining possibilities with each comparison.
 
 ### The phone book analogy
 
-Imagine you're looking for "Smith" in a physical phone book. You wouldn't start from page 1 and flip through every page. Instead, you'd:
+Imagine we're looking for "Smith" in a physical phone book. You wouldn't start from page 1 and flip through every page. Instead, you'd:
 
 1. Open to the middle of the book
 2. See if "Smith" comes before or after the names on that page
 3. Eliminate half the book and repeat the process
-4. Continue until you find "Smith" or determine it's not there
+4. Continue until we find "Smith" or determine it's not there
 
 This intuitive process is exactly how binary search works.
 
@@ -237,22 +237,23 @@ The decision between linear and binary search depends on several factors:
 - **Simple implementation** is more important than optimal performance
 
 ### Use binary search when:
-- **Data is already sorted** or you can afford to sort it
+- **Data is already sorted** or we can afford to sort it
 - **Large datasets** where the logarithmic advantage is significant
 - **Read-heavy operations** where searches are more frequent than modifications
-- **Performance is critical** and you can maintain sorted order
+- **Performance is critical** and we can maintain sorted order
 
 ## Practical considerations
 
 Consider a contact application where users frequently search for names but rarely add new contacts. Sorting the contacts once and using binary search for all subsequent lookups would be more efficient than using linear search repeatedly.
 
 ```swift
-//simulation of contact searching
+// Contact struct for demonstrating binary search in a contact manager application
 struct Contact {
     let name: String
     let phone: String
 }
 
+// Conform Contact to Comparable protocol to enable binary search by name
 extension Contact: Comparable {
     static func < (lhs: Contact, rhs: Contact) -> Bool {
         return lhs.name < rhs.name
@@ -288,7 +289,7 @@ class ContactManager {
 
 ### Memory vs. time trade-offs
 
-Sometimes you might maintain both sorted and unsorted versions of your data, trading memory for faster access patterns:
+Sometimes we might maintain both sorted and unsorted versions of your data, trading memory for faster access patterns:
 
 ```swift
 class OptimizedDataStore<T: Comparable> {
@@ -335,3 +336,48 @@ extension Array where Element: Comparable {
     }
 }
 ```
+
+## Summary
+
+This chapter introduces two fundamental search algorithms that demonstrate the practical impact of Big O notation from Chapter 2. Linear search and binary search represent different approaches to the same problem, with dramatically different performance characteristics that matter increasingly as data grows.
+
+**Linear search characteristics:**
+Linear search is the brute force approach—check every element until finding the target or exhausting the collection. It operates in `O(n)` time, requiring up to n comparisons in the worst case. The algorithm works with any data organization (sorted or unsorted), making it universally applicable. Implementation is straightforward with minimal chance of bugs, and it uses no additional memory beyond the input array. Performance is consistent—no best or worst case surprises based on data organization.
+
+**When linear search shines:**
+Use linear search for unsorted data where sorting would be expensive, small datasets where the overhead of sorting isn't justified, frequently changing data where maintaining sorted order is costly, or situations where simple implementation is more important than optimal performance. The simplicity and universality of linear search make it valuable despite its `O(n)` performance.
+
+**Binary search characteristics:**
+Binary search uses divide and conquer—eliminate half the remaining possibilities with each comparison. It achieves `O(log n)` time complexity, requiring only 20 comparisons to search 1 million items. The algorithm requires sorted data as a prerequisite, making it inapplicable to unsorted collections. Binary search demonstrates logarithmic growth where doubling data size adds only one additional step. This efficiency becomes remarkable with large datasets—the difference between 1,000,000 comparisons (linear) and 20 comparisons (binary) for million-item arrays.
+
+**The phone book analogy:**
+Looking for "Smith" in a physical phone book demonstrates binary search intuitively: open to the middle, determine if "Smith" comes before or after that page, eliminate half the book, and repeat. This natural process—what humans do instinctively—is exactly how binary search operates programmatically. The analogy helps explain why logarithmic performance is so powerful.
+
+**Performance comparison:**
+The comparison table reveals the dramatic difference: searching 100 items requires 100 comparisons (linear) versus 7 comparisons (binary). For 1,000 items: 1,000 versus 10. For 10,000 items: 10,000 versus 14. For 1,000,000 items: 1,000,000 versus 20. This exponential divergence explains why binary search dominates for large sorted datasets and why maintaining sorted order can be worthwhile despite the upfront cost.
+
+**The sorted data requirement:**
+Binary search's efficiency comes with an important constraint—data must be sorted. Attempting binary search on unsorted data produces incorrect results because the algorithm assumes it can eliminate half the possibilities based on comparisons. This requirement influences data management strategy: when to sort once and search many times, versus when frequent modifications make maintaining sorted order too expensive.
+
+**Decision framework:**
+Use binary search when data is already sorted or we can afford to sort it, for large datasets where logarithmic advantage is significant, for read-heavy operations where searches outnumber modifications, or when performance is critical and we can maintain sorted order. Use linear search when data is unsorted and sorting is expensive, for small datasets, for frequently changing data where maintaining sorted order is costly, or when simple implementation matters most.
+
+**Real-world applications:**
+Contact managers sort contacts once and use binary search for all subsequent lookups, demonstrating the read-heavy pattern. The ContactManager class maintains sorted order on every insertion, enabling efficient binary searches. The OptimizedDataStore demonstrates memory-time tradeoffs—maintaining both insertion-order and sorted arrays trades memory for faster access patterns, allowing efficient search while preserving original order.
+
+**Space-time tradeoffs:**
+The OptimizedDataStore example shows advanced strategy—maintaining two copies of data (insertion order and sorted order) trades `O(n)` additional memory for `O(log n)` search performance while preserving insertion order. The binarySearchInsertionPoint function enables efficient insertions into sorted arrays, finding the correct position in `O(log n)` time. These tradeoffs demonstrate that optimal solutions often involve balancing multiple competing concerns.
+
+**Connections to future chapters:**
+Chapter 4 introduces sorting algorithms (bubble sort, insertion sort, selection sort) that enable binary search by organizing data. Chapter 5 presents efficient `O(n log n)` sorting algorithms (merge sort, quicksort) that make sorting large datasets practical before searching. Chapter 7 demonstrates generics enabling search algorithms to work with any comparable type, not just specific data types. Chapter 11 explores binary search trees—data structures that maintain sorted order automatically and provide `O(log n)` search performance. Chapter 14 covers hash tables achieving `O(1)` average-case lookups, even faster than binary search's `O(log n)`, though with different tradeoffs.
+
+**Practical implications:**
+Understanding these search algorithms means recognizing when to invest in sorting. Netflix searching 100,000 titles benefits enormously from binary search—the difference between 100,000 comparisons and 17 comparisons per search, multiplied by millions of users. Phone contacts, dictionary lookups, database indexes, and autocomplete systems all leverage binary search on sorted data. The algorithms you choose determine whether your application feels instant or sluggish with real-world data volumes.
+
+<div class="bottom-nav">
+  <div class="nav-container">
+    <a href="02-measuring-performance" class="nav-link prev">← Chapter 2: Measuring Performance</a>
+    <a href="index" class="nav-link toc">Table of Contents</a>
+    <a href="04-basic-sorting" class="nav-link next">Chapter 4: Basic Sorting →</a>
+  </div>
+</div>

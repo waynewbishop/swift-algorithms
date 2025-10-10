@@ -254,17 +254,17 @@ Consider these real-world scenarios where edge weights matter:
 
 ### Understanding the frontier concept
 
-The **frontier** is the key concept that makes Dijkstra's algorithm work. Think of it as the "edge of exploration" – the set of paths you're currently considering but haven't fully explored yet.
+The **frontier** is the key concept that makes Dijkstra's algorithm work. Think of it as the "edge of exploration" – the set of paths we're currently considering but haven't fully explored yet.
 
 **Analogy: Exploring a cave system**
 
-Imagine you're exploring a cave with multiple tunnels:
+Imagine we're exploring a cave with multiple tunnels:
 - You start at the entrance
 - You can see several tunnels leading out (this is your **frontier**)
 - You pick the shortest tunnel to explore first
-- When you reach its end, you discover new tunnels (you **expand the frontier**)
+- When you reach its end, we discover new tunnels (you **expand the frontier**)
 - You always choose the shortest unexplored path from your current options
-- You keep track of where you've been to avoid going in circles
+- You keep track of where we've been to avoid going in circles
 
 **How the frontier works in Dijkstra's:**
 
@@ -273,7 +273,7 @@ Imagine you're exploring a cave with multiple tunnels:
 3. Explore: From that path's destination, discover new possible paths
 4. Expand: Add these new paths to the frontier
 5. Remove: Take the explored path out of the frontier
-6. Repeat: Continue until you've found the destination or explored everything
+6. Repeat: Continue until we've found the destination or explored everything
 
 ### The Path class: Tracking paths in the frontier
 
@@ -584,7 +584,7 @@ Graphs are fundamental data structures that model relationships between objects,
 - Linked-list reversal technique (Chapter 9) for path reconstruction
 - Heap optimization (Chapter 15) improves Dijkstra performance
 
-Understanding graphs and Dijkstra's frontier concept is fundamental to many algorithms in computer science and powers countless real-world applications from Google Maps to Internet routing. In Chapter 14, you'll see tries—a specialized tree structure that combines aspects of both trees and graphs for efficient string operations. In Chapter 15, you'll learn about heaps, which optimize Dijkstra's algorithm from O(V²) to O((V + E) log V).
+Understanding graphs and Dijkstra's frontier concept is fundamental to many algorithms in computer science and powers countless real-world applications from Google Maps to Internet routing. In Chapter 14, we'll see tries—a specialized tree structure that combines aspects of both trees and graphs for efficient string operations. In Chapter 15, we'll learn about heaps, which optimize Dijkstra's algorithm from O(V²) to O((V + E) log V).
 
 <div class="bottom-nav">
   <div class="nav-container">

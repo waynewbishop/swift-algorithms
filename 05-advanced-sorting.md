@@ -104,6 +104,35 @@ However, Quicksort can degrade to `O(n²)` in its worst case when the pivot sele
 
 The [space complexity](https://en.wikipedia.org/wiki/Space_complexity) of Quicksort is `O(log n)` due to the recursion stack. Each recursive call stores information about the current partition being processed. In a balanced partition scenario, the maximum depth of recursion is log n, which determines the space required.
 
+### Visualizing the performance difference
+
+To understand why `O(n log n)` is dramatically better than `O(n²)`, consider sorting 10,000 elements:
+
+- **Basic sorting** (`O(n²)`): ~100,000,000 operations
+- **Quicksort** (`O(n log n)`): ~140,000 operations
+
+This difference of over 700× explains why Quicksort dominates production code. The performance gap widens further as data grows—for 100,000 elements, the difference becomes approximately 7,500×.
+
+### Best, average, and worst cases
+
+**Best case:** `O(n log n)` occurs when each pivot divides the array into perfectly balanced halves. This produces the shallowest recursion tree possible.
+
+**Average case:** `O(n log n)` still holds even with imperfect pivots, as long as partitions remain reasonably balanced. Random data typically produces this behavior.
+
+**Worst case:** `O(n²)` happens when pivots consistently create maximally unbalanced partitions (e.g., always choosing the smallest or largest element as pivot). Sorted or reverse-sorted arrays trigger this behavior with naive pivot selection.
+
+### Pivot selection strategies
+
+The choice of pivot significantly impacts performance:
+
+**Last element** (our implementation): Simple but vulnerable to worst-case behavior on sorted data.
+
+**Random element**: Avoids worst-case patterns in pre-sorted data, achieving `O(n log n)` expected performance.
+
+**Median-of-three**: Selects the median of first, middle, and last elements. Balances simplicity with improved pivot quality.
+
+**True median**: Guarantees balanced partitions but requires extra computation to find, potentially negating the benefits.
+
 ## Practical applications
 
 Quicksort excels in situations where memory is limited, since it uses minimal additional space through its in-place partitioning strategy. The algorithm typically runs faster than other `O(n log n)` algorithms in practice when average-case performance matters more than worst-case guarantees. Since Quicksort modifies the original array rather than creating copies, it's preferred when in-place sorting is required.
@@ -120,14 +149,79 @@ Unlike some divide and conquer algorithms that require significant work to combi
 
 The divide and conquer approach appears throughout computer science, from binary search to merge sort to the graph algorithms we'll explore later in this book. Understanding how Quicksort applies this strategy provides a foundation for recognizing the pattern in other contexts. The key insight is that many complex problems become tractable when broken into smaller instances of the same problem.
 
-We'll explore recursion more deeply in [Chapter 6](06-recursion.md), where you'll see how functions that call themselves enable elegant solutions to complex problems. Quicksort serves as an excellent introduction to recursive thinking, demonstrating how a few lines of code can express a powerful algorithm through self-reference.
+We'll explore recursion more deeply in [Chapter 6](06-recursion.md), where we'll see how functions that call themselves enable elegant solutions to complex problems. Quicksort serves as an excellent introduction to recursive thinking, demonstrating how a few lines of code can express a powerful algorithm through self-reference.
+
+## Quicksort vs merge sort
+
+Both Quicksort and merge sort achieve `O(n log n)` time complexity, but they differ in important ways:
+
+| Characteristic | Quicksort | Merge Sort |
+|----------------|-----------|------------|
+| Average case | `O(n log n)` | `O(n log n)` |
+| Worst case | `O(n²)` | `O(n log n)` |
+| Space complexity | `O(log n)` | `O(n)` |
+| In-place | Yes | No |
+| Stable | No | Yes |
+| Practical speed | Usually faster | Predictable |
+
+**When to choose Quicksort:**
+- Memory is limited (in-place sorting)
+- Average-case performance matters more than worst-case guarantees
+- Stability (preserving order of equal elements) is not required
+- Data is random or unpredictable
+
+**When to choose merge sort:**
+- Worst-case guarantees are essential
+- Stability is required (sorting objects with multiple fields)
+- Extra memory is available
+- Data is already partially sorted or has patterns
+
+Swift's standard library uses Introsort, which starts with Quicksort and switches to heapsort if recursion depth becomes excessive. This hybrid approach combines Quicksort's speed with guaranteed `O(n log n)` worst-case performance.
 
 ## Summary
 
-Quicksort represents a significant advancement over the `O(n²)` algorithms from the previous chapter. Its `O(n log n)` average-case performance makes it suitable for production use with large datasets, while its in-place partitioning keeps memory requirements minimal.
+This chapter introduces Quicksort, a production-grade sorting algorithm achieving `O(n log n)` average-case performance through divide and conquer strategy. Unlike the `O(n²)` algorithms from Chapter 4, Quicksort handles large datasets efficiently—the difference between 140,000 operations and 100,000,000 operations for 10,000 elements, a 700× performance advantage.
 
-The algorithm demonstrates several key computer science principles. The divide and conquer strategy shows how complex problems can be broken into manageable pieces. The partitioning technique illustrates how clever data arrangement can eliminate unnecessary comparisons. The recursive implementation previews the power of functions that call themselves, a topic we'll explore thoroughly in the next chapter.
+**Quicksort characteristics:**
+Quicksort partitions arrays around pivot values, dividing data into segments where left elements are smaller than the pivot and right elements are larger. The algorithm recursively sorts each segment using the same strategy. In-place partitioning modifies the original array without requiring additional memory proportional to input size, resulting in `O(log n)` space complexity from recursion stack depth. The implementation uses two functions: quickSort manages overall execution and pivot selection, while qPartition sorts each pivot to its correct position.
 
-When choosing Quicksort, consider your data characteristics and performance requirements. For general-purpose sorting where average-case performance matters and memory is limited, Quicksort excels. When worst-case guarantees are essential, hybrid approaches like Swift's Introsort provide the benefits of Quicksort while eliminating its worst-case risks.
+**Performance analysis:**
+Average-case `O(n log n)` complexity arises from log n recursion levels (each level halves the problem) multiplied by n operations per level (partitioning examines every element). Best case occurs with perfectly balanced partitions. Worst case degrades to `O(n²)` when pivots create maximally unbalanced partitions—sorted or reverse-sorted arrays with naive pivot selection trigger this behavior. Space complexity is `O(log n)` from recursion stack in balanced scenarios.
 
-As you continue through this book, you'll see divide and conquer strategies applied to data structures like binary search trees and graphs, where breaking problems into smaller pieces enables efficient operations. The analytical approach developed here—understanding when and why an algorithm excels—will serve you well throughout your career in software development.
+**Pivot selection strategies:**
+Last element pivoting (the implementation shown) is simple but vulnerable to worst-case behavior on sorted data. Random element selection avoids worst-case patterns, achieving `O(n log n)` expected performance. Median-of-three selects the median of first, middle, and last elements, balancing simplicity with improved pivot quality. True median guarantees balanced partitions but requires extra computation that may negate benefits.
+
+**The divide and conquer strategy:**
+Quicksort exemplifies divide and conquer by breaking sorting into smaller subproblems. Partitioning divides the array around a pivot, creating two segments that become independent sorting problems solved recursively. Unlike algorithms requiring significant combination work (like merge sort merging sorted halves), Quicksort's combination phase is trivial—once both segments are sorted, the entire array is sorted with no additional work. The partitioning phase does the heavy lifting.
+
+**Performance comparison with Chapter 4:**
+For 10,000 elements, basic sorting requires ~100,000,000 operations while Quicksort requires ~140,000 operations—over 700× faster. For 100,000 elements, the difference grows to approximately 7,500×. This exponential divergence explains why production code rarely uses `O(n²)` algorithms beyond small datasets. The performance gap widens as data grows, making algorithm choice increasingly critical.
+
+**Quicksort vs merge sort tradeoffs:**
+Both achieve `O(n log n)` average case, but Quicksort offers `O(log n)` space versus merge sort's `O(n)` space, making Quicksort preferable when memory is limited. Quicksort sorts in-place while merge sort requires auxiliary arrays. However, Quicksort's worst case degrades to `O(n²)` while merge sort guarantees `O(n log n)` worst case. Merge sort is stable (preserves order of equal elements); Quicksort is not. Quicksort typically runs faster in practice on random data due to better cache locality and fewer memory allocations.
+
+**When to choose Quicksort:**
+Use Quicksort when memory is limited (in-place sorting), average-case performance matters more than worst-case guarantees, stability is not required, or data is random/unpredictable. The algorithm excels for general-purpose sorting with no particular data patterns. Database systems, operating system utilities, and application frameworks frequently rely on Quicksort or variants for sorting operations.
+
+**When to choose alternatives:**
+Choose merge sort when worst-case guarantees are essential, stability is required (sorting objects with multiple fields), extra memory is available, or data is already partially sorted. Choose insertion sort from Chapter 4 for small arrays (fewer than 10-20 elements) or nearly-sorted data. Swift's standard library uses Introsort, starting with Quicksort and switching to heapsort if recursion depth exceeds threshold, combining Quicksort's speed with guaranteed `O(n log n)` worst-case performance.
+
+**Recursion preview:**
+Quicksort introduces recursive thinking—functions calling themselves to solve smaller instances of the same problem. The qSort function calls itself on left and right segments, eventually reaching base cases (single elements needing no sorting). Chapter 6 explores recursion thoroughly, showing how self-referential functions enable elegant solutions to complex problems. Quicksort demonstrates recursion's power: a few lines of code express a sophisticated algorithm through self-reference.
+
+**Connections to future chapters:**
+Chapter 2 introduced `O(n log n)` complexity that Quicksort achieves. Chapter 4's `O(n²)` algorithms provide performance baseline showing Quicksort's advantages. Chapter 6 explores recursion in depth, explaining the control structure that powers Quicksort. Chapter 7 demonstrates generics enabling Quicksort to work with any Comparable type. Chapter 8 provides comprehensive performance analysis including recursion overhead and cache considerations. Chapter 11's binary search trees use similar partitioning concepts to maintain sorted data automatically.
+
+**Practical implications:**
+Understanding Quicksort means recognizing when in-place sorting with minimal memory overhead justifies potential worst-case behavior. Modern implementations mitigate risks through randomized pivots or hybrid approaches. The algorithm's widespread adoption—appearing in code libraries, production systems, and standard library implementations—demonstrates practical value. Sorting 100,000 elements 7,500× faster than basic algorithms enables applications that would be impractical otherwise.
+
+**The analytical approach:**
+This chapter develops the framework for algorithm evaluation: understanding time and space complexity, recognizing best/average/worst cases, evaluating tradeoffs (in-place vs additional memory, average speed vs worst-case guarantees), and matching algorithm characteristics to problem requirements. This analytical thinking applies throughout computer science, from choosing data structures to designing system architectures.
+
+<div class="bottom-nav">
+  <div class="nav-container">
+    <a href="04-basic-sorting" class="nav-link prev">← Chapter 4: Basic Sorting</a>
+    <a href="index" class="nav-link toc">Table of Contents</a>
+    <a href="06-recursion" class="nav-link next">Chapter 6: Recursion →</a>
+  </div>
+</div>

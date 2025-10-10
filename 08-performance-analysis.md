@@ -10,13 +10,13 @@ description: "Understanding algorithmic efficiency, complexity analysis, and rea
 
 # Analyzing Algorithms
 
-You've now explored searching techniques that locate values in collections, sorting methods that organize data, [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)) that breaks problems into smaller pieces, and generics that enable flexible code. Along the way, you've noticed patterns—binary search feels faster than linear search, merge sort handles large datasets better than bubble sort, and some recursive solutions run exponentially slow.
+We've now explored searching techniques that locate values in collections, sorting methods that organize data, [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)) that breaks problems into smaller pieces, and generics that enable flexible code. Along the way, we've noticed patterns—binary search feels faster than linear search, merge sort handles large datasets better than bubble sort, and some recursive solutions run exponentially slow.
 
-It's time to formalize these observations. In [Chapter 2](02-measuring-performance.md), you learned the vocabulary of performance—[Big O Notation](https://en.wikipedia.org/wiki/Big_O_notation) provides a common language for discussing how [algorithms](https://en.wikipedia.org/wiki/Algorithm) scale. This chapter builds on that foundation, teaching you to analyze the algorithms you've written and make informed decisions about which approaches fit which problems.
+It's time to formalize these observations. In [Chapter 2](02-measuring-performance.md), we learned the vocabulary of performance—[Big O Notation](https://en.wikipedia.org/wiki/Big_O_notation) provides a common language for discussing how [algorithms](https://en.wikipedia.org/wiki/Algorithm) scale. This chapter builds on that foundation, teaching you to analyze the algorithms we've written and make informed decisions about which approaches fit which problems.
 
 ## Applying Big O to algorithms you know
 
-In Chapter 2, you learned that O(n) means linear time, O(log n) means logarithmic time, and O(n²) means quadratic time. Now let's apply this knowledge to every algorithm you've implemented.
+In Chapter 2, we learned that O(n) means linear time, O(log n) means logarithmic time, and O(n²) means quadratic time. Now let's apply this knowledge to every algorithm we've implemented.
 
 ### Search algorithms from Chapter 3
 
@@ -273,7 +273,7 @@ func updateVideoFrame() {
 
 Use Xcode's Time Profiler (Product → Profile → Time Profiler) to find actual bottlenecks. Profile, optimize the slowest part, measure improvement, and stop when performance is acceptable. Don't guess—measure.
 
-## Looking back at the algorithms you've learned
+## Looking back at the algorithms we've learned
 
 **Chapter 3: Searching**
 - Linear search: O(n), binary search: O(log n)

@@ -11,7 +11,7 @@ description: "Solve complex problems with memoization"
 
 # Dynamic Programming
 
-[Dynamic programming](https://en.wikipedia.org/wiki/Dynamic_programming) is a technique for solving problems by breaking them into smaller, overlapping subproblems and storing the results to avoid repeating work. It's one of the most powerful optimization techniques in computer science, and while the name sounds intimidating, the core concept is straightforward: remember what you've already calculated so you don't have to calculate it again.
+[Dynamic programming](https://en.wikipedia.org/wiki/Dynamic_programming) is a technique for solving problems by breaking them into smaller, overlapping subproblems and storing the results to avoid repeating work. It's one of the most powerful optimization techniques in computer science, and while the name sounds intimidating, the core concept is straightforward: remember what we've already calculated so you don't have to calculate it again.
 
 Dynamic programming builds on recursion from Chapter 6, but adds memoization—storing results in a cache (typically a Dictionary from Chapter 15 or an Array) to avoid redundant calculations. This transforms exponential O(2^n) algorithms into linear O(n) solutions, demonstrating the dramatic space-time tradeoffs analyzed in Chapter 8. Where naive recursion uses the call stack (Chapter 10's stack concept), dynamic programming uses explicit arrays to track subproblem solutions. Some advanced DP problems even use heaps (Chapter 16) to efficiently track optimal values.
 
@@ -50,7 +50,7 @@ The technique we'll focus on is called **[memoization](https://en.wikipedia.org/
 
 ## Dynamic programming with memoization
 
-Memoization means storing computed results in a cache (usually a dictionary or array). Before calculating a value, check if you've already computed it.
+Memoization means storing computed results in a cache (usually a dictionary or array). Before calculating a value, check if we've already computed it.
 
 ```swift
 // Fibonacci with memoization reduces O(2^n) to O(n) by caching results in dictionary
@@ -170,7 +170,7 @@ dp[11] = 3 // 5 + 5 + 1 ✓
 
 ### Tracking which coins were used
 
-If you need to know which coins to use (not just the count), track the parent coins:
+If we need to know which coins to use (not just the count), track the parent coins:
 
 ```swift
 // Track which coins were used by storing parent choices during DP computation
@@ -296,7 +296,7 @@ return dp[amount] == Int.max ? -1 : dp[amount]
 
 ## Building algorithmic intuition
 
-Dynamic programming combines several techniques you've learned:
+Dynamic programming combines several techniques we've learned:
 
 - **Recursion (Chapter 6)**: Breaking problems into smaller versions of themselves
 - **Arrays (throughout the book)**: Storing intermediate results
@@ -304,11 +304,11 @@ Dynamic programming combines several techniques you've learned:
 
 The key insight is trading space for time. By using O(n) memory to store results, we reduce time complexity from exponential to linear—a massive improvement.
 
-Think of dynamic programming like taking notes in a meeting. Instead of trying to remember everything (naive recursion), you write things down (memoization) so you can look them up later without having to reconstruct your thoughts.
+Think of dynamic programming like taking notes in a meeting. Instead of trying to remember everything (naive recursion), we write things down (memoization) so you can look them up later without having to reconstruct your thoughts.
 
 ## Summary
 
-Dynamic programming is a powerful optimization technique based on a simple idea: remember what you've calculated to avoid doing the same work twice.
+Dynamic programming is a powerful optimization technique based on a simple idea: remember what we've calculated to avoid doing the same work twice.
 
 **Key characteristics:**
 - Solves problems with overlapping subproblems and optimal substructure
@@ -378,7 +378,7 @@ Dynamic programming is a powerful optimization technique based on a simple idea:
 - Bioinformatics (DNA sequence alignment)
 - Compiler optimization (instruction scheduling)
 
-Understanding dynamic programming is essential for solving optimization problems efficiently. The key insight—store results to avoid recalculation—applies far beyond these examples, from database query optimization to training machine learning models. In Chapter 18, you'll see PageRank, which uses iterative computation similar to DP's tabulation approach to calculate web page importance scores.
+Understanding dynamic programming is essential for solving optimization problems efficiently. The key insight—store results to avoid recalculation—applies far beyond these examples, from database query optimization to training machine learning models. In Chapter 18, we'll see PageRank, which uses iterative computation similar to DP's tabulation approach to calculate web page importance scores.
 
 <div class="bottom-nav">
   <div class="nav-container">

@@ -12,7 +12,7 @@ description: "Essential data structures for managing collections"
 
 In [Chapter 9](09-linked-lists.md), you built linked lists—collections where elements connect through pointers rather than contiguous memory. Stacks and queues extend this concept by adding ordering rules: stacks process elements last-in, first-out (LIFO), while queues process elements first-in, first-out (FIFO). Both structures achieve [O(1)](https://en.wikipedia.org/wiki/Big_O_notation) insertion and removal (from Chapter 8), making them ideal building blocks for algorithms requiring consistent, fast access patterns.
 
-These structures power critical systems you use daily. Navigation controllers use stacks to manage view hierarchies (push a view, pop to go back). Task queues schedule operations fairly (DispatchQueue, OperationQueue). Understanding stacks and queues is essential for iOS development and algorithm design.
+These structures power critical systems we use daily. Navigation controllers use stacks to manage view hierarchies (push a view, pop to go back). Task queues schedule operations fairly (DispatchQueue, OperationQueue). Understanding stacks and queues is essential for iOS development and algorithm design.
 
 ## Real-world applications
 
@@ -235,7 +235,7 @@ Stacks and queues are specialized linked structures that enforce ordering rules:
 - Queues restrict access to front/back only (O(1) operations)
 - Simpler node structure (singly-linked vs doubly-linked)
 
-Both structures build on linked list concepts while adding constraints that enable faster operations and clearer semantics. In Chapter 11, you'll see how stacks help implement tree traversal algorithms. In Chapter 12, queues will power breadth-first graph searches.
+Both structures build on linked list concepts while adding constraints that enable faster operations and clearer semantics. In Chapter 11, we'll see how stacks help implement tree traversal algorithms. In Chapter 12, queues will power breadth-first graph searches.
 
 <div class="bottom-nav">
   <div class="nav-container">

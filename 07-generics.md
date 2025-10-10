@@ -10,7 +10,7 @@ description: "Build type-safe, reusable code with Swift generics"
 
 # Generics
 
-In the previous chapters, you implemented search algorithms that work with any comparable type and sorting algorithms that handle integers, strings, and custom objects equally well. In [Chapter 6](06-recursion.md), you created `ListNode<T>` and `TreeNode<T>` structures that work with any type. You've been using Swift's most powerful feature all along—[generics](https://en.wikipedia.org/wiki/Generic_programming). Now it's time to understand how they work.
+In the previous chapters, you implemented search algorithms that work with any comparable type and sorting algorithms that handle integers, strings, and custom objects equally well. In [Chapter 6](06-recursion.md), you created `ListNode<T>` and `TreeNode<T>` structures that work with any type. We've been using Swift's most powerful feature all along—[generics](https://en.wikipedia.org/wiki/Generic_programming). Now it's time to understand how they work.
 
 Without generics, you'd need separate implementations of every data structure for every type. A linked list for integers. Another for strings. Another for custom objects. Generics solve this problem by allowing you to write one implementation that works with any type while maintaining complete type safety.
 
@@ -33,7 +33,7 @@ class IntListNode {
 }
 ```
 
-This works for integers. But when you need to create a linked list of strings, you'd have to duplicate the entire class:
+This works for integers. But when we need to create a linked list of strings, you'd have to duplicate the entire class:
 
 ```swift
 // Duplicate implementation for strings
@@ -73,11 +73,11 @@ let stringNode = ListNode(value: "Hello")
 
 One implementation maintains type safety across all uses. Swift ensures you can't accidentally mix types—trying to set an integer node's `next` to a string node produces a compile-time error. You maintain type safety while eliminating duplication.
 
-The `<T>` syntax defines a type parameter—a placeholder that gets replaced with an actual type when you create an instance. When you write `ListNode<Int>`, Swift replaces every `T` with `Int`. When you write `ListNode<String>`, it replaces every `T` with `String`.
+The `<T>` syntax defines a type parameter—a placeholder that gets replaced with an actual type when you create an instance. When we write `ListNode<Int>`, Swift replaces every `T` with `Int`. When we write `ListNode<String>`, it replaces every `T` with `String`.
 
-## You've already used generics
+## We've already used generics
 
-Every search and sorting algorithm from previous chapters uses generics. Let's examine what you've been writing.
+Every search and sorting algorithm from previous chapters uses generics. Let's examine what we've been writing.
 
 ### Generic search from Chapter 3
 
@@ -151,7 +151,7 @@ Swift's standard library uses descriptive names:
 | `Element` | Collection types | `Array<Element>` |
 | `Key`, `Value` | Dictionary-like types | `Dictionary<Key, Value>` |
 
-For the data structures you'll build in upcoming chapters, use `Element` for collections and `T` for simple generic types.
+For the data structures we'll build in upcoming chapters, use `Element` for collections and `T` for simple generic types.
 
 ## Protocol constraints
 
@@ -225,7 +225,7 @@ Types conforming to Comparable automatically conform to Equatable, since orderin
 
 ### Hashable protocol
 
-[Hashable](https://en.wikipedia.org/wiki/Hash_function) enables types to be used in Sets and as Dictionary keys. While you haven't built hash tables yet, you can use Swift's built-in Set and Dictionary types:
+[Hashable](https://en.wikipedia.org/wiki/Hash_function) enables types to be used in Sets and as Dictionary keys. While we haven't built hash tables yet, we can use Swift's built-in Set and Dictionary types:
 
 ```swift
 // Generic function requiring Hashable for Set usage
@@ -245,7 +245,7 @@ func removeDuplicates<T: Hashable>(_ array: [T]) -> [T] {
 removeDuplicates([1, 2, 2, 3, 1, 4])  // [1, 2, 3, 4]
 ```
 
-Types conforming to Hashable automatically conform to Equatable. You'll learn how hash tables work in Chapter 14.
+Types conforming to Hashable automatically conform to Equatable. We'll learn how hash tables work in Chapter 14.
 
 ## Where clauses for conditional functionality
 
@@ -287,7 +287,7 @@ extension Array where Element: Comparable & Hashable {
 
 ## Understanding recursive generic types
 
-In Chapter 6, you learned why recursive data structures require classes rather than structs. Let's examine how generics work with recursive types:
+In Chapter 6, we learned why recursive data structures require classes rather than structs. Let's examine how generics work with recursive types:
 
 ```swift
 // Generic linked list node from Chapter 6
@@ -377,7 +377,7 @@ The `Comparable` constraint enables `<=` comparison in the partitioning logic. T
 
 ## Generic performance
 
-Generics in Swift have zero runtime overhead. The compiler generates specialized code for each concrete type you use—a process called monomorphization. When you write:
+Generics in Swift have zero runtime overhead. The compiler generates specialized code for each concrete type you use—a process called monomorphization. When we write:
 
 ```swift
 let intNode = ListNode<Int>(value: 42)
@@ -404,4 +404,4 @@ Understanding generics prepares you for the data structures in upcoming chapters
 
 **Chapter 15: Heaps** - Generic priority queues with comparable elements
 
-Every data structure in this book uses the same generic patterns you've learned here. The search and sorting algorithms from Chapters 3-5 demonstrated generics in action. The recursive structures from Chapter 6 showed how generics work with self-referential types. Now you understand the mechanism—type parameters, protocol constraints, and where clauses working together to enable reusable, type-safe code with zero performance penalty.
+Every data structure in this book uses the same generic patterns we've learned here. The search and sorting algorithms from Chapters 3-5 demonstrated generics in action. The recursive structures from Chapter 6 showed how generics work with self-referential types. Now you understand the mechanism—type parameters, protocol constraints, and where clauses working together to enable reusable, type-safe code with zero performance penalty.

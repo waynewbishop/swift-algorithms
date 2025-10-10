@@ -355,7 +355,7 @@ Tries are specialized tree structures optimized for string operations, particula
 - Combines multiple structures like graphs (Chapter 13)
 - Analyzed using Big O notation from Chapter 8
 
-Understanding tries is essential for implementing efficient string search and autocomplete systems. The combination of tree hierarchy and hash table lookups creates a specialized structure that excels at prefix operations—a task where general-purpose data structures struggle. In Chapter 15, you'll learn about hash tables, which provide the O(1) child lookups that make modern trie implementations so efficient.
+Understanding tries is essential for implementing efficient string search and autocomplete systems. The combination of tree hierarchy and hash table lookups creates a specialized structure that excels at prefix operations—a task where general-purpose data structures struggle. In Chapter 15, we'll learn about hash tables, which provide the O(1) child lookups that make modern trie implementations so efficient.
 
 <div class="bottom-nav">
   <div class="nav-container">

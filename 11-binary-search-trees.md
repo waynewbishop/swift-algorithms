@@ -92,11 +92,11 @@ for number in numberList {
 }
 ```
 
-The recursion in `append` mirrors the recursive structure of the tree itself. This is a key pattern you'll see throughout tree algorithms.
+The recursion in `append` mirrors the recursive structure of the tree itself. This is a key pattern we'll see throughout tree algorithms.
 
 ## Searching the tree
 
-Searching exploits the BST property. If the target is smaller than the current node, search left. If larger, search right. If equal, you found it:
+Searching exploits the BST property. If the target is smaller than the current node, search left. If larger, search right. If equal, we found it:
 
 ```swift
 // Search for value in BST - O(log n) average
@@ -160,7 +160,7 @@ root.traversePreOrder { value in
 // Output: 8, 2, 1, 7, 10, 9, 11
 ```
 
-Pre-order gives you the root first, which is essential when you need to rebuild the tree structure.
+Pre-order gives you the root first, which is essential when we need to rebuild the tree structure.
 
 ### Post-order traversal
 
@@ -221,7 +221,7 @@ BST performance depends on tree balance. A balanced tree has roughly equal numbe
 
 **Why O(log n) for balanced trees?** Each comparison eliminates half the remaining nodes, just like binary search. A tree with 1,000 nodes has height ~10, requiring at most 10 comparisons.
 
-**Why O(n) for unbalanced trees?** If you insert sorted data [1, 2, 3, 4, 5], the tree degenerates into a linked list—every node has only a right child. Searching becomes linear, no better than traversing a linked list from Chapter 9.
+**Why O(n) for unbalanced trees?** If we insert sorted data [1, 2, 3, 4, 5], the tree degenerates into a linked list—every node has only a right child. Searching becomes linear, no better than traversing a linked list from Chapter 9.
 
 This is why tree balancing (Chapter 12) is critical for production use. Balanced trees guarantee O(log n) performance regardless of insertion order.
 
@@ -281,7 +281,7 @@ Binary search trees organize data hierarchically using a simple rule: left child
 - Requires balancing (Chapter 12) to guarantee performance
 - Foundation for tries (Chapter 13) and advanced data structures
 
-Understanding BSTs is essential for recognizing when hierarchical organization beats linear structures. In Chapter 12, you'll see how AVL trees use rotations to maintain balance, ensuring O(log n) performance regardless of insertion order.
+Understanding BSTs is essential for recognizing when hierarchical organization beats linear structures. In Chapter 12, we'll see how AVL trees use rotations to maintain balance, ensuring O(log n) performance regardless of insertion order.
 
 <div class="bottom-nav">
   <div class="nav-container">
