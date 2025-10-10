@@ -10,79 +10,74 @@ description: "Build type-safe, reusable code with Swift generics"
 
 # Generics
 
-In the previous chapters, you implemented search algorithms that work with any comparable type and sorting algorithms that handle integers, strings, and custom objects equally well. You've been using Swift's most powerful feature all along—generics. Now it's time to understand how they work and why they enable the data structures you'll build throughout this book.
+In the previous chapters, you implemented search algorithms that work with any comparable type and sorting algorithms that handle integers, strings, and custom objects equally well. In [Chapter 6](06-recursion.md), you created `ListNode<T>` and `TreeNode<T>` structures that work with any type. You've been using Swift's most powerful feature all along—[generics](glossary#generic). Now it's time to understand how they work.
 
-Without [generics](glossary#generic), you'd need separate implementations of every data structure for every type. A linked list for integers. Another for strings. Another for custom objects. Generics solve this problem by allowing you to write one implementation that works with any type while maintaining complete type safety.
+Without generics, you'd need separate implementations of every data structure for every type. A linked list for integers. Another for strings. Another for custom objects. Generics solve this problem by allowing you to write one implementation that works with any type while maintaining complete type safety.
 
 ## The code duplication problem
 
-Consider building a queue system for your application. You might start with a queue for processing user names:
+In Chapter 6, you saw `ListNode<T>` as a generic structure. But what if Swift didn't have generics? You'd need separate implementations for each type.
+
+Here's a linked list node for integers:
 
 ```swift
-// Queue implementation for strings only
-class StringQueue {
-    private var items: [String] = []
+// Linked list node for integers only
+class IntListNode {
+    var value: Int
+    var next: IntListNode?
 
-    func enqueue(_ item: String) {
-        items.append(item)
-    }
-
-    func dequeue() -> String? {
-        return items.isEmpty ? nil : items.removeFirst()
+    init(value: Int, next: IntListNode? = nil) {
+        self.value = value
+        self.next = next
     }
 }
 ```
 
-This works perfectly for strings. But when you need to queue integers for task processing, you face a choice: copy the entire class and change the type, or find a better solution.
+This works for integers. But when you need to create a linked list of strings, you'd have to duplicate the entire class:
 
 ```swift
-// Duplicate implementation for integers
-class IntQueue {
-    private var items: [Int] = []
+// Duplicate implementation for strings
+class StringListNode {
+    var value: String
+    var next: StringListNode?
 
-    func enqueue(_ item: Int) {
-        items.append(item)
-    }
-
-    func dequeue() -> Int? {
-        return items.isEmpty ? nil : items.removeFirst()
+    init(value: String, next: StringListNode? = nil) {
+        self.value = value
+        self.next = next
     }
 }
 ```
 
-The code is nearly identical—only the type differs. This duplication creates maintenance problems. Bug fixes must be applied to every version. Updates to one implementation might be forgotten in others. Every new type requires copying hundreds of lines of code.
+The code is nearly identical—only the type differs. This duplication creates maintenance problems. Bug fixes must be applied to every version. Updates to one implementation might be forgotten in others. Every new type requires copying the same logic.
 
 ## Generic types solve duplication
 
-Generics eliminate duplication by using type parameters—placeholders for actual types specified when you create an instance:
+Generics eliminate duplication by using type parameters—placeholders for actual types specified when you create an instance. Here's the generic version from Chapter 6:
 
 ```swift
-// Single generic queue implementation works with any type
-class Queue<Element> {
-    private var items: [Element] = []
+// Single generic implementation works with any type
+class ListNode<T> {
+    var value: T
+    var next: ListNode<T>?
 
-    func enqueue(_ item: Element) {
-        items.append(item)
-    }
-
-    func dequeue() -> Element? {
-        return items.isEmpty ? nil : items.removeFirst()
+    init(value: T, next: ListNode<T>? = nil) {
+        self.value = value
+        self.next = next
     }
 }
 
 // Same implementation, different types
-let stringQueue = Queue<String>()
-stringQueue.enqueue("Alice")
-
-let intQueue = Queue<Int>()
-intQueue.enqueue(42)
+let intNode = ListNode(value: 42)
+let stringNode = ListNode(value: "Hello")
 ```
 
-One implementation maintains type safety across all uses. Swift ensures you can't accidentally mix types—trying to enqueue an integer into a string queue produces a compile-time error. You maintain type safety while eliminating duplication.
+One implementation maintains type safety across all uses. Swift ensures you can't accidentally mix types—trying to set an integer node's `next` to a string node produces a compile-time error. You maintain type safety while eliminating duplication.
+
+The `<T>` syntax defines a type parameter—a placeholder that gets replaced with an actual type when you create an instance. When you write `ListNode<Int>`, Swift replaces every `T` with `Int`. When you write `ListNode<String>`, it replaces every `T` with `String`.
 
 ## You've already used generics
 
-Every search and sorting algorithm from previous chapters uses generics. Let's examine what you've been writing:
+Every search and sorting algorithm from previous chapters uses generics. Let's examine what you've been writing.
 
 ### Generic search from Chapter 3
 
@@ -130,7 +125,7 @@ extension Array where Element: Comparable {
 ["dog", "cat", "bird"].bubbleSort()  // ["bird", "cat", "dog"]
 ```
 
-The `where Element: Comparable` clause constrains the generic `Element` type to types that support comparison operators. This allows using `>` and `<` in the sorting logic.
+The `where Element: Comparable` clause constrains the generic `Element` type to types that support comparison operators. This allows using `>` in the sorting logic.
 
 ## Type parameter naming
 
@@ -138,9 +133,9 @@ Generic types use angle brackets to define type parameters. While `T` is common,
 
 ```swift
 // All equivalent - T is not a keyword
-struct Container<T> { var item: T }
-struct Container<Element> { var item: Element }
-struct Container<Value> { var item: Value }
+class ListNode<T> { var value: T }
+class ListNode<Element> { var value: Element }
+class ListNode<Value> { var value: Value }
 ```
 
 Swift's standard library uses descriptive names:
@@ -148,10 +143,15 @@ Swift's standard library uses descriptive names:
 - `Dictionary<Key, Value>` - key-value pairs use descriptive names
 - `Optional<Wrapped>` - the wrapped value inside an Optional
 
-For this book's data structures:
-- Use `Element` for collections (linked lists, stacks, queues)
-- Use `T` for simple generic types
-- Use descriptive names when clarity matters (Key, Value)
+**Common naming conventions:**
+
+| Convention | Usage | Example |
+|------------|-------|---------|
+| `T` | Single generic parameter | `class ListNode<T>` |
+| `Element` | Collection types | `Array<Element>` |
+| `Key`, `Value` | Dictionary-like types | `Dictionary<Key, Value>` |
+
+For the data structures you'll build in upcoming chapters, use `Element` for collections and `T` for simple generic types.
 
 ## Protocol constraints
 
@@ -172,6 +172,8 @@ func areEqual<T: Equatable>(_ first: T, _ second: T) -> Bool {
     return first == second
 }
 ```
+
+The constraint `T: Equatable` means "T can be any type, as long as it conforms to the Equatable protocol."
 
 ### Equatable protocol
 
@@ -223,7 +225,7 @@ Types conforming to Comparable automatically conform to Equatable, since orderin
 
 ### Hashable protocol
 
-[Hashable](glossary#hashable) enables types to be used in Sets and as Dictionary keys. You'll use this extensively in Chapter 14 (Hash Tables) and Chapter 12 (Graphs):
+[Hashable](glossary#hashable) enables types to be used in Sets and as Dictionary keys. While you haven't built hash tables yet, you can use Swift's built-in Set and Dictionary types:
 
 ```swift
 // Generic function requiring Hashable for Set usage
@@ -243,7 +245,7 @@ func removeDuplicates<T: Hashable>(_ array: [T]) -> [T] {
 removeDuplicates([1, 2, 2, 3, 1, 4])  // [1, 2, 3, 4]
 ```
 
-Types conforming to Hashable automatically conform to Equatable.
+Types conforming to Hashable automatically conform to Equatable. You'll learn how hash tables work in Chapter 14.
 
 ## Where clauses for conditional functionality
 
@@ -269,7 +271,7 @@ extension Array where Element: Comparable {
 [1, 3, 2, 4].isSorted()  // false
 ```
 
-You can specify multiple constraints:
+You can specify multiple constraints using the `&` operator:
 
 ```swift
 // Extension requiring both Comparable and Hashable
@@ -283,9 +285,9 @@ extension Array where Element: Comparable & Hashable {
 [3, 1, 2, 1, 3, 2].sortedUnique()  // [1, 2, 3]
 ```
 
-## Building generic data structures
+## Understanding recursive generic types
 
-Generic types become essential when building recursive data structures. In Chapter 6, you saw why linked lists and trees require classes rather than structs:
+In Chapter 6, you learned why recursive data structures require classes rather than structs. Let's examine how generics work with recursive types:
 
 ```swift
 // Generic linked list node from Chapter 6
@@ -298,43 +300,41 @@ class ListNode<T> {
         self.next = next
     }
 }
-
-// Works with any type
-let intList = ListNode(value: 1, next: ListNode(value: 2))
-let stringList = ListNode(value: "first", next: ListNode(value: "second"))
 ```
 
-The `<T>` parameter makes this node work with any type. When you create `ListNode<Int>`, Swift generates specialized code for integers. When you create `ListNode<String>`, it generates specialized code for strings—all from one generic definition.
+Notice how the generic parameter flows through the entire structure. `ListNode<T>` contains a property of type `ListNode<T>?`. When you create `ListNode<Int>`, Swift generates specialized code where both `value` is `Int` and `next` is `ListNode<Int>?`. The type safety extends through the entire recursive structure.
 
 ### Generic tree nodes
+
+The same principle applies to tree structures from Chapter 6:
 
 ```swift
 // Generic binary tree node from Chapter 6
 class TreeNode<T> {
-    var value: T
+    var value: T?
     var left: TreeNode<T>?
     var right: TreeNode<T>?
 
-    init(value: T) {
+    init(value: T?) {
         self.value = value
     }
 }
 
 // Recursive traversal works with any type
 func printTree<T>(_ node: TreeNode<T>?) {
-    guard let node = node else { return }
+    guard let node = node, let value = node.value else { return }
 
     printTree(node.left)
-    print(node.value)
+    print(value)
     printTree(node.right)
 }
 ```
 
-Notice how the generic parameter flows through the entire structure. `TreeNode<T>` contains properties of type `TreeNode<T>?`, creating a type-safe recursive structure.
+The generic parameter `T` appears throughout the structure. Each `TreeNode<T>` has left and right children of the same type—`TreeNode<T>?`. This maintains type consistency through the entire tree.
 
 ## Combining protocol constraints
 
-Many algorithms require multiple capabilities. Quicksort from Chapter 5 needs elements that can be compared and swapped:
+Many algorithms require multiple capabilities. Quicksort from Chapter 5 needs elements that can be compared:
 
 ```swift
 // Quicksort requires Comparable for comparisons
@@ -356,7 +356,7 @@ extension Array where Element: Comparable {
         var wallIndex = startIndex
 
         for currentIndex in wallIndex..<pivot {
-            if self[currentIndex] <= self[pivot] {
+            if self[currentIndex] <= self[pivot] {  // Requires Comparable
                 if wallIndex != currentIndex {
                     self.swapAt(currentIndex, wallIndex)
                 }
@@ -380,8 +380,8 @@ The `Comparable` constraint enables `<=` comparison in the partitioning logic. T
 Generics in Swift have zero runtime overhead. The compiler generates specialized code for each concrete type you use—a process called monomorphization. When you write:
 
 ```swift
-let intQueue = Queue<Int>()
-let stringQueue = Queue<String>()
+let intNode = ListNode<Int>(value: 42)
+let stringNode = ListNode<String>(value: "Hello")
 ```
 
 The compiler generates two separate, optimized implementations—one for Int, one for String. Your generic code runs as fast as if you had written type-specific versions manually, but you only maintain one implementation.
@@ -390,14 +390,18 @@ The compiler generates two separate, optimized implementations—one for Int, on
 
 Understanding generics prepares you for the data structures in upcoming chapters. Each uses generics to provide type-safe, reusable implementations:
 
-**Chapter 9: Linked Lists** - Generic nodes linking to nodes of the same type
-**Chapter 10: Stacks and Queues** - Generic collections you explored in this chapter
-**Chapter 11: Binary Search Trees** - Generic tree nodes with comparable elements
+**Chapter 9: Linked Lists** - Build complete linked list structures using the `ListNode<T>` pattern from Chapter 6
+
+**Chapter 10: Stacks and Queues** - Generic collections with constrained element types
+
+**Chapter 11: Binary Search Trees** - Extend the `TreeNode<T>` structure with search and insertion algorithms
+
 **Chapter 12: Graphs** - Generic vertices and edges working with any type
+
 **Chapter 13: Tries** - Generic prefix trees for efficient string operations
-**Chapter 14: Hash Tables** - Generic key-value storage requiring Hashable
+
+**Chapter 14: Hash Tables** - Generic key-value storage requiring Hashable elements
+
 **Chapter 15: Heaps** - Generic priority queues with comparable elements
 
-Every data structure in this book uses the same generic patterns you've learned here. The search and sorting algorithms from Chapters 3-5 demonstrated generics in action. Now you understand the mechanism behind that flexibility—type parameters, protocol constraints, and where clauses working together to enable reusable, type-safe code.
-
-When you implement a linked list in Chapter 9, you'll write `LinkedList<Element>` once and use it with any type. When you build a binary search tree in Chapter 11, `TreeNode<T: Comparable>` will work with integers, strings, or custom types. This is the power of generics—write once, use everywhere, with complete type safety and zero performance penalty.
+Every data structure in this book uses the same generic patterns you've learned here. The search and sorting algorithms from Chapters 3-5 demonstrated generics in action. The recursive structures from Chapter 6 showed how generics work with self-referential types. Now you understand the mechanism—type parameters, protocol constraints, and where clauses working together to enable reusable, type-safe code with zero performance penalty.
