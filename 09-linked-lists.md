@@ -8,230 +8,181 @@ description: "Implement singly and doubly linked lists"
   <a href="index">Table of Contents</a>
 </div>
 
+# Linked Lists
 
-# Linked lists
+In [Chapter 6](06-recursion.md), you encountered linked list nodes as self-referential structures perfect for recursive algorithms. In [Chapter 8](08-performance-analysis.md), you learned that different data structures offer different performance trade-offs. Now it's time to build a complete [linked list](glossary#linked-list) implementation—a fundamental data structure that trades random access speed for insertion and deletion flexibility.
 
-A [linked list](glossary#linked-list) is a basic data structure that provides a way to associate related content. At a basic level, linked lists provide the same functionality as an Array. That is, the ability to insert, retrieve, update and remove related items. However, if properly implemented, linked lists can provide enhanced flexibility. Since objects are managed independently (instead of contiguously - as with an [array](glossary#array)), lists can prove useful when dealing with large datasets and complex algorithms.
+A linked list provides similar functionality to an [array](glossary#array)—the ability to insert, retrieve, update, and remove elements. However, because elements are managed independently (scattered in memory) rather than contiguously (in a single block), linked lists excel when dealing with frequent modifications to large datasets.
 
-## Arrays vs linked lists: Understanding the trade-offs
+## Arrays vs linked lists
 
-Before diving into implementation, it's important to understand when you'd choose a linked list over Swift's built-in Array, and vice versa.
+Before implementing linked lists, understand when to choose them over Swift's built-in Array.
 
 ### Memory organization
 
-**Arrays: Contiguous memory**
+**Arrays** store elements in contiguous memory—a single continuous block. This enables fast random access (base address + index × size = element location) but requires copying the entire array to a larger block when capacity is exceeded.
 
-[diagram: Array memory layout showing contiguous blocks]
-
-- Elements are stored in a single continuous block
-- Fast random access (just calculate: base address + index × size)
-- Requires resizing when full (copy entire array to larger space)
-
-**Linked lists: Non-contiguous memory**
-
-[diagram: Linked list showing nodes scattered in memory with pointer connections]
-
-- Elements can be anywhere in memory
-- Each element points to the next (and previous, in doubly linked lists)
-- No resizing needed—just allocate new nodes as needed
+**Linked lists** store elements anywhere in memory, with each element pointing to the next (and optionally previous). No resizing needed—just allocate new nodes as needed. The cost is slower access by index since you must traverse from the beginning.
 
 ### Performance comparison
 
-| Operation | Array | Linked List | Winner |
-|-----------|-------|-------------|--------|
-| Access by index | O(1) | O(n) | Array |
-| Insert at beginning | O(n) | O(1) | Linked List |
-| Insert at end | O(1)* | O(1)** | Tie |
-| Insert in middle | O(n) | O(1)*** | Linked List |
-| Remove from beginning | O(n) | O(1) | Linked List |
-| Remove from end | O(1) | O(1)** | Tie |
-| Remove from middle | O(n) | O(1)*** | Linked List |
-| Search for value | O(n) | O(n) | Tie |
-| Memory overhead | Low | High | Array |
+| Operation | Array | Linked List |
+|-----------|-------|-------------|
+| Access by index | O(1) | O(n) |
+| Insert at beginning | O(n) | O(1) |
+| Insert at end | O(1)* | O(1)** |
+| Remove from beginning | O(n) | O(1) |
+| Search for value | O(n) | O(n) |
 
 \* Amortized O(1) with capacity doubling
-\** If you maintain a tail pointer
-\*** Once you've found the position (finding is still O(n))
+\** If maintaining a tail pointer
 
-### When to use linked lists
+### When to use each
 
-**Choose linked lists when:**
+**Use linked lists when:**
+- Frequent insertions/deletions at beginning or middle
+- Unknown or highly dynamic size
+- Sequential-only access patterns
+- Building other data structures ([Stack](glossary#stack), [Queue](glossary#queue), [Hash Table](glossary#hash-table) with chaining)
 
-1. **Frequent insertions/deletions at the beginning**
-   ```swift
-   // Implementing an undo/redo stack where items are added at the front
-   class UndoManager {
-       private var actions = LinkedList<Action>()
+**Use arrays when:**
+- Frequent random access by index
+- Mostly reading data, few modifications
+- Small datasets (< 100 elements)
+- Memory efficiency critical (arrays have lower overhead)
+- Working with Swift's functional methods (map, filter, reduce)
 
-       func recordAction(_ action: Action) {
-           actions.insert(action, at: 0)  // O(1) with linked list
-       }
-   }
-   ```
+**Real-world examples:**
+- Linked lists: UIKit responder chain, browser navigation history, undo/redo systems
+- Arrays: UITableView data sources, configuration settings, most app data models
 
-2. **Unknown or dynamic size with frequent modifications**
-   ```swift
-   // Real-time data stream processing
-   class MessageQueue {
-       private var messages = LinkedList<Message>()
+## The node structure
 
-       func enqueue(_ message: Message) {
-           messages.append(element: message)  // No resizing needed
-       }
-   }
-   ```
-
-3. **You never need random access**
-   ```swift
-   // Processing items sequentially
-   var current = list.head
-   while current != nil {
-       process(current!.key!)
-       current = current?.next
-   }
-   ```
-
-4. **Building other data structures**
-   - Implementing your own [Stack](glossary#stack) or [Queue](glossary#queue)
-   - Creating a [Hash Table](glossary#hash-table) with chaining for collisions
-   - Building a Graph with adjacency lists
-
-### When to use arrays
-
-**Choose arrays when:**
-
-1. **Frequent random access by index**
-   ```swift
-   // Accessing student records by ID
-   let student = students[42]  // O(1) with array
-   ```
-
-2. **Mostly reading data, few modifications**
-   ```swift
-   // Configuration settings loaded once
-   let settings = ["theme": "dark", "notifications": true]
-   ```
-
-3. **Memory efficiency matters**
-   - Arrays: Just store the elements
-   - Linked lists: Store elements + 1-2 pointers per element (8-16 extra bytes)
-
-4. **Working with Swift collections ecosystem**
-   ```swift
-   // Arrays work seamlessly with Swift's functional methods
-   let doubled = numbers.map { $0 * 2 }
-   let evens = numbers.filter { $0 % 2 == 0 }
-   ```
-
-5. **Small datasets**
-   - For < 100 elements, array overhead is negligible
-   - Modern CPUs are optimized for contiguous memory access
-
-### Real-world iOS examples
-
-**Linked lists in iOS:**
-- **UIKit responder chain**: Each view has a `next` pointer forming a linked list
-- **Core Data fault handling**: Lazy loading of related objects
-- **Custom navigation history**: Browser-like back/forward functionality
-
-**Arrays in iOS:**
-- **UITableView/UICollectionView data sources**: Fast random access by index path
-- **UserDefaults**: Storing configuration arrays
-- **Most app data models**: Contact lists, photo galleries, etc.
-
-### Swift's native support
-
-**Important:** Swift's standard library doesn't include a built-in LinkedList type because:
-1. Arrays are faster for most use cases
-2. Modern CPU cache optimization favors contiguous memory
-3. Arrays cover 95% of use cases efficiently
-
-However, understanding linked lists is crucial for:
-- Implementing other data structures (stacks, queues, graphs)
-- Technical interviews
-- Situations where insertion/deletion performance is critical
-- Understanding how other languages (like Java's LinkedList) work
-
-## How it works
-
-In its basic form, a linked list is comprised of a key and indicator. The key represents the data you would like to store such as a String or scalar value. Typically represented by a pointer, the indicator stores the location (e.g. memory address) of where the next item can be found. Using this technique, you can chain seemingly independent objects together.
-
-[diagram: A linked list with three keys and three indicators]
-
-## The data structure
-
-Here's an example of a "doubly" linked list structure written in Swift. The term doubly refers to the idea that the structure contains two pointers that refer to the previous and next items. With generics applied, the structure can also store any type and also supports optional nil values. The concept of combining keys and pointers to create structures not only applies to linked lists, but to other types like tries, queues and graphs.
+The production implementation uses `LLNode<T>` to represent individual nodes in a doubly-linked list:
 
 ```swift
-//linked list structure
-class LLNode<T> {
-    var key: T?
+// Generic linked list node - doubly-linked with previous and next pointers
+public class LLNode<T> {
+    var tvalue: T?
     var next: LLNode?
     var previous: LLNode?
+
+    public init() {}
 }
 ```
 
-## Using optionals
+This structure supports both singly-linked lists (using only `next`) and doubly-linked lists (using both `next` and `previous`). The generic type `T` allows storing any type, and optional values enable representing empty nodes and list boundaries.
 
-When creating algorithms its good practice to set your class properties to nil before they are used. Like with app development, nil can be used to determine missing values or to predict the end of a list. Swift helps enforce this best-practice at compile time through a paradigm called optionals. For example, the function printAllKeys employs an optional (e.g., current) to iterate through linked list items.
+## Building the LinkedList class
 
-```swift
-//print keys for the class
-func printAllKeys() {
-    var current: LLNode? = head
-
-    while current != nil {
-        print("link item is: \(String(describing: current?.key!))")
-        current = current?.next
-    }
-}
-```
-
-## Adding links
-
-Here's the algorithm that builds a doubly linked list. The append method creates a new item and adds it to the end of the list. The Swift generic type constraint `<T: Equatable>` is also defined to ensure instances conform to a specific protocol.
+The `LinkedList<T>` class manages a collection of nodes:
 
 ```swift
-public class LinkedList<T: Equatable> {
-    //new instance
+// Generic linked list implementation
+public class LinkedList<T> {
     private var head = LLNode<T>()
+    private var counter: Int = 0
 
-    //add item
-    func append(element key: T) {
-        guard head.key != nil else {
-            head.key = key
-            return
-        }
-
-        var current: LLNode? = head
-
-        //position node
-        while current != nil {
-            if current?.next == nil {
-                let childToUse = LLNode<T>()
-
-                childToUse.key = key
-                childToUse.previous = current
-                current!.next = childToUse
-                break
-            } else {
-                current = current?.next
-            }
-        } //end while
+    // Number of elements in list - O(1)
+    var count: Int {
+        return counter
     }
-} //end class
+
+    // Check if list is empty - O(1)
+    public func isEmpty() -> Bool {
+        return counter == 0 || head.tvalue == nil
+    }
+}
 ```
 
-## Removing links
+The `head` node represents the beginning of the list. The `counter` tracks the number of elements for O(1) count operations.
 
-Conversely, here's an example of removing items from a list. Removing links not only involves reclaiming memory (for the deleted item), but also reassigning links so the chain remains unbroken.
+## Appending elements
+
+Adding elements to the end of a linked list requires traversing to the last node:
 
 ```swift
-//remove at specific index
-func remove(at index: Int) {
-    //check empty conditions
-    if ((index < 0) || (index > (self.count - 1)) || (head.key == nil)) {
-        print("link index does not exist..")
+// Add element to end of list - O(n)
+public func append(_ tvalue: T) {
+    // Handle empty list
+    guard head.tvalue != nil else {
+        head.tvalue = tvalue
+        counter += 1
+        return
+    }
+
+    var current: LLNode = head
+
+    // Traverse to end of list
+    while let item = current.next {
+        current = item
+    }
+
+    // Create and append new node
+    let childToUse = LLNode<T>()
+    childToUse.tvalue = tvalue
+    childToUse.previous = current
+    current.next = childToUse
+
+    counter += 1
+}
+```
+
+This operation is O(n) because we must traverse the entire list to find the end. A production implementation might maintain a `tail` pointer to make appending O(1).
+
+## Finding elements
+
+Accessing elements by index requires linear traversal:
+
+```swift
+// Find element at specific index - O(n)
+public func find(at index: Int) -> LLNode<T>? {
+    // Validate index
+    if index < 0 || index > (count - 1) || head.tvalue == nil {
+        return nil
+    }
+
+    var current: LLNode<T> = head
+    var x: Int = 0
+
+    // Traverse to index
+    while index != x {
+        guard let nextNode = current.next else {
+            return nil
+        }
+        current = nextNode
+        x += 1
+    }
+
+    return current
+}
+
+// Subscript support for convenient access
+public subscript(index: Int) -> LLNode<T>? {
+    get {
+        return find(at: index)
+    }
+}
+```
+
+Unlike arrays where `array[5]` is instant, linked lists must walk through nodes 0, 1, 2, 3, 4 to reach index 5. This makes random access inefficient.
+
+## Inserting elements
+
+Insertion at a specific position involves adjusting pointer references:
+
+```swift
+// Insert element at specific index - O(n)
+public func insert(_ tvalue: T, at index: Int) {
+    // Validate and handle empty list
+    guard index >= 0 && index <= count - 1 else {
+        print("Index out of bounds")
+        return
+    }
+
+    guard head.tvalue != nil else {
+        head.tvalue = tvalue
+        counter += 1
         return
     }
 
@@ -239,134 +190,142 @@ func remove(at index: Int) {
     var trailer: LLNode<T>?
     var listIndex: Int = 0
 
-    //determine if the removal is at the head
-    if index == 0 {
-        current = current?.next
-        head = current!
-        return
-    }
-
-    //iterate through remaining items
+    // Find insertion point
     while current != nil {
-        if listIndex == index {
-            //redirect the trailer and next pointers
-            trailer!.next = current?.next
-            current = nil
+        if index == listIndex {
+            let childToUse = LLNode<T>()
+            childToUse.tvalue = tvalue
+
+            // Link new node into chain
+            childToUse.next = current
+            childToUse.previous = trailer
+
+            if let linktrailer = trailer {
+                linktrailer.next = childToUse
+            }
+
+            if let linkCurrent = current {
+                linkCurrent.previous = childToUse
+            }
+
+            // Update head if inserting at beginning
+            if index == 0 {
+                head = childToUse
+            }
+
             break
         }
 
-        //update assignments
         trailer = current
         current = current?.next
         listIndex += 1
     }
+
+    counter += 1
 }
 ```
 
-## Counting links
+Once at the correct position, insertion is O(1)—just adjust a few pointers. The O(n) cost comes from finding the position.
 
-It can also be convenient to count link items. In Swift, this can be expressed as a computed property. For example, the following technique will allow the class instance to use a dot notation and is calculated in constant time - O(1).
+## Removing elements
+
+Removal requires relinking nodes to skip the deleted element:
 
 ```swift
-//the number of items - O(1)
-var count: Int {
-    return counter
-}
+// Remove element at specific index - O(n)
+public func remove(at index: Int) {
+    guard head.tvalue != nil else { return }
 
-//empty list check
-func isEmpty() -> Bool {
-    return counter == 0 || head.key == nil
-}
+    // Handle removing first element
+    if index == 0 {
+        if let item = head.next {
+            head = item
+            counter -= 1
+        } else {
+            head.tvalue = nil
+            counter = 0
+        }
+        return
+    }
 
-//add link item
-func append(element key: T) {
-    // ...
-    counter += 1
-}
+    var current: LLNode<T>? = head
+    var trailer: LLNode<T>?
+    var nodeindex: Int = 0
 
-//insert at specific index
-func insert(_ key: T, at index: Int) {
-    // ...
-    counter += 1
-}
+    // Find node to remove
+    while let item = current {
+        if nodeindex == index {
+            // Bypass removed node in chain
+            if let tnode = trailer, let cnode = current {
+                tnode.next = cnode.next
+            }
+            current = nil
+            break
+        }
 
-//remove at specific index
-func remove(at index: Int) {
-    // ...
+        trailer = current
+        current = item.next
+        nodeindex += 1
+    }
+
     counter -= 1
 }
 ```
 
-## Finding links
+Removing from the beginning is O(1), but removing from elsewhere requires O(n) traversal to find the node.
 
-Finding links works similar to appending elements. To identify a found object, the algorithm must cycle through the entire collection. This occurs as a linear-time based operation. To ensure the function can return a nil result if no elements are found, the LLNode return value is declared as an optional:
+## Traversing the list
+
+Processing all elements uses iteration:
 
 ```swift
-//obtain link at a specific index
-func find(at index: Int) -> LLNode<T>? {
-    //check empty conditions
-    if ((index < 0) || (index > (self.count - 1)) || (head.key == nil)) {
-        return nil
-    } else {
-        var current: LLNode<T> = head
-        var x: Int = 0
+// Print all values in list - O(n)
+public func printValues() {
+    var current: LLNode? = head
 
-        //cycle through elements
-        while (index != x) {
-            current = current.next!
-            x += 1
+    while current != nil {
+        if let item = current, let tvalue = item.tvalue {
+            print("link item is: \(tvalue)")
         }
-
-        return current
+        current = current?.next
     }
 }
 ```
 
-To enhance the linked list class, retrieving elements can also be obtained by subscript:
-
-```swift
-//find subscript shortcut
-subscript(index: Int) -> LLNode<T>? {
-    get {
-        return find(at: index)
-    }
-}
-
-//test find operation
-var list = LinkedList<Int>()
-// ...
-let newnode: LLNode<Int>? = list[8]
-```
+This pattern—using a `current` pointer that advances through the list—is fundamental to all linked list operations.
 
 ## Summary
 
-Linked lists are fundamental data structures that trade random access speed for insertion/deletion flexibility:
+Linked lists are fundamental data structures that trade random access speed for insertion and deletion flexibility:
 
 **Key characteristics:**
-- **Non-contiguous memory**: Elements scattered with pointers connecting them
-- **O(1) insertion/deletion**: Once you're at the position
-- **O(n) access by index**: Must traverse from the beginning
-- **Higher memory overhead**: Extra pointer(s) per element
+- Non-contiguous memory with pointer-connected elements
+- O(1) insertion/deletion at beginning (once position is known)
+- O(n) access by index (must traverse from head)
+- Higher memory overhead (extra pointers per element)
 
-**When to use linked lists:**
-- Frequent insertions/deletions at beginning or middle
-- Building other data structures (stacks, queues, graphs)
-- Dynamic size with constant modifications
-- Sequential-only access patterns
+**Performance comparison with arrays:**
+- Arrays win: Random access, small datasets, memory efficiency
+- Linked lists win: Frequent insertions/deletions, unknown size, sequential access
 
-**When to use arrays instead:**
-- Need random access by index
-- Small datasets (< 100 elements)
-- Mostly reading data
-- Working with Swift's functional methods
-- Memory efficiency is critical
+**When to choose linked lists:**
+- Building stacks, queues, or hash tables
+- Implementing undo/redo systems
+- Managing dynamic collections with frequent modifications
+- Sequential-only processing
 
-**Real-world applications:**
-- UIKit responder chain
-- Browser back/forward navigation
-- Undo/redo functionality
-- Music playlist management
-- Hash table collision handling (chaining)
+**Implementation highlights:**
+- `LLNode<T>` provides doubly-linked node structure
+- `LinkedList<T>` manages collection with head pointer and counter
+- Operations: append O(n), find O(n), insert O(n), remove O(n)
+- Maintaining a tail pointer can optimize append to O(1)
 
-Understanding linked lists is essential not just for implementing them directly, but for building more complex data structures and understanding performance trade-offs in your Swift applications. In the next chapter, we'll see how linked lists serve as the foundation for stacks and queues.
+Understanding linked lists is essential for implementing more complex data structures and recognizing when their trade-offs benefit your application. In Chapter 10, you'll see how linked lists serve as the foundation for stacks and queues.
 
+<div class="bottom-nav">
+  <div class="nav-container">
+    <a href="08-performance-analysis" class="nav-link prev">← Chapter 8: Analyzing Algorithms</a>
+    <a href="index" class="nav-link toc">Table of Contents</a>
+    <a href="10-stacks-and-queues" class="nav-link next">Chapter 10: Stacks and Queues →</a>
+  </div>
+</div>
