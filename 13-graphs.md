@@ -239,7 +239,7 @@ BFS has the following complexity from [Chapter 8](08-performance-analysis.md):
 - **Time Complexity**: O(V + E) where V is the number of vertices and E is the number of edges
 - **Space Complexity**: O(V) for storing visited vertices and the queue
 
-## Finding shortest paths with Dijkstra's algorithm
+## Shortest paths
 
 While BFS finds the shortest path in terms of the number of edges (hops), many real-world problems require finding the shortest path when edges have different weights or costs. This is where [Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) becomes essential.
 
