@@ -11,7 +11,11 @@ description: "Implement priority queues with heap data structures"
 
 # Heaps
 
-[Heaps](glossary#heap) are specialized [tree](glossary#tree)-based data structures that maintain a specific ordering property, making them ideal for [priority queues](glossary#priority-queue) and efficient sorting [algorithms](glossary#algorithm). Unlike [binary search trees](glossary#binary-search-tree-bst) that maintain left-right ordering, heaps focus on parent-child relationships to ensure the most important element is always accessible in constant time. In this chapter, we'll explore heap fundamentals and build a complete heap implementation in Swift.
+[Heaps](glossary#heap) are specialized [tree](glossary#tree)-based data structures that maintain a specific ordering property, making them ideal for [priority queues](glossary#priority-queue) and efficient sorting [algorithms](glossary#algorithm). Unlike [binary search trees](glossary#binary-search-tree-bst) from Chapters 11-12 that maintain left-right ordering, heaps focus on parent-child relationships to ensure the most important element is always accessible in constant time.
+
+Heaps combine concepts from throughout this book. They use generic types (Chapter 7) with Comparable constraints, achieve O(log n) operations (Chapter 8), can be implemented as specialized queues (Chapter 10), and dramatically optimize graph algorithms like Dijkstra's (Chapter 13). The heap property—parent nodes are always more extreme than their children—creates a complete binary tree that's both simple to implement and remarkably efficient.
+
+In this chapter, we'll explore heap fundamentals and build a complete heap implementation in Swift.
 
 ## Understanding heaps
 
@@ -52,6 +56,7 @@ For any element at index `i`:
 Our heap implementation focuses on performance, type safety, and Swift best practices:
 
 ```swift
+// Generic heap structure using Comparable for flexible priority ordering - O(1) peek
 public enum HeapType {
     case minHeap
     case maxHeap
@@ -93,6 +98,7 @@ public struct Heap<Element: Comparable> {
 ### Index helper methods
 
 ```swift
+// Helper methods for navigating parent-child relationships in array - O(1) index calculations
 extension Heap {
     private func parentIndex(of index: Int) -> Int {
         return (index - 1) / 2
@@ -131,6 +137,7 @@ extension Heap {
 When inserting a new element, we add it to the end of the array and "bubble up" to maintain the heap property:
 
 ```swift
+// Insert element and bubble up to maintain heap property - O(log n)
 extension Heap {
     public mutating func insert(_ element: Element) {
         elements.append(element)
@@ -160,6 +167,7 @@ extension Heap {
 Removing the root element requires moving the last element to the root and "bubbling down":
 
 ```swift
+// Extract root element and bubble down replacement to restore heap property - O(log n)
 extension Heap {
     @discardableResult
     public mutating func extractRoot() -> Element? {
@@ -212,6 +220,7 @@ extension Heap {
 Converting an arbitrary array into a heap using bottom-up approach:
 
 ```swift
+// Build heap from array using bottom-up heapify - O(n) linear time
 extension Heap {
     private mutating func buildHeap() {
         // Start from last non-leaf node and bubble down
@@ -232,6 +241,7 @@ extension Heap {
 Heaps are perfect for implementing priority queues where elements are processed based on priority rather than insertion order:
 
 ```swift
+// Priority queue wrapper using heap for O(log n) enqueue/dequeue operations
 public struct PriorityQueue<Element: Comparable> {
     private var heap: Heap<Element>
 
@@ -267,6 +277,7 @@ public struct PriorityQueue<Element: Comparable> {
 For complex priority logic, create custom comparable types:
 
 ```swift
+// Custom Comparable type for complex priority logic with multiple criteria
 struct Task: Comparable {
     let name: String
     let priority: Int
@@ -303,6 +314,7 @@ while let nextTask = taskQueue.dequeue() {
 Heaps enable an efficient O(n log n) sorting algorithm:
 
 ```swift
+// Heap sort using max heap for ascending order - O(n log n) time, O(n) space
 extension Array where Element: Comparable {
     public mutating func heapSort() {
         // Build max heap
@@ -332,6 +344,7 @@ print(sorted) // [11, 12, 22, 25, 34, 64, 90]
 
 ### 1. Event scheduler
 ```swift
+// Event scheduler using min-heap for chronological processing
 struct Event: Comparable {
     let name: String
     let scheduledTime: Date
@@ -367,6 +380,7 @@ class EventScheduler {
 Using heaps dramatically improves pathfinding performance:
 
 ```swift
+// Dijkstra's algorithm optimized with min-heap - reduces O(V²) to O((V + E) log V)
 struct PathNode: Comparable {
     let vertex: String
     let distance: Int
@@ -415,6 +429,7 @@ func dijkstra(graph: [String: [(String, Int)]], start: String) -> [String: Int] 
 
 ### 3. Top-K elements
 ```swift
+// Find K largest elements using min-heap - O(n log k) time, O(k) space
 extension Array where Element: Comparable {
     func topKLargest(_ k: Int) -> [Element] {
         guard k > 0 && k <= count else { return [] }
@@ -472,4 +487,79 @@ print(top3) // [9, 6, 5]
 | Insert | O(n) | O(1) | O(log n) | O(log n) | O(1) avg |
 | Delete Min/Max | O(n) | O(n) | O(log n) | O(log n) | O(n) |
 | Build from Array | O(1) | O(n) | O(n log n) | O(n) | O(n) |
+
+## Summary
+
+Heaps are specialized tree structures optimized for fast access to the minimum or maximum element, making them the foundation for priority queues and efficient sorting.
+
+**Key characteristics:**
+- Complete binary tree stored in an array (no pointer overhead)
+- Heap property: parent nodes are always more extreme than children
+- Min-heap: parent ≤ children, max-heap: parent ≥ children
+- Root always contains the most important element (O(1) access)
+- Array indices provide O(1) parent/child navigation
+- Generic implementation with Comparable constraint (Chapter 7)
+
+**Core operations:**
+- Insert: O(log n) - append to array, bubble up to restore heap property
+- Extract root: O(log n) - replace root with last element, bubble down
+- Peek: O(1) - root is always at index 0
+- Build heap: O(n) - surprisingly linear time despite O(log n) per element
+- Search: O(n) - heaps are not optimized for arbitrary searches
+
+**Implementation highlights:**
+- Struct with value semantics (unlike tree classes from Chapters 11-12)
+- Priority function enables flexible min-heap or max-heap behavior
+- Index relationships: parent = (i-1)/2, left = 2i+1, right = 2i+2
+- Bubble up: swap with parent until heap property satisfied
+- Bubble down: swap with higher-priority child until heap property satisfied
+- Bottom-up heapify: start from last non-leaf, work up to root
+
+**Real-world applications:**
+- Priority queues (task scheduling, event processing)
+- Dijkstra's algorithm optimization (O(V²) → O((V+E) log V))
+- Heap sort (O(n log n) comparison-based sorting)
+- Top-K element problems (min-heap of size k)
+- Operating system scheduling (process priorities)
+- Network routing (shortest path calculations)
+- Streaming algorithms (median maintenance)
+
+**Performance advantages:**
+- O(1) access to min/max vs O(n) for arrays, O(log n) for BSTs
+- O(n) heap construction vs O(n log n) for BSTs
+- Cache-friendly array layout vs pointer-chasing in trees
+- Guaranteed complete tree shape (no balancing needed like Chapter 12)
+- Space efficient: no parent/child pointers required
+
+**When to use heaps:**
+- Need repeated access to minimum or maximum element
+- Implementing priority queues
+- Want O(n) construction from arbitrary array
+- Building heap sort (comparison-based, in-place possible)
+- Optimizing algorithms that repeatedly find extremes
+
+**When to avoid heaps:**
+- Need to search for arbitrary elements (O(n) - use hash tables from Chapter 15)
+- Need sorted traversal (use BSTs from Chapter 11)
+- Need to maintain full ordering (use sorted array with binary search)
+- Elements arrive pre-sorted (use stack/queue from Chapter 10)
+
+**Connections:**
+- Uses generics from Chapter 7 (Comparable protocol constraint)
+- Achieves O(log n) performance analyzed in Chapter 8
+- Specializes queue concept from Chapter 10 (priority queue)
+- Related to BST concept from Chapters 11-12 (but different ordering)
+- Optimizes Dijkstra's algorithm from Chapter 13
+- Alternative to hash tables from Chapter 15 for priority-based access
+- Provides O(n log n) sorting (compare to Chapter 5 algorithms)
+
+Understanding heaps is essential for building efficient priority-based systems and optimizing algorithms that repeatedly access extreme elements. The heap property creates a sweet spot between simple arrays and complex trees—fast enough for most priority queue needs, simple enough to implement with just an array. In Chapter 17, you'll learn about dynamic programming, which sometimes uses heaps to efficiently track optimal subproblem solutions.
+
+<div class="bottom-nav">
+  <div class="nav-container">
+    <a href="15-hash-tables" class="nav-link prev">← Chapter 15: Hash Tables</a>
+    <a href="index" class="nav-link toc">Table of Contents</a>
+    <a href="17-dynamic-programming" class="nav-link next">Chapter 17: Dynamic Programming →</a>
+  </div>
+</div>
 
