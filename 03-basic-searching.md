@@ -30,26 +30,6 @@ Each scenario involves the same fundamental challenge, but the optimal approach 
 
 We've already encountered [linear search](glossary#linear-search) in our Big O chapter, but let's examine it more thoroughly. Linear search represents the most straightforward approach to finding data: check every item until you find what you're looking for.
 
-<div class="mermaid">
-flowchart TD
-    Start([Start: Search for target]) --> GetFirst[Get first element]
-    GetFirst --> Compare{Does element<br/>match target?}
-    Compare -->|Yes| Found[Return index]
-    Compare -->|No| More{More elements<br/>remaining?}
-    More -->|Yes| Next[Move to next element]
-    Next --> Compare
-    More -->|No| NotFound[Return nil]
-    Found --> End([End])
-    NotFound --> End
-
-    style Start fill:#007aff,stroke:#005eb8,stroke-width:2px,color:#fff
-    style End fill:#007aff,stroke:#005eb8,stroke-width:2px,color:#fff
-    style Compare fill:#ff9500,stroke:#cc7700,stroke-width:2px,color:#fff
-    style More fill:#ff9500,stroke:#cc7700,stroke-width:2px,color:#fff
-    style Found fill:#34c759,stroke:#28a745,stroke-width:2px,color:#fff
-    style NotFound fill:#ff3b30,stroke:#cc2e24,stroke-width:2px,color:#fff
-</div>
-
 ```swift
 extension Array where Element: Equatable {
     // Search for an element using linear search, returning its index if found
@@ -134,29 +114,6 @@ Imagine you're looking for "Smith" in a physical phone book. You wouldn't start 
 
 This intuitive process is exactly how binary search works.
 
-<div class="mermaid">
-flowchart TD
-    Start([Start: Search in sorted array]) --> Init[Set left = 0<br/>right = array length - 1]
-    Init --> Check{left ≤ right?}
-    Check -->|No| NotFound[Return nil]
-    Check -->|Yes| CalcMid[Calculate middle index<br/>mid = left + right / 2]
-    CalcMid --> Compare{Compare<br/>array[mid] with target}
-    Compare -->|Equal| Found[Return mid]
-    Compare -->|array[mid] < target| SearchRight[Set left = mid + 1]
-    Compare -->|array[mid] > target| SearchLeft[Set right = mid - 1]
-    SearchRight --> Check
-    SearchLeft --> Check
-    Found --> End([End])
-    NotFound --> End
-
-    style Start fill:#007aff,stroke:#005eb8,stroke-width:2px,color:#fff
-    style End fill:#007aff,stroke:#005eb8,stroke-width:2px,color:#fff
-    style Check fill:#ff9500,stroke:#cc7700,stroke-width:2px,color:#fff
-    style Compare fill:#ff9500,stroke:#cc7700,stroke-width:2px,color:#fff
-    style Found fill:#34c759,stroke:#28a745,stroke-width:2px,color:#fff
-    style NotFound fill:#ff3b30,stroke:#cc2e24,stroke-width:2px,color:#fff
-</div>
-
 ### Binary search implementation
 
 ```swift
@@ -231,29 +188,7 @@ print("Found 750 at index \(foundIndex ?? -1) in \(steps) steps")
 
 ### The power of logarithmic time
 
-The efficiency of binary search becomes remarkable with large datasets. Here's a visualization of how binary search eliminates half the data with each comparison when searching for 17 in a sorted array:
-
-<div class="mermaid">
-graph TB
-    subgraph "Step 1: Check Middle (13)"
-        A["[1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25]<br/>Middle = 13<br/>17 > 13 → Search right half"]
-    end
-
-    subgraph "Step 2: Check Middle (19)"
-        B["[15, 17, 19, 21, 23, 25]<br/>Middle = 19<br/>17 < 19 → Search left half"]
-    end
-
-    subgraph "Step 3: Check Middle (17)"
-        C["[15, 17]<br/>Middle = 17<br/>17 == 17 → Found!"]
-    end
-
-    A --> B
-    B --> C
-
-    style A fill:#ff9500,stroke:#cc7700,stroke-width:2px,color:#fff
-    style B fill:#ff9500,stroke:#cc7700,stroke-width:2px,color:#fff
-    style C fill:#34c759,stroke:#28a745,stroke-width:2px,color:#fff
-</div>
+The efficiency of binary search becomes remarkable with large datasets.
 
 **Note:** These numbers represent the maximum comparisons needed in the worst-case scenario:
 
@@ -294,32 +229,6 @@ if let index = sortedData.binarySearch(for: 22) {
 ## Choosing the right search strategy
 
 The decision between linear and binary search depends on several factors:
-
-<div class="mermaid">
-flowchart TD
-    Start{Is data<br/>sorted?}
-    Start -->|No| SortCost{Can you afford<br/>to sort?}
-    Start -->|Yes| DataSize{Large<br/>dataset?}
-
-    SortCost -->|Yes| Sort[Sort once,<br/>use Binary Search<br/>O log n per search]
-    SortCost -->|No| Linear1[Linear Search<br/>O n per search]
-
-    DataSize -->|Yes| Binary[Binary Search<br/>O log n]
-    DataSize -->|No| Frequency{Frequent<br/>searches?}
-
-    Frequency -->|Yes| Binary2[Binary Search<br/>Worth the overhead]
-    Frequency -->|No| Either[Either algorithm<br/>works fine]
-
-    style Start fill:#007aff,stroke:#005eb8,stroke-width:2px,color:#fff
-    style SortCost fill:#ff9500,stroke:#cc7700,stroke-width:2px,color:#fff
-    style DataSize fill:#ff9500,stroke:#cc7700,stroke-width:2px,color:#fff
-    style Frequency fill:#ff9500,stroke:#cc7700,stroke-width:2px,color:#fff
-    style Sort fill:#34c759,stroke:#28a745,stroke-width:2px,color:#fff
-    style Binary fill:#34c759,stroke:#28a745,stroke-width:2px,color:#fff
-    style Binary2 fill:#34c759,stroke:#28a745,stroke-width:2px,color:#fff
-    style Linear1 fill:#5856d6,stroke:#4644b8,stroke-width:2px,color:#fff
-    style Either fill:#86868b,stroke:#6c6c70,stroke-width:2px,color:#fff
-</div>
 
 ### Use linear search when:
 - **Data is unsorted** and sorting is expensive
