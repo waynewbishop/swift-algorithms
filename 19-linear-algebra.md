@@ -187,6 +187,7 @@ let velocity = direction * speed  // [3.0, 4.0] - exactly 5 units/sec
 Normalization separates direction from magnitude, enabling precise control over movement speeds, force magnitudes, and other directional quantities. Always handle zero vectors properly:
 
 ```swift
+// Check vector magnitude before normalizing to avoid division by zero errors
 // Handle zero vectors to avoid normalization errors
 import Quiver
 
