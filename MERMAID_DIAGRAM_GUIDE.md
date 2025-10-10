@@ -46,14 +46,16 @@ Neutral:                #86868b (Gray)
 
 ### Basic Syntax
 
-Simply add a code block with `mermaid` as the language:
+Use HTML `<div class="mermaid">` tags (not code blocks, as Jekyll wraps them in `<pre><code>` which prevents rendering):
 
-````markdown
-```mermaid
+```markdown
+<div class="mermaid">
 flowchart TD
     Start --> Process --> End
+</div>
 ```
-````
+
+**Important:** Do NOT use ` ```mermaid` code blocks - they won't render on GitHub Pages!
 
 ### Available Diagram Types
 

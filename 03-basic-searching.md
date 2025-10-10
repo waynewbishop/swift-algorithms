@@ -30,7 +30,7 @@ Each scenario involves the same fundamental challenge, but the optimal approach 
 
 We've already encountered [linear search](glossary#linear-search) in our Big O chapter, but let's examine it more thoroughly. Linear search represents the most straightforward approach to finding data: check every item until you find what you're looking for.
 
-```mermaid
+<div class="mermaid">
 flowchart TD
     Start([Start: Search for target]) --> GetFirst[Get first element]
     GetFirst --> Compare{Does element<br/>match target?}
@@ -48,7 +48,7 @@ flowchart TD
     style More fill:#ff9500,stroke:#cc7700,stroke-width:2px,color:#fff
     style Found fill:#34c759,stroke:#28a745,stroke-width:2px,color:#fff
     style NotFound fill:#ff3b30,stroke:#cc2e24,stroke-width:2px,color:#fff
-```
+</div>
 
 ```swift
 extension Array where Element: Equatable {
@@ -134,7 +134,7 @@ Imagine you're looking for "Smith" in a physical phone book. You wouldn't start 
 
 This intuitive process is exactly how binary search works.
 
-```mermaid
+<div class="mermaid">
 flowchart TD
     Start([Start: Search in sorted array]) --> Init[Set left = 0<br/>right = array length - 1]
     Init --> Check{left ≤ right?}
@@ -155,7 +155,7 @@ flowchart TD
     style Compare fill:#ff9500,stroke:#cc7700,stroke-width:2px,color:#fff
     style Found fill:#34c759,stroke:#28a745,stroke-width:2px,color:#fff
     style NotFound fill:#ff3b30,stroke:#cc2e24,stroke-width:2px,color:#fff
-```
+</div>
 
 ### Binary search implementation
 
@@ -233,7 +233,7 @@ print("Found 750 at index \(foundIndex ?? -1) in \(steps) steps")
 
 The efficiency of binary search becomes remarkable with large datasets. Here's a visualization of how binary search eliminates half the data with each comparison when searching for 17 in a sorted array:
 
-```mermaid
+<div class="mermaid">
 graph TB
     subgraph "Step 1: Check Middle (13)"
         A["[1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25]<br/>Middle = 13<br/>17 > 13 → Search right half"]
@@ -253,7 +253,7 @@ graph TB
     style A fill:#ff9500,stroke:#cc7700,stroke-width:2px,color:#fff
     style B fill:#ff9500,stroke:#cc7700,stroke-width:2px,color:#fff
     style C fill:#34c759,stroke:#28a745,stroke-width:2px,color:#fff
-```
+</div>
 
 **Note:** These numbers represent the maximum comparisons needed in the worst-case scenario:
 
@@ -295,7 +295,7 @@ if let index = sortedData.binarySearch(for: 22) {
 
 The decision between linear and binary search depends on several factors:
 
-```mermaid
+<div class="mermaid">
 flowchart TD
     Start{Is data<br/>sorted?}
     Start -->|No| SortCost{Can you afford<br/>to sort?}
@@ -319,7 +319,7 @@ flowchart TD
     style Binary2 fill:#34c759,stroke:#28a745,stroke-width:2px,color:#fff
     style Linear1 fill:#5856d6,stroke:#4644b8,stroke-width:2px,color:#fff
     style Either fill:#86868b,stroke:#6c6c70,stroke-width:2px,color:#fff
-```
+</div>
 
 ### Use linear search when:
 - **Data is unsorted** and sorting is expensive
