@@ -11,7 +11,7 @@ description: "Implement prefix trees for efficient string operations"
 
 # Tries
 
-[Tries](glossary#trie) are [tree](glossary#tree)-based data structures that organize information in a hierarchy. Often pronounced "try", the term comes from the English language verb to retrieve. While most [algorithms](glossary#algorithm) are designed to manipulate generic data, tries are commonly used with Strings.
+[Tries](https://en.wikipedia.org/wiki/Trie) are [tree](https://en.wikipedia.org/wiki/Tree_(data_structure))-based data structures that organize information in a hierarchy. Often pronounced "try", the term comes from the English language verb to retrieve. While most [algorithms](https://en.wikipedia.org/wiki/Algorithm) are designed to manipulate generic data, tries are commonly used with Strings.
 
 Tries specialize the tree structures from [Chapters 11-12](11-binary-search-trees.md) for string operations. While binary search trees store values in nodes and have two children (left/right), tries store characters in nodes and can have many children (one per character in the alphabet). This makes tries exceptionally efficient for prefix-based operations like autocomplete—a task that would require O(n) time with other data structures but takes only O(p) time with tries, where p is the prefix length.
 
@@ -39,7 +39,7 @@ Tries involve building hierarchies, storing phrases along the way until a word i
 
 ## The data structure
 
-Here's an example of a trie data structure written in Swift. In addition to storing a key, the structure also includes a dictionary for identifying its children. Unlike a [binary search tree](glossary#binary-search-tree-bst) from Chapters 11-12, a trie can store an unlimited number of leaf [nodes](glossary#node). The boolean value isEndOfWord will allow us to distinguish words and phrases. Finally, the level will indicate the node's level in the tree hierarchy.
+Here's an example of a trie data structure written in Swift. In addition to storing a key, the structure also includes a dictionary for identifying its children. Unlike a [binary search tree](https://en.wikipedia.org/wiki/Binary_search_tree) from Chapters 11-12, a trie can store an unlimited number of leaf [nodes](https://en.wikipedia.org/wiki/Node_(computer_science)). The boolean value isEndOfWord will allow us to distinguish words and phrases. Finally, the level will indicate the node's level in the tree hierarchy.
 
 ```swift
 // Trie node with dictionary-based children for O(1) character lookup

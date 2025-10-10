@@ -14,11 +14,11 @@ Traditional search systems rely on exact keyword matching. When you search for "
 
 Semantic search solves this problem by understanding the meaning behind words rather than matching their literal characters. Instead of asking "do these words appear in the document," semantic search asks "does this document mean something similar to what I'm looking for." This shift from syntax to semantics enables search systems to find relevant content even when the exact words differ.
 
-The foundation of semantic search rests on a mathematical representation of meaning: [vectors](glossary#vector). By converting text into high-dimensional numerical [arrays](glossary#array), we can use mathematical operations to measure how similar two pieces of text are in meaning. This chapter explores the [algorithms](glossary#algorithm) that power semantic search, from converting text to vectors through finding the most similar documents in a collection.
+The foundation of semantic search rests on a mathematical representation of meaning: [vectors](https://en.wikipedia.org/wiki/Euclidean_vector). By converting text into high-dimensional numerical [arrays](https://en.wikipedia.org/wiki/Array_data_structure), we can use mathematical operations to measure how similar two pieces of text are in meaning. This chapter explores the [algorithms](https://en.wikipedia.org/wiki/Algorithm) that power semantic search, from converting text to vectors through finding the most similar documents in a collection.
 
 ## Introducing word embeddings
 
-Represented as a series of `Dictionary` values, **[word embeddings](glossary#word-embedding)** transform words from symbolic representations into numerical vectors that capture semantic meaning. Rather than treating "king" and "queen" as arbitrary symbols with no mathematical relationship, embeddings represent them as points in a high-dimensional space where their proximity reflects their semantic similarity.
+Represented as a series of `Dictionary` values, **[word embeddings](https://en.wikipedia.org/wiki/Word_embedding)** transform words from symbolic representations into numerical vectors that capture semantic meaning. Rather than treating "king" and "queen" as arbitrary symbols with no mathematical relationship, embeddings represent them as points in a high-dimensional space where their proximity reflects their semantic similarity.
 
 ```swift
 // Word embeddings represent semantic relationships numerically
@@ -61,7 +61,7 @@ GloVe offers embeddings in multiple dimensions. The 50-dimensional version (50d)
 
 You can download GloVe embeddings from the Stanford NLP website at `https://nlp.stanford.edu/projects/glove/`. The download file `glove.6B.zip` contains four versions trained on Wikipedia 2014 and Gigaword 5 (6 billion tokens total). Extract `glove.6B.50d.txt` to begin working with 50-dimensional embeddings.
 
-Loading GloVe embeddings requires parsing the text format into a [dictionary](glossary#dictionary) mapping words to their vector representations:
+Loading GloVe embeddings requires parsing the text format into a [dictionary](https://en.wikipedia.org/wiki/Associative_array) mapping words to their vector representations:
 
 ```swift
 // Parse GloVe text file into word-to-vector dictionary
@@ -269,7 +269,7 @@ These thresholds vary by domain and application. Academic paper search might use
 
 ## Similarity search algorithm
 
-Semantic search requires finding the most similar documents to a query from a collection. Given a query vector and a database of document vectors, we need to identify the top k most similar documents. This is the [k-nearest neighbors](glossary#k-nearest-neighbors-k-nn) problem in high-dimensional space.
+Semantic search requires finding the most similar documents to a query from a collection. Given a query vector and a database of document vectors, we need to identify the top k most similar documents. This is the [k-nearest neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm) problem in high-dimensional space.
 
 The brute-force algorithm compares the query vector against every document vector, computes cosine similarity for each, sorts by similarity, and returns the top k results:
 
@@ -301,7 +301,7 @@ func findSimilar(
 
 The algorithm has three phases. First, it iterates through all n documents in the database, computing cosine similarity between the query and each document. This produces n similarity scores. Second, it sorts these scores in descending order. Third, it selects the top k entries and returns them.
 
-The [time complexity](glossary#time-complexity) is O(n × d + n log n), where n is the number of documents and d is the vector dimensionality. The first term (n × d) comes from computing n cosine similarities, each requiring O(d) operations for the dot product and magnitude calculations. The second term (n log n) comes from sorting n scores. For typical values where d is 50 and k is much smaller than n, the sorting dominates when n is small, but the similarity computation dominates for large databases.
+The [time complexity](https://en.wikipedia.org/wiki/Time_complexity) is O(n × d + n log n), where n is the number of documents and d is the vector dimensionality. The first term (n × d) comes from computing n cosine similarities, each requiring O(d) operations for the dot product and magnitude calculations. The second term (n log n) comes from sorting n scores. For typical values where d is 50 and k is much smaller than n, the sorting dominates when n is small, but the similarity computation dominates for large databases.
 
 Consider a concrete example with a small document collection:
 

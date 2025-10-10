@@ -11,13 +11,13 @@ description: "Build hash tables with collision handling"
 
 # Hash tables
 
-[Hash tables](glossary#hash-table) are fundamental data structures that provide extremely fast insertion, deletion, and lookup operations through clever use of [hash functions](glossary#hash-function). While Swift's built-in `Dictionary` type implements hash table functionality, understanding how to build your own hash table from scratch is essential for mastering computer science fundamentals.
+[Hash tables](https://en.wikipedia.org/wiki/Hash_table) are fundamental data structures that provide extremely fast insertion, deletion, and lookup operations through clever use of [hash functions](https://en.wikipedia.org/wiki/Hash_function). While Swift's built-in `Dictionary` type implements hash table functionality, understanding how to build your own hash table from scratch is essential for mastering computer science fundamentals.
 
 Hash tables solve the constant-time access problem using a technique fundamentally different from the tree and graph structures in [Chapters 11-14](11-binary-search-trees.md). Instead of organizing data hierarchically and searching through levels, hash tables use a mathematical function to compute the exact storage location. This transforms the search problem into simple arithmetic, achieving O(1) average-case performance (from [Chapter 8](08-performance-analysis.md)).
 
 Recall from [Chapter 14](14-tries.md) how tries used dictionaries for child node storage. Those dictionaries were hash tables! This chapter reveals the implementation behind that O(1) child lookup, showing how hash tables power many of Swift's built-in collections and why they're essential building blocks for higher-level data structures.
 
-In this chapter, we'll explore hash table design principles and implement a robust, modern hash table in Swift using [generics](glossary#generic) from Chapter 7 and collision resolution via linked lists from [Chapter 9](09-linked-lists.md).
+In this chapter, we'll explore hash table design principles and implement a robust, modern hash table in Swift using [generics](https://en.wikipedia.org/wiki/Generic_programming) from Chapter 7 and collision resolution via linked lists from [Chapter 9](09-linked-lists.md).
 
 ## Understanding hash tables
 
@@ -26,7 +26,7 @@ Hash tables solve a fundamental problem in computer science: how do we store and
 ### Keys & values
 
 Compared to other data structures:
-- **[Linked Lists](glossary#linked-list)**: Flexible but require O(n) search time due to sequential traversal
+- **[Linked Lists](https://en.wikipedia.org/wiki/Linked_list)**: Flexible but require O(n) search time due to sequential traversal
 - Arrays: Fast indexed access but require knowing the exact position
 - **Hash Tables**: Combine the best of both worlds - fast O(1) average case operations with flexible key-based access
 
@@ -59,7 +59,7 @@ Values are stored in non-contiguous "buckets" within an array. The hash function
 
 ## Modern hash table implementation
 
-Our hash table implementation uses [generics](glossary#generic) from Chapter 7 and modern Swift patterns for type safety and performance. We'll start with the supporting structures:
+Our hash table implementation uses [generics](https://en.wikipedia.org/wiki/Generic_programming) from Chapter 7 and modern Swift patterns for type safety and performance. We'll start with the supporting structures:
 
 ```swift
 // Generic node for collision resolution via chaining (linked list from Chapter 9)
@@ -85,7 +85,7 @@ public enum HashTableResult {
 
 ### Protocol-based design
 
-We'll use Swift's [`Hashable`](glossary#hashable) protocol which provides built-in hash functionality, making our implementation more robust and compatible with Swift's type system:
+We'll use Swift's [`Hashable`](https://en.wikipedia.org/wiki/Hash_function) protocol which provides built-in hash functionality, making our implementation more robust and compatible with Swift's type system:
 
 ```swift
 // All Hashable types automatically work with our hash table
@@ -213,7 +213,7 @@ Our implementation uses Swift's robust hashing system which implements:
 
 ## Collision resolution strategies
 
-Even with excellent hash functions, collisions are inevitable. [Collisions](glossary#collision) occur when different keys map to the same index. Our implementation uses **separate chaining** with linked lists (Chapter 9) to handle these situations:
+Even with excellent hash functions, collisions are inevitable. [Collisions](https://en.wikipedia.org/wiki/Hash_collision) occur when different keys map to the same index. Our implementation uses **separate chaining** with linked lists (Chapter 9) to handle these situations:
 
 ```swift
 // Handle collisions by chaining nodes in linked list - O(1) insertion, O(k) search where k=chain length

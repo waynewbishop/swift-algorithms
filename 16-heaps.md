@@ -11,7 +11,7 @@ description: "Implement priority queues with heap data structures"
 
 # Heaps
 
-[Heaps](glossary#heap) are specialized [tree](glossary#tree)-based data structures that maintain a specific ordering property, making them ideal for [priority queues](glossary#priority-queue) and efficient sorting [algorithms](glossary#algorithm). Unlike [binary search trees](glossary#binary-search-tree-bst) from Chapters 11-12 that maintain left-right ordering, heaps focus on parent-child relationships to ensure the most important element is always accessible in constant time.
+[Heaps](https://en.wikipedia.org/wiki/Heap_(data_structure)) are specialized [tree](https://en.wikipedia.org/wiki/Tree_(data_structure))-based data structures that maintain a specific ordering property, making them ideal for [priority queues](https://en.wikipedia.org/wiki/Priority_queue) and efficient sorting [algorithms](https://en.wikipedia.org/wiki/Algorithm). Unlike [binary search trees](https://en.wikipedia.org/wiki/Binary_search_tree) from Chapters 11-12 that maintain left-right ordering, heaps focus on parent-child relationships to ensure the most important element is always accessible in constant time.
 
 Heaps combine concepts from throughout this book. They use generic types (Chapter 7) with Comparable constraints, achieve O(log n) operations (Chapter 8), can be implemented as specialized queues (Chapter 10), and dramatically optimize graph algorithms like Dijkstra's (Chapter 13). The heap property—parent nodes are always more extreme than their children—creates a complete binary tree that's both simple to implement and remarkably efficient.
 
@@ -19,7 +19,7 @@ In this chapter, we'll explore heap fundamentals and build a complete heap imple
 
 ## Understanding heaps
 
-A heap is a complete [binary tree](glossary#binary-tree) that satisfies the heap property:
+A heap is a complete [binary tree](https://en.wikipedia.org/wiki/Binary_tree) that satisfies the heap property:
 - **Min-Heap**: Every parent node is smaller than or equal to its children
 - **Max-Heap**: Every parent node is greater than or equal to its children
 

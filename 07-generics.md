@@ -10,7 +10,7 @@ description: "Build type-safe, reusable code with Swift generics"
 
 # Generics
 
-In the previous chapters, you implemented search algorithms that work with any comparable type and sorting algorithms that handle integers, strings, and custom objects equally well. In [Chapter 6](06-recursion.md), you created `ListNode<T>` and `TreeNode<T>` structures that work with any type. You've been using Swift's most powerful feature all along—[generics](glossary#generic). Now it's time to understand how they work.
+In the previous chapters, you implemented search algorithms that work with any comparable type and sorting algorithms that handle integers, strings, and custom objects equally well. In [Chapter 6](06-recursion.md), you created `ListNode<T>` and `TreeNode<T>` structures that work with any type. You've been using Swift's most powerful feature all along—[generics](https://en.wikipedia.org/wiki/Generic_programming). Now it's time to understand how they work.
 
 Without generics, you'd need separate implementations of every data structure for every type. A linked list for integers. Another for strings. Another for custom objects. Generics solve this problem by allowing you to write one implementation that works with any type while maintaining complete type safety.
 
@@ -97,7 +97,7 @@ linearSearch(for: 42, in: [1, 2, 3, 42, 5])
 linearSearch(for: "Bob", in: ["Alice", "Bob", "Charlie"])
 ```
 
-The `<T: Equatable>` syntax defines a generic type parameter `T` that must conform to [Equatable](glossary#equatable). This allows comparison with `==` while working with any type that supports equality.
+The `<T: Equatable>` syntax defines a generic type parameter `T` that must conform to [Equatable](https://en.wikipedia.org/wiki/Relational_operator). This allows comparison with `==` while working with any type that supports equality.
 
 ### Generic sorting from Chapter 4
 
@@ -177,7 +177,7 @@ The constraint `T: Equatable` means "T can be any type, as long as it conforms t
 
 ### Equatable protocol
 
-[Equatable](glossary#equatable) enables equality comparison with `==` and `!=`. Linear search from Chapter 3 requires Equatable because it must compare elements:
+[Equatable](https://en.wikipedia.org/wiki/Relational_operator) enables equality comparison with `==` and `!=`. Linear search from Chapter 3 requires Equatable because it must compare elements:
 
 ```swift
 // Requires Equatable for == comparison
@@ -195,7 +195,7 @@ Most Swift built-in types (Int, Double, String, Bool) conform to Equatable autom
 
 ### Comparable protocol
 
-[Comparable](glossary#comparable) enables ordering operations using `<`, `>`, `<=`, and `>=`. All sorting algorithms require Comparable:
+[Comparable](https://en.wikipedia.org/wiki/Relational_operator) enables ordering operations using `<`, `>`, `<=`, and `>=`. All sorting algorithms require Comparable:
 
 ```swift
 // Binary search requires Comparable for < and > comparisons
@@ -225,7 +225,7 @@ Types conforming to Comparable automatically conform to Equatable, since orderin
 
 ### Hashable protocol
 
-[Hashable](glossary#hashable) enables types to be used in Sets and as Dictionary keys. While you haven't built hash tables yet, you can use Swift's built-in Set and Dictionary types:
+[Hashable](https://en.wikipedia.org/wiki/Hash_function) enables types to be used in Sets and as Dictionary keys. While you haven't built hash tables yet, you can use Swift's built-in Set and Dictionary types:
 
 ```swift
 // Generic function requiring Hashable for Set usage

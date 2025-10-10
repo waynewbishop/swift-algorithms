@@ -11,7 +11,7 @@ description: "Explore graph data structures and algorithms"
 
 # Graphs
 
-A [graph](glossary#graph) is a data structure that shows a relationship (e.g., connection) between two or more objects. Because of their flexibility, graphs are one of the most widely used structures in modern computing. Popular tools and services like online maps, social networks, and even the Internet as a whole are based on how objects relate to one another.
+A [graph](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)) is a data structure that shows a relationship (e.g., connection) between two or more objects. Because of their flexibility, graphs are one of the most widely used structures in modern computing. Popular tools and services like online maps, social networks, and even the Internet as a whole are based on how objects relate to one another.
 
 Graphs generalize the tree structures from [Chapters 11-12](11-binary-search-trees.md). While trees enforce a strict parent-child hierarchy, graphs allow any vertex to connect to any other vertex, creating cycles and multiple paths between nodes. This flexibility makes graphs perfect for modeling real-world networks where relationships are more complex than simple hierarchies.
 
@@ -19,9 +19,9 @@ In this chapter, we'll highlight the key features of graphs and demonstrate how 
 
 ## The basics
 
-As discussed, a graph is a model that shows how objects relate to one another. Graph objects are usually referred to as nodes or [vertices](glossary#vertex). While it would be possible to build and graph a single node, models that contain multiple vertices better represent real-world applications.
+As discussed, a graph is a model that shows how objects relate to one another. Graph objects are usually referred to as nodes or [vertices](https://en.wikipedia.org/wiki/Vertex_(graph_theory)). While it would be possible to build and graph a single node, models that contain multiple vertices better represent real-world applications.
 
-Graph objects relate to one another through connections called [edges](glossary#edge). Depending on your requirements, a vertex could be linked to one or more objects through a series of edges. It's also possible to create a vertex without edges. Here are some basic graph configurations:
+Graph objects relate to one another through connections called [edges](https://en.wikipedia.org/wiki/Glossary_of_graph_theory#edge). Depending on your requirements, a vertex could be linked to one or more objects through a series of edges. It's also possible to create a vertex without edges. Here are some basic graph configurations:
 
 [diagram: Examples of undirected graphs with varying vertices and edges]
 
@@ -39,7 +39,7 @@ Regardless of graph type, it's common to represent the level of connectedness be
 
 ## The vertex
 
-With our understanding of graphs in place, let's build a graph using [generics](glossary#generic) from Chapter 7. This allows the graph to work with any data type. Here's the data structure for a vertex:
+With our understanding of graphs in place, let's build a graph using [generics](https://en.wikipedia.org/wiki/Generic_programming) from Chapter 7. This allows the graph to work with any data type. Here's the data structure for a vertex:
 
 ```swift
 // Generic vertex with neighbors array and traversal tracking
@@ -136,7 +136,7 @@ Graph traversal is the process of visiting every vertex in a graph exactly once.
 
 ### Breadth-first search (BFS)
 
-Breadth-First Search explores all vertices at the current depth before moving to vertices at the next depth level. It uses a [queue](glossary#queue) data structure from Chapter 10. Recall that queues maintain first-in, first-out (FIFO) ordering, which ensures we process vertices level by level:
+Breadth-First Search explores all vertices at the current depth before moving to vertices at the next depth level. It uses a [queue](https://en.wikipedia.org/wiki/Queue_(abstract_data_type)) data structure from Chapter 10. Recall that queues maintain first-in, first-out (FIFO) ordering, which ensures we process vertices level by level:
 
 ```swift
 // BFS traversal using queue for level-by-level exploration - O(V + E)
@@ -243,7 +243,7 @@ BFS has the following complexity from [Chapter 8](08-performance-analysis.md):
 
 ## Finding shortest paths with Dijkstra's algorithm
 
-While BFS finds the shortest path in terms of the number of edges (hops), many real-world problems require finding the shortest path when edges have different weights or costs. This is where [Dijkstra's algorithm](glossary#dijkstras-algorithm) becomes essential.
+While BFS finds the shortest path in terms of the number of edges (hops), many real-world problems require finding the shortest path when edges have different weights or costs. This is where [Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) becomes essential.
 
 ### The shortest path problem
 

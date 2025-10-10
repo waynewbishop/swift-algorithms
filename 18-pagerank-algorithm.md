@@ -11,7 +11,7 @@ description: "Implement Google's PageRank in Swift"
 
 # PageRank
 
-The [PageRank](glossary#pagerank) [algorithm](glossary#algorithm) stands as one of the most influential algorithms in modern computing, powering the original Google search engine and fundamentally changing how we navigate information. Conceived at Stanford University in 1996 by Larry Page and Sergey Brin, PageRank introduced a revolutionary approach to determining web page importance through mathematical modeling of human browsing behavior. In this chapter, we'll explore how PageRank works, implement an educational version in Swift, and understand its broader applications beyond search engines.
+The [PageRank](https://en.wikipedia.org/wiki/PageRank) [algorithm](https://en.wikipedia.org/wiki/Algorithm) stands as one of the most influential algorithms in modern computing, powering the original Google search engine and fundamentally changing how we navigate information. Conceived at Stanford University in 1996 by Larry Page and Sergey Brin, PageRank introduced a revolutionary approach to determining web page importance through mathematical modeling of human browsing behavior. In this chapter, we'll explore how PageRank works, implement an educational version in Swift, and understand its broader applications beyond search engines.
 
 ## Understanding PageRank
 
@@ -33,11 +33,11 @@ This probabilistic approach captures something profound about web browsing: impo
 
 ### From web pages to graph theory
 
-The beauty of PageRank lies in how it transforms the abstract concept of web importance into concrete [graph](glossary#graph) theory:
+The beauty of PageRank lies in how it transforms the abstract concept of web importance into concrete [graph](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)) theory:
 
 **Web Structure as a Directed Graph:**
-- [Vertices](glossary#vertex): Web pages
-- [Edges](glossary#edge): Hyperlinks between pages
+- [Vertices](https://en.wikipedia.org/wiki/Vertex_(graph_theory)): Web pages
+- [Edges](https://en.wikipedia.org/wiki/Glossary_of_graph_theory#edge): Hyperlinks between pages
 - Direction: Links point from source page to destination page
 
 ```swift

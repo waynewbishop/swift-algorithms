@@ -10,9 +10,9 @@ description: "Understanding algorithmic efficiency, complexity analysis, and rea
 
 # Analyzing Algorithms
 
-You've now explored searching techniques that locate values in collections, sorting methods that organize data, [recursion](glossary#recursion) that breaks problems into smaller pieces, and generics that enable flexible code. Along the way, you've noticed patterns—binary search feels faster than linear search, merge sort handles large datasets better than bubble sort, and some recursive solutions run exponentially slow.
+You've now explored searching techniques that locate values in collections, sorting methods that organize data, [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)) that breaks problems into smaller pieces, and generics that enable flexible code. Along the way, you've noticed patterns—binary search feels faster than linear search, merge sort handles large datasets better than bubble sort, and some recursive solutions run exponentially slow.
 
-It's time to formalize these observations. In [Chapter 2](02-measuring-performance.md), you learned the vocabulary of performance—[Big O Notation](glossary#big-o-notation) provides a common language for discussing how [algorithms](glossary#algorithm) scale. This chapter builds on that foundation, teaching you to analyze the algorithms you've written and make informed decisions about which approaches fit which problems.
+It's time to formalize these observations. In [Chapter 2](02-measuring-performance.md), you learned the vocabulary of performance—[Big O Notation](https://en.wikipedia.org/wiki/Big_O_notation) provides a common language for discussing how [algorithms](https://en.wikipedia.org/wiki/Algorithm) scale. This chapter builds on that foundation, teaching you to analyze the algorithms you've written and make informed decisions about which approaches fit which problems.
 
 ## Applying Big O to algorithms you know
 
@@ -215,7 +215,7 @@ extension Array where Element: Comparable {
 
 ## Space complexity matters
 
-[Time complexity](glossary#time-complexity) measures operations. [Space complexity](glossary#space-complexity) measures memory usage. Sometimes you must trade one for the other.
+[Time complexity](https://en.wikipedia.org/wiki/Time_complexity) measures operations. [Space complexity](https://en.wikipedia.org/wiki/Space_complexity) measures memory usage. Sometimes you must trade one for the other.
 
 | Algorithm | Time | Space | When to use |
 |-----------|------|-------|-------------|
@@ -234,7 +234,7 @@ Most algorithms don't perform the same way in every situation.
 - Average case: target in middle = O(n)
 - Worst case: target is last or not present = O(n)
 
-When we say "linear search is O(n)", we typically refer to [worst case](glossary#worst-case) unless specified otherwise. Big O provides an upper bound—performance won't get worse than this.
+When we say "linear search is O(n)", we typically refer to [worst case](https://en.wikipedia.org/wiki/Best,_worst_and_average_case) unless specified otherwise. Big O provides an upper bound—performance won't get worse than this.
 
 **Quicksort's varying performance:**
 - **Best/Average: O(n log n)** - Good pivot selection, balanced partitions, typical with random data

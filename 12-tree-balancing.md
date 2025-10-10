@@ -24,13 +24,13 @@ This scenario isn't rare. Any monotonically increasing sequence (timestamps, aut
 
 AVL trees extend BSTs with height tracking and automatic rebalancing. Named after inventors Adelson-Velsky and Landis (1962), AVL trees maintain a balance invariant: the height difference between left and right subtrees never exceeds 1.
 
-To start, let's revisit our original example. Array values from `numberList` were used to build a tree. As shown, all elements had either one or two children - otherwise called leaf elements. This is known as a [balanced binary search tree](glossary#balanced-tree).
+To start, let's revisit our original example. Array values from `numberList` were used to build a tree. As shown, all elements had either one or two children - otherwise called leaf elements. This is known as a [balanced binary search tree](https://en.wikipedia.org/wiki/Self-balancing_binary_search_tree).
 
 Our model achieved balance not only through usage of the BST append algorithm but also by the way keys were inserted. In reality, there could be numerous ways to populate a tree. Without considering other factors, this can produce unexpected results.
 
 ## Tracking height
 
-To compensate for these imbalances, we need to expand the scope of our algorithm. In addition to left/right logic, we'll add a new property called `height`. Coupled with specific rules, we can use `height` to detect tree imbalances. To see how this works, let's create a new [AVL tree](glossary#avl-tree):
+To compensate for these imbalances, we need to expand the scope of our algorithm. In addition to left/right logic, we'll add a new property called `height`. Coupled with specific rules, we can use `height` to detect tree imbalances. To see how this works, let's create a new [AVL tree](https://en.wikipedia.org/wiki/AVL_tree):
 
 ```swift
 // AVL tree node with height tracking for balance detection
@@ -46,7 +46,7 @@ class AVLTree<T: Comparable> {
 
 To start, we add the root element. As the first item, left/right leaves don't yet exist, so they are initialized to `nil`. Arrows point from the leaf element to the root because they are used to calculate its height. For math purposes, the height of non-existent leaves are set to -1.
 
-With a model in place, we can calculate the element's [height](glossary#height-tree). This is done by comparing the height of each leaf, finding the largest value, then increasing that value by +1. For the root element, this equates to 0. In Swift, these rules can be represented as follows:
+With a model in place, we can calculate the element's [height](https://en.wikipedia.org/wiki/Tree_(data_structure)#Terminology). This is done by comparing the height of each leaf, finding the largest value, then increasing that value by +1. For the root element, this equates to 0. In Swift, these rules can be represented as follows:
 
 ```swift
 // Height calculation for AVL balance checking
@@ -143,7 +143,7 @@ With tree balancing, it is important to note that techniques like rotations impr
 23, 26, 29
 ```
 
-By implementing tree balancing techniques, we ensure that our binary search tree maintains its efficiency, providing consistent O(log n) [performance](glossary#logarithmic-time-o-log-n) for insertions, deletions, and searches, even as the tree grows and changes over time.
+By implementing tree balancing techniques, we ensure that our binary search tree maintains its efficiency, providing consistent O(log n) [performance](https://en.wikipedia.org/wiki/Time_complexity#Logarithmic_time) for insertions, deletions, and searches, even as the tree grows and changes over time.
 
 ## Summary
 

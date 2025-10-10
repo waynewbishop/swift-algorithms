@@ -12,11 +12,11 @@ description: "Build and traverse binary search trees"
 
 In [Chapter 10](10-stacks-and-queues.md), you built linear structures where elements connect in a single chain. Binary search trees (BST) extend this concept into hierarchical organization—each node can have up to two children, creating a tree structure. Like the recursive data structures from [Chapter 6](06-recursion.md), trees naturally enable recursive algorithms. But unlike linear structures, BSTs maintain sorted order that enables O(log n) search performance (from [Chapter 8](08-performance-analysis.md)), making them dramatically faster than linked lists for searching.
 
-A [binary search tree](glossary#binary-search-tree-bst) stores information using a simple rule: values smaller than a node go left, values larger go right. This ordering property transforms an unsorted array into a searchable hierarchy where finding any element requires examining only a small fraction of the data.
+A [binary search tree](https://en.wikipedia.org/wiki/Binary_search_tree) stores information using a simple rule: values smaller than a node go left, values larger go right. This ordering property transforms an unsorted array into a searchable hierarchy where finding any element requires examining only a small fraction of the data.
 
 ## The BST structure
 
-Here's the binary search tree structure. Using [generics](glossary#generic) from Chapter 7, it works with any comparable type:
+Here's the binary search tree structure. Using [generics](https://en.wikipedia.org/wiki/Generic_programming) from Chapter 7, it works with any comparable type:
 
 ```swift
 // Binary search tree node with left and right children
@@ -44,7 +44,7 @@ The tree organizes itself: 8 becomes the root, values less than 8 (2, 1, 7) filt
 
 ## Inserting elements
 
-The `append` method uses [recursion](glossary#recursion) to find the correct insertion point. Recall from Chapter 6 how recursion simplifies tree operations—each child is another BST, so we recursively call `append` on the appropriate subtree:
+The `append` method uses [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)) to find the correct insertion point. Recall from Chapter 6 how recursion simplifies tree operations—each child is another BST, so we recursively call `append` on the appropriate subtree:
 
 ```swift
 // Insert element into BST maintaining sort order - O(log n) average

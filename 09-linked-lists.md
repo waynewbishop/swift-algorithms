@@ -10,9 +10,9 @@ description: "Implement singly and doubly linked lists"
 
 # Linked Lists
 
-In [Chapter 6](06-recursion.md), you encountered linked list nodes as self-referential structures perfect for recursive algorithms. In [Chapter 8](08-performance-analysis.md), you learned that different data structures offer different performance trade-offs. Now it's time to build a complete [linked list](glossary#linked-list) implementation—a fundamental data structure that trades random access speed for insertion and deletion flexibility.
+In [Chapter 6](06-recursion.md), you encountered linked list nodes as self-referential structures perfect for recursive algorithms. In [Chapter 8](08-performance-analysis.md), you learned that different data structures offer different performance trade-offs. Now it's time to build a complete [linked list](https://en.wikipedia.org/wiki/Linked_list) implementation—a fundamental data structure that trades random access speed for insertion and deletion flexibility.
 
-A linked list provides similar functionality to an [array](glossary#array)—the ability to insert, retrieve, update, and remove elements. However, because elements are managed independently (scattered in memory) rather than contiguously (in a single block), linked lists excel when dealing with frequent modifications to large datasets.
+A linked list provides similar functionality to an [array](https://en.wikipedia.org/wiki/Array_data_structure)—the ability to insert, retrieve, update, and remove elements. However, because elements are managed independently (scattered in memory) rather than contiguously (in a single block), linked lists excel when dealing with frequent modifications to large datasets.
 
 ## Arrays vs linked lists
 
@@ -43,7 +43,7 @@ Before implementing linked lists, understand when to choose them over Swift's bu
 - Frequent insertions/deletions at beginning or middle
 - Unknown or highly dynamic size
 - Sequential-only access patterns
-- Building other data structures ([Stack](glossary#stack), [Queue](glossary#queue), [Hash Table](glossary#hash-table) with chaining)
+- Building other data structures ([Stack](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)), [Queue](https://en.wikipedia.org/wiki/Queue_(abstract_data_type)), [Hash Table](https://en.wikipedia.org/wiki/Hash_table) with chaining)
 
 **Use arrays when:**
 - Frequent random access by index

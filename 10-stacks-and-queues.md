@@ -10,7 +10,7 @@ description: "Essential data structures for managing collections"
 
 # Stacks & queues
 
-In [Chapter 9](09-linked-lists.md), you built linked lists—collections where elements connect through pointers rather than contiguous memory. Stacks and queues extend this concept by adding ordering rules: stacks process elements last-in, first-out (LIFO), while queues process elements first-in, first-out (FIFO). Both structures achieve [O(1)](glossary#big-o-notation) insertion and removal (from Chapter 8), making them ideal building blocks for algorithms requiring consistent, fast access patterns.
+In [Chapter 9](09-linked-lists.md), you built linked lists—collections where elements connect through pointers rather than contiguous memory. Stacks and queues extend this concept by adding ordering rules: stacks process elements last-in, first-out (LIFO), while queues process elements first-in, first-out (FIFO). Both structures achieve [O(1)](https://en.wikipedia.org/wiki/Big_O_notation) insertion and removal (from Chapter 8), making them ideal building blocks for algorithms requiring consistent, fast access patterns.
 
 These structures power critical systems you use daily. Navigation controllers use stacks to manage view hierarchies (push a view, pop to go back). Task queues schedule operations fairly (DispatchQueue, OperationQueue). Understanding stacks and queues is essential for iOS development and algorithm design.
 

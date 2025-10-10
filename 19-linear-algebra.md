@@ -11,9 +11,9 @@ description: "Vector mathematics and numerical computing"
 
 # Linear Algebra
 
-In [Chapter 17](17-dynamic-programming.md), we saw how breaking problems into smaller subproblems leads to elegant solutions. In [Chapter 18](18-pagerank-algorithm.md), we encountered PageRank's matrix operations for ranking web pages. Now we'll explore the mathematical foundation that powers these [algorithms](glossary#algorithm): linear algebra. While dynamic programming optimizes recursive computations and PageRank analyzes networks, linear algebra provides the mathematical language for spatial relationships, transformations, and data analysis.
+In [Chapter 17](17-dynamic-programming.md), we saw how breaking problems into smaller subproblems leads to elegant solutions. In [Chapter 18](18-pagerank-algorithm.md), we encountered PageRank's matrix operations for ranking web pages. Now we'll explore the mathematical foundation that powers these [algorithms](https://en.wikipedia.org/wiki/Algorithm): linear algebra. While dynamic programming optimizes recursive computations and PageRank analyzes networks, linear algebra provides the mathematical language for spatial relationships, transformations, and data analysis.
 
-Understanding [vectors](glossary#vector) and [matrices](glossary#matrix) is essential for the algorithms we've seen and those ahead. Chapter 18 demonstrated how PageRank uses matrix operations to compute page importance across web graphs. In Chapter 20, semantic search will rely on vector mathematics to find similar documents by treating text as high-dimensional vectors. Beyond these applications, linear algebra underpins computer graphics, machine learning, physics simulations, and data analysis across modern computing.
+Understanding [vectors](https://en.wikipedia.org/wiki/Euclidean_vector) and [matrices](https://en.wikipedia.org/wiki/Matrix_(mathematics)) is essential for the algorithms we've seen and those ahead. Chapter 18 demonstrated how PageRank uses matrix operations to compute page importance across web graphs. In Chapter 20, semantic search will rely on vector mathematics to find similar documents by treating text as high-dimensional vectors. Beyond these applications, linear algebra underpins computer graphics, machine learning, physics simulations, and data analysis across modern computing.
 
 ## What are vectors?
 
@@ -89,7 +89,7 @@ Applications span multiple domains. In physics, the dot product calculates work 
 
 ## Matrices
 
-Matrices are rectangular [arrays](glossary#array) of numbers. A `2×3` matrix has 2 rows and 3 columns:
+Matrices are rectangular [arrays](https://en.wikipedia.org/wiki/Array_data_structure) of numbers. A `2×3` matrix has 2 rows and 3 columns:
 
 ```
 [1  2  3]
