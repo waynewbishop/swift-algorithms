@@ -11,7 +11,13 @@ description: "Build hash tables with collision handling"
 
 # Hash tables
 
-[Hash tables](glossary#hash-table) are fundamental data structures that provide extremely fast insertion, deletion, and lookup operations through clever use of [hash functions](glossary#hash-function). While Swift's built-in `Dictionary` type implements hash table functionality, understanding how to build your own hash table from scratch is essential for mastering computer science fundamentals. In this chapter, we'll explore hash table design principles and implement a robust, modern hash table in Swift.
+[Hash tables](glossary#hash-table) are fundamental data structures that provide extremely fast insertion, deletion, and lookup operations through clever use of [hash functions](glossary#hash-function). While Swift's built-in `Dictionary` type implements hash table functionality, understanding how to build your own hash table from scratch is essential for mastering computer science fundamentals.
+
+Hash tables solve the constant-time access problem using a technique fundamentally different from the tree and graph structures in [Chapters 11-14](11-binary-search-trees.md). Instead of organizing data hierarchically and searching through levels, hash tables use a mathematical function to compute the exact storage location. This transforms the search problem into simple arithmetic, achieving O(1) average-case performance (from [Chapter 8](08-performance-analysis.md)).
+
+Recall from [Chapter 14](14-tries.md) how tries used dictionaries for child node storage. Those dictionaries were hash tables! This chapter reveals the implementation behind that O(1) child lookup, showing how hash tables power many of Swift's built-in collections and why they're essential building blocks for higher-level data structures.
+
+In this chapter, we'll explore hash table design principles and implement a robust, modern hash table in Swift using [generics](glossary#generic) from Chapter 7 and collision resolution via linked lists from [Chapter 9](09-linked-lists.md).
 
 ## Understanding hash tables
 
@@ -53,10 +59,10 @@ Values are stored in non-contiguous "buckets" within an array. The hash function
 
 ## Modern hash table implementation
 
-Our hash table implementation uses [generics](glossary#generic) and modern Swift patterns for type safety and performance. We'll start with the supporting structures:
+Our hash table implementation uses [generics](glossary#generic) from Chapter 7 and modern Swift patterns for type safety and performance. We'll start with the supporting structures:
 
 ```swift
-// Generic node for collision resolution via chaining
+// Generic node for collision resolution via chaining (linked list from Chapter 9)
 public class HashNode<Key: Hashable, Value> {
     public let key: Key
     public var value: Value
@@ -91,6 +97,7 @@ We'll use Swift's [`Hashable`](glossary#hashable) protocol which provides built-
 Our modern hash table implementation focuses on performance, type safety, and Swift best practices:
 
 ```swift
+// Hash table with dynamic resizing and load factor management - O(1) average operations
 public class HashTable<Key: Hashable, Value> {
     private var buckets: [HashNode<Key, Value>?]
     private var capacity: Int
@@ -124,6 +131,7 @@ public class HashTable<Key: Hashable, Value> {
 Unlike our earlier simple implementation, this hash table automatically resizes when the load factor becomes too high, maintaining optimal performance:
 
 ```swift
+// Resize and rehash all elements when load factor exceeds threshold - O(n)
 extension HashTable {
     private func shouldResize() -> Bool {
         return loadFactor > maxLoadFactor
@@ -152,6 +160,7 @@ extension HashTable {
 Instead of creating a custom protocol, we leverage Swift's built-in `Hashable` protocol, which provides robust hashing for all standard types and allows custom types to easily conform:
 
 ```swift
+// Modern hash function using Swift's built-in Hasher for uniform distribution
 extension HashTable {
     // Modern hash function using Swift's built-in hasher
     private func hashIndex(for key: Key) -> Int {
@@ -172,7 +181,7 @@ extension HashTable {
 Any type can be used as a key by conforming to `Hashable`:
 
 ```swift
-// Example: Custom vertex type for graph algorithms
+// Example: Custom vertex type for graph algorithms (Chapter 13)
 struct Vertex: Hashable {
     let id: String
     let coordinates: (x: Int, y: Int)
@@ -204,11 +213,11 @@ Our implementation uses Swift's robust hashing system which implements:
 
 ## Collision resolution strategies
 
-Even with excellent hash functions, collisions are inevitable. [Collisions](glossary#collision) occur when different keys map to the same index. Our implementation uses **separate chaining** with linked lists to handle these situations:
+Even with excellent hash functions, collisions are inevitable. [Collisions](glossary#collision) occur when different keys map to the same index. Our implementation uses **separate chaining** with linked lists (Chapter 9) to handle these situations:
 
 ```swift
+// Handle collisions by chaining nodes in linked list - O(1) insertion, O(k) search where k=chain length
 extension HashTable {
-    // Handle collisions by chaining nodes
     private func insertInChain(key: Key, value: Value, at index: Int) -> HashTableResult {
         if buckets[index] == nil {
             // No collision - direct insertion
@@ -252,6 +261,7 @@ While we use chaining, other strategies include:
 Our modern hash table provides full Create, Read, Update, Delete functionality with automatic resizing:
 
 ```swift
+// Complete CRUD operations with automatic resizing - O(1) average case
 extension HashTable {
     // Insert or update a key-value pair
     @discardableResult
@@ -326,6 +336,7 @@ extension HashTable {
 Make our hash table feel like a native Swift collection:
 
 ```swift
+// Subscript support for Dictionary-like syntax - O(1) average
 extension HashTable {
     public subscript(key: Key) -> Value? {
         get {
@@ -347,7 +358,9 @@ extension HashTable {
 Hash tables are fundamental to many systems and algorithms:
 
 ### 1. Caching system
+
 ```swift
+// LRU cache using hash table for O(1) lookups
 class LRUCache<Key: Hashable, Value> {
     private let capacity: Int
     private var cache = HashTable<Key, CacheNode<Value>>()
@@ -385,8 +398,9 @@ class LRUCache<Key: Hashable, Value> {
 ```
 
 ### 2. Database indexing
+
 ```swift
-// Simplified database index using hash table
+// Simplified database index using hash table for fast lookups
 class DatabaseIndex<Key: Hashable> {
     private var index = HashTable<Key, [Int]>()
 
@@ -406,8 +420,9 @@ class DatabaseIndex<Key: Hashable> {
 ```
 
 ### 3. Set implementation
+
 ```swift
-// Efficient set implementation using hash table
+// Efficient set implementation using hash table - O(1) operations
 public struct HashSet<Element: Hashable> {
     private var table = HashTable<Element, Bool>()
 
@@ -430,7 +445,9 @@ public struct HashSet<Element: Hashable> {
 ```
 
 ### 4. Word frequency counter
+
 ```swift
+// Count word occurrences using hash table - O(n) where n=word count
 func wordFrequency(in text: String) -> HashTable<String, Int> {
     let words = text.lowercased()
         .components(separatedBy: .whitespacesAndNewlines)
@@ -455,7 +472,7 @@ print(freq.getValue(for: "algorithms"))  // Optional(2)
 
 ## Performance analysis
 
-Hash tables offer excellent performance characteristics when properly implemented:
+Hash tables offer excellent performance characteristics when properly implemented, as analyzed using [Chapter 8](08-performance-analysis.md) principles:
 
 ### Time complexity
 - **Average Case**: O(1) for insert, search, delete
@@ -474,7 +491,7 @@ Hash tables offer excellent performance characteristics when properly implemente
 
 ### Comparison with other data structures
 
-| Operation | Array | Linked List | BST | Hash Table |
+| Operation | Array | Linked List (Ch 9) | BST (Ch 11) | Hash Table |
 |-----------|-------|-------------|-----|------------|
 | Search | O(n) | O(n) | O(log n) | O(1) avg |
 | Insert | O(n) | O(1) | O(log n) | O(1) avg |
@@ -487,8 +504,8 @@ Hash tables offer excellent performance characteristics when properly implemente
 ### Hash function quality metrics
 
 ```swift
+// Analyze hash distribution quality to detect poor hash functions
 extension HashTable {
-    // Measure distribution quality
     public func analyzeDistribution() -> (Double, Int, Int) {
         var chainLengths: [Int] = []
         var maxChainLength = 0
@@ -526,7 +543,7 @@ extension HashTable {
 - Set operations
 
 **Avoid when:**
-- Need ordered iteration
+- Need ordered iteration (use BSTs from Chapter 11)
 - Range queries required
 - Memory is severely constrained
 - Keys don't hash well
@@ -540,3 +557,69 @@ Hash tables demonstrate several key algorithmic concepts:
 3. **Hash Function Design**: The quality of the hash function affects performance dramatically
 4. **Load Factor Management**: We must balance between space and time efficiency
 
+## Summary
+
+Hash tables provide O(1) average-case performance for key-value operations through mathematical transformation of keys into array indices.
+
+**Key characteristics:**
+- Use hash function to compute storage location directly
+- Buckets store key-value pairs in array
+- Collisions handled via chaining (linked lists)
+- Dynamic resizing maintains performance as size grows
+- Load factor threshold (0.75) triggers resize
+
+**Core operations:**
+- Insert: O(1) average - hash key, store in bucket, handle collisions
+- Search: O(1) average - hash key, traverse chain if needed
+- Delete: O(1) average - hash key, remove from chain
+- Resize: O(n) - occurs infrequently, amortized O(1)
+
+**Implementation highlights:**
+- Generic over Key (Hashable) and Value types
+- HashNode uses linked list for collision chaining
+- Swift's Hasher provides cryptographically secure hashing
+- Subscript support mimics Dictionary syntax
+- analyzeDistribution monitors hash function quality
+
+**Real-world applications:**
+- LRU caches (combined with linked list)
+- Database indexes (fast record lookup)
+- Set implementation (HashSet using hash table)
+- Word frequency counting (counting occurrences)
+- Swift's Dictionary and Set types
+
+**Performance characteristics:**
+- O(1) average case for all operations
+- O(n) worst case when hash function poor
+- Load factor determines actual performance
+- Resize threshold (0.75) balances speed and space
+
+**Connections:**
+- Uses generics (Chapter 7) for type safety
+- Applies O(1) analysis from Chapter 8
+- Collision chaining uses linked lists (Chapter 9)
+- Faster than BST search (Chapter 11) but no ordering
+- Powers trie child storage (Chapter 14)
+- Complements graph adjacency lists (Chapter 13)
+
+**When to choose hash tables:**
+- Need O(1) lookups by key (faster than any tree)
+- Order doesn't matter (can't iterate sorted)
+- Keys are hashable (strings, numbers, custom types)
+- Memory available for load factor overhead
+
+**When to avoid hash tables:**
+- Need ordered iteration (use BST from Chapter 11)
+- Need range queries (use BST)
+- Keys don't hash uniformly (many collisions)
+- Memory severely constrained
+
+Understanding hash tables is essential for choosing the right data structure. They excel at exact-match lookups but sacrifice ordering for speed. The combination of hash functions, array indexing, and collision resolution creates the fastest key-value store in computer science—a building block used throughout modern software from databases to compilers to language runtimes.
+
+<div class="bottom-nav">
+  <div class="nav-container">
+    <a href="14-tries" class="nav-link prev">← Chapter 14: Tries</a>
+    <a href="index" class="nav-link toc">Table of Contents</a>
+    <a href="16-heaps" class="nav-link next">Chapter 16: Heaps →</a>
+  </div>
+</div>
