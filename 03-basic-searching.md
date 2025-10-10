@@ -140,10 +140,10 @@ flowchart TD
     Init --> Check{left ≤ right?}
     Check -->|No| NotFound[Return nil]
     Check -->|Yes| CalcMid[Calculate middle index<br/>mid = left + right / 2]
-    CalcMid --> Compare{Compare<br/>array\[mid\] with target}
+    CalcMid --> Compare{Compare<br/>array[mid] with target}
     Compare -->|Equal| Found[Return mid]
-    Compare -->|array\[mid\] < target| SearchRight[Set left = mid + 1]
-    Compare -->|array\[mid\] > target| SearchLeft[Set right = mid - 1]
+    Compare -->|array[mid] < target| SearchRight[Set left = mid + 1]
+    Compare -->|array[mid] > target| SearchLeft[Set right = mid - 1]
     SearchRight --> Check
     SearchLeft --> Check
     Found --> End([End])
