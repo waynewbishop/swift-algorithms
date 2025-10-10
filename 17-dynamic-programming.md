@@ -37,7 +37,6 @@ This code is elegant and matches the mathematical definition perfectly. But ther
 
 When you calculate `fibonacci(5)`, the function calculates `fibonacci(3)` three separate times and `fibonacci(2)` five separate times. For `fibonacci(40)`, the function makes over 330 million function calls!
 
-[diagram: Fibonacci recursion tree showing duplicate calculations]
 
 The time complexity is O(2^n)—exponential. For larger numbers, this approach becomes unusable.
 

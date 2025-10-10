@@ -23,7 +23,6 @@ As discussed, a graph is a model that shows how objects relate to one another. G
 
 Graph objects relate to one another through connections called [edges](https://en.wikipedia.org/wiki/Glossary_of_graph_theory#edge). Depending on your requirements, a vertex could be linked to one or more objects through a series of edges. It's also possible to create a vertex without edges. Here are some basic graph configurations:
 
-[diagram: Examples of undirected graphs with varying vertices and edges]
 
 ## Directed vs. undirected
 
@@ -35,7 +34,6 @@ A service like Google Maps is a great example of a directed graph. Unlike an und
 
 Regardless of graph type, it's common to represent the level of connectedness between vertices. Normally associated with an edge, the weight is a numerical value tracked for this purpose. As we'll see, modeling of graphs with edge weights can be used to solve a variety of problems.
 
-[diagram: A directed graph with three vertices showing weighted edges]
 
 ## The vertex
 

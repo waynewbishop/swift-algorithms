@@ -49,7 +49,6 @@ For any element at index `i`:
 - **Left Child**: `2 * i + 1`
 - **Right Child**: `2 * i + 2`
 
-[diagram: Heap array to tree visualization showing indices and parent-child relationships]
 
 ## Modern heap implementation
 

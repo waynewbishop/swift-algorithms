@@ -38,7 +38,6 @@ Let's build a BST from an array. The insertion order doesn't matter—the BST ru
 let numberList: [Int] = [8, 2, 10, 9, 11, 1, 7]
 ```
 
-[diagram: Balanced BST showing 8 as root, 2 and 10 as children, with 1,7 under 2 and 9,11 under 10]
 
 The tree organizes itself: 8 becomes the root, values less than 8 (2, 1, 7) filter left, values greater than 8 (10, 9, 11) filter right. This automatic organization enables fast searching.
 

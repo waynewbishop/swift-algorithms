@@ -33,7 +33,6 @@ As discussed, tries organize data in a hierarchy. To see how they work, let's bu
 
 At first glance, we see words prefixed with the phrase "Ba", while entries like "Ballard" combine words and phrases (e.g., "Ball" and "Ballard"). Even though our dictionary contains a limited quantity of words, a thousand-item list would have the same characteristics. As with any algorithm, we'll apply our knowledge to build an efficient model. To start, let's create a new trie for the word "Ball":
 
-[diagram: Trie structure showing hierarchical storage of "Ball" with shared prefix "Ba"]
 
 Tries involve building hierarchies, storing phrases along the way until a word is created (seen in yellow). With so many permutations, it's important to know what qualifies as an actual word. For example, even though we've stored the phrase "Ba", it's not identified as a word.
 

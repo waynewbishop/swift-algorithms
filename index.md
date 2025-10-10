@@ -3,7 +3,7 @@ layout: home
 title: Swift Algorithms & Data Structures
 ---
 
-# Swift Algorithms & Data Structures
+# Swift Algorithms & Data Structures - 5th Edition
 
 The Swift language has become the cornerstone of Apple development, powering solutions for iPhone, WatchOS, VisionOS, server-based solutions and beyond. This book provides complete implementations of essential algorithms, data structures and mathematics in modern Swift, going beyond pseudocode to show you how these concepts work in production code.
 
@@ -17,7 +17,7 @@ The Swift language has become the cornerstone of Apple development, powering sol
 - Learn linear algebra fundamentals for data science, including working with vectors and matrices
 - Apply vector mathematics to create customized semantic search models
 
-## Who this book is for
+## Audience
 
 This book is designed for:
 
