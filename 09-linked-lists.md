@@ -293,39 +293,3 @@ public func printValues() {
 ```
 
 This pattern—using a `current` pointer that advances through the list—is fundamental to all linked list operations.
-
-## Summary
-
-Linked lists are fundamental data structures that trade random access speed for insertion and deletion flexibility:
-
-**Key characteristics:**
-- Non-contiguous memory with pointer-connected elements
-- O(1) insertion/deletion at beginning (once position is known)
-- O(n) access by index (must traverse from head)
-- Higher memory overhead (extra pointers per element)
-
-**Performance comparison with arrays:**
-- Arrays win: Random access, small datasets, memory efficiency
-- Linked lists win: Frequent insertions/deletions, unknown size, sequential access
-
-**When to choose linked lists:**
-- Building stacks, queues, or hash tables
-- Implementing undo/redo systems
-- Managing dynamic collections with frequent modifications
-- Sequential-only processing
-
-**Implementation highlights:**
-- `LLNode<T>` provides doubly-linked node structure
-- `LinkedList<T>` manages collection with head pointer and counter
-- Operations: append O(n), find O(n), insert O(n), remove O(n)
-- Maintaining a tail pointer can optimize append to O(1)
-
-Understanding linked lists is essential for implementing more complex data structures and recognizing when their trade-offs benefit your application. In Chapter 10, we'll see how linked lists serve as the foundation for stacks and queues.
-
-<div class="bottom-nav">
-  <div class="nav-container">
-    <a href="08-performance-analysis" class="nav-link prev">← Chapter 8: Analyzing Algorithms</a>
-    <a href="index" class="nav-link toc">Table of Contents</a>
-    <a href="10-stacks-and-queues" class="nav-link next">Chapter 10: Stacks and Queues →</a>
-  </div>
-</div>

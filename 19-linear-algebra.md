@@ -543,16 +543,3 @@ Linear algebra connects to concepts throughout this book. In Chapter 3, we learn
 The connections extend to advanced topics. Chapter 13 covered graphs, where adjacency matrices represent graph connections and eigenvectors reveal network structure. Chapter 18 explored PageRank, which uses matrix operations to compute page importance scores across the entire web graph through iterative linear algebra. Chapter 20 covers semantic search, where cosine similarity between document vectors enables intelligent text matching beyond keyword search.
 
 The key insight: Linear algebra provides a mathematical language for spatial relationships, transformations, and similarity measures that power everything from game physics to modern AI systems. Understanding vectors and matrices isn't just about mathematical abstraction—it's about having the right tool for modeling spatial and relational data.
-
-## Summary
-
-Linear algebra provides the mathematical foundation for representing and manipulating spatial data, whether in two dimensions, three dimensions, or the high-dimensional spaces used in machine learning. At its core, linear algebra gives us vectors—mathematical objects that combine magnitude and direction—and matrices, which organize data and represent transformations.
-
-Understanding magnitude and normalization separates how much from which way, enabling precise control over velocities, forces, and directions in games and simulations. The dot product measures alignment between vectors, powering everything from physics calculations to recommendation systems through cosine similarity. Matrices extend these concepts to transformations like rotations and scaling, as well as organizing multidimensional data.
-
-The Quiver framework brings these mathematical concepts to Swift with zero conversion overhead. By extending native arrays rather than introducing custom types, Quiver integrates seamlessly into Swift codebases while providing comprehensive vector mathematics, statistical operations, and linear algebra capabilities. Broadcasting eliminates loops for element-wise operations, while built-in functions like magnitude, normalized, and dot() make mathematical formulas translate directly to code.
-
-The practical applications span game development (physics, AI behaviors), computer graphics (transformations, lighting), machine learning (feature vectors, similarity measures), and data analysis (normalization, statistics). These same vector operations form the foundation for PageRank's matrix computations in Chapter 18 and semantic search's document similarity in Chapter 20.
-
-Linear algebra isn't just abstract mathematics—it's the practical tool that makes spatial computing, intelligent systems, and data-driven applications possible. Start with small examples, build intuition through practice, and recognize when your data represents positions, directions, or relationships in space.
-

@@ -332,35 +332,3 @@ Problem: Store user sessions, need fast lookup by session ID
 | Binary Search Tree | O(log n) | O(log n) | Need sorted iteration |
 
 Answer: Hash table—O(1) average for lookups, dynamic add/remove.
-
-## Summary
-
-Performance analysis gives you tools to understand, predict, and optimize algorithm behavior:
-
-**Core concepts:**
-- Big O describes growth rate as input increases
-- Drop constants and lower-order terms
-- Consider best, average, and worst cases
-- Analyze both time and space complexity
-
-**Common complexities:**
-- O(1): Constant, O(log n): Logarithmic, O(n): Linear
-- O(n log n): Linearithmic, O(n²): Quadratic, O(2^n): Exponential
-
-**Practical wisdom:**
-- Profile before optimizing
-- Optimize only when it matters
-- Understand trade-offs between time and space
-- Choose algorithms based on expected input
-
-**Most important lesson:** Understanding complexity helps you choose the right algorithm and recognize when optimization matters. But remember: correct, maintainable code is better than prematurely optimized code. Optimize strategically when profiling shows real need.
-
-As you continue through the data structures ahead, you now have the vocabulary and framework to evaluate their performance systematically.
-
-<div class="bottom-nav">
-  <div class="nav-container">
-    <a href="07-generics" class="nav-link prev">← Chapter 7: Generics</a>
-    <a href="index" class="nav-link toc">Table of Contents</a>
-    <a href="09-linked-lists" class="nav-link next">Chapter 9: Linked Lists →</a>
-  </div>
-</div>

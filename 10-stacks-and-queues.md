@@ -212,35 +212,3 @@ for _ in 0..<1_000_000 {
 ```
 
 This predictable performance makes stacks and queues ideal for systems requiring consistent response times.
-
-## Summary
-
-Stacks and queues are specialized linked structures that enforce ordering rules:
-
-**Stacks (LIFO):**
-- Last element added is first removed
-- O(1) push and pop operations
-- Use for: undo/redo, navigation, backtracking, function calls
-- iOS examples: UINavigationController, responder chain, modal presentations
-
-**Queues (FIFO):**
-- First element added is first removed
-- O(1) dequeue, O(1) enqueue with tail pointer
-- Use for: task scheduling, breadth-first search, buffering
-- iOS examples: DispatchQueue, OperationQueue, NotificationCenter
-
-**Key differences from Chapter 9:**
-- Linked lists allow insertion/removal anywhere (O(n) to find position)
-- Stacks restrict access to top only (O(1) operations)
-- Queues restrict access to front/back only (O(1) operations)
-- Simpler node structure (singly-linked vs doubly-linked)
-
-Both structures build on linked list concepts while adding constraints that enable faster operations and clearer semantics. In Chapter 11, we'll see how stacks help implement tree traversal algorithms. In Chapter 12, queues will power breadth-first graph searches.
-
-<div class="bottom-nav">
-  <div class="nav-container">
-    <a href="09-linked-lists" class="nav-link prev">← Chapter 9: Linked Lists</a>
-    <a href="index" class="nav-link toc">Table of Contents</a>
-    <a href="11-binary-search-trees" class="nav-link next">Chapter 11: Binary Search Trees →</a>
-  </div>
-</div>

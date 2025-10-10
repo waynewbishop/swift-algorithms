@@ -65,25 +65,3 @@ The book includes production code from the Swift Structures package, available a
 Master the fundamentals, and we'll understand everything built on top. This book teaches those fundamentals in production Swift code. We'll build working implementations using modern Swift features—generics, protocols, async/await, and the Quiver framework for vector operations. Every chapter connects classical algorithms to their modern applications, showing us not just how they work, but why they matter and where we'll use them.
 
 The algorithms we'll learn aren't just academic exercises—they're the foundation of every technology we use daily. Understanding them means understanding how modern systems really work, from AI search engines to recommendation systems to graph-based social networks. More importantly, it means we'll know which algorithm to choose when solving our own problems, and we'll understand the performance implications of our decisions.
-
-## Summary
-
-This chapter introduces the core philosophy of the book: classical algorithms from 1946-2000s power every modern technology, from Google autocomplete to generative AI. Swift has evolved from an iOS-only language into a full-stack platform spanning mobile, desktop, server, and spatial computing with SwiftUI, Swift Concurrency, Swift Package Manager, and server frameworks like Vapor.
-
-The chapter emphasizes algorithm lineage—how binary search enables vector databases, tries power autocomplete systems, PageRank influenced attention mechanisms, and hash tables enable modern web session management. These aren't just historical curiosities; they're the actual building blocks of contemporary systems.
-
-Modern AI runs on vector mathematics, and the Quiver framework provides production-ready vector operations in pure Swift. Throughout Chapters 18-20, we'll use Quiver to build semantic search engines and recommendation systems using the same techniques that power Netflix, Spotify, and e-commerce platforms.
-
-The book is organized into five parts: fundamentals introduce performance thinking and Big O notation, core algorithms cover searching and sorting, Swift concepts teach generics and deep performance analysis, data structures present linked lists through heaps, and advanced topics demonstrate PageRank, vector mathematics, and semantic search.
-
-Prerequisites include comfortable Swift programming skills—variables, functions, classes, structs, protocols, and collections. Advanced computer science knowledge is not required; mathematical concepts are explained from first principles. The book includes production code from the Swift Structures package available on GitHub.
-
-The path forward emphasizes understanding fundamentals to comprehend everything built on top. We'll learn not just how algorithms work but why they matter and where they're used. By mastering these concepts, we'll understand how modern systems really work and know which algorithms to choose when solving your own problems, with full awareness of performance implications.
-
-<div class="bottom-nav">
-  <div class="nav-container">
-    <span class="nav-link prev"></span>
-    <a href="index" class="nav-link toc">Table of Contents</a>
-    <a href="02-measuring-performance" class="nav-link next">Chapter 2: Measuring Performance →</a>
-  </div>
-</div>
