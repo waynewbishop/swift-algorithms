@@ -109,19 +109,30 @@ Matrices serve two primary purposes in computational work. First, they organize 
 
 ### Matrix-vector multiplication
 
-One of the most powerful applications is transforming vectors with matrices. A `2×2` rotation matrix that rotates vectors 90° counterclockwise:
+One of the most powerful applications is transforming vectors with matrices. When we multiply a matrix by a vector, each element of the result comes from taking the dot product of a matrix row with the vector. For a 2D transformation, the calculation follows this pattern:
+
+```
+[a  b]   [x]   [a×x + b×y]
+[c  d] × [y] = [c×x + d×y]
+```
+
+Consider a `2×2` rotation matrix that rotates vectors 90° counterclockwise:
 
 ```
 [0  -1]
 [1   0]
 ```
 
-When this matrix transforms vector `[1, 0]` (pointing right), the result is `[0, 1]` (pointing up).
+When this matrix transforms vector `[1, 0]` (pointing right), we calculate each component:
 
+```
+[0  -1]   [1]   [0×1 + (-1)×0]   [0]
+[1   0] × [0] = [1×1 +   0×0 ] = [1]
+```
 
-For a matrix to transform a vector, the matrix width must match the vector length.
+The result `[0, 1]` points up, exactly 90° counterclockwise from the original direction. Each component of the output vector is computed by multiplying corresponding elements from a matrix row and the input vector, then summing those products. This is why matrix multiplication is defined as the dot product of rows with the vector.
 
-Common transformations demonstrate matrices' power. Rotation matrices change direction while preserving magnitude. Scaling matrices change magnitude along specific axes. Reflection matrices mirror vectors across an axis. Shear matrices shift components proportionally, creating skewed transformations. Each transformation has practical applications in graphics, physics, and data manipulation.
+For a matrix to transform a vector, the matrix width must match the vector length. Common transformations demonstrate matrices' power. Rotation matrices change direction while preserving magnitude. Scaling matrices change magnitude along specific axes. Reflection matrices mirror vectors across an axis. Shear matrices shift components proportionally, creating skewed transformations. Each transformation has practical applications in graphics, physics, and data manipulation.
 
 
 ## Introducing Quiver
@@ -274,7 +285,7 @@ The `.averaged()` method validates that all vectors have the same dimensionality
 
 ## Working with matrices
 
-Matrices represent rectangular grids of numbers that appear throughout computing. In computer graphics, transformation matrices rotate, scale, and translate objects in 3D space. In data science, matrices organize datasets where rows represent observations and columns represent features. Linear algebra operations on these matrices enable image processing and recommendation systems.
+With the mathematical foundations of matrices established, let's see how to work with them using Quiver.
 
 ```swift
 // Create and manipulate matrices for transformations and data organization
@@ -293,29 +304,7 @@ let identity = [Double].identity(3)
 //  [0.0, 0.0, 1.0]]
 ```
 
-### Matrix transformations
-
-Matrix transformations apply geometric operations to vectors by multiplying the matrix with the vector. In game development, transformation matrices move characters through scenes, rotate camera views, and apply physics forces. In computer graphics, rotation matrices orient 3D models, while scaling matrices resize objects without distortion. 
-
-In robotics, transformation matrices convert sensor readings from one coordinate frame to another, enabling path planning and obstacle avoidance. The multiplication `matrix × vector` produces a new vector by taking dot products of matrix rows with the vector. A rotation matrix preserves vector length while changing direction. A scaling matrix multiplies each vector component by a scale factor, growing or shrinking without rotating.
-
-### How matrix multiplication transforms vectors
-
-When we multiply a matrix by a vector, each element of the result comes from taking the dot product of a matrix row with the vector. For a 2D transformation, the calculation follows this pattern:
-
-```
-[a  b]   [x]   [a×x + b×y]
-[c  d] × [y] = [c×x + d×y]
-```
-
-For example, rotating the vector `[1, 0]` (pointing right) by 90° counterclockwise using a rotation matrix:
-
-```
-[0  -1]   [1]   [0×1 + (-1)×0]   [0]
-[1   0] × [0] = [1×1 +   0×0 ] = [1]
-```
-
-The result `[0, 1]` points up, exactly 90° counterclockwise from the original direction. Each component of the output vector is computed by multiplying corresponding elements from a matrix row and the input vector, then summing those products. This is why matrix multiplication is defined as the dot product of rows with the vector.
+Applying transformations to vectors uses the `.transform()` method:
 
 ```swift
 // Transform vectors using matrix operations
