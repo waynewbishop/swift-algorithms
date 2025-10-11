@@ -8,7 +8,6 @@ description: "Vector mathematics and numerical computing"
   <a href="index">Table of Contents</a>
 </div>
 
-
 # Linear Algebra
 
 In [Chapter 18](18-dynamic-programming), we saw how breaking problems into smaller subproblems leads to elegant solutions. In [Chapter 19](19-pagerank-algorithm), we encountered PageRank's iterative algorithm for ranking web pages based on link structure. Now we'll explore the mathematical foundation underlying many network algorithms: linear algebra. While dynamic programming optimizes recursive computations and PageRank analyzes networks through iteration, linear algebra provides the mathematical language for spatial relationships, transformations, and data analysis. 
@@ -28,29 +27,19 @@ Vectors can represent many real-world concepts. In physics simulations and game 
 
 ## Magnitude and direction
 
-Every vector has two fundamental properties: magnitude and direction.
+Every vector has two fundamental properties: `magnitude` and `direction`.
 
 ### Magnitude
 
-Magnitude represents a vector's length or size - how much of something we have, independent of direction. For a velocity vector, magnitude is speed. For a force vector, magnitude is strength.
+Magnitude represents a vector's length or size - how much of something we have, independent of direction. For a velocity vector, magnitude is speed. For a force vector, magnitude is strength. It is calculated using the Pythagorean theorem extended to any dimension. For a 2D vector `[x, y]`, magnitude equals `√(x² + y²)`. For a 3D vector `[x, y, z]`, it's `√(x² + y² + z²)`. This pattern extends to any number of dimensions.
 
-Magnitude is calculated using the Pythagorean theorem extended to any dimension. For a 2D vector `[x, y]`, magnitude equals `√(x² + y²)`. For a 3D vector `[x, y, z]`, it's `√(x² + y² + z²)`. This pattern extends to any number of dimensions.
-
-For vector `[3, 4]`, imagine an arrow from the origin to point `(3, 4)`. This forms a right triangle's hypotenuse with sides 3 and 4. The Pythagorean theorem gives us `√(3² + 4²) = √25 = 5`.
-
-
-This extends to higher dimensions. A vector `[1, 2, 3, 4]` has magnitude `√(1² + 2² + 3² + 4²) = √30 ≈ 5.48`.
+For vector `[3, 4]`, imagine an arrow from the origin to point `(3, 4)`. This forms a right triangle's hypotenuse with sides 3 and 4. The Pythagorean theorem gives us `√(3² + 4²) = √25 = 5`. This extends to higher dimensions. A vector `[1, 2, 3, 4]` has magnitude `√(1² + 2² + 3² + 4²) = √30 ≈ 5.48`.
 
 ### Direction and normalization
 
-Direction is expressed as a unit vector - a vector with magnitude 1 that points in the same direction as the original. This process is called normalization.
+Direction is expressed as a unit vector - a `vector` with `magnitude` 1 that points in the same direction as the original. This process is called **normalization**. To normalize, divide each component by the vector's `magnitude`. Vector `[3, 4]` with magnitude 5 becomes `[3/5, 4/5] = [0.6, 0.8]`. Verify: `√(0.6² + 0.8²) = 1`.
 
-To normalize, divide each component by the vector's magnitude. Vector `[3, 4]` with magnitude 5 becomes `[3/5, 4/5] = [0.6, 0.8]`. Verify: `√(0.6² + 0.8²) = 1`.
-
-
-Unit vectors separate how much from which way. A game character moving northeast `[0.7, 0.7]` at 5 units per second: normalize the direction, then multiply by speed to get the exact velocity needed.
-
-The zero vector `[0, 0]` cannot be normalized because it has no direction - it represents no movement or no force.
+Unit vectors separate how much from which way. A game character moving northeast `[0.7, 0.7]` at 5 units per second: normalize the direction, then multiply by speed to get the exact velocity needed. The zero vector `[0, 0]` cannot be normalized because it has no direction - it represents no movement or no force.
 
 ## Vector operations
 
@@ -62,7 +51,6 @@ Vector addition combines vectors by adding corresponding components: `[a₁, a�
 
 A boat with velocity `[3, 0]` (3 units east) in a current with velocity `[0, 2]` (2 units north) has actual velocity `[3, 0] + [0, 2] = [3, 2]`.
 
-
 Vector subtraction: `[a₁, a₂] - [b₁, b₂] = [a₁ - b₁, a₂ - b₂]`. This gives displacement between points. Enemy at `[130, 170]`, player at `[100, 200]`: displacement is `[100, 200] - [130, 170] = [-30, 30]`.
 
 ### Scalar multiplication
@@ -73,14 +61,13 @@ Multiplying `[3, 4]` by 2 gives `[6, 8]` - same direction, doubled length. Multi
 
 ### The dot product
 
-The dot product takes two vectors and produces a single number. For `a = [a₁, a₂]` and `b = [b₁, b₂]`, the dot product is `a · b = a₁ × b₁ + a₂ × b₂`.
-
-The dot product measures how much vectors agree - how much they point in the same direction. Mathematically: `a · b = |a| × |b| × cos(θ)`, where `θ` is the angle between vectors.
-
+The dot product takes two vectors and produces a single number. For `a = [a₁, a₂]` and `b = [b₁, b₂]`, the dot product is `a · b = a₁ × b₁ + a₂ × b₂`. It measures how much vectors agree - how much they point in the **same direction**. Mathematically: `a · b = |a| × |b| × cos(θ)`, where `θ` is the angle between vectors.
 
 The dot product reveals relationships between vectors. When the dot product equals zero, vectors are perpendicular (`cos(90°) = 0`). When the dot product is positive, vectors point in similar directions. When the dot product is negative, vectors point in opposite directions.
 
 Applications span multiple domains. In physics, the dot product calculates work done by computing force · distance. In graphics, it determines if surfaces face light sources, controlling brightness and shadows. In machine learning, measuring similarity between feature vectors through cosine similarity enables recommendation systems to find related items. The dot product transforms geometric intuition into practical computation.
+
+> **For the mathematically curious:** The dot product formula `a · b = |a| × |b| × cos(θ)` reveals why normalized vectors measure similarity: when both have magnitude 1, the dot product *is* the cosine of the angle between them. This geometric insight powers the semantic search in Chapter 21.
 
 ## Matrices
 
@@ -125,7 +112,7 @@ With mathematical foundations established, we need practical tools for working w
 
 ### Why Quiver?
 
-Quiver provides Swift-native vector mathematics and numerical computing by extending the standard Array type rather than creating custom containers. This design eliminates conversion overhead—arrays are vectors without boxing or unboxing. Operations integrate seamlessly with Swift's standard library, maintaining familiar syntax while adding mathematical capabilities. Generic constraints ensure type safety, with operations like division available only for floating-point types. The implementation prioritizes readability, making it easy to translate mathematical formulas directly to code.
+Quiver provides Swift-native vector mathematics and numerical computing by extending the standard `Array` type rather than creating custom containers. This design eliminates conversion overhead—arrays are vectors without boxing or unboxing. Operations integrate seamlessly with Swift's standard library, maintaining familiar syntax while adding mathematical capabilities. Generic constraints ensure type safety, with operations like division available only for floating-point types. The implementation prioritizes readability, making it easy to translate mathematical formulas directly to code.
 
 ### Installing Quiver
 
@@ -270,11 +257,13 @@ Data normalization is essential for machine learning:
 // Normalize data to standard range for machine learning preprocessing
 import Quiver
 
-// Normalize age data to [0, 1] range
+// Normalize age data to [0, 1] range for machine learning model
 let ages = [25.0, 32.0, 47.0, 19.0, 56.0, 38.0]
 
-let minAge = ages.min()!  // 19.0
-let maxAge = ages.max()!  // 56.0
+guard let minAge = ages.min(),
+      let maxAge = ages.max() else {
+    fatalError("Cannot normalize empty array")
+}
 
 let shifted = ages.broadcast(subtracting: minAge)
 let normalized = shifted.broadcast(dividingBy: maxAge - minAge)
@@ -292,16 +281,26 @@ import Quiver
 let scores = [85.0, 92.0, 78.0, 88.0, 95.0, 82.0, 90.0]
 
 // Measures of central tendency
-print(scores.mean()!)     // 87.14
-print(scores.median()!)   // 88.0
+if let mean = scores.mean() {
+    print(mean)  // 87.14
+}
+if let median = scores.median() {
+    print(median)  // 88.0
+}
 
 // Measures of spread
-print(scores.std()!)      // 5.85 (standard deviation)
-print(scores.variance()!) // 34.27
+if let std = scores.std() {
+    print(std)  // 5.85 (standard deviation)
+}
+if let variance = scores.variance() {
+    print(variance)  // 34.27
+}
 
 // Range
-print(scores.min()!)      // 78.0
-print(scores.max()!)      // 95.0
+if let min = scores.min(), let max = scores.max() {
+    print(min)  // 78.0
+    print(max)  // 95.0
+}
 ```
 
 Performance analysis demonstrates practical statistical application:
@@ -312,21 +311,24 @@ import Quiver
 
 let responseTimes = [120.0, 145.0, 132.0, 118.0, 150.0, 125.0]
 
-let avgTime = responseTimes.mean()!     // 131.67ms
-let stdDev = responseTimes.std()!       // 12.41ms
+guard let avgTime = responseTimes.mean(),
+      let stdDev = responseTimes.std() else {
+    print("Error: Insufficient data for analysis")
+    return
+}
 
 if avgTime < 150.0 {
     print("✓ Average response time acceptable")
 }
 
 if stdDev > 20.0 {
-    print("⚠️ High variability - investigate outliers")
+    print("High variability - investigate outliers")
 }
 ```
 
 ## Array generation
 
-Quiver provides utilities for creating arrays for scientific computing.
+Scientific computing and data analysis often require specialized array initialization patterns that go beyond Swift's standard array creation. Machine learning algorithms need arrays of zeros for weight initialization, ones for bias terms, and uniformly spaced values for function plotting. Statistical simulations require random number generation with specific distributions. Testing numerical code demands reproducible sequences for validation. Quiver provides utilities for these common patterns, eliminating repetitive initialization code and reducing errors. The `linspace` function generates evenly-spaced values for plotting continuous functions. The `zeros` and `ones` functions create matrices for linear algebra operations. The `random` function produces test data for statistical analysis. These utilities mirror functionality from NumPy and MATLAB, making Quiver familiar to developers from scientific computing backgrounds.
 
 ```swift
 // Generate arrays for numerical computing and testing
@@ -349,7 +351,7 @@ let yValues = xValues.map { sin($0) }
 
 ## Working with matrices
 
-Matrices are represented as arrays of arrays in Quiver.
+Matrices represent rectangular grids of numbers that appear throughout computing. In computer graphics, transformation matrices rotate, scale, and translate objects in 3D space. In data science, matrices organize datasets where rows represent observations and columns represent features. Linear algebra operations on these matrices enable image processing and recommendation systems.
 
 ```swift
 // Create and manipulate matrices for transformations and data organization
@@ -369,6 +371,8 @@ let identity = [Double].identity(3)
 ```
 
 ### Matrix transformations
+
+Matrix transformations apply geometric operations to vectors by multiplying the matrix with the vector. In game development, transformation matrices move characters through scenes, rotate camera views, and apply physics forces. In computer graphics, rotation matrices orient 3D models, while scaling matrices resize objects without distortion. In robotics, transformation matrices convert sensor readings from one coordinate frame to another, enabling path planning and obstacle avoidance. The multiplication `matrix × vector` produces a new vector by taking dot products of matrix rows with the vector. A rotation matrix preserves vector length while changing direction. A scaling matrix multiplies each vector component by a scale factor, growing or shrinking without rotating. 
 
 ```swift
 // Transform vectors using matrix operations
@@ -489,8 +493,8 @@ import Quiver
 let song1 = [140.0, 0.9, 0.7, 0.8]  // [tempo, energy, danceability, loudness]
 let song2 = [120.0, 0.8, 0.9, 0.7]
 
-// Normalize then dot product = cosine similarity
-let similarity = song1.normalized.dot(song2.normalized)  // 0.98 (very similar)
+// Quiver's cosineOfAngle computes similarity directly
+let similarity = song1.cosineOfAngle(with: song2)  // 0.98 (very similar)
 ```
 
 This cosine similarity technique is fundamental to recommendation systems, search engines, and machine learning. It appears again in [Chapter 21](21-semantic-search), where semantic search uses vector similarity to find related documents.
@@ -529,17 +533,3 @@ let distance = [10.0, 0.0, 0.0]
 
 let work = force.dot(distance)  // 50.0
 ```
-
-## When to use linear algebra
-
-Linear algebra excels with spatial, directional, or multidimensional data. Game development benefits from vectors representing positions, velocities, and forces. Computer graphics relies on transformations, lighting calculations, and camera positioning. Physics simulations model kinematics, dynamics, and particle systems. Machine learning treats data as feature vectors, enabling similarity measures and dimensionality reduction. Data analysis uses statistical operations for normalization, trend detection, and pattern recognition.
-
-Linear algebra is not needed for string processing, file I/O operations, simple business logic, or database queries. The key question: Does your data represent positions, directions, measurements, or relationships in space? If so, linear algebra provides the mathematical foundation.
-
-## Building algorithmic intuition
-
-Linear algebra connects to concepts throughout this book. In [Chapter 3](03-basic-searching), we learned how arrays store sequential data—vectors extend arrays with mathematical operations like dot products and normalization. [Chapter 7](07-generics) introduced generics, and Quiver uses generic constraints to ensure type safety for mathematical operations, allowing division only on floating-point types. [Chapter 8](08-performance-analysis) taught us about Big O notation—vector operations run in `O(n)` time where n is dimensionality, while matrix multiplication is `O(n³)`.
-
-The connections extend to advanced topics. [Chapter 13](13-graphs) covered graphs, where adjacency matrices represent graph connections and eigenvectors reveal network structure. [Chapter 19](19-pagerank-algorithm) explored PageRank, which uses iterative computation to analyze link structure and compute page importance scores across web graphs—though the algorithm's theoretical foundation rests on eigenvector analysis. [Chapter 21](21-semantic-search) covers semantic search, where cosine similarity between document vectors enables intelligent text matching beyond keyword search.
-
-The key insight: Linear algebra provides a mathematical language for spatial relationships, transformations, and similarity measures that power everything from game physics to modern AI systems. Understanding vectors and matrices isn't just about mathematical abstraction—it's about having the right tool for modeling spatial and relational data.
