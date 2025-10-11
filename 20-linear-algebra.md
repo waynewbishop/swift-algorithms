@@ -22,7 +22,6 @@ Consider everyday examples. Wind isn't just "20 miles per hour" - it's "20 miles
 
 Mathematically, vectors are represented as ordered lists of numbers. A two-dimensional vector might be written as `[3, 4]`, representing movement 3 units in one direction and 4 units in another. Three-dimensional vectors add a third component `[x, y, z]`, and we can extend this to any number of dimensions.
 
-
 Vectors can represent many real-world concepts. In physics simulations and game development, they represent positions in space, forces acting on objects, and velocities of moving entities. In machine learning, feature vectors capture multiple attributes of data points—a song might be represented as `[tempo, energy, danceability, loudness]`. Even RGB color values are vectors, with each component representing intensity on a scale from 0 to 1.
 
 ## Magnitude and direction
@@ -96,15 +95,6 @@ For a matrix to transform a vector, the matrix width must match the vector lengt
 
 Common transformations demonstrate matrices' power. Rotation matrices change direction while preserving magnitude. Scaling matrices change magnitude along specific axes. Reflection matrices mirror vectors across an axis. Shear matrices shift components proportionally, creating skewed transformations. Each transformation has practical applications in graphics, physics, and data manipulation.
 
-## Statistics and data analysis
-
-Linear algebra extends beyond geometry into statistical analysis. Understanding distributions, central tendencies, and variations in data requires mathematical operations on vectors and matrices.
-
-Measures of central tendency describe where data clusters. The mean (average) provides the central value, calculated by summing all elements and dividing by count. The median identifies the middle value when data is sorted, being less sensitive to outliers than the mean.
-
-Measures of spread quantify data variability. Standard deviation measures how far values typically deviate from the mean. Variance, the square of standard deviation, provides a mathematically convenient form for many calculations. Range simply captures the difference between maximum and minimum values.
-
-These statistical operations treat data as vectors, applying mathematical transformations to extract insights. A vector of test scores `[85, 92, 78, 88, 95, 82, 90]` can be analyzed for mean performance, consistency through standard deviation, and outliers through range analysis. This mathematical approach to data forms the foundation for more advanced techniques in machine learning and data science.
 
 ## Introducing Quiver
 
@@ -203,150 +193,55 @@ let b = [1.0, 2.0]
 let result = a.dot(b)  // `(3×1) + (4×2) = 11`
 ```
 
-## Vector arithmetic
+### Cosine similarity
 
-Quiver provides natural operators for vector operations.
+The most important operation for semantic search is cosine similarity, which measures how similar two vectors are regardless of their magnitude. Quiver provides `cosineOfAngle(with:)` for this calculation:
 
 ```swift
-// Combine vectors using standard arithmetic operators
+// Measure similarity between vectors using cosine of angle
 import Quiver
 
-// Vector addition (combine forces)
-let force1 = [3.0, 4.0]
-let force2 = [1.0, 2.0]
-let totalForce = force1 + force2  // [4.0, 6.0]
+// Word embedding vectors (simplified for illustration)
+let word1 = [0.2, 0.8, 0.5]  // "running"
+let word2 = [0.3, 0.7, 0.6]  // "jogging"
 
-// Vector subtraction (find displacement)
-let playerPos = [100.0, 200.0]
-let enemyPos = [130.0, 170.0]
-let displacement = playerPos - enemyPos  // [-30.0, 30.0]
+// Cosine similarity ranges from -1 (opposite) to 1 (identical)
+let similarity = word1.cosineOfAngle(with: word2)  // ~0.98 (very similar)
 
-// Scalar multiplication
-let velocity = [5.0, 3.0]
-let doubled = velocity * 2.0      // [10.0, 6.0]
-let halved = velocity * 0.5       // [2.5, 1.5]
-let opposite = velocity * -1.0    // [-5.0, -3.0]
+// Feature vectors for songs
+let song1 = [140.0, 0.9, 0.7, 0.8]  // [tempo, energy, danceability, loudness]
+let song2 = [120.0, 0.8, 0.9, 0.7]
+let songSimilarity = song1.cosineOfAngle(with: song2)  // 0.98
 ```
 
-## Broadcasting and array operations
+This cosine similarity technique is fundamental to recommendation systems, search engines, and machine learning. It appears throughout [Chapter 21](21-semantic-search), where semantic search uses vector similarity to find related documents.
 
-Broadcasting applies a scalar operation to every element in an array, eliminating explicit loops.
+## Vector averaging
 
-```swift
-// Apply scalar operations to all vector elements
-import Quiver
-
-let vector = [1.0, 2.0, 3.0, 4.0]
-
-// Add a scalar to each element
-let increased = vector.broadcast(adding: 5.0)  // [6.0, 7.0, 8.0, 9.0]
-
-// Multiply each element by a scalar
-let scaled = vector.broadcast(multiplyingBy: 2.0)  // [2.0, 4.0, 6.0, 8.0]
-
-// Subtract a scalar from each element
-let decreased = vector.broadcast(subtracting: 1.0)  // [0.0, 1.0, 2.0, 3.0]
-
-// Divide each element by a scalar
-let divided = vector.broadcast(dividingBy: 2.0)  // [0.5, 1.0, 1.5, 2.0]
-```
-
-Data normalization is essential for machine learning:
+Semantic search requires averaging word vectors to create document embeddings:
 
 ```swift
-// Normalize data to standard range for machine learning preprocessing
+// Average multiple word vectors to create document representation
 import Quiver
 
-// Normalize age data to [0, 1] range for machine learning model
-let ages = [25.0, 32.0, 47.0, 19.0, 56.0, 38.0]
+let wordVectors = [
+    [0.2, 0.8, 0.5],  // "running"
+    [0.3, 0.7, 0.6],  // "shoes"
+    [0.1, 0.6, 0.4]   // "comfortable"
+]
 
-guard let minAge = ages.min(),
-      let maxAge = ages.max() else {
-    fatalError("Cannot normalize empty array")
+// Calculate mean across each dimension
+let dimensions = wordVectors[0].count
+var documentVector = [Double](repeating: 0.0, count: dimensions)
+
+for dimension in 0..<dimensions {
+    let sum = wordVectors.reduce(0.0) { total, vector in
+        total + vector[dimension]
+    }
+    documentVector[dimension] = sum / Double(wordVectors.count)
 }
 
-let shifted = ages.broadcast(subtracting: minAge)
-let normalized = shifted.broadcast(dividingBy: maxAge - minAge)
-// [0.16, 0.35, 0.76, 0.0, 1.0, 0.51]
-```
-
-## Statistical functions
-
-Beyond vector mathematics, Quiver provides statistical functions for data analysis.
-
-```swift
-// Analyze data distributions using statistical measures
-import Quiver
-
-let scores = [85.0, 92.0, 78.0, 88.0, 95.0, 82.0, 90.0]
-
-// Measures of central tendency
-if let mean = scores.mean() {
-    print(mean)  // 87.14
-}
-if let median = scores.median() {
-    print(median)  // 88.0
-}
-
-// Measures of spread
-if let std = scores.std() {
-    print(std)  // 5.85 (standard deviation)
-}
-if let variance = scores.variance() {
-    print(variance)  // 34.27
-}
-
-// Range
-if let min = scores.min(), let max = scores.max() {
-    print(min)  // 78.0
-    print(max)  // 95.0
-}
-```
-
-Performance analysis demonstrates practical statistical application:
-
-```swift
-// Monitor system performance using statistical analysis
-import Quiver
-
-let responseTimes = [120.0, 145.0, 132.0, 118.0, 150.0, 125.0]
-
-guard let avgTime = responseTimes.mean(),
-      let stdDev = responseTimes.std() else {
-    print("Error: Insufficient data for analysis")
-    return
-}
-
-if avgTime < 150.0 {
-    print("✓ Average response time acceptable")
-}
-
-if stdDev > 20.0 {
-    print("High variability - investigate outliers")
-}
-```
-
-## Array generation
-
-Scientific computing and data analysis often require specialized array initialization patterns that go beyond Swift's standard array creation. Machine learning algorithms need arrays of zeros for weight initialization, ones for bias terms, and uniformly spaced values for function plotting. Statistical simulations require random number generation with specific distributions. Testing numerical code demands reproducible sequences for validation. Quiver provides utilities for these common patterns, eliminating repetitive initialization code and reducing errors. The `linspace` function generates evenly-spaced values for plotting continuous functions. The `zeros` and `ones` functions create matrices for linear algebra operations. The `random` function produces test data for statistical analysis. These utilities mirror functionality from NumPy and MATLAB, making Quiver familiar to developers from scientific computing backgrounds.
-
-```swift
-// Generate arrays for numerical computing and testing
-import Quiver
-
-// Arrays of zeros and ones
-let zeros = [Double].zeros(count: 5)  // [0.0, 0.0, 0.0, 0.0, 0.0]
-let ones = [Double].ones(count: 3)    // [1.0, 1.0, 1.0]
-
-// Linearly spaced values
-let range = [Double].linspace(0, 10, 5)  // [0.0, 2.5, 5.0, 7.5, 10.0]
-
-// Random values
-let random = [Double].random(count: 100, in: 0...1)
-
-// Generating test data for plotting
-let xValues = [Double].linspace(0, 2 * .pi, 100)
-let yValues = xValues.map { sin($0) }
+// Result: [0.2, 0.7, 0.5] - the average vector
 ```
 
 ## Working with matrices
@@ -372,7 +267,9 @@ let identity = [Double].identity(3)
 
 ### Matrix transformations
 
-Matrix transformations apply geometric operations to vectors by multiplying the matrix with the vector. In game development, transformation matrices move characters through scenes, rotate camera views, and apply physics forces. In computer graphics, rotation matrices orient 3D models, while scaling matrices resize objects without distortion. In robotics, transformation matrices convert sensor readings from one coordinate frame to another, enabling path planning and obstacle avoidance. The multiplication `matrix × vector` produces a new vector by taking dot products of matrix rows with the vector. A rotation matrix preserves vector length while changing direction. A scaling matrix multiplies each vector component by a scale factor, growing or shrinking without rotating. 
+Matrix transformations apply geometric operations to vectors by multiplying the matrix with the vector. In game development, transformation matrices move characters through scenes, rotate camera views, and apply physics forces. In computer graphics, rotation matrices orient 3D models, while scaling matrices resize objects without distortion. 
+
+In robotics, transformation matrices convert sensor readings from one coordinate frame to another, enabling path planning and obstacle avoidance. The multiplication `matrix × vector` produces a new vector by taking dot products of matrix rows with the vector. A rotation matrix preserves vector length while changing direction. A scaling matrix multiplies each vector component by a scale factor, growing or shrinking without rotating. 
 
 ```swift
 // Transform vectors using matrix operations
@@ -397,139 +294,8 @@ let point = [3.0, 4.0]
 let scaled = scaleMatrix.transform(point)  // [6.0, 8.0]
 ```
 
-## Practical applications by domain
+## Building algorithmic intuition
 
-### Game development
+Linear algebra provides the mathematical foundation for many algorithms throughout this book. Vector operations power similarity calculations in semantic search ([Chapter 21](21-semantic-search)), while matrix transformations enable coordinate systems in graph algorithms ([Chapter 12](12-graphs)). The dot product and cosine similarity form the basis of recommendation systems and machine learning applications.
 
-Game AI enemy movement demonstrates vector mathematics in action:
-
-```swift
-// Calculate enemy movement direction and velocity toward player
-import Quiver
-
-// Enemy moves toward player at fixed speed
-let enemyPos = [10.0, 20.0]
-let playerPos = [40.0, 60.0]
-
-let toPlayer = playerPos - enemyPos  // [30.0, 40.0]
-let direction = toPlayer.normalized   // [0.6, 0.8]
-let enemySpeed = 3.0
-
-let enemyVelocity = direction * enemySpeed  // [1.8, 2.4]
-```
-
-Field of view calculations determine if enemies can see the player:
-
-```swift
-// Determine if player is within enemy's field of view
-import Quiver
-
-let enemyForward = [1.0, 0.0]  // Enemy faces right
-let toPlayer = [5.0, 2.0]       // Direction to player
-
-let alignment = enemyForward.normalized.dot(toPlayer.normalized)
-
-if alignment > 0 {
-    print("Player is in front")  // alignment = 0.93
-} else {
-    print("Player is behind")
-}
-```
-
-Physics simulations rely on vector operations for realistic movement:
-
-```swift
-// Simulate ball physics with gravity and velocity
-import Quiver
-
-struct Ball {
-    var position: [Double]
-    var velocity: [Double]
-
-    mutating func update(deltaTime: Double) {
-        position = position + (velocity * deltaTime)
-    }
-
-    mutating func applyForce(_ force: [Double], deltaTime: Double) {
-        velocity = velocity + (force * deltaTime)
-    }
-}
-
-var ball = Ball(position: [0.0, 100.0], velocity: [20.0, 0.0])
-let gravity = [0.0, -9.8]
-
-for _ in 0..<10 {
-    ball.applyForce(gravity, deltaTime: 0.1)
-    ball.update(deltaTime: 0.1)
-}
-```
-
-Distance calculations enable range checking and collision detection:
-
-```swift
-// Check if game objects are within interaction range
-import Quiver
-
-let playerPos = [42.5, 67.3]
-let targetPos = [56.2, 89.7]
-
-let displacement = targetPos - playerPos  // [13.7, 22.4]
-let distance = displacement.magnitude     // 26.24
-
-if distance < 30.0 {
-    print("Target within interaction range!")
-}
-```
-
-### Machine learning
-
-Cosine similarity measures how similar feature vectors are, powering recommendation systems:
-
-```swift
-// Calculate similarity between feature vectors for recommendations
-import Quiver
-
-// Feature vectors for two songs
-let song1 = [140.0, 0.9, 0.7, 0.8]  // [tempo, energy, danceability, loudness]
-let song2 = [120.0, 0.8, 0.9, 0.7]
-
-// Quiver's cosineOfAngle computes similarity directly
-let similarity = song1.cosineOfAngle(with: song2)  // 0.98 (very similar)
-```
-
-This cosine similarity technique is fundamental to recommendation systems, search engines, and machine learning. It appears again in [Chapter 21](21-semantic-search), where semantic search uses vector similarity to find related documents.
-
-### Graphics and visualization
-
-Color manipulation treats RGB values as vectors:
-
-```swift
-// Manipulate colors using vector operations
-import Quiver
-
-// RGB color as a vector
-let color = [0.8, 0.5, 0.2]  // Amber
-
-// Brightness adjustment
-let brighter = color.broadcast(multiplyingBy: 1.2)  // [0.96, 0.6, 0.24]
-
-// Blend two colors
-let red = [1.0, 0.0, 0.0]
-let blue = [0.0, 0.0, 1.0]
-let purple = (red * 0.5) + (blue * 0.5)  // [0.5, 0.0, 0.5]
-```
-
-### Physics calculations
-
-Work calculation demonstrates dot product application:
-
-```swift
-// Calculate work done by force over distance
-import Quiver
-
-// Work = Force · Distance
-let force = [5.0, 3.0, 2.0]
-let distance = [10.0, 0.0, 0.0]
-
-let work = force.dot(distance)  // 50.0
-```
+Understanding vectors and matrices creates a unified framework for thinking about spatial relationships, transformations, and data analysis. These concepts bridge theoretical computer science and practical applications, from game development to artificial intelligence.
