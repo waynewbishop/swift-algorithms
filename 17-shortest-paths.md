@@ -14,25 +14,19 @@ When we explored [graphs](https://en.wikipedia.org/wiki/Graph_(abstract_data_typ
 
 [Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm), developed by Edsger W. Dijkstra in 1956, solves this weighted shortest path problem with elegant efficiency. The algorithm employs a [greedy strategy](https://en.wikipedia.org/wiki/Greedy_algorithm)—always choosing the locally optimal path—which surprisingly guarantees the globally optimal solution. While originally designed for routing in communications networks, Dijkstra's algorithm now powers the GPS systems in our cars, optimizes data flow across the internet, and helps delivery services minimize fuel costs. Every time we ask for directions to the nearest coffee shop, we benefit from Dijkstra's six-decade-old insight.
 
-The algorithm builds on concepts from throughout this book. It uses the graph structures and vertex/edge relationships from Chapter 13, applies the priority queue pattern from Chapter 10, and dramatically benefits from the heap data structure we explored in Chapter 16. By maintaining a frontier of partially explored paths and always selecting the most promising option, Dijkstra's algorithm navigates complex networks to find optimal routes efficiently. This chapter presents both the foundational array-based implementation and the optimized heap-based version, demonstrating how the right data structure transforms algorithmic performance.
-
 ## The shortest path problem
-
-Real-world networks assign weights to their connections, representing different kinds of costs or distances. GPS navigation systems model roads as graphs where edge weights represent travel time or distance. Network routing protocols use edge weights to represent latency or bandwidth capacity. Social network analysis assigns weights based on interaction frequency or relationship strength. Flight booking systems optimize for monetary cost, travel time, or number of connections.
 
 The shortest path problem asks us to find the minimum total weight path between two vertices in a weighted graph. Unlike breadth-first search, which treats all edges equally, Dijkstra's algorithm considers these weights to find truly optimal routes. A path with more edges might have a lower total weight than a path with fewer edges, making the problem substantially more complex than unweighted traversal.
 
-## Understanding the frontier concept
+## Understanding the frontier
 
-The frontier is the key concept that makes Dijkstra's algorithm work. Think of it as the edge of exploration—the set of paths we're currently considering but haven't fully explored yet. As we discover new vertices and potential routes, the frontier expands. As we select and fully explore paths, they leave the frontier and become part of our known solution space.
+The `frontier` is the key concept that makes Dijkstra's algorithm work. Think of it as the edge of exploration—the set of paths we're currently considering but haven't fully explored yet. As we discover new vertices and potential routes, the frontier expands. As we select and fully explore paths, they leave the frontier and become part of our known solution space.
 
 Consider exploring a cave system with multiple tunnels branching in different directions. You start at the entrance and can see several tunnels leading deeper into the cave. This initial view represents your frontier—the paths you know about but haven't yet explored. You choose the shortest tunnel to investigate first, following it until you reach a junction. At this junction, you discover new tunnels, expanding your frontier with additional options. You always choose the shortest unexplored path from your current options, keeping track of where you've been to avoid circular exploration.
 
-Dijkstra's algorithm follows this same pattern. We initialize the frontier with all paths from the starting vertex. We select the shortest path from the frontier, making a greedy choice that proves optimal. We explore from that path's destination, discovering new possible paths and expanding the frontier. We remove the explored path from the frontier, adding it to our collection of known-optimal solutions. This process repeats until we've found the destination or explored all reachable vertices.
-
 ## The Path class
 
-To maintain the frontier effectively, we need more than just vertices. We must track how we reached each vertex, the total cost accumulated along the way, and which vertex the path terminates at. The Path class encapsulates this information:
+To maintain the `frontier` effectively, we need more than just vertices. We must track how we reached each vertex, the total cost accumulated along the way, and which vertex the path terminates at. The Path class encapsulates this information:
 
 ```swift
 // Path class maintains objects that comprise the frontier
@@ -49,13 +43,13 @@ public class Path<T> {
 }
 ```
 
-Each Path object represents a potential route through the graph. The destination property identifies which vertex this path reaches. The total property accumulates the sum of edge weights from the source to this destination. The previous property forms a linked list structure, allowing us to reconstruct the complete path by following these references backward from destination to source.
+Each `Path` represents a potential route through the graph. The destination property identifies which vertex this path reaches. The `total` accumulates the sum of edge weights from the source to this destination. The previous property forms a linked list structure, allowing us to reconstruct the complete path by following these references backward from destination to source.
 
-Without the Path class, we would only track which vertices we've visited. But optimal pathfinding requires knowing how we got there and what it cost us. The previous pointer enables path reconstruction after finding the optimal route. The total weight enables comparison between alternative routes to the same destination. This structure transforms Dijkstra's algorithm from a simple traversal into an optimization engine.
+Without the `Path` class, we would only track which vertices we've visited. But optimal pathfinding requires knowing how we got there and what it cost us. The previous pointer enables path reconstruction after finding the optimal route. The total `weight` enables comparison between alternative routes to the same destination. This structure transforms Dijkstra's algorithm from a simple traversal into an optimization engine.
 
 ## Array-based implementation
 
-The foundational implementation uses an array to maintain the frontier. This approach clearly demonstrates the algorithm's mechanics before we optimize with more sophisticated data structures:
+The foundational implementation uses an array to maintain the `frontier`. This approach clearly demonstrates the algorithm's mechanics before we optimize with more sophisticated data structures:
 
 ```swift
 // Dijkstra's shortest path using array-based frontier - O(V²)
@@ -130,21 +124,21 @@ extension Graph {
 }
 ```
 
-The algorithm begins by initializing the frontier with Path objects for all neighbors of the source vertex. Each initial path has the source as its implicit starting point, a neighbor as its destination, and the edge weight as its total cost. This seeding process establishes the starting frontier from which exploration proceeds.
+The algorithm begins by initializing the `frontier` with `Path` objects for all neighbors of the source `vertex`. Each initial path has the source as its implicit starting point, a `neighbor` as its destination, and the edge `weight` as its total cost. This seeding process establishes the starting `frontier` from which exploration proceeds.
 
-The main loop repeatedly selects the path with the minimum total cost from the frontier. This greedy selection requires scanning all frontier paths, comparing their totals, and tracking both the best path and its index position. Once identified, the algorithm expands from this path's destination vertex, creating new Path objects for each of that vertex's neighbors. These new paths link back to the current best path via the previous pointer, building the chain that will eventually represent the complete route.
+The main loop repeatedly selects the path with the minimum total cost from the frontier. This greedy selection requires scanning all `frontier` paths, comparing their totals, and tracking both the best path and its index position. Once identified, the algorithm expands from this path's destination `vertex`, creating new `Path` objects for each of that vertex's neighbors. These new paths link back to the current best path via the previous pointer, building the chain that will eventually represent the complete route.
 
-After exploring all paths from the best path's destination, we move it from the frontier to finalPaths. This transfer represents our confidence that we've found the optimal route to this particular vertex. The frontier removal completes the iteration, and the process repeats until the frontier empties. Finally, we search finalPaths for all routes reaching our target destination and return the one with minimum total cost.
+After exploring all paths from the best path's destination, we move it from the frontier to finalPaths. This transfer represents our confidence that we've found the optimal route to this particular vertex. The frontier removal completes the iteration, and the process repeats until the `frontier` empties. Finally, we search `finalPaths` for all routes reaching our target destination and return the one with minimum total cost.
 
 ## Performance analysis
 
-The array-based implementation achieves O(V²) [time complexity](https://en.wikipedia.org/wiki/Time_complexity) in the worst case. Each iteration requires scanning the entire frontier to find the minimum, an O(V) operation. We perform this scan once for each vertex we visit, yielding O(V) iterations. Together, these nested operations produce quadratic complexity. The space complexity is O(V + E) to store the frontier and the finalPaths collection.
+The array-based implementation achieves `O(V²)` [time complexity](https://en.wikipedia.org/wiki/Time_complexity) in the worst case. Each iteration requires scanning the entire frontier to find the minimum, an `O(V)` operation. We perform this scan once for each vertex we visit, yielding `O(V)` iterations. Together, these nested operations produce quadratic complexity. The space complexity is `O(V + E)` to store the `frontier` and the `finalPaths` collection.
 
-For sparse graphs where the number of edges is much smaller than V², this performance is acceptable. However, as graphs grow denser or larger in scale, the quadratic time complexity becomes prohibitive. Finding the minimum path in the frontier dominates the runtime, consuming the majority of computational resources. This bottleneck suggests an optimization opportunity—if we could find the minimum path more efficiently, we could dramatically improve overall performance.
+For sparse graphs where the number of edges is much smaller than `V²`, this performance is acceptable. However, as graphs grow denser or larger in scale, the quadratic time complexity becomes prohibitive. Finding the minimum path in the frontier dominates the runtime, consuming the majority of computational resources. This bottleneck suggests an optimization opportunity—if we could find the **minimum path** more efficiently, we could dramatically improve overall performance.
 
 ## Heap-optimized implementation
 
-Chapter 16 introduced heaps as priority queues with O(log n) insertion and O(1) minimum element access. By replacing the array-based frontier with a heap, we transform the expensive minimum-finding operation into a constant-time peek followed by a logarithmic dequeue:
+Chapter 16 introduced **heaps** as priority queues with `O(log n)` insertion and `O(1)` minimum element access. By replacing the array-based frontier with a `heap`, we transform the expensive minimum-finding operation into a **constant-time** O(1) `peek` followed by a logarithmic `dequeue`:
 
 ```swift
 // Dijkstra's shortest path using heap-based frontier - O((V + E) log V)
@@ -203,9 +197,9 @@ extension Graph {
 }
 ```
 
-The heap-based version eliminates the explicit minimum-finding loop. Instead of scanning all frontier paths, we simply peek at the heap's root to access the path with minimum total cost. The heap property guarantees this element is the minimum, removing the need for comparison. Enqueuing new paths and dequeuing the minimum both operate in O(log V) time, dramatically reducing the per-iteration cost.
+The heap-based version eliminates the explicit minimum-finding loop. Instead of scanning all `frontier` paths, we simply `peek` at the heap's root to access the path with minimum total cost. The heap property guarantees this element is the minimum, removing the need for comparison. Enqueuing new paths and dequeuing the minimum both operate in `O(log V)` time, dramatically reducing the per-iteration cost.
 
-This optimization changes the overall time complexity to O((V + E) log V). We visit each vertex once (V iterations) and examine each edge once (E edge examinations). Each frontier operation (enqueue or dequeue) costs O(log V). For graphs with many edges, this improvement is substantial. A graph with 1,000 vertices and 5,000 edges would require roughly 1,000,000 operations with the array-based approach but only 65,000 operations with the heap-based approach—a 15× speedup.
+This optimization changes the overall time complexity to `O((V + E) log V)`. We visit each `vertex` once (V iterations) and examine each edge once (E edge examinations). Each `frontier` operation (enqueue or dequeue) costs `O(log V)`. For graphs with many edges, this improvement is substantial. A graph with 1,000 vertices and 5,000 edges would require roughly 1,000,000 operations with the array-based approach but only 65,000 operations with the heap-based approach—a **15× speedup**.
 
 ## Performance comparison
 
@@ -313,16 +307,8 @@ This example demonstrates Dijkstra's greedy approach in action. The direct route
 
 ## Real-world applications
 
-Modern navigation systems rely on variations of Dijkstra's algorithm to compute optimal routes. GPS devices model road networks as weighted graphs where edge weights represent travel time, incorporating real-time traffic data to avoid congestion. The algorithm runs continuously, recomputing routes as conditions change. When we request directions, the system applies Dijkstra's algorithm to find the fastest route given current traffic patterns.
+Modern **navigation systems** rely on variations of Dijkstra's algorithm to compute optimal routes. GPS devices model road networks as weighted graphs where edge weights represent travel time, incorporating real-time traffic data to avoid congestion. The algorithm runs continuously, recomputing routes as conditions change. When we request directions, the system applies Dijkstra's algorithm to find the fastest route given current traffic patterns.
 
-Network routing protocols use Dijkstra's algorithm to direct data packets across the internet. Routers maintain graphs representing network topology, with edge weights based on latency, bandwidth, or cost. When forwarding packets, routers consult routing tables precomputed using shortest path algorithms. The Border Gateway Protocol, which routes traffic between autonomous systems on the internet, employs path vector algorithms derived from Dijkstra's work.
+Network **routing protocols** use Dijkstra's algorithm to direct data packets across the internet. Routers maintain graphs representing network topology, with edge weights based on latency, bandwidth, or cost. When forwarding packets, routers consult routing tables precomputed using shortest path algorithms. The Border Gateway Protocol, which routes traffic between autonomous systems on the internet, employs path vector algorithms derived from Dijkstra's work.
 
-Flight booking systems and logistics companies apply shortest path algorithms to optimize routes and minimize costs. Delivery services like UPS and FedEx use sophisticated variants to plan daily routes for thousands of vehicles. The algorithm considers multiple constraints simultaneously—distance, time, fuel efficiency, and delivery windows—by encoding these factors as edge weights in the graph representation.
-
-## Building algorithmic intuition
-
-Dijkstra's algorithm demonstrates the power of the greedy approach when applied to problems with optimal substructure. The algorithm never reconsiders a decision once made, yet it guarantees an optimal result. This works because the shortest path to any vertex must include the shortest paths to intermediate vertices along the way. If a shorter intermediate path existed, we would have discovered it earlier due to the greedy selection strategy.
-
-The frontier concept appears in many pathfinding algorithms. A-star search, used in video games and robotics, extends Dijkstra's algorithm with heuristics that guide exploration toward the goal. Bidirectional search maintains two frontiers, one expanding from the source and another from the destination, meeting in the middle. Understanding how Dijkstra's algorithm manages its frontier provides the foundation for comprehending these more sophisticated variants.
-
-The relationship between data structure choice and algorithm performance becomes particularly clear with Dijkstra's algorithm. The array-based version works but scales poorly. The heap-based version transforms performance by targeting the algorithmic bottleneck. This pattern repeats throughout algorithm design—identifying the expensive operations and applying appropriate data structures to optimize them.
+Flight **booking systems** and logistics companies apply shortest path algorithms to optimize routes and minimize costs. Delivery services like UPS and FedEx use sophisticated variants to plan daily routes for thousands of vehicles. The algorithm considers multiple constraints simultaneously—distance, time, fuel efficiency, and delivery windows—by encoding these factors as edge weights in the graph representation.
