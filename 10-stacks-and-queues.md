@@ -10,13 +10,13 @@ description: "Essential data structures for managing collections"
 
 # Stacks & queues
 
-In [Chapter 9](09-linked-lists.md), you built linked lists—collections where elements connect through pointers rather than contiguous memory. Stacks and queues extend this concept by adding ordering rules: stacks process elements last-in, first-out (LIFO), while queues process elements first-in, first-out (FIFO). Both structures achieve [O(1)](https://en.wikipedia.org/wiki/Big_O_notation) insertion and removal (from Chapter 8), making them ideal building blocks for algorithms requiring consistent, fast access patterns.
+In [Chapter 9](09-linked-lists.md), you built linked lists—collections where elements connect through pointers rather than contiguous memory. **Stacks and queues** extend this concept by adding ordering rules: stacks process elements last-in, first-out (LIFO), while queues process elements first-in, first-out (FIFO). Both structures achieve constant time `O(1)` insertion and removal (from Chapter 8), making them ideal building blocks for algorithms requiring consistent, fast access patterns.
 
-These structures power critical systems we use daily. Navigation controllers use stacks to manage view hierarchies (push a view, pop to go back). Task queues schedule operations fairly (DispatchQueue, OperationQueue). Understanding stacks and queues is essential for iOS development and algorithm design.
+These structures power critical systems we use daily. Navigation controllers use stacks to manage view hierarchies (push a view, pop to go back). Task queues schedule operations fairly (`DispatchQueue`, `OperationQueue`). Understanding stacks and queues is essential for iOS development and algorithm design.
 
 ## Real-world applications
 
-Stacks reverse order—the last item added is first removed. This makes them perfect for undo/redo systems (track history, pop to undo), navigation (push views, pop to go back), and function call tracking (debugger shows call stack). iOS uses stacks extensively: UINavigationController maintains a view stack, the responder chain propagates touches through a stack, and modal presentations form a stack.
+Stacks reverse order—the last item added is first removed. This makes them perfect for undo/redo systems (track history, pop to undo), navigation (push views, pop to go back), and function call tracking (debugger shows call stack). iOS uses stacks extensively: `UINavigationController` maintains a view stack, the responder chain propagates touches through a stack, and modal presentations form a stack.
 
 Queues preserve order—the first item added is first removed. This ensures fairness in task scheduling (process requests in order received), breadth-first graph traversal (Chapter 12 uses queues to explore graphs level-by-level), and buffering (network requests, print jobs, video frames). Foundation frameworks rely on queues: DispatchQueue schedules tasks, OperationQueue manages concurrent operations, and NotificationCenter posts notifications in order.
 
@@ -111,11 +111,11 @@ public class Queue<T> {
 }
 ```
 
-Enqueuing is O(n) because we must traverse to the end. A production implementation might maintain a `tail` pointer to make enqueuing O(1). Dequeuing is O(1)—just update the `top` pointer.
+Enqueuing is linear time `O(n)` because we must traverse to the end. A production implementation might maintain a `tail` pointer to make enqueuing `O(1)`. Dequeuing is `O(1)`—just update the `top` pointer.
 
 ## Building a stack
 
-Stacks follow "last-in, first-out" ordering. Elements are added and removed from the same end (the top), like a stack of plates. This enables O(1) insertion and removal:
+Stacks follow "last-in, first-out" ordering. Elements are added and removed from the same end (the `top`), like a stack of plates. This enables O(1) insertion and removal:
 
 ```swift
 // Generic stack implementation with LIFO ordering
@@ -180,7 +180,7 @@ public class Stack<T> {
 }
 ```
 
-Unlike queues (which add at the back and remove from the front), stacks add and remove from the same location. This makes all stack operations O(1)—no traversal needed.
+Unlike queues (which add at the back and remove from the front), stacks add and remove from the same location. This makes all stack operations perform in constant time `O(1)` -no traversal needed.
 
 ## Performance characteristics
 
@@ -196,7 +196,7 @@ Both structures excel at their core operations:
 
 \* This implementation's enqueue is O(n). With a tail pointer, it becomes O(1).
 
-The O(1) performance means these operations take constant time regardless of size. Adding the millionth element takes the same time as adding the first:
+The `O(1)` performance means these operations take constant time regardless of size. Adding the millionth element takes the same time as adding the first:
 
 ```swift
 // Process 1 million items with consistent performance
