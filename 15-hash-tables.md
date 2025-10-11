@@ -22,11 +22,11 @@ Hash tables solve a fundamental problem in computer science: how do we store and
 ### Keys & values
 
 Compared to other data structures:
-- **[Linked Lists](https://en.wikipedia.org/wiki/Linked_list)**: Flexible but require O(n) search time due to sequential traversal
+- **[Linked Lists](https://en.wikipedia.org/wiki/Linked_list)**: Flexible but require `O(n)` search time due to sequential traversal
 - Arrays: Fast indexed access but require knowing the exact position
-- **Hash Tables**: Combine the best of both worlds - fast O(1) average case operations with flexible key-based access
+- **Hash Tables**: Combine the best of both worlds - fast `O(1)` average case operations with flexible key-based access
 
-A well-designed hash table can achieve constant time O(1) for insertion, deletion, and lookup operations, making it one of the most efficient data structures available.
+A well-designed hash table can achieve constant time `O(1)` for insertion, deletion, and lookup operations, making it one of the most efficient data structures available.
 
 ## Hash function fundamentals
 
@@ -45,7 +45,7 @@ The hash function is the heart of any hash table. It takes an input key and prod
 
 A good hash function should be:
 - Deterministic: Same input always produces same output
-- Fast: O(1) computation time
+- Fast: `O(1)` computation time
 - Uniform: Distributes keys evenly across buckets
 - **Avalanche Effect**: Small input changes create large output changes
 
@@ -250,7 +250,7 @@ extension HashTable {
 While we use chaining, other strategies include:
 - **Open Addressing**: Find next available slot
 - **Robin Hood Hashing**: Minimize variance in probe distances
-- **Cuckoo Hashing**: Guarantees O(1) worst-case lookup
+- **Cuckoo Hashing**: Guarantees `O(1)` worst-case lookup
 
 ## Complete CRUD operations
 
@@ -349,131 +349,14 @@ extension HashTable {
 }
 ```
 
-## Real-world applications
-
-Hash tables are fundamental to many systems and algorithms:
-
-### 1. Caching system
-
-```swift
-// LRU cache using hash table for O(1) lookups
-class LRUCache<Key: Hashable, Value> {
-    private let capacity: Int
-    private var cache = HashTable<Key, CacheNode<Value>>()
-    private var head: CacheNode<Value>?
-    private var tail: CacheNode<Value>?
-
-    init(capacity: Int) {
-        self.capacity = capacity
-    }
-
-    func get(_ key: Key) -> Value? {
-        guard let node = cache.getValue(for: key) else {
-            return nil
-        }
-
-        // Move to front (most recently used)
-        moveToFront(node)
-        return node.value
-    }
-
-    func put(_ key: Key, value: Value) {
-        if let existingNode = cache.getValue(for: key) {
-            existingNode.value = value
-            moveToFront(existingNode)
-        } else {
-            let newNode = CacheNode(value: value)
-            cache.insert(key, value: newNode)
-
-            if cache.count > capacity {
-                removeLRU()
-            }
-        }
-    }
-}
-```
-
-### 2. Database indexing
-
-```swift
-// Simplified database index using hash table for fast lookups
-class DatabaseIndex<Key: Hashable> {
-    private var index = HashTable<Key, [Int]>()
-
-    func addRecord(key: Key, recordID: Int) {
-        if var records = index.getValue(for: key) {
-            records.append(recordID)
-            index.insert(key, value: records)
-        } else {
-            index.insert(key, value: [recordID])
-        }
-    }
-
-    func findRecords(for key: Key) -> [Int] {
-        return index.getValue(for: key) ?? []
-    }
-}
-```
-
-### 3. Set implementation
-
-```swift
-// Efficient set implementation using hash table - O(1) operations
-public struct HashSet<Element: Hashable> {
-    private var table = HashTable<Element, Bool>()
-
-    public mutating func insert(_ element: Element) {
-        table.insert(element, value: true)
-    }
-
-    public func contains(_ element: Element) -> Bool {
-        return table.contains(element)
-    }
-
-    public mutating func remove(_ element: Element) {
-        table.remove(element)
-    }
-
-    public var count: Int {
-        return table.count
-    }
-}
-```
-
-### 4. Word frequency counter
-
-```swift
-// Count word occurrences using hash table - O(n) where n=word count
-func wordFrequency(in text: String) -> HashTable<String, Int> {
-    let words = text.lowercased()
-        .components(separatedBy: .whitespacesAndNewlines)
-        .filter { !$0.isEmpty }
-
-    let frequency = HashTable<String, Int>()
-
-    for word in words {
-        let currentCount = frequency.getValue(for: word) ?? 0
-        frequency.insert(word, value: currentCount + 1)
-    }
-
-    return frequency
-}
-
-// Usage
-let text = "Swift algorithms Swift programming algorithms"
-let freq = wordFrequency(in: text)
-print(freq.getValue(for: "swift"))  // Optional(2)
-print(freq.getValue(for: "algorithms"))  // Optional(2)
-```
-
 ## Performance analysis
 
 Hash tables offer excellent performance characteristics when properly implemented, as analyzed using [Chapter 8](08-performance-analysis.md) principles:
 
 ### Time complexity
-- **Average Case**: O(1) for insert, search, delete
-- **Worst Case**: O(n) when all keys hash to same bucket
-- Space: O(n) where n is the number of elements
+- **Average Case**: `O(1)` for insert, search, delete
+- **Worst Case**: `O(n)` when all keys hash to same bucket
+- Space: `O(n)` where n is the number of elements
 
 ### Load factor impact
 
@@ -483,66 +366,17 @@ Hash tables offer excellent performance characteristics when properly implemente
 | 0.50 | 0.50 | Very Good (balanced) |
 | 0.75 | 0.75 | Good (our resize threshold) |
 | 1.00 | 1.00 | Fair (getting slower) |
-| 2.00 | 2.00 | Poor (approaching O(n)) |
+| 2.00 | 2.00 | Poor (approaching `O(n)`) |
 
 ### Comparison with other data structures
 
 | Operation | Array | Linked List (Ch 9) | BST (Ch 11) | Hash Table |
 |-----------|-------|-------------|-----|------------|
-| Search | O(n) | O(n) | O(log n) | O(1) avg |
-| Insert | O(n) | O(1) | O(log n) | O(1) avg |
-| Delete | O(n) | O(n) | O(log n) | O(1) avg |
+| Search | `O(n)` | `O(n)` | `O(log n)` | `O(1)` avg |
+| Insert | `O(n)` | `O(1)` | `O(log n)` | `O(1)` avg |
+| Delete | `O(n)` | `O(n)` | `O(log n)` | `O(1)` avg |
 | Ordered Traversal | ✓ | ✗ | ✓ | ✗ |
 | Memory Overhead | Low | Medium | Medium | Medium-High |
-
-## Advanced concepts
-
-### Hash function quality metrics
-
-```swift
-// Analyze hash distribution quality to detect poor hash functions
-extension HashTable {
-    public func analyzeDistribution() -> (Double, Int, Int) {
-        var chainLengths: [Int] = []
-        var maxChainLength = 0
-        var nonEmptyBuckets = 0
-
-        for bucket in buckets {
-            var length = 0
-            var current = bucket
-
-            while current != nil {
-                length += 1
-                current = current?.next
-            }
-
-            chainLengths.append(length)
-            if length > 0 {
-                nonEmptyBuckets += 1
-                maxChainLength = max(maxChainLength, length)
-            }
-        }
-
-        let averageChainLength = Double(size) / Double(nonEmptyBuckets)
-        return (averageChainLength, maxChainLength, nonEmptyBuckets)
-    }
-}
-```
-
-### When to use hash tables
-
-**Ideal for:**
-- Fast lookups by key
-- Implementing caches
-- Counting occurrences
-- Detecting duplicates
-- Set operations
-
-**Avoid when:**
-- Need ordered iteration (use BSTs from Chapter 11)
-- Range queries required
-- Memory is severely constrained
-- Keys don't hash well
 
 ## Building algorithmic intuition
 
