@@ -16,8 +16,6 @@ Semantic search solves this problem by understanding the meaning behind words ra
 
 The foundation of semantic search rests on a mathematical representation of meaning: [vectors](https://en.wikipedia.org/wiki/Euclidean_vector). By converting text into high-dimensional numerical [arrays](https://en.wikipedia.org/wiki/Array_data_structure), we can use mathematical operations to measure how similar two pieces of text are in meaning.
 
-Semantic search synthesizes concepts from throughout this book. It stores document vectors in arrays from Chapter 3, uses generic types from Chapter 7 to work with any numeric vector type, and analyzes O(n×d) complexity from Chapter 8. Dictionary data structures from Chapter 15 map words to embeddings with O(1) lookup. The vector mathematics from Chapter 21—dot products, magnitude, normalization, and cosine similarity—form the algorithmic core. Even PageRank from Chapter 21 uses similar matrix operations to compute importance scores, demonstrating how linear algebra powers both web search and semantic search.
-
 This chapter explores the [algorithms](https://en.wikipedia.org/wiki/Algorithm) that power semantic search, from converting text to vectors through finding the most similar documents in a collection.
 
 ## Introducing word embeddings

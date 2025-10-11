@@ -26,7 +26,7 @@ Consider exploring a cave system with multiple tunnels branching in different di
 
 ## The Path class
 
-To maintain the `frontier` effectively, we need more than just vertices. We must track how we reached each vertex, the total cost accumulated along the way, and which vertex the path terminates at. The Path class encapsulates this information:
+To maintain the `frontier` effectively, we need more than just vertices. We must track how we reached each vertex, the total cost accumulated along the way, and which vertex the path terminates at. The `Path` class encapsulates this information:
 
 ```swift
 // Path class maintains objects that comprise the frontier
@@ -307,8 +307,8 @@ This example demonstrates Dijkstra's greedy approach in action. The direct route
 
 ## Real-world applications
 
-Modern **navigation systems** rely on variations of Dijkstra's algorithm to compute optimal routes. GPS devices model road networks as weighted graphs where edge weights represent travel time, incorporating real-time traffic data to avoid congestion. The algorithm runs continuously, recomputing routes as conditions change. When we request directions, the system applies Dijkstra's algorithm to find the fastest route given current traffic patterns.
+- Modern navigation systems rely on variations of Dijkstra's algorithm to compute optimal routes. GPS devices model road networks as weighted graphs where edge weights represent travel time, incorporating real-time traffic data to avoid congestion. The algorithm runs continuously, recomputing routes as conditions change. When we request directions, the system applies Dijkstra's algorithm to find the fastest route given current traffic patterns.
 
-Network **routing protocols** use Dijkstra's algorithm to direct data packets across the internet. Routers maintain graphs representing network topology, with edge weights based on latency, bandwidth, or cost. When forwarding packets, routers consult routing tables precomputed using shortest path algorithms. The Border Gateway Protocol, which routes traffic between autonomous systems on the internet, employs path vector algorithms derived from Dijkstra's work.
+- Network routing protocols use Dijkstra's algorithm to direct data packets across the internet. Routers maintain graphs representing network topology, with edge weights based on latency, bandwidth, or cost. When forwarding packets, routers consult routing tables precomputed using shortest path algorithms. The Border Gateway Protocol, which routes traffic between autonomous systems on the internet, employs path vector algorithms derived from Dijkstra's work.
 
-Flight **booking systems** and logistics companies apply shortest path algorithms to optimize routes and minimize costs. Delivery services like UPS and FedEx use sophisticated variants to plan daily routes for thousands of vehicles. The algorithm considers multiple constraints simultaneously—distance, time, fuel efficiency, and delivery windows—by encoding these factors as edge weights in the graph representation.
+- Flight booking systems and logistics companies apply shortest path algorithms to optimize routes and minimize costs. Delivery services like UPS and FedEx use sophisticated variants to plan daily routes for thousands of vehicles. The algorithm considers multiple constraints simultaneously—distance, time, fuel efficiency, and delivery windows—by encoding these factors as edge weights in the graph representation.
