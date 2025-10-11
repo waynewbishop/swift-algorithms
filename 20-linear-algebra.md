@@ -288,38 +288,31 @@ The `.averaged()` method validates that all vectors have the same dimensionality
 With the mathematical foundations of matrices established, let's see how to work with them using Quiver.
 
 ```swift
-// Create and manipulate matrices for transformations and data organization
-import Quiver
-
-// A `2×3` matrix (2 rows, 3 columns)
-let matrix = [
-    [1.0, 2.0, 3.0],
-    [4.0, 5.0, 6.0]
-]
-
-// Create identity matrix
-let identity = [Double].identity(3)
-// [[1.0, 0.0, 0.0],
-//  [0.0, 1.0, 0.0],
-//  [0.0, 0.0, 1.0]]
-```
-
-Applying transformations to vectors uses the `.transform()` method:
-
-```swift
-// Transform vectors using matrix operations
+// Create rotation matrix from the conceptual example
 import Quiver
 
 // 2D rotation matrix (90° counterclockwise)
+// Same matrix from the mathematical explanation above
 let rotation90 = [
     [0.0, -1.0],
     [1.0,  0.0]
 ]
 
+// The matrix we discussed: [0  -1]
+//                          [1   0]
+```
+
+Applying transformations to vectors uses the `.transform()` method. Using the rotation matrix we just created:
+
+```swift
+// Apply the rotation transformation to a vector
 let rightVector = [1.0, 0.0]  // Points right
 let rotated = rotation90.transform(rightVector)  // [0.0, 1.0] - points up!
 
-// Scaling transformation
+// This confirms the math: [0  -1]   [1]   [0]
+//                        [1   0] × [0] = [1]
+
+// Create and apply a scaling transformation
 let scaleMatrix = [
     [2.0, 0.0],
     [0.0, 2.0]
