@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 18: PageRank Algorithm"
+title: "Chapter 19: PageRank Algorithm"
 description: "Implement Google's PageRank in Swift"
 ---
 
@@ -13,7 +13,7 @@ description: "Implement Google's PageRank in Swift"
 
 The [PageRank](https://en.wikipedia.org/wiki/PageRank) [algorithm](https://en.wikipedia.org/wiki/Algorithm) stands as one of the most influential algorithms in modern computing, powering the original Google search engine and fundamentally changing how we navigate information. Conceived at Stanford University in 1996 by Larry Page and Sergey Brin, PageRank introduced a revolutionary approach to determining web page importance through mathematical modeling of human browsing behavior.
 
-PageRank synthesizes concepts from throughout this book. It builds on graph structures from Chapter 13, using vertices and edges to model web pages and links. The iterative computation mirrors the tabulation approach from dynamic programming (Chapter 17), repeatedly refining estimates until convergence. Generic types from Chapter 7 allow PageRank to work with any vertex data, while performance analysis from Chapter 8 reveals O(V + E) complexity per iteration. Hash table lookups from Chapter 15 enable efficient vertex finding in the canvas array. Even recursion patterns from Chapter 6 appear in the authority distribution calculations that flow through the graph.
+PageRank synthesizes concepts from throughout this book. It builds on graph structures from Chapter 13, using vertices and edges to model web pages and links. The iterative computation mirrors the tabulation approach from dynamic programming (Chapter 21), repeatedly refining estimates until convergence. Generic types from Chapter 7 allow PageRank to work with any vertex data, while performance analysis from Chapter 8 reveals O(V + E) complexity per iteration. Hash table lookups from Chapter 15 enable efficient vertex finding in the canvas array. Even recursion patterns from Chapter 6 appear in the authority distribution calculations that flow through the graph.
 
 In this chapter, we'll explore how PageRank works, implement an educational version in Swift, and understand its broader applications beyond search engines.
 

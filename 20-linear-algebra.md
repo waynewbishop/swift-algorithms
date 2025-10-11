@@ -1,6 +1,6 @@
 ---
 layout: chapter
-title: "Chapter 19: Linear Algebra"
+title: "Chapter 20: Linear Algebra"
 description: "Vector mathematics and numerical computing"
 ---
 
@@ -11,9 +11,9 @@ description: "Vector mathematics and numerical computing"
 
 # Linear Algebra
 
-In [Chapter 17](17-dynamic-programming.md), we saw how breaking problems into smaller subproblems leads to elegant solutions. In [Chapter 18](18-pagerank-algorithm.md), we encountered PageRank's matrix operations for ranking web pages. Now we'll explore the mathematical foundation that powers these [algorithms](https://en.wikipedia.org/wiki/Algorithm): linear algebra. While dynamic programming optimizes recursive computations and PageRank analyzes networks, linear algebra provides the mathematical language for spatial relationships, transformations, and data analysis.
+In [Chapter 21](18-dynamic-programming.md), we saw how breaking problems into smaller subproblems leads to elegant solutions. In [Chapter 21](19-pagerank-algorithm.md), we encountered PageRank's matrix operations for ranking web pages. Now we'll explore the mathematical foundation that powers these [algorithms](https://en.wikipedia.org/wiki/Algorithm): linear algebra. While dynamic programming optimizes recursive computations and PageRank analyzes networks, linear algebra provides the mathematical language for spatial relationships, transformations, and data analysis.
 
-Understanding [vectors](https://en.wikipedia.org/wiki/Euclidean_vector) and [matrices](https://en.wikipedia.org/wiki/Matrix_(mathematics)) is essential for the algorithms we've seen and those ahead. Chapter 18 demonstrated how PageRank uses matrix operations to compute page importance across web graphs. In Chapter 20, semantic search will rely on vector mathematics to find similar documents by treating text as high-dimensional vectors. Beyond these applications, linear algebra underpins computer graphics, machine learning, physics simulations, and data analysis across modern computing.
+Understanding [vectors](https://en.wikipedia.org/wiki/Euclidean_vector) and [matrices](https://en.wikipedia.org/wiki/Matrix_(mathematics)) is essential for the algorithms we've seen and those ahead. Chapter 21 demonstrated how PageRank uses matrix operations to compute page importance across web graphs. In Chapter 21, semantic search will rely on vector mathematics to find similar documents by treating text as high-dimensional vectors. Beyond these applications, linear algebra underpins computer graphics, machine learning, physics simulations, and data analysis across modern computing.
 
 ## What are vectors?
 
@@ -493,7 +493,7 @@ let song2 = [120.0, 0.8, 0.9, 0.7]
 let similarity = song1.normalized.dot(song2.normalized)  // 0.98 (very similar)
 ```
 
-This cosine similarity technique is fundamental to recommendation systems, search engines, and machine learning. It appears again in Chapter 20, where semantic search uses vector similarity to find related documents.
+This cosine similarity technique is fundamental to recommendation systems, search engines, and machine learning. It appears again in Chapter 21, where semantic search uses vector similarity to find related documents.
 
 ### Graphics and visualization
 
@@ -540,6 +540,6 @@ Linear algebra is not needed for string processing, file I/O operations, simple 
 
 Linear algebra connects to concepts throughout this book. In Chapter 3, we learned how arrays store sequential data—vectors extend arrays with mathematical operations like dot products and normalization. Chapter 7 introduced generics, and Quiver uses generic constraints to ensure type safety for mathematical operations, allowing division only on floating-point types. Chapter 8 taught us about Big O notation—vector operations run in `O(n)` time where n is dimensionality, while matrix multiplication is `O(n³)`.
 
-The connections extend to advanced topics. Chapter 13 covered graphs, where adjacency matrices represent graph connections and eigenvectors reveal network structure. Chapter 18 explored PageRank, which uses matrix operations to compute page importance scores across the entire web graph through iterative linear algebra. Chapter 20 covers semantic search, where cosine similarity between document vectors enables intelligent text matching beyond keyword search.
+The connections extend to advanced topics. Chapter 13 covered graphs, where adjacency matrices represent graph connections and eigenvectors reveal network structure. Chapter 21 explored PageRank, which uses matrix operations to compute page importance scores across the entire web graph through iterative linear algebra. Chapter 21 covers semantic search, where cosine similarity between document vectors enables intelligent text matching beyond keyword search.
 
 The key insight: Linear algebra provides a mathematical language for spatial relationships, transformations, and similarity measures that power everything from game physics to modern AI systems. Understanding vectors and matrices isn't just about mathematical abstraction—it's about having the right tool for modeling spatial and relational data.

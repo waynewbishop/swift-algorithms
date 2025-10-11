@@ -2,13 +2,13 @@
 
 **Date:** October 8, 2025
 **Source:** `/Users/waynebishop/Projects/bishop-algorithms-quiver-package`
-**Current Documentation:** Chapter 18 (Linear Algebra)
+**Current Documentation:** Chapter 21 (Linear Algebra)
 
 ---
 
 ## Executive Summary
 
-After researching the Quiver package source code, I found **45+ methods/features that exist but are NOT documented in Chapter 18**. Many of these have immediate practical value for iOS developers.
+After researching the Quiver package source code, I found **45+ methods/features that exist but are NOT documented in Chapter 21**. Many of these have immediate practical value for iOS developers.
 
 **Key Finding:** Quiver has significant capabilities beyond basic vector math that solve real iOS development problems:
 - Boolean masking/filtering (data analysis)
@@ -20,7 +20,7 @@ After researching the Quiver package source code, I found **45+ methods/features
 
 ---
 
-## Currently Documented in Chapter 18
+## Currently Documented in Chapter 21
 
 ### ✅ Covered
 1. **Vector operations:** `magnitude`, `normalized`, `dot()`
@@ -375,7 +375,7 @@ print(data.info())
 
 ## Proposed Chapter Additions
 
-### Option A: Expand Chapter 18 (Moderate)
+### Option A: Expand Chapter 21 (Moderate)
 
 Add 2-3 new sections to existing chapter:
 
@@ -403,9 +403,9 @@ Add 2-3 new sections to existing chapter:
 
 ---
 
-### Option B: New Chapter 18.5 (Aggressive)
+### Option B: New Chapter 21.5 (Aggressive)
 
-Create "Chapter 18.5: Advanced Quiver Techniques"
+Create "Chapter 21.5: Advanced Quiver Techniques"
 
 **Sections:**
 1. Boolean operations and filtering
@@ -423,7 +423,7 @@ Create "Chapter 18.5: Advanced Quiver Techniques"
 
 ### Option C: Selective Integration (Conservative)
 
-Add only Tier 1 features to Chapter 18:
+Add only Tier 1 features to Chapter 21:
 
 **Additions:**
 1. Boolean masking example in "When to use" section
@@ -512,7 +512,7 @@ let centroid = userVectors.averaged()  // [0.8, 0.2]
 
 ## Immediate High-Value Additions
 
-If adding just 3 features to Chapter 18, I'd choose:
+If adding just 3 features to Chapter 21, I'd choose:
 
 ### 1. Boolean Masking (Lines: ~40)
 ```swift

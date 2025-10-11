@@ -98,17 +98,19 @@ navigation:
         url: "15-hash-tables"
       - title: "Heaps"
         url: "16-heaps"
+      - title: "Shortest Paths"
+        url: "17-shortest-paths"
 
   - section: "Advanced Topics"
     chapters:
       - title: "Dynamic Programming"
-        url: "17-dynamic-programming"
+        url: "18-dynamic-programming"
       - title: "PageRank"
-        url: "18-pagerank-algorithm"
+        url: "19-pagerank-algorithm"
       - title: "Linear Algebra"
-        url: "19-linear-algebra"
+        url: "20-linear-algebra"
       - title: "Semantic Search"
-        url: "20-semantic-search"
+        url: "21-semantic-search"
 
 # Exclude from processing
 exclude:
