@@ -10,7 +10,7 @@ description: "Find optimal routes with Dijkstra's algorithm and priority queue o
 
 # Shortest Paths
 
-When we explored [graphs](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)) in Chapter 13, we learned how breadth-first search finds the shortest path measured by the number of edges traversed. While useful for unweighted graphs, this approach falls short when edges carry different weights or costs. The question shifts from "what is the quickest route" to "what is the cheapest, fastest, or shortest route"—a problem that appears everywhere from GPS navigation to network packet routing to flight path optimization.
+When we explored [graphs](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)) in [Chapter 13](13-graphs), we learned how breadth-first search finds the shortest path measured by the number of edges traversed. While useful for unweighted graphs, this approach falls short when edges carry different weights or costs. The question shifts from "what is the quickest route" to "what is the cheapest, fastest, or shortest route"—a problem that appears everywhere from GPS navigation to network packet routing to flight path optimization.
 
 [Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm), developed by Edsger W. Dijkstra in 1956, solves this weighted shortest path problem with elegant efficiency. The algorithm employs a [greedy strategy](https://en.wikipedia.org/wiki/Greedy_algorithm)—always choosing the locally optimal path—which surprisingly guarantees the globally optimal solution. While originally designed for routing in communications networks, Dijkstra's algorithm now powers the GPS systems in our cars, optimizes data flow across the internet, and helps delivery services minimize fuel costs. Every time we ask for directions to the nearest coffee shop, we benefit from Dijkstra's six-decade-old insight.
 
@@ -138,7 +138,7 @@ For sparse graphs where the number of edges is much smaller than `V²`, this per
 
 ## Heap-optimized implementation
 
-Chapter 16 introduced **heaps** as priority queues with `O(log n)` insertion and `O(1)` minimum element access. By replacing the array-based frontier with a `heap`, we transform the expensive minimum-finding operation into a **constant-time** O(1) `peek` followed by a logarithmic `dequeue`:
+[Chapter 16](16-heaps) introduced heaps as priority queues with `O(log n)` insertion and `O(1)` minimum element access. By replacing the array-based frontier with a `heap`, we transform the expensive minimum-finding operation into a constant-time O(1) `peek` followed by a logarithmic `dequeue`:
 
 ```swift
 // Dijkstra's shortest path using heap-based frontier - O((V + E) log V)
@@ -214,7 +214,7 @@ For small graphs with fewer than 100 vertices, the array-based implementation su
 
 ## Reversing the path
 
-Once we've found the shortest path, we must reverse it to obtain the sequence from source to destination. The Path objects form a linked list through their previous pointers, but this list runs backward—from destination to source. Reversing the path uses the same three-pointer technique from Chapter 9's linked list reversal:
+Once we've found the shortest path, we must reverse it to obtain the sequence from source to destination. The Path objects form a linked list through their previous pointers, but this list runs backward—from destination to source. Reversing the path uses the same three-pointer technique from [Chapter 9](09-linked-lists)'s linked list reversal:
 
 ```swift
 // Reverse path sequence using linked-list reversal technique - O(n)

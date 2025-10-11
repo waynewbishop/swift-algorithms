@@ -105,7 +105,7 @@ let jogging = embeddings["jogging"]!
 let shoes = embeddings["shoes"]!
 let sneakers = embeddings["sneakers"]!
 
-// Measure similarity using Quiver's cosineOfAngle (from Chapter 21)
+// Measure similarity using Quiver's cosineOfAngle (from Chapter 20)
 running.cosineOfAngle(with: jogging)     // ~0.78 (both athletic activities)
 shoes.cosineOfAngle(with: sneakers)      // ~0.82 (both footwear)
 running.cosineOfAngle(with: shoes)       // ~0.45 (related: running shoes)
@@ -199,7 +199,7 @@ For unknown words not in the GloVe vocabulary, the `compactMap` operation silent
 
 ## Measuring semantic similarity
 
-Once documents are represented as vectors, measuring their semantic similarity reduces to computing the geometric similarity between their vector representations. The cosine similarity metric, introduced in Chapter 21, provides exactly this measurement.
+Once documents are represented as vectors, measuring their semantic similarity reduces to computing the geometric similarity between their vector representations. The cosine similarity metric, introduced in [Chapter 20](20-linear-algebra), provides exactly this measurement.
 
 Cosine similarity computes the cosine of the angle between two vectors. Vectors pointing in the same direction (parallel) have cosine 1, vectors at right angles (orthogonal) have cosine 0, and vectors pointing in opposite directions have cosine -1. For document vectors, this translates to semantic similarity: documents about the same topic point in similar directions in the embedding space.
 
@@ -211,7 +211,7 @@ cosine_similarity = (a · b) / (||a|| × ||b||)
 
 The numerator is the dot product: the sum of element-wise products. The denominator normalizes by the magnitudes of both vectors. This normalization makes cosine similarity independent of vector length—it measures direction, not magnitude.
 
-The Quiver framework, introduced in Chapter 21, provides the complete implementation of cosine similarity and the underlying vector operations:
+The Quiver framework, introduced in [Chapter 20](20-linear-algebra), provides the complete implementation of cosine similarity and the underlying vector operations:
 
 ```swift
 import Quiver
@@ -563,4 +563,4 @@ Multi-stage retrieval pipelines use cheap approximate search to identify candida
 
 For interview preparation, semantic search problems test multiple skills. Implement cosine similarity efficiently. Design a document retrieval system with specified latency and accuracy requirements. Optimize search for millions of documents. Explain tradeoffs between exact and approximate nearest neighbor methods. Discuss how to handle vocabulary mismatch and rare terms. These questions assess both algorithmic understanding and system design thinking.
 
-The algorithms in this chapter demonstrate how vector mathematics from Chapter 21 enables practical AI applications. Cosine similarity, originally an abstract geometric concept, becomes a semantic relatedness measure. k-nearest neighbors, originally a classification algorithm, becomes a semantic search engine. Pre-trained embeddings eliminate machine learning complexity while still capturing semantic meaning. Together, these pieces create systems that understand text meaning rather than just matching characters.
+The algorithms in this chapter demonstrate how vector mathematics from [Chapter 20](20-linear-algebra) enables practical AI applications. Cosine similarity, originally an abstract geometric concept, becomes a semantic relatedness measure. k-nearest neighbors, originally a classification algorithm, becomes a semantic search engine. Pre-trained embeddings eliminate machine learning complexity while still capturing semantic meaning. Together, these pieces create systems that understand text meaning rather than just matching characters.
