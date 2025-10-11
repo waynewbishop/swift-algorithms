@@ -3,12 +3,6 @@ layout: chapter
 title: "Chapter 13: Graphs"
 description: "Explore graph data structures and algorithms"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
-
 # Graphs
 
 A [graph](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)) is a data structure that shows a relationship (e.g., connection) between two or more objects. Because of their flexibility, graphs are one of the most widely used structures in modern computing. Popular tools and services like online maps, social networks, and even the Internet as a whole are based on how objects relate to one another.

@@ -3,11 +3,6 @@ layout: chapter
 title: "Chapter 2: Measuring Performance"
 description: "Understanding algorithmic efficiency and the language of performance"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
 # Measuring Performance
 
 When we write code we're creating instructions for the computer to follow. But have you ever wondered: how does your code behave when the amount of data changes? Does it slow down gracefully, or does it grind to a halt? Understanding this relationship between data size and performance is essential to building software users will love.

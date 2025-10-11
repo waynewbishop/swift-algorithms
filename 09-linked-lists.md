@@ -3,11 +3,6 @@ layout: chapter
 title: "Chapter 9: Linked Lists"
 description: "Implement singly and doubly linked lists"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
 # Linked Lists
 
 In [Chapter 6](06-recursion.md), you encountered linked list nodes as self-referential structures perfect for recursive algorithms. In [Chapter 8](08-performance-analysis.md), we learned that different data structures offer different performance trade-offs. Now it's time to build a complete [linked list](https://en.wikipedia.org/wiki/Linked_list) implementation—a fundamental data structure that trades random access speed for insertion and deletion flexibility.

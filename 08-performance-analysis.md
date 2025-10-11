@@ -3,11 +3,6 @@ layout: chapter
 title: "Chapter 8: Analyzing Algorithms"
 description: "Understanding algorithmic efficiency, complexity analysis, and real-world performance"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
 # Analyzing Algorithms
 
 We've now explored searching techniques that locate values in collections, sorting methods that organize data, [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)) that breaks problems into smaller pieces, and generics that enable flexible code. Along the way, we've noticed patterns—binary search feels faster than linear search, merge sort handles large datasets better than bubble sort, and some recursive solutions run exponentially slow.

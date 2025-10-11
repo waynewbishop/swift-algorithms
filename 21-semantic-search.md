@@ -3,11 +3,6 @@ layout: chapter
 title: "Chapter 21: Semantic Search"
 description: "Understanding meaning through vector similarity"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
 # Semantic Search
 
 Traditional search systems rely on exact keyword matching. When you search for "comfortable running shoes," these systems look for documents containing those exact words. This approach works well when queries and documents use identical terminology, but it fails to capture meaning. A product description using "athletic footwear" or "jogging sneakers" might be exactly what we're looking for, yet keyword matching would miss it entirely.
@@ -145,29 +140,13 @@ func embedText(_ text: String, embeddings: [String: [Double]]) -> [Double] {
     // Look up embedding for each word
     let vectors = words.compactMap { embeddings[$0] }
 
-    // Handle case where no words have embeddings
-    guard !vectors.isEmpty else {
-        return Array(repeating: 0.0, count: 50)
-    }
-
-    // Compute element-wise average
-    return averageVectors(vectors)
-}
-
-func averageVectors(_ vectors: [[Double]]) -> [Double] {
-    guard !vectors.isEmpty else { return [] }
-
-    let dimensions = vectors[0].count
-    return (0..<dimensions).map { dimension in
-        let sum = vectors.reduce(0.0) { total, vector in
-            total + vector[dimension]
-        }
-        return sum / Double(vectors.count)
-    }
+    // Compute element-wise average using Quiver's .averaged() method
+    // Returns nil if vectors is empty or has mismatched dimensions
+    return vectors.averaged() ?? Array(repeating: 0.0, count: 50)
 }
 ```
 
-The `embedText` function handles the full pipeline from text to vector. Tokenization splits on whitespace and converts to lowercase to match the GloVe vocabulary format. The `compactMap` operation looks up each word and filters out any words not in the embedding dictionary (like typos or rare words). The averaging function computes the mean for each dimension independently, producing a vector with the same dimensionality as the individual word embeddings.
+The `embedText` function handles the full pipeline from text to vector. Tokenization splits on whitespace and converts to lowercase to match the GloVe vocabulary format. The `compactMap` operation looks up each word and filters out any words not in the embedding dictionary (like typos or rare words). Quiver's `.averaged()` method computes the element-wise mean, returning `nil` if the array is empty or dimensions are inconsistent. The nil-coalescing operator provides a zero vector fallback for documents with no known words.
 
 Consider a concrete example with three-word documents and simplified 3-dimensional embeddings:
 

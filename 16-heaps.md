@@ -3,12 +3,6 @@ layout: chapter
 title: "Chapter 16: Heaps"
 description: "Implement priority queues with heap data structures"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
-
 # Heaps
 
 [Heaps](https://en.wikipedia.org/wiki/Heap_(data_structure)) are specialized [tree](https://en.wikipedia.org/wiki/Tree_(data_structure))-based data structures that maintain a specific ordering property, making them ideal for [priority queues](https://en.wikipedia.org/wiki/Priority_queue) and efficient sorting [algorithms](https://en.wikipedia.org/wiki/Algorithm). Unlike [binary search trees](https://en.wikipedia.org/wiki/Binary_search_tree) from Chapters 11-12 that maintain left-right ordering, heaps focus on parent-child relationships to ensure the most important element is always accessible in constant time.

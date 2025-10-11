@@ -3,11 +3,6 @@ layout: chapter
 title: "Chapter 7: Generics"
 description: "Build type-safe, reusable code with Swift generics"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
 # Generics
 
 In the previous chapters, you implemented search algorithms that work with any comparable type and sorting algorithms that handle integers, strings, and custom objects equally well. In [Chapter 6](06-recursion.md), you created `ListNode<T>` and `TreeNode<T>` structures that work with any type. We've been using Swift's most powerful feature all along—[generics](https://en.wikipedia.org/wiki/Generic_programming). Now it's time to understand how they work.

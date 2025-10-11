@@ -3,12 +3,6 @@ layout: chapter
 title: "Chapter 14: Tries"
 description: "Implement prefix trees for efficient string operations"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
-
 # Tries
 
 [Tries](https://en.wikipedia.org/wiki/Trie) are [tree](https://en.wikipedia.org/wiki/Tree_(data_structure))-based data structures that organize information in a hierarchy. Often pronounced "try", the term comes from the English language verb to retrieve. While most [algorithms](https://en.wikipedia.org/wiki/Algorithm) are designed to manipulate generic data, tries are commonly used with Strings.

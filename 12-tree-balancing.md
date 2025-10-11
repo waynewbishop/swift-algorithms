@@ -3,11 +3,6 @@ layout: chapter
 title: "Chapter 12: Tree Balancing"
 description: "Maintain balanced binary search trees with AVL rotations"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
 # Tree Balancing
 
 In [Chapter 11](11-binary-search-trees.md), you built binary search trees that achieve O(log n) search performance—but only when the tree remains balanced. When a tree becomes unbalanced, performance degrades to O(n), no better than searching a linked list. This chapter introduces AVL trees, a self-balancing BST variant that guarantees O(log n) performance regardless of insertion order.

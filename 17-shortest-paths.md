@@ -3,11 +3,6 @@ layout: chapter
 title: "Chapter 17: Shortest Paths"
 description: "Find optimal routes with Dijkstra's algorithm and priority queue optimization"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
 # Shortest Paths
 
 When we explored [graphs](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)) in [Chapter 13](13-graphs), we learned how breadth-first search finds the shortest path measured by the number of edges traversed. While useful for unweighted graphs, this approach falls short when edges carry different weights or costs. The question shifts from "what is the quickest route" to "what is the cheapest, fastest, or shortest route"—a problem that appears everywhere from GPS navigation to network packet routing to flight path optimization.

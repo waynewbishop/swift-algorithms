@@ -3,11 +3,6 @@ layout: chapter
 title: "Chapter 1: Introduction"
 description: "Understanding algorithms and their importance in Swift development"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
 # Introduction
 
 If we're learning Swift development, we may be asking: do I need to know AI and machine learning to be relevant, why learn algorithms when AI can generate code for me, or how do recommendation systems work—the ones that power Netflix and Spotify? These are the right questions. The surprising answer is they all lead back to the same place—fundamental algorithms that have existed for decades.

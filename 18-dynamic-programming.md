@@ -3,12 +3,6 @@ layout: chapter
 title: "Chapter 18: Dynamic Programming"
 description: "Solve complex problems with memoization"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
-
 # Dynamic Programming
 
 **Dynamic programming** is a technique for solving problems by breaking them into smaller, overlapping subproblems and storing the results to avoid repeating work. It's one of the most powerful optimization techniques in computer science, and while the name sounds intimidating, the core concept is straightforward: remember what we've already calculated so you don't have to calculate it again.

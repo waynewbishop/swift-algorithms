@@ -3,12 +3,6 @@ layout: chapter
 title: "Chapter 19: PageRank Algorithm"
 description: "Implement Google's PageRank in Swift"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
-
 # PageRank
 
 The [PageRank](https://en.wikipedia.org/wiki/PageRank) algorithm stands as one of the most influential algorithms in modern computing, powering the original Google search engine and fundamentally changing how we navigate information. Conceived at Stanford University in 1996 by Larry Page and Sergey Brin, PageRank introduced a revolutionary approach to determining web page importance through mathematical modeling of human browsing behavior.

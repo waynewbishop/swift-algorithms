@@ -3,12 +3,6 @@ layout: chapter
 title: "Chapter 4: Basic Sorting"
 description: "Master bubble sort, insertion sort, and selection sort"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
-
 # Basic sorting
 
 Sorting is an essential task when managing data. As we saw in [Chapter 2](02-measuring-performance.md), sorted data allows us to implement efficient [algorithms](https://en.wikipedia.org/wiki/Algorithm). Our goal with sorting is to move from disarray to order. This is done by arranging data in a logical sequence so we'll know where to find information.

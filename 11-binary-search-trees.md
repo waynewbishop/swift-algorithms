@@ -3,11 +3,6 @@ layout: chapter
 title: "Chapter 11: Binary Search Trees"
 description: "Build and traverse binary search trees"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
 # Binary Search Trees
 
 In [Chapter 10](10-stacks-and-queues.md), you built linear structures where elements connect in a single chain. Binary search trees (BST) extend this concept into hierarchical organization—each node can have up to two children, creating a tree structure. Like the recursive data structures from [Chapter 6](06-recursion.md), trees naturally enable recursive algorithms. But unlike linear structures, BSTs maintain sorted order that enables O(log n) search performance (from [Chapter 8](08-performance-analysis.md)), making them dramatically faster than linked lists for searching.

@@ -3,11 +3,6 @@ layout: chapter
 title: "Chapter 3: Basic Searching"
 description: "Learn linear and binary search algorithms in Swift"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
 # Basic Searching
 
 In [Chapter 2](02-measuring-performance.md) we learned the vocabulary of performance—Big O notation provides a common language for discussing algorithmic efficiency. Now it's time to apply that knowledge to your first concrete [algorithms](https://en.wikipedia.org/wiki/Algorithm). Whether we're building a contact app, a music library, or any system that manages information, search functionality is essential.

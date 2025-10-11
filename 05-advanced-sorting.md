@@ -3,12 +3,6 @@ layout: chapter
 title: "Chapter 5: Advanced Sorting"
 description: "Master the Quicksort algorithm and divide & conquer strategy"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
-
 # Advanced sorting
 
 In [Chapter 4](04-basic-sorting.md), we explored insertion sort, bubble sort, and selection sort—all performing with a [time complexity](https://en.wikipedia.org/wiki/Time_complexity) of `O(n²)`. While valuable for understanding sorting fundamentals and useful for small datasets, these algorithms are seldom used in production code when dealing with larger collections.

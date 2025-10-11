@@ -3,11 +3,6 @@ layout: chapter
 title: "Chapter 20: Linear Algebra"
 description: "Vector mathematics and numerical computing"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
 # Linear Algebra
 
 In [Chapter 18](18-dynamic-programming), we saw how breaking problems into smaller subproblems leads to elegant solutions. In [Chapter 19](19-pagerank-algorithm), we encountered PageRank's iterative algorithm for ranking web pages based on link structure. Now we'll explore the mathematical foundation underlying many network algorithms: linear algebra. While dynamic programming optimizes recursive computations and PageRank analyzes networks through iteration, linear algebra provides the mathematical language for spatial relationships, transformations, and data analysis. 
@@ -218,7 +213,11 @@ This cosine similarity technique is fundamental to recommendation systems, searc
 
 ## Vector averaging
 
-Semantic search requires averaging word vectors to create document embeddings:
+Word embeddings represent individual words as vectors, but semantic search operates on documents: sentences, paragraphs, or full articles. We need to convert multi-word text into a single vector that captures the entire document's meaning. The solution is to average the word vectors element-wise, creating a document embedding.
+
+This averaging preserves semantic properties. If a document contains words like "lightweight," "cushioned," "running," and "athletic," the averaged vector points toward the general region of "athletic footwear" in the embedding space. Individual words contribute their semantic information, and the average represents their combined meaning. Documents with similar words produce similar average vectors, which is exactly the property semantic search exploits.
+
+Quiver provides the `.averaged()` method for computing the element-wise average of a collection of vectors:
 
 ```swift
 // Average multiple word vectors to create document representation
@@ -230,19 +229,15 @@ let wordVectors = [
     [0.1, 0.6, 0.4]   // "comfortable"
 ]
 
-// Calculate mean across each dimension
-let dimensions = wordVectors[0].count
-var documentVector = [Double](repeating: 0.0, count: dimensions)
-
-for dimension in 0..<dimensions {
-    let sum = wordVectors.reduce(0.0) { total, vector in
-        total + vector[dimension]
-    }
-    documentVector[dimension] = sum / Double(wordVectors.count)
+// Compute element-wise average
+guard let documentVector = wordVectors.averaged() else {
+    fatalError("Cannot average empty or mismatched vectors")
 }
 
-// Result: [0.2, 0.7, 0.5] - the average vector
+// Result: [0.2, 0.7, 0.5] - points toward "athletic footwear" region
 ```
+
+The `.averaged()` method validates that all vectors have the same dimensionality and returns `nil` for empty arrays or inconsistent dimensions. This pattern appears throughout [Chapter 21](21-semantic-search), where the `embedText()` function uses vector averaging to convert search queries and documents into comparable vectors for similarity computation.
 
 ## Working with matrices
 
@@ -269,7 +264,25 @@ let identity = [Double].identity(3)
 
 Matrix transformations apply geometric operations to vectors by multiplying the matrix with the vector. In game development, transformation matrices move characters through scenes, rotate camera views, and apply physics forces. In computer graphics, rotation matrices orient 3D models, while scaling matrices resize objects without distortion. 
 
-In robotics, transformation matrices convert sensor readings from one coordinate frame to another, enabling path planning and obstacle avoidance. The multiplication `matrix × vector` produces a new vector by taking dot products of matrix rows with the vector. A rotation matrix preserves vector length while changing direction. A scaling matrix multiplies each vector component by a scale factor, growing or shrinking without rotating. 
+In robotics, transformation matrices convert sensor readings from one coordinate frame to another, enabling path planning and obstacle avoidance. The multiplication `matrix × vector` produces a new vector by taking dot products of matrix rows with the vector. A rotation matrix preserves vector length while changing direction. A scaling matrix multiplies each vector component by a scale factor, growing or shrinking without rotating.
+
+### How matrix multiplication transforms vectors
+
+When we multiply a matrix by a vector, each element of the result comes from taking the dot product of a matrix row with the vector. For a 2D transformation, the calculation follows this pattern:
+
+```
+[a  b]   [x]   [a×x + b×y]
+[c  d] × [y] = [c×x + d×y]
+```
+
+For example, rotating the vector `[1, 0]` (pointing right) by 90° counterclockwise using a rotation matrix:
+
+```
+[0  -1]   [1]   [0×1 + (-1)×0]   [0]
+[1   0] × [0] = [1×1 +   0×0 ] = [1]
+```
+
+The result `[0, 1]` points up, exactly 90° counterclockwise from the original direction. Each component of the output vector is computed by multiplying corresponding elements from a matrix row and the input vector, then summing those products. This is why matrix multiplication is defined as the dot product of rows with the vector.
 
 ```swift
 // Transform vectors using matrix operations

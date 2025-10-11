@@ -3,12 +3,6 @@ layout: chapter
 title: "Chapter 6: Recursion"
 description: "Understanding recursive algorithms and techniques"
 ---
-
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
-
-
 # Recursion
 
 In [Chapter 5](05-advanced-sorting.md), we saw how Quicksort uses [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)) to partition and sort arrays. Now it's time to explore recursion more deeply as a fundamental programming technique. Understanding recursion is crucial as we move forward to more complex data structures like trees and graphs, where recursive thinking becomes essential.
