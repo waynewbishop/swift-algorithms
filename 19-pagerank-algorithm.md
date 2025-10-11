@@ -11,9 +11,9 @@ description: "Implement Google's PageRank in Swift"
 
 # PageRank
 
-The [PageRank](https://en.wikipedia.org/wiki/PageRank) [algorithm](https://en.wikipedia.org/wiki/Algorithm) stands as one of the most influential algorithms in modern computing, powering the original Google search engine and fundamentally changing how we navigate information. Conceived at Stanford University in 1996 by Larry Page and Sergey Brin, PageRank introduced a revolutionary approach to determining web page importance through mathematical modeling of human browsing behavior.
+The [PageRank](https://en.wikipedia.org/wiki/PageRank) algorithm stands as one of the most influential algorithms in modern computing, powering the original Google search engine and fundamentally changing how we navigate information. Conceived at Stanford University in 1996 by Larry Page and Sergey Brin, PageRank introduced a revolutionary approach to determining web page importance through mathematical modeling of human browsing behavior.
 
-PageRank synthesizes concepts from throughout this book. It builds on graph structures from Chapter 13, using vertices and edges to model web pages and links. The iterative computation mirrors the tabulation approach from dynamic programming (Chapter 21), repeatedly refining estimates until convergence. Generic types from Chapter 7 allow PageRank to work with any vertex data, while performance analysis from Chapter 8 reveals O(V + E) complexity per iteration. Hash table lookups from Chapter 15 enable efficient vertex finding in the canvas array. Even recursion patterns from Chapter 6 appear in the authority distribution calculations that flow through the graph.
+PageRank synthesizes concepts from throughout this book. It builds on graph structures from [Chapter 13](13-graphs), using vertices and edges to model web pages and links. The iterative computation mirrors the tabulation approach from dynamic programming ([Chapter 18](18-dynamic-programming)), repeatedly refining estimates until convergence. Generic types from [Chapter 7](07-generics) allow PageRank to work with any vertex data, while performance analysis from [Chapter 8](08-performance-analysis) reveals `O(V + E)` complexity per iteration. Hash table lookups from [Chapter 15](15-hash-tables) enable efficient vertex finding in the canvas array. Even recursion patterns from [Chapter 6](06-recursion) appear in the authority distribution calculations that flow through the graph.
 
 In this chapter, we'll explore how PageRank works, implement an educational version in Swift, and understand its broader applications beyond search engines.
 
@@ -192,7 +192,7 @@ Let's implement an educational PageRank algorithm that demonstrates core concept
 
 ### Graph structure design
 
-Our implementation builds on the graph structures from Chapter 13, extending vertices to support PageRank calculations:
+Our implementation builds on the graph structures from [Chapter 13](13-graphs), extending vertices to support PageRank calculations:
 
 ```swift
 // Generic vertex with PageRank history array - stores rank across iterations
@@ -736,7 +736,7 @@ func checkConvergence(_ oldRanks: [Float], _ newRanks: [Float]) -> Bool {
 
 PageRank enhances many algorithms covered in previous chapters:
 
-#### Enhanced graph traversal (Chapter 12)
+#### Enhanced graph traversal ([Chapter 13](13-graphs))
 ```swift
 // Priority-guided traversal using PageRank
 func pageRankGuidedTraversal(_ graph: Graph<String>) {
@@ -753,7 +753,7 @@ func pageRankGuidedTraversal(_ graph: Graph<String>) {
 }
 ```
 
-#### Search optimization (Chapter 3)
+#### Search optimization ([Chapter 3](03-basic-searching))
 ```swift
 // PageRank-weighted search results
 func searchWithPageRank(_ query: String,
