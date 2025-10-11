@@ -65,12 +65,45 @@ Applications span multiple domains. In physics, the dot product calculates work 
 
 ## Matrices
 
-Matrices are rectangular [arrays](https://en.wikipedia.org/wiki/Array_data_structure) of numbers. A `2×3` matrix has 2 rows and 3 columns:
+A matrix is a rectangular grid of numbers arranged in rows and columns. While a vector is a single list of numbers representing a point or direction in space, a matrix is a collection of multiple vectors organized together. You can think of a matrix as a table where each row or column is itself a vector.
+
+The dimensions of a matrix tell us its shape. A `2×3` matrix means 2 rows and 3 columns:
 
 ```
 [1  2  3]
 [4  5  6]
 ```
+
+Can a matrix have just a single vector? Yes. A matrix can be a single row or a single column. A `1×3` matrix (one row, three columns) looks like this:
+
+```
+[1  2  3]
+```
+
+This is mathematically identical to the vector `[1, 2, 3]`. A `3×1` matrix (three rows, one column) represents the same data oriented vertically:
+
+```
+[1]
+[2]
+[3]
+```
+
+Both are valid matrices because they have the rectangular row-and-column structure, even though one dimension equals 1. In formal linear algebra, vectors are often represented as single-row or single-column matrices. This representation makes operations like matrix multiplication work consistently, since the dimensions must align properly. When we write `[1, 2, 3]` in code, we're thinking "vector" conceptually, but mathematically it can be treated as either a `1×3` or `3×1` matrix depending on the context.
+
+What do these numbers represent? That depends entirely on the application. In a dataset, each row might represent a different person, and each column a different measurement. The first row `[1, 2, 3]` could represent Person A's age (1), height (2), and weight (3). The second row `[4, 5, 6]` represents Person B's measurements. Now we have organized data for 2 people across 3 attributes.
+
+In computer graphics, these same numbers might represent a transformation. The matrix describes how to move, rotate, or scale objects in space. Each number specifies how much one dimension affects another during the transformation. The matrix `[[0, -1], [1, 0]]` doesn't represent data about objects—it represents an operation that rotates any vector by 90 degrees.
+
+Consider a real-world example: tracking three athletes across two fitness metrics (running speed and jump height). Each athlete is a row, each metric is a column:
+
+```
+          Speed  Jump
+Athlete A   8.5   2.1
+Athlete B   7.2   2.4
+Athlete C   9.1   1.9
+```
+
+This is a `3×2` matrix. The numbers represent measured values. We could extract Athlete B's performance as a vector `[7.2, 2.4]`, or compare all athletes' speeds by looking at the first column `[8.5, 7.2, 9.1]`.
 
 Matrices serve two primary purposes in computational work. First, they organize data efficiently, with rows typically representing samples and columns representing features. A dataset of 1000 customers with 5 attributes becomes a `1000×5` matrix. Second, matrices represent transformations—mathematical operations that change vectors in specific ways, such as rotations, scaling, reflections, and shearing.
 
