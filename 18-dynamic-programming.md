@@ -11,15 +11,15 @@ description: "Solve complex problems with memoization"
 
 # Dynamic Programming
 
-[Dynamic programming](https://en.wikipedia.org/wiki/Dynamic_programming) is a technique for solving problems by breaking them into smaller, overlapping subproblems and storing the results to avoid repeating work. It's one of the most powerful optimization techniques in computer science, and while the name sounds intimidating, the core concept is straightforward: remember what we've already calculated so you don't have to calculate it again.
+**Dynamic programming** is a technique for solving problems by breaking them into smaller, overlapping subproblems and storing the results to avoid repeating work. It's one of the most powerful optimization techniques in computer science, and while the name sounds intimidating, the core concept is straightforward: remember what we've already calculated so you don't have to calculate it again.
 
 Dynamic programming builds on recursion from Chapter 6, but adds memoization—storing results in a cache (typically a Dictionary from Chapter 15 or an Array) to avoid redundant calculations. This transforms exponential O(2^n) algorithms into linear O(n) solutions, demonstrating the dramatic space-time tradeoffs analyzed in Chapter 8. Where naive recursion uses the call stack (Chapter 10's stack concept), dynamic programming uses explicit arrays to track subproblem solutions. Some advanced DP problems even use heaps (Chapter 16) to efficiently track optimal values.
 
 In this chapter, we'll explore dynamic programming through practical examples that demonstrate why this technique matters and how to apply it in Swift.
 
-## The problem with naive [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science))
+## Naive recursion
 
-Let's start with a simple question: what's wrong with this Fibonacci implementation?
+Let's start with a simple question. What's wrong with this `Fibonacci` implementation?
 
 ```swift
 // Naive Fibonacci with exponential time complexity - O(2^n) due to repeated calculations
@@ -225,27 +225,6 @@ Let's compare naive recursion vs memoization:
 
 The performance difference is dramatic. Exponential algorithms quickly become unusable, while dynamic programming with memoization remains fast even for large inputs.
 
-## When to use dynamic programming
-
-Dynamic programming works well when a problem has these characteristics:
-
-1. **Optimal substructure** - The optimal solution contains optimal solutions to subproblems
-2. **Overlapping subproblems** - The same subproblems are solved multiple times
-
-**Common patterns that suggest DP:**
-
-- "Find the minimum/maximum way to..."
-- "Count the number of ways to..."
-- "What's the longest/shortest..."
-- The problem can be broken into similar smaller problems
-
-**Examples of DP problems:**
-- Fibonacci numbers (as we've seen)
-- Making change with coins
-- Finding shortest paths in graphs
-- Text comparison and spell-checking
-- Game strategy optimization
-
 ## Why memoization works so well
 
 Memoization is effective because:
@@ -255,53 +234,4 @@ Memoization is effective because:
 3. **Easy to implement** - Add caching to existing recursive code
 4. **Clear logic** - Mirrors the mathematical definition of the problem
 
-The trade-off is simple: use O(n) extra memory to reduce time complexity from O(2^n) to O(n). That's a bargain!
-
-## Common pitfalls
-
-**1. Forgetting base cases**
-```swift
-// Common pitfall: missing base case causes infinite recursion and stack overflow
-// Bad - what if n is 0 or 1?
-func fib(_ n: Int) -> Int {
-    return fib(n - 1) + fib(n - 2)  // Infinite recursion!
-}
-
-// Good
-func fib(_ n: Int) -> Int {
-    if n <= 1 { return n }
-    return fib(n - 1) + fib(n - 2)
-}
-```
-
-**2. Off-by-one errors in array sizes**
-```swift
-// Common pitfall: array too small causes index out of bounds crash
-// Bad - crashes when accessing dp[n]
-var dp = Array(repeating: 0, count: n)
-
-// Good - array indices go from 0 to n
-var dp = Array(repeating: 0, count: n + 1)
-```
-
-**3. Not checking if a solution exists**
-```swift
-// Common pitfall: returning sentinel value instead of indicating no solution exists
-// Bad - returns Int.max when no solution
-return dp[amount]
-
-// Good - returns -1 when impossible
-return dp[amount] == Int.max ? -1 : dp[amount]
-```
-
-## Building algorithmic intuition
-
-Dynamic programming combines several techniques we've learned:
-
-- **Recursion (Chapter 6)**: Breaking problems into smaller versions of themselves
-- **Arrays (throughout the book)**: Storing intermediate results
-- **Big O analysis (Chapter 8)**: Understanding why DP is faster
-
-The key insight is trading space for time. By using O(n) memory to store results, we reduce time complexity from exponential to linear—a massive improvement.
-
-Think of dynamic programming like taking notes in a meeting. Instead of trying to remember everything (naive recursion), we write things down (memoization) so you can look them up later without having to reconstruct your thoughts.
+The trade-off is simple: use `O(n)` extra memory to reduce time complexity from O(2^n) to O(n).
