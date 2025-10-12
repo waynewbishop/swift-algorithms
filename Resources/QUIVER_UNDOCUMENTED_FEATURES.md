@@ -1,14 +1,50 @@
 # Quiver Undocumented Features - Research Report
 
-**Date:** October 8, 2025
+**Date:** October 12, 2025 (Updated)
 **Source:** `/Users/waynebishop/Projects/bishop-algorithms-quiver-package`
-**Current Documentation:** Chapter 21 (Linear Algebra)
+**Current Documentation:** Chapters 20 (Vectors) and 21 (Matrices)
+**Last Updated:** Added `.column(at:)`, `.transposed()`, `.transform()` methods
+
+---
+
+## Recent Updates (October 12, 2025)
+
+### What Changed
+
+**Three new matrix methods added to Quiver and documented:**
+
+| Method | Purpose | Location | Status |
+|--------|---------|----------|--------|
+| `.column(at:)` | Extract columns from matrices | Chapter 21 | ✅ Documented |
+| `.transposed()` | Swift naming alias for `.transpose()` | Chapter 21 | ✅ Documented |
+| `.transform(_:)` | Matrix-vector multiplication | Chapter 21 | ✅ Documented |
+
+### Implementation Details
+
+- **Quiver Commit:** `e54ab7c` - "Add matrix convenience methods for improved ergonomics"
+- **Book Commit:** `8c1ffcc` - "Update Chapter 21 to use new Quiver matrix methods"
+- **Report Commit:** `ab42909` - "Add comprehensive report for Quiver matrix methods enhancement"
+
+### Metrics
+
+- **Code added:** 55 lines (VectorOperations.swift)
+- **Tests added:** 13 new unit tests (103 total passing ✅)
+- **Documentation:** Updated Shape.md and Operations.md in DocC
+- **Book example:** Replaced sensor data with game scores example using new methods
+
+### Impact
+
+**Before:** 45+ undocumented features
+**After:** 42+ undocumented features
+**Progress:** 6.7% reduction in undocumented features
+
+**See:** `Resources/Quiver_Matrix_Methods_Report.md` for complete implementation details, rationale, and code examples.
 
 ---
 
 ## Executive Summary
 
-After researching the Quiver package source code, I found **45+ methods/features that exist but are NOT documented in Chapter 21**. Many of these have immediate practical value for iOS developers.
+After researching the Quiver package source code, I found **42+ methods/features that exist but are NOT documented in Chapters 20-21**. Many of these have immediate practical value for iOS developers.
 
 **Key Finding:** Quiver has significant capabilities beyond basic vector math that solve real iOS development problems:
 - Boolean masking/filtering (data analysis)
@@ -20,21 +56,26 @@ After researching the Quiver package source code, I found **45+ methods/features
 
 ---
 
-## Currently Documented in Chapter 21
+## Currently Documented in Chapters 20-21
 
-### ✅ Covered
-1. **Vector operations:** `magnitude`, `normalized`, `dot()`
+### ✅ Covered in Chapter 20 (Vectors)
+1. **Vector operations:** `magnitude`, `normalized`, `dot()`, `cosineOfAngle(with:)`
 2. **Arithmetic:** `+`, `-`, `*` (vectors), `* scalar`
-3. **Broadcasting:** `broadcast(adding:)`, `broadcast(multiplyingBy:)`, `broadcast(subtracting:)`, `broadcast(dividingBy:)`
-4. **Statistics:** `mean()`, `median()`, `std()`, `variance()`, `min()`, `max()`
-5. **Array generation:** `zeros()`, `ones()`, `linspace()`, `random()`
-6. **Matrix operations:** `identity()`, `transform()`
+3. **Vector collections:** `averaged()`, `cosineSimilarities(to:)`
+4. **Distance:** `distance(to:)`
 
-**Total documented:** ~16 core features
+### ✅ Covered in Chapter 21 (Matrices)
+1. **Broadcasting:** `broadcast(adding:)`, `broadcast(multiplyingBy:)`, `broadcast(subtracting:)`, `broadcast(dividingBy:)`
+2. **Statistics:** `mean()`, `median()`, `std()`, `variance()`, `min()`, `max()`
+3. **Array generation:** `zeros()`, `ones()`, `linspace()`, `random()`
+4. **Matrix operations:** `identity()`, `transform()`, `transformedBy()`, `transpose()`, `transposed()`, `column(at:)`
+5. **Shape info:** `shape`, `isMatrix`, `matrixDimensions`
+
+**Total documented:** ~25 core features (updated October 2025)
 
 ---
 
-## Undocumented Features (45+)
+## Undocumented Features (42+)
 
 ### Category 1: Angle Calculations ⭐⭐⭐ (HIGH VALUE for iOS)
 
@@ -276,37 +317,46 @@ let filledMatrix = [Double].full(3, 3, value: 0.5)
 
 ---
 
-### Category 9: Matrix Operations ⭐⭐ (MEDIUM VALUE)
+### Category 9: Matrix Operations ⭐⭐ (MEDIUM VALUE) - ✅ NOW DOCUMENTED
 
 **File:** `VectorOperations.swift`
 
+**Status:** ✅ **DOCUMENTED in Chapter 21 (October 2025)**
+
+The following matrix operations were added to Quiver and documented in commit `e54ab7c`:
+
 ```swift
-// Transpose matrix (swap rows/columns)
-let matrix = [
-    [1.0, 2.0, 3.0],
-    [4.0, 5.0, 6.0]
-]
-let transposed = matrix.transpose()
-// [[1, 4],
-//  [2, 5],
-//  [3, 6]]
+// ✅ Transpose matrix - NOW DOCUMENTED
+let matrix = [[1.0, 2.0, 3.0], [4.0, 5.0, 6.0]]
+let transposed = matrix.transpose()   // Original method
+let transposed2 = matrix.transposed()  // NEW: Swift naming convention
 
-// Shape/dimensions info
-let data = [1, 2, 3, 4, 5]
-let shape = data.shape  // (5, 0) - vector
+// ✅ Column extraction - NOW DOCUMENTED
+let gameScores = [[95, 88, 92, 91], [87, 90, 89, 93]]
+let game3Scores = gameScores.column(at: 2)  // NEW: [92, 89]
 
-let matrixShape = matrix.shape  // (2, 3) - 2 rows, 3 columns
+// ✅ Matrix-vector multiplication - NOW DOCUMENTED
+let rotationMatrix = [[0.0, -1.0], [1.0, 0.0]]
+let vector = [1.0, 0.0]
+let result = rotationMatrix.transform(vector)  // NEW: [0.0, 1.0]
+
+// ✅ Shape/dimensions - ALREADY DOCUMENTED in Chapter 21
+let shape = data.shape  // (5, 0)
 let isValid = matrix.isMatrix  // true
 let dims = matrix.matrixDimensions  // (2, 3)
 ```
 
-**Use cases:**
-- **Linear algebra:** Matrix operations prep
-- **Data transformation:** Pivot tables
-- **ML:** Weight matrix manipulation
-- **Debugging:** Inspect array dimensions
+**What was added:**
+1. **`.transposed()`** - Swift-style alias for `.transpose()`
+2. **`.column(at:)`** - Extract columns easily (replaces awkward `.map { $0[index] }`)
+3. **`.transform(_:)`** - Intuitive matrix-on-vector API (complements `.transformedBy()`)
 
-**Why valuable:** Essential for any linear algebra work beyond basics.
+**Documentation:**
+- Chapter 21 example updated (Lines 193-208)
+- DocC documentation in `Shape.md` and `Operations.md`
+- 13 comprehensive unit tests added (103 total passing)
+
+**See:** `Resources/Quiver_Matrix_Methods_Report.md` for complete details.
 
 ---
 
@@ -361,7 +411,7 @@ print(data.info())
 8. ✅ **Vector projections** (`scalarProjection()`, `vectorProjection()`, `orthogonalComponent()`) - Physics
 9. ✅ **Element-wise math** (`sin()`, `cos()`, `log()`, `exp()`, `sqrt()`, `power()`, `square()`) - Scientific
 10. ✅ **Rounding operations** (`floor()`, `ceil()`, `round()`) - UI formatting
-11. ✅ **Matrix transpose** - Linear algebra
+11. ✅ ~~**Matrix transpose**~~ - ✅ **DOCUMENTED** (`.transpose()`, `.transposed()`) - October 2025
 12. ✅ **Advanced generation** (`arange()`, `full()`, `diag()`, 2D arrays)
 
 ### Tier 3: NICE TO HAVE (Niche or obvious)
@@ -544,7 +594,7 @@ let heading = directionVector.angleInDegrees(with: [0, 1])
 
 ## Conclusion
 
-Quiver has 45+ undocumented features that solve real iOS development problems. The biggest gaps:
+Quiver has **42+ undocumented features** that solve real iOS development problems (reduced from 45+ after October 2025 updates). The biggest remaining gaps:
 
 1. **Boolean operations** - Essential for data filtering/analytics
 2. **Cumulative operations** - Required for charts/dashboards
@@ -552,6 +602,17 @@ Quiver has 45+ undocumented features that solve real iOS development problems. T
 4. **Vector projections** - Physics engines need this
 5. **Advanced statistics** - argmin/argmax incredibly useful
 
-**Recommendation:** Start with Option C (selective integration) for quick wins, then consider Option A (expand Ch 18) for comprehensive coverage.
+### Recent Progress (October 2025)
+
+✅ **Documented 3 matrix operations:**
+- `.column(at:)` - Column extraction
+- `.transposed()` - Swift naming convention
+- `.transform(_:)` - Intuitive matrix-vector multiplication
+
+**See:** `Resources/Quiver_Matrix_Methods_Report.md` for implementation details.
+
+### Next Steps
+
+**Recommendation:** Start with Option C (selective integration) for quick wins, then consider Option A (expand Ch 20-21) for comprehensive coverage.
 
 The features are production-ready, well-implemented, and solve problems iOS developers face daily. They just need examples showing *when* and *why* to use them.
