@@ -1,13 +1,11 @@
 ---
 layout: chapter
-title: "Chapter 20: Linear Algebra"
-description: "Vector mathematics and numerical computing"
+title: "Chapter 20: Vectors"
+description: "Mathematical foundations of vector operations and numerical computing"
 ---
-# Linear Algebra
+# Vectors
 
-In [Chapter 18](18-dynamic-programming), we saw how breaking problems into smaller subproblems leads to elegant solutions. In [Chapter 19](19-pagerank-algorithm), we encountered PageRank's iterative algorithm for ranking web pages based on link structure. Now we'll explore the mathematical foundation underlying many network algorithms: linear algebra. While dynamic programming optimizes recursive computations and PageRank analyzes networks through iteration, linear algebra provides the mathematical language for spatial relationships, transformations, and data analysis. 
-
-Understanding [vectors](https://en.wikipedia.org/wiki/Euclidean_vector) and [matrices](https://en.wikipedia.org/wiki/Matrix_(mathematics)) is essential for the algorithms we've seen and those ahead. [Chapter 19](19-pagerank-algorithm) demonstrated how PageRank uses iterative computation to analyze network structure and compute page importance across web graphs. In [Chapter 21](21-semantic-search), semantic search will rely on vector mathematics to find similar documents by treating text as high-dimensional vectors. Beyond these applications, linear algebra underpins computer graphics, machine learning, physics simulations, and data analysis across modern computing.
+In [Chapter 19](19-pagerank-algorithm), we saw how PageRank uses iterative computation to rank web pages through network analysis. That algorithm operated on graph structures, tracking numerical scores that flowed through connections. Now we'll explore the mathematical foundation that powers many modern algorithms: vectors. Understanding vectors is essential for the semantic search algorithms ahead in [Chapter 22](22-semantic-search), where we'll treat documents as high-dimensional vectors and use mathematical operations to find similar content. Before we can understand how matrices organize and transform data in [Chapter 21](21-matrices), we need to master vectors—the fundamental building blocks of linear algebra.
 
 ## What are vectors?
 
@@ -61,112 +59,11 @@ The dot product reveals relationships between vectors. When the dot product equa
 
 Applications span multiple domains. In physics, the dot product calculates work done by computing force · distance. In graphics, it determines if surfaces face light sources, controlling brightness and shadows. In machine learning, measuring similarity between feature vectors through cosine similarity enables recommendation systems to find related items. The dot product transforms geometric intuition into practical computation.
 
-> **For the mathematically curious:** The dot product formula `a · b = |a| × |b| × cos(θ)` reveals why normalized vectors measure similarity: when both have magnitude 1, the dot product *is* the cosine of the angle between them. This geometric insight powers the semantic search in Chapter 21.
-
-## Matrices
-
-A matrix is a rectangular grid of numbers arranged in rows and columns. While a vector is a single list of numbers representing a point or direction in space, a matrix is a collection of multiple vectors organized together. You can think of a matrix as a table where each row or column is itself a vector.
-
-The dimensions of a matrix tell us its shape. A `2×3` matrix means 2 rows and 3 columns:
-
-```
-[1  2  3]
-[4  5  6]
-```
-
-Can a matrix have just a single vector? Yes. A matrix can be a single row or a single column. A `1×3` matrix (one row, three columns) looks like this:
-
-```
-[1  2  3]
-```
-
-This is mathematically identical to the vector `[1, 2, 3]`. A `3×1` matrix (three rows, one column) represents the same data oriented vertically:
-
-```
-[1]
-[2]
-[3]
-```
-
-Both are valid matrices because they have the rectangular row-and-column structure, even though one dimension equals 1. In formal linear algebra, vectors are often represented as single-row or single-column matrices. This representation makes operations like matrix multiplication work consistently, since the dimensions must align properly. When we write `[1, 2, 3]` in code, we're thinking "vector" conceptually, but mathematically it can be treated as either a `1×3` or `3×1` matrix depending on the context.
-
-What do these numbers represent? That depends entirely on the application. In a dataset, each row might represent a different person, and each column a different measurement. The first row `[1, 2, 3]` could represent Person A's age (1), height (2), and weight (3). The second row `[4, 5, 6]` represents Person B's measurements. Now we have organized data for 2 people across 3 attributes.
-
-In computer graphics, these same numbers might represent a transformation. The matrix describes how to move, rotate, or scale objects in space. Each number specifies how much one dimension affects another during the transformation. The matrix `[[0, -1], [1, 0]]` doesn't represent data about objects—it represents an operation that rotates any vector by 90 degrees.
-
-Consider a real-world example: tracking three athletes across two fitness metrics (running speed and jump height). Each athlete is a row, each metric is a column:
-
-```
-          Speed  Jump
-Athlete A   8.5   2.1
-Athlete B   7.2   2.4
-Athlete C   9.1   1.9
-```
-
-This is a `3×2` matrix. The numbers represent measured values. We could extract Athlete B's performance as a vector `[7.2, 2.4]`, or compare all athletes' speeds by looking at the first column `[8.5, 7.2, 9.1]`.
-
-Matrices serve two primary purposes in computational work. First, they organize data efficiently, with rows typically representing samples and columns representing features. A dataset of 1000 customers with 5 attributes becomes a `1000×5` matrix. Second, matrices represent transformations—mathematical operations that change vectors in specific ways, such as rotations, scaling, reflections, and shearing.
-
-### Matrix-vector multiplication
-
-One of the most powerful applications is transforming vectors with matrices. When we multiply a matrix by a vector, each element of the result comes from taking the dot product of a matrix row with the vector. For a 2D transformation, the calculation follows this pattern:
-
-```
-[a  b]   [x]   [a×x + b×y]
-[c  d] × [y] = [c×x + d×y]
-```
-
-Consider a `2×2` rotation matrix that rotates vectors 90° counterclockwise:
-
-```
-[0  -1]
-[1   0]
-```
-
-When this matrix transforms vector `[1, 0]` (pointing right), we calculate each component:
-
-```
-[0  -1]   [1]   [0×1 + (-1)×0]   [0]
-[1   0] × [0] = [1×1 +   0×0 ] = [1]
-```
-
-The result `[0, 1]` points up, exactly 90° counterclockwise from the original direction. Each component of the output vector is computed by multiplying corresponding elements from a matrix row and the input vector, then summing those products. This is why matrix multiplication is defined as the dot product of rows with the vector.
-
-### Identifying transformation types
-
-Different transformations have distinct mathematical patterns in their matrix structure. You can identify what a matrix does by examining where its non-zero values appear.
-
-A scaling matrix has non-zero values only on the diagonal (top-left to bottom-right), with zeros everywhere else. The diagonal values are the scale factors:
-
-```
-[2  0]  Scales x by 2, y by 3
-[0  3]
-```
-
-When you multiply this matrix by any vector, each component is simply multiplied by its corresponding diagonal value. The vector `[4, 5]` becomes `[8, 15]`. The direction stays the same, only the magnitude changes.
-
-A rotation matrix has non-zero values in off-diagonal positions. The specific pattern depends on the rotation angle, following the formula `[[cos θ, -sin θ], [sin θ, cos θ]]`:
-
-```
-[0  -1]  90° counterclockwise rotation
-[1   0]  (cos 90° = 0, sin 90° = 1)
-```
-
-Rotation matrices preserve the magnitude of vectors while changing their direction. If you rotate `[3, 4]` (magnitude 5), the result still has magnitude 5, just pointing in a different direction.
-
-The identity matrix is a special case of scaling where all diagonal values equal 1:
-
-```
-[1  0]  No transformation
-[0  1]  (multiplying by identity returns the original vector)
-```
-
-For a matrix to transform a vector, the matrix width must match the vector length. These patterns extend to higher dimensions. A 3D scaling matrix has three diagonal values `[[sx, 0, 0], [0, sy, 0], [0, 0, sz]]`, while 3D rotations are more complex but still follow predictable patterns based on the rotation axis.
-
+> **For the mathematically curious:** The dot product formula `a · b = |a| × |b| × cos(θ)` reveals why normalized vectors measure similarity: when both have magnitude 1, the dot product *is* the cosine of the angle between them. This geometric insight powers the semantic search in [Chapter 22](22-semantic-search).
 
 ## Introducing Quiver
 
-With mathematical foundations established, we need practical tools for working with vectors and matrices in Swift. Quiver is a lightweight Swift package that provides vector mathematics, numerical computing, and statistical operations.
+With mathematical foundations established, we need practical tools for working with vectors in Swift. Quiver is a lightweight Swift package that provides vector mathematics, numerical computing, and statistical operations.
 
 ### Why Quiver?
 
@@ -226,7 +123,6 @@ let velocity = direction * speed  // [3.0, 4.0] - exactly 5 units/sec
 Normalization separates direction from magnitude, enabling precise control over movement speeds, force magnitudes, and other directional quantities. Always handle zero vectors properly:
 
 ```swift
-// Check vector magnitude before normalizing to avoid division by zero errors
 // Handle zero vectors to avoid normalization errors
 import Quiver
 
@@ -282,7 +178,7 @@ let song2 = [120.0, 0.8, 0.9, 0.7]
 let songSimilarity = song1.cosineOfAngle(with: song2)  // 0.98
 ```
 
-This cosine similarity technique is fundamental to recommendation systems, search engines, and machine learning. It appears throughout [Chapter 21](21-semantic-search), where semantic search uses vector similarity to find related documents.
+This cosine similarity technique is fundamental to recommendation systems, search engines, and machine learning. It appears throughout [Chapter 22](22-semantic-search), where semantic search uses vector similarity to find related documents.
 
 ## Vector averaging
 
@@ -310,38 +206,8 @@ guard let documentVector = wordVectors.averaged() else {
 // Result: [0.2, 0.7, 0.5] - points toward "athletic footwear" region
 ```
 
-The `.averaged()` method validates that all vectors have the same dimensionality and returns `nil` for empty arrays or inconsistent dimensions. This pattern appears throughout [Chapter 21](21-semantic-search), where the `embedText()` function uses vector averaging to convert search queries and documents into comparable vectors for similarity computation.
+The `.averaged()` method validates that all vectors have the same dimensionality and returns `nil` for empty arrays or inconsistent dimensions. This pattern appears throughout [Chapter 22](22-semantic-search), where the `embedText()` function uses vector averaging to convert search queries and documents into comparable vectors for similarity computation.
 
-## Working with matrices
+## Building intuition
 
-With the mathematical foundations of matrices established, let's see how to work with them using Quiver.
-
-```swift
-// Create and apply matrix transformations
-import Quiver
-
-// 2D rotation matrix (90° counterclockwise)
-let rotation90 = [
-    [0.0, -1.0],
-    [1.0,  0.0]
-]
-
-// Apply the rotation transformation
-let rightVector = [1.0, 0.0]  // Points right
-let rotated = rotation90.transform(rightVector)  // [0.0, 1.0] - points up
-
-// Create and apply a scaling transformation
-let scaleMatrix = [
-    [2.0, 0.0],
-    [0.0, 2.0]
-]
-
-let point = [3.0, 4.0]
-let scaled = scaleMatrix.transform(point)  // [6.0, 8.0]
-```
-
-## Building algorithmic intuition
-
-Linear algebra provides the mathematical foundation for many algorithms throughout this book. Vector operations power similarity calculations in semantic search ([Chapter 21](21-semantic-search)), while matrix transformations enable coordinate systems in graph algorithms ([Chapter 12](12-graphs)). The dot product and cosine similarity form the basis of recommendation systems and machine learning applications.
-
-Understanding vectors and matrices creates a unified framework for thinking about spatial relationships, transformations, and data analysis. These concepts bridge theoretical computer science and practical applications, from game development to artificial intelligence.
+Vectors provide the mathematical language for representing multi-dimensional data and measuring relationships between points in space. The operations we've explored—magnitude, normalization, dot product, and cosine similarity—form the foundation for semantic search, recommendation systems, and machine learning applications. These same vectors can be organized and transformed systematically using matrices, which we'll explore in [Chapter 21](21-matrices). Together, vectors and matrices create a powerful framework for spatial reasoning, data analysis, and algorithmic problem-solving throughout computer science.

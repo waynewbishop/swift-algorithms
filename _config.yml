@@ -107,10 +107,12 @@ navigation:
         url: "18-dynamic-programming"
       - title: "PageRank"
         url: "19-pagerank-algorithm"
-      - title: "Linear Algebra"
-        url: "20-linear-algebra"
+      - title: "Vectors"
+        url: "20-vectors"
+      - title: "Matrices"
+        url: "21-matrices"
       - title: "Semantic Search"
-        url: "21-semantic-search"
+        url: "22-semantic-search"
 
 # Exclude from processing
 exclude:
