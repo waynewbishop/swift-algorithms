@@ -132,7 +132,36 @@ When this matrix transforms vector `[1, 0]` (pointing right), we calculate each 
 
 The result `[0, 1]` points up, exactly 90° counterclockwise from the original direction. Each component of the output vector is computed by multiplying corresponding elements from a matrix row and the input vector, then summing those products. This is why matrix multiplication is defined as the dot product of rows with the vector.
 
-For a matrix to transform a vector, the matrix width must match the vector length. Common transformations demonstrate matrices' power. Rotation matrices change direction while preserving magnitude. Scaling matrices change magnitude along specific axes. Reflection matrices mirror vectors across an axis. Shear matrices shift components proportionally, creating skewed transformations. Each transformation has practical applications in graphics, physics, and data manipulation.
+### Identifying transformation types
+
+Different transformations have distinct mathematical patterns in their matrix structure. You can identify what a matrix does by examining where its non-zero values appear.
+
+A scaling matrix has non-zero values only on the diagonal (top-left to bottom-right), with zeros everywhere else. The diagonal values are the scale factors:
+
+```
+[2  0]  Scales x by 2, y by 3
+[0  3]
+```
+
+When you multiply this matrix by any vector, each component is simply multiplied by its corresponding diagonal value. The vector `[4, 5]` becomes `[8, 15]`. The direction stays the same, only the magnitude changes.
+
+A rotation matrix has non-zero values in off-diagonal positions. The specific pattern depends on the rotation angle, following the formula `[[cos θ, -sin θ], [sin θ, cos θ]]`:
+
+```
+[0  -1]  90° counterclockwise rotation
+[1   0]  (cos 90° = 0, sin 90° = 1)
+```
+
+Rotation matrices preserve the magnitude of vectors while changing their direction. If you rotate `[3, 4]` (magnitude 5), the result still has magnitude 5, just pointing in a different direction.
+
+The identity matrix is a special case of scaling where all diagonal values equal 1:
+
+```
+[1  0]  No transformation
+[0  1]  (multiplying by identity returns the original vector)
+```
+
+For a matrix to transform a vector, the matrix width must match the vector length. These patterns extend to higher dimensions. A 3D scaling matrix has three diagonal values `[[sx, 0, 0], [0, sy, 0], [0, 0, sz]]`, while 3D rotations are more complex but still follow predictable patterns based on the rotation axis.
 
 
 ## Introducing Quiver
@@ -292,8 +321,6 @@ With the mathematical foundations of matrices established, let's see how to work
 import Quiver
 
 // 2D rotation matrix (90° counterclockwise)
-// Same matrix from the mathematical explanation: [0  -1]
-//                                                [1   0]
 let rotation90 = [
     [0.0, -1.0],
     [1.0,  0.0]
@@ -301,10 +328,7 @@ let rotation90 = [
 
 // Apply the rotation transformation
 let rightVector = [1.0, 0.0]  // Points right
-let rotated = rotation90.transform(rightVector)  // [0.0, 1.0] - points up!
-
-// This confirms the math: [0  -1]   [1]   [0]
-//                        [1   0] × [0] = [1]
+let rotated = rotation90.transform(rightVector)  // [0.0, 1.0] - points up
 
 // Create and apply a scaling transformation
 let scaleMatrix = [
