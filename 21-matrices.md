@@ -187,24 +187,24 @@ let scaled = scaleMatrix.transform(point)  // [6.0, 8.0]
 
 ### Data organization
 
-Matrices naturally represent tabular data. Consider organizing sensor readings from multiple devices:
+Matrices naturally represent tabular data. Consider organizing game scores for multiple players:
 
 ```swift
-// Organize sensor data as matrix (rows = sensors, columns = readings)
+// Organize game scores as matrix (rows = players, columns = games)
 import Quiver
 
-let sensorData = [
-    [72.1, 73.5, 74.2, 73.8],  // Sensor A: 4 temperature readings
-    [71.8, 72.9, 73.7, 73.1],  // Sensor B: 4 temperature readings
-    [73.2, 74.1, 74.8, 74.3]   // Sensor C: 4 temperature readings
+let gameScores = [
+    [95.0, 88.0, 92.0, 91.0],  // Player A: 4 game scores
+    [87.0, 90.0, 89.0, 93.0],  // Player B: 4 game scores
+    [92.0, 94.0, 88.0, 96.0]   // Player C: 4 game scores
 ]
 
-// Extract readings from all sensors at time 2
-let timeSlice = sensorData.map { $0[2] }  // [74.2, 73.7, 74.8]
+// Extract all scores from game 3 using column extraction
+let game3Scores = gameScores.column(at: 2)  // [92.0, 89.0, 88.0]
 
-// Average all readings from Sensor B
-let sensorB = sensorData[1]
-let average = sensorB.reduce(0, +) / Double(sensorB.count)  // 72.875°
+// Calculate average score for Player B
+let playerBScores = gameScores[1]
+let average = playerBScores.mean() ?? 0.0  // 89.75
 ```
 
 ### Composing transformations
