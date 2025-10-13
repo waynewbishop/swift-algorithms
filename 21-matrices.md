@@ -78,6 +78,31 @@ When this matrix transforms vector `[1, 0]` (pointing right), we calculate each 
 
 The result `[0, 1]` points up, exactly 90° counterclockwise from the original direction. Each component of the output vector is computed by multiplying corresponding elements from a matrix row and the input vector, then summing those products. This is why matrix multiplication is defined as the dot product of rows with the vector.
 
+We can verify this definition using Quiver's `.dot()` method to compute each component explicitly:
+
+```swift
+// Demonstrate matrix-vector multiplication as row-by-row dot products
+import Quiver
+
+let rotationMatrix = [
+    [0.0, -1.0],
+    [1.0,  0.0]
+]
+
+let vector = [1.0, 0.0]
+
+// Calculate each component as dot product of matrix row with vector
+let component1 = rotationMatrix[0].dot(vector)  // 0×1 + (-1)×0 = 0.0
+let component2 = rotationMatrix[1].dot(vector)  // 1×1 + 0×0 = 1.0
+
+let result = [component1, component2]  // [0.0, 1.0]
+
+// Verify: this matches Quiver's built-in transform method
+let quickResult = rotationMatrix.transform(vector)  // [0.0, 1.0]
+```
+
+This explicit calculation reveals what happens during matrix-vector multiplication: each row of the matrix produces one component of the output through its dot product with the input vector. Quiver's `.transform()` method performs this calculation efficiently, but understanding the underlying dot product operation builds intuition for why matrix transformations work as they do.
+
 ### Identifying transformation types
 
 Different transformations have distinct mathematical patterns in their matrix structure. You can identify what a matrix does by examining where its non-zero values appear.
