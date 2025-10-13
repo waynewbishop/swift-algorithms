@@ -147,11 +147,7 @@ let newJHat = rotate45.transform([0.0, 1.0])  // [-0.707, 0.707]
 
 This reveals a fundamental insight: matrix transformations change the coordinate system. When you transform the vector `[3, 4]`, you're not just moving a point—you're expressing that point in a new coordinate system where the axes themselves have been transformed.
 
-This concept, called `change of basis`, appears throughout computer science. In computer graphics, different coordinate systems (object space, world space, camera space) are related by transformation matrices. In machine learning, dimensionality reduction techniques like PCA find new basis vectors that better represent the data's structure. In robotics, transforming between a robot's coordinate system and the world's coordinate system enables navigation and manipulation.
-
-Understanding that transformation matrices reorient the coordinate system—not just move points around—provides deeper intuition for why matrix operations behave as they do and why order matters when composing transformations.
-
-For a matrix to transform a vector, the matrix width must match the vector length. These patterns extend to higher dimensions. A 3D scaling matrix has three diagonal values `[[sx, 0, 0], [0, sy, 0], [0, 0, sz]]`, while 3D rotations are more complex but still follow predictable patterns based on the rotation axis.
+This concept, called `change of basis`, appears throughout computer science. In computer graphics, different coordinate systems (object space, world space, camera space) are related by transformation matrices. In machine learning, dimensionality reduction techniques like **PCA** find new basis vectors that better represent the data's structure. In robotics, transforming between a robot's coordinate system and the world's coordinate system enables navigation and manipulation.
 
 ## Matrix operations
 
