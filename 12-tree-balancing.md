@@ -1,31 +1,34 @@
 ---
 layout: chapter
 title: "Chapter 12: Tree Balancing"
-description: "Maintain balanced binary search trees with AVL rotations"
+description: "Maintaining balanced binary search trees through height tracking and rotations"
 ---
 # Tree Balancing
 
-In [Chapter 11](11-binary-search-trees.md), you built binary search trees that achieve O(log n) search performance—but only when the tree remains balanced. When a tree becomes unbalanced, performance degrades to O(n), no better than searching a linked list. This chapter introduces self-balancing techniques that guarantee O(log n) performance regardless of insertion order.
+In the previous chapter, we saw how binary search trees are used to manage data. With basic logic, an algorithm can easily traverse a model, searching data in O(log n) time. However, there are occasions when navigating a tree becomes inefficient - in some cases working at O(n) time. In this chapter, we will review those scenarios and introduce the concept of tree balancing.
 
-The key insight: by tracking the height of each subtree and performing rotations when imbalances occur, we can maintain balance automatically. This transforms BSTs from good-on-average structures into guaranteed-efficient data structures suitable for production systems.
-
-## The balance problem
-
-Consider inserting sorted data into a BST from Chapter 11. Building a tree from `[1, 2, 3, 4, 5]` creates a degenerate case—every node has only a right child, forming a linked list. Searching for 5 requires examining all 5 nodes (O(n)), not the 3 comparisons (O(log 5) ≈ 2.3) a balanced tree would need.
-
-This scenario isn't rare. Any monotonically increasing sequence (timestamps, auto-increment IDs, sorted imports) triggers worst-case behavior. Without balancing, BSTs become unreliable in real systems.
-
-## Self-balancing through height tracking
-
-Self-balancing trees extend BSTs with height tracking and automatic rebalancing. The balance invariant: the height difference between left and right subtrees never exceeds 1.
+## New Models
 
 To start, let's revisit our original example. Array values from `numberList` were used to build a tree. As shown, all elements had either one or two children - otherwise called leaf elements. This is known as a balanced binary search tree.
 
 Our model achieved balance not only through usage of the BST append algorithm but also by the way keys were inserted. In reality, there could be numerous ways to populate a tree. Without considering other factors, this can produce unexpected results.
 
-## Tracking height
+Consider inserting sorted data into a BST. Building a tree from `[1, 2, 3, 4, 5]` creates a degenerate case—every node has only a right child, forming a linked list. Searching for 5 requires examining all 5 nodes (O(n)), not the 3 comparisons (O(log 5) ≈ 2.3) a balanced tree would need.
 
-To compensate for these imbalances, we need to expand the scope of our algorithm. In addition to left/right logic, we'll add a new property called `height`. Coupled with specific rules, we can use `height` to detect tree imbalances. To see how this works, let's implement height tracking in our tree:
+This scenario isn't rare. Any monotonically increasing sequence (timestamps, auto-increment IDs, sorted imports) triggers worst-case behavior. Without balancing, BSTs become unreliable in real systems.
+
+## New Heights
+
+To compensate for these imbalances, we need to expand the scope of our algorithm. In addition to left/right logic, we'll add a new property called `height`. Coupled with specific rules, we can use `height` to detect tree imbalances. To see how this works, let's create a simple array:
+
+```swift
+// A simple array of unsorted integers
+let balanceList: Array<Int> = [29, 26, 23]
+```
+
+To start, we add the root element. As the first item, left/right leaves don't yet exist, so they are initialized to `nil`. Arrows point from the leaf element to the root because they are used to calculate its height. For math purposes, the height of non-existent leaves are set to -1.
+
+With a model in place, we can calculate the element's height. This is done by comparing the height of each leaf, finding the largest value, then increasing that value by +1. For the root element, this equates to 0. In Swift, these rules can be represented as follows:
 
 ```swift
 // Self-balancing tree node with height tracking for balance detection
@@ -39,9 +42,7 @@ class AVLTree<T: Comparable> {
 }
 ```
 
-To start, we add the root element. As the first item, left/right leaves don't yet exist, so they are initialized to `nil`. Arrows point from the leaf element to the root because they are used to calculate its height. For math purposes, the height of non-existent leaves are set to -1.
-
-With a model in place, we can calculate the element's height. This is done by comparing the height of each leaf, finding the largest value, then increasing that value by +1. For the root element, this equates to 0. In Swift, these rules can be represented as follows:
+The height calculation follows a simple pattern:
 
 ```swift
 // Height calculation for balance checking
@@ -63,7 +64,7 @@ extension AVLTree {
 }
 ```
 
-## Measuring balance
+## Measuring Balance
 
 With the root element established, we can proceed to add the next value. Upon implementing standard BST logic, item 26 is positioned as the left leaf node. As a new item, its height is also calculated (i.e., 0). However, since our model is a hierarchy, we traverse upwards to recalculate its parent height value.
 
@@ -91,7 +92,7 @@ extension AVLTree {
 }
 ```
 
-## Restoring balance through rotation
+## Adjusting the Model
 
 With 29 and 26 added, we can proceed to insert the final value (i.e., 23). Like before, we continue to traverse the left side of the tree. However, upon insertion, the math reveals node 29 violates the BST property. In other words, its subtree is no longer balanced.
 
@@ -129,7 +130,7 @@ extension AVLTree {
 
 Even though we undergo a series of steps, the process occurs in O(1) time. Meaning, its performance is unaffected by other factors such as number of leaf nodes, descendants, or tree height. In addition, even though we've completed a right rotation, similar steps could be implemented to resolve both left and right imbalances.
 
-## Sort order preservation
+## The Results
 
 With tree balancing, it is important to note that techniques like rotations improve performance but do not change tree output. For example, even though a right rotation changes the connections between nodes, the overall BST sort order is preserved. As a test, one can traverse a balanced and unbalanced BST comparing the same values and receive the same results. In our case, a simple depth-first search will produce the following:
 
