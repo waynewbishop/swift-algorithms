@@ -59,7 +59,7 @@ The dot product reveals relationships between vectors. When the dot product equa
 
 Applications span multiple domains. In physics, the dot product calculates work done by computing force · distance. In graphics, it determines if surfaces face light sources, controlling brightness and shadows. In machine learning, measuring similarity between feature vectors through cosine similarity enables recommendation systems to find related items. The dot product transforms geometric intuition into practical computation.
 
-> **For the mathematically curious:** The dot product formula `a · b = |a| × |b| × cos(θ)` reveals why normalized vectors measure similarity: when both have magnitude 1, the dot product *is* the cosine of the angle between them. This geometric insight powers the semantic search in [Chapter 22](22-semantic-search).
+> **Note:** The dot product formula `a · b = |a| × |b| × cos(θ)` reveals why normalized vectors measure similarity: when both have magnitude 1, the dot product *is* the cosine of the angle between them. This geometric insight powers the semantic search in [Chapter 22](22-semantic-search).
 
 ## Introducing Quiver
 

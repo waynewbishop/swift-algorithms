@@ -27,7 +27,7 @@ func fibonacci(_ n: Int) -> Int {
 
 This code is elegant and matches the mathematical definition perfectly. But there's a serious problem: it's incredibly slow.
 
-**Why it's slow:**
+Why it's slow:
 
 When you calculate `fibonacci(5)`, the function calculates `fibonacci(3)` three separate times and `fibonacci(2)` five separate times. For `fibonacci(40)`, the function makes over 330 million function calls!
 
@@ -38,7 +38,7 @@ The time complexity is O(2^n)—exponential. For larger numbers, this approach b
 
 Dynamic programming solves this problem with a simple insight: **store the results of subproblems so you can reuse them instead of recalculating**.
 
-The technique we'll focus on is called **[memoization](https://en.wikipedia.org/wiki/Memoization)**: start with the big problem and recursively break it down, storing (or memoizing) results along the way so you can reuse them.
+The technique we'll focus on is called **memoization**: start with the big problem and recursively break it down, storing (or memoizing) results along the way so you can reuse them.
 
 **Note:** There's another approach called tabulation (bottom-up) that builds solutions iteratively from base cases, but memoization is often more intuitive because it follows the natural recursive structure of problems.
 
@@ -66,17 +66,17 @@ func fibonacciMemo(_ n: Int, cache: inout [Int: Int]) -> Int {
     return result
 }
 
-// Wrapper function for clean usage
+// Wrapper provides clean API by hiding memoization cache from caller
 func fibonacci(_ n: Int) -> Int {
     var cache: [Int: Int] = [:]
     return fibonacciMemo(n, cache: &cache)
 }
 
-// Usage
+// Example: Calculate 40th Fibonacci number using memoization
 print(fibonacci(40))  // Completes instantly!
 ```
 
-**How it works:**
+How it works:
 
 1. Before calculating `fibonacci(n)`, check if it's in the cache
 2. If yes, return the cached value immediately
@@ -84,8 +84,8 @@ print(fibonacci(40))  // Completes instantly!
 
 Now `fibonacci(5)` makes only 9 function calls instead of 15, and each value is calculated exactly once.
 
-**[Time Complexity](https://en.wikipedia.org/wiki/Time_complexity):** O(n) - we calculate each value from 0 to n exactly once
-**[Space Complexity](https://en.wikipedia.org/wiki/Space_complexity):** O(n) - we store n values in the cache plus the recursion stack
+**Time Complexity:** O(n) - we calculate each value from 0 to n exactly once
+**Space Complexity:** O(n) - we store n values in the cache plus the recursion stack
 
 This simple change transforms an exponential algorithm into a linear one—a massive improvement!
 
@@ -132,12 +132,12 @@ func minCoins(amount: Int, coins: [Int]) -> Int {
     return dp[amount] == Int.max ? -1 : dp[amount]
 }
 
-// Usage
+// Example: Find minimum coins to make 11 cents with denominations [1, 4, 5]
 let result = minCoins(amount: 11, coins: [1, 4, 5])
 print("Minimum coins needed: \(result)")  // 3
 ```
 
-**How it works:**
+How it works:
 
 1. Create array where `dp[i]` = minimum coins for amount `i`
 2. Start with `dp[0] = 0` (no coins needed for $0)
@@ -223,9 +223,9 @@ The performance difference is dramatic. Exponential algorithms quickly become un
 
 Memoization is effective because:
 
-1. **Natural recursion** - The solution follows the problem's recursive structure
-2. **Lazy evaluation** - Only calculates values you actually need
-3. **Easy to implement** - Add caching to existing recursive code
-4. **Clear logic** - Mirrors the mathematical definition of the problem
+1. Natural recursion - The solution follows the problem's recursive structure
+2. Lazy evaluation - Only calculates values you actually need
+3. Easy to implement - Add caching to existing recursive code
+4. Clear logic - Mirrors the mathematical definition of the problem
 
 The trade-off is simple: use `O(n)` extra memory to reduce time complexity from O(2^n) to O(n).
