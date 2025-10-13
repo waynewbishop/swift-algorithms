@@ -220,7 +220,7 @@ Transposition is useful for reorganizing data. If rows represent samples and col
 
 In machine learning, transposition enables efficient computation of matrix operations. The dot product of two vectors can be expressed as matrix multiplication: `a · b = a^T × b`, treating vectors as column matrices.
 
-## Working with matrices in Quiver
+## Practical matrix applications
 
 Quiver extends Swift's array syntax to support matrix operations. Since Quiver treats arrays as vectors and arrays of arrays as matrices, you can work with mathematical structures using familiar Swift syntax.
 
