@@ -88,6 +88,66 @@ Let's compare naive recursion vs memoization:
 
 The performance difference is dramatic. Exponential algorithms quickly become unusable, while dynamic programming with memoization remains fast even for large inputs.
 
+## Climbing stairs
+
+Consider another classic problem that demonstrates memoization using a Dictionary. You're climbing a staircase with n steps, and you can climb either 1 or 2 steps at a time. How many distinct ways can you reach the top?
+
+For example, with 3 steps, there are 3 different ways:
+- 1 step + 1 step + 1 step
+- 1 step + 2 steps
+- 2 steps + 1 step
+
+This problem appears in iOS contexts more than you might think. Fitness apps that track step counts, animation systems that interpolate between states, or game mechanics involving movement patterns all encounter variations of this counting problem.
+
+The naive recursive approach suffers from the same exponential explosion as Fibonacci:
+
+```swift
+// Naive recursive climbing - O(2^n) time complexity
+func climbStairsNaive(_ n: Int) -> Int {
+    if n <= 2 {
+        return n
+    }
+
+    return climbStairsNaive(n - 1) + climbStairsNaive(n - 2)
+}
+```
+
+Notice the pattern. To reach step n, we could arrive from step (n-1) by taking 1 step, or from step (n-2) by taking 2 steps. This gives us the same recursive structure as Fibonacci, but in a different problem domain.
+
+Now let's apply memoization using a Dictionary—the most common pattern you'll encounter in practice:
+
+```swift
+// Memoized stair climbing using Dictionary cache - O(n) time
+func climbStairs(_ n: Int) -> Int {
+    var cache: [Int: Int] = [:]
+    return climbHelper(n, cache: &cache)
+}
+
+func climbHelper(_ n: Int, cache: inout [Int: Int]) -> Int {
+    // Check cache first
+    if let cached = cache[n] {
+        return cached
+    }
+
+    // Base cases
+    if n <= 2 {
+        return n
+    }
+
+    // Recursive calculation with memoization
+    let result = climbHelper(n - 1, cache: &cache) + climbHelper(n - 2, cache: &cache)
+    cache[n] = result
+
+    return result
+}
+
+// Example usage
+print(climbStairs(10))  // 89 distinct ways
+print(climbStairs(30))  // 1346269 - computes instantly
+```
+
+This Dictionary-based approach is the canonical memoization pattern. Before calculating anything, we check if the result exists in our cache. If it does, we return it immediately. If not, we calculate it, store it, and then return it. This pattern works for any problem where subproblems overlap and solutions can be reused.
+
 ## Shortest paths
 
 Code memoization can also improve a program's efficiency to the point of making seemingly difficult or nearly unsolvable questions answerable. An example of this can be seen with Dijkstra's Algorithm and Shortest Paths from [Chapter 12](12-graphs). To review, we created a unique data structure named Path with the goal of storing specific traversal metadata:
@@ -111,6 +171,6 @@ What makes Path useful is its ability to store data on nodes previously visited.
 
 ## Why memoization works
 
-Dynamic programming with memoization is effective because it trades a small amount of memory (storing previously computed results) for dramatic speed improvements. By remembering what we've already calculated, we avoid repeating expensive computations. This pattern appears throughout algorithm design—whether building Fibonacci sequences with Arrays, navigating graphs with Path objects, or tracking states in more complex problems.
+Dynamic programming with memoization is effective because it trades a small amount of memory (storing previously computed results) for dramatic speed improvements. By remembering what we've already calculated, we avoid repeating expensive computations. This pattern appears throughout algorithm design—whether building Fibonacci sequences with Arrays, counting paths through problems like climbing stairs, or navigating graphs with Path objects.
 
-The key insight is recognizing when your problem has overlapping subproblems that can be cached and reused. Once you spot this pattern, memoization transforms intractable exponential algorithms into practical linear-time solutions. This is why dynamic programming remains one of the most powerful optimization techniques in computer science.
+The key insight is recognizing when your problem has overlapping subproblems that can be cached and reused. Once you spot this pattern, memoization transforms intractable exponential algorithms into practical linear-time solutions. Whether you use Arrays, Dictionaries, or custom data structures to store your results, the principle remains the same: calculate once, use many times. This is why dynamic programming remains one of the most powerful optimization techniques in computer science.
