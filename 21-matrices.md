@@ -299,38 +299,10 @@ let vector = [1.0, 0.0]
 let result = combined.transform(vector)  // Rotated 45° and scaled 2×
 ```
 
-## Applications across algorithms
-
-Matrices appear throughout computer science, providing both data organization and computational tools.
-
-### Computer graphics
-
-In graphics, matrices power transformation pipelines. 3D engines use `4×4` matrices to combine translation, rotation, scaling, and projection into single operations. Each vertex in a 3D model is a vector that gets transformed by a series of matrices: model matrix (object space → world space), view matrix (world space → camera space), and projection matrix (camera space → screen space). Combining these into a single matrix enables efficient GPU processing.
-
-Camera matrices define viewpoint and perspective. A camera's position, orientation, and field of view are encoded in transformation matrices that convert 3D coordinates to 2D screen positions. Game engines and rendering software rely on matrix operations to display millions of triangles per frame at interactive rates.
-
-### Machine learning
-
-Neural networks are fundamentally matrix operations. A dataset with 1000 samples and 50 features becomes a `1000×50` matrix. Each layer in a neural network multiplies this input matrix by a weight matrix, transforming the data. The formula for a fully connected layer is `output = input × weights + bias`, where matrices represent entire batches of data flowing through the network.
-
-Training algorithms like gradient descent compute matrices of partial derivatives. Backpropagation updates weight matrices by multiplying gradient matrices. Matrix operations enable processing thousands of examples simultaneously through vectorization, making training feasible on modern hardware.
-
-### Graph algorithms
-
-Adjacency matrices represent graph connections. A graph with `n` vertices becomes an `n×n` matrix where `A[i][j] = 1` if an edge exists from vertex `i` to vertex `j`, and 0 otherwise. This representation appears in [Chapter 13](13-graphs), enabling matrix-based graph algorithms.
-
-PageRank ([Chapter 19](19-pagerank-algorithm)) uses matrix operations to compute page importance. The algorithm iteratively multiplies a vector of page ranks by a transition matrix representing link structure. This matrix formulation reveals PageRank's connection to eigenvector computation, a fundamental linear algebra concept.
-
-### Semantic search foundation
-
-In [Chapter 22](22-semantic-search), matrices organize word embeddings and document representations. A vocabulary of 10,000 words with 100-dimensional embeddings becomes a `10,000×100` matrix. Each row is a word vector, enabling efficient lookup and computation.
-
-Document-term matrices track which words appear in which documents. For a collection of 500 documents and 5,000 unique words, the `500×5,000` matrix has `matrix[i][j] = frequency of word j in document i`. These matrices enable computing document similarity through matrix operations, forming the foundation of modern search and recommendation systems.
-
 ## Building algorithmic intuition
 
 Matrices provide two essential capabilities: organizing multi-dimensional data and transforming it systematically. The row-column structure naturally represents relationships—whether sensor readings over time, feature values across samples, or transformation coefficients for geometric operations.
 
-Matrix operations compose. Combining transformations, chaining computations, and building complex algorithms from simpler matrix operations creates powerful abstractions. This composability appears in graphics pipelines, neural networks, graph algorithms, and data analysis.
+Matrix operations compose. Combining transformations, chaining computations, and building complex algorithms from simpler matrix operations creates powerful abstractions.
 
 Understanding matrices completes the linear algebra foundation needed for modern algorithms. Combined with vector operations from [Chapter 20](20-vectors), you now have the mathematical tools to understand semantic search ([Chapter 22](22-semantic-search)), where vectors and matrices work together to find similar documents, power recommendation systems, and enable machine learning applications across computer science.
