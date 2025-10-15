@@ -17,9 +17,9 @@ Before implementing linked lists, understand when to choose them over Swift's bu
 
 ### Memory organization
 
-**Arrays** store elements in contiguous memory—a single continuous block. This enables fast random access (base address + index × size = element location) but requires copying the entire array to a larger block when capacity is exceeded.
+- Arrays store elements in contiguous memory—a single continuous block. This enables fast random access (base address + index × size = element location) but requires copying the entire array to a larger block when capacity is exceeded.
 
-**Linked lists** store elements anywhere in memory, with each element pointing to the next (and optionally previous). No resizing needed—just allocate new nodes as needed. The cost is slower access by index since you must traverse from the beginning.
+- Linked lists store elements anywhere in memory, with each element pointing to the next (and optionally previous). No resizing needed—just allocate new nodes as needed. The cost is slower access by index since you must traverse from the beginning.
 
 ### Performance comparison
 
@@ -50,7 +50,7 @@ Before implementing linked lists, understand when to choose them over Swift's bu
 - Working with Swift's functional methods (map, filter, reduce)
 
 **Real-world examples:**
-- Linked lists: UIKit responder chain, browser navigation history, undo/redo systems, music playlists (add/remove songs), workout interval training (modify exercises mid-workout)
+- Linked lists: UIKit [responder chain](https://developer.apple.com/documentation/uikit/using-responders-and-the-responder-chain-to-handle-events), browser navigation history, undo/redo systems, music playlists (add/remove songs), workout interval training (modify exercises mid-workout)
 - Arrays: UITableView data sources, configuration settings, most app data models, weekly workout summaries, step count history
 
 ## The node structure
