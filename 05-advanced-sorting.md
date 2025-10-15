@@ -5,7 +5,9 @@ description: "Master the Quicksort algorithm and divide & conquer strategy"
 ---
 # Advanced sorting
 
-In [Chapter 4](04-basic-sorting.md), we explored insertion sort, bubble sort, and selection sort—all performing with a [time complexity](https://en.wikipedia.org/wiki/Time_complexity) of `O(n²)`. While valuable for understanding sorting fundamentals and useful for small datasets, these algorithms are seldom used in production code when dealing with larger collections.
+You've logged 5,000 workouts over five years. Your fitness app needs to display them sorted by calorie burn—highest first. Using bubble sort or insertion sort would take noticeable seconds, maybe minutes. Using Quicksort? Milliseconds.
+
+In [Chapter 4](04-basic-sorting.md), we explored insertion sort, bubble sort, and selection sort—all performing with a [time complexity](https://en.wikipedia.org/wiki/Time_complexity) of `O(n²)`. While valuable for understanding sorting fundamentals and useful for small datasets like this week's workouts, these algorithms are seldom used in production code when dealing with larger collections like years of fitness history.
 
 The Quicksort [algorithm](https://en.wikipedia.org/wiki/Algorithm), however, has broad practical application and usage. This commonly used algorithm appears in code libraries, production systems, and even forms part of many standard library sorting implementations. Quicksort features a time complexity of `O(n log n)` in average cases and applies a divide & conquer strategy that results in superior performance.
 
@@ -100,12 +102,12 @@ The [space complexity](https://en.wikipedia.org/wiki/Space_complexity) of Quicks
 
 ### Visualizing the performance difference
 
-To understand why `O(n log n)` is dramatically better than `O(n²)`, consider sorting 10,000 elements:
+To understand why `O(n log n)` is dramatically better than `O(n²)`, consider sorting 10,000 workouts (about 3 years of daily training):
 
-- **Basic sorting** (`O(n²)`): ~100,000,000 operations
-- **Quicksort** (`O(n log n)`): ~140,000 operations
+- **Basic sorting** (`O(n²)`): ~100,000,000 operations (several seconds of lag)
+- **Quicksort** (`O(n log n)`): ~140,000 operations (instant)
 
-This difference of over 700× explains why Quicksort dominates production code. The performance gap widens further as data grows—for 100,000 elements, the difference becomes approximately 7,500×.
+This difference of over 700× explains why Quicksort dominates production code. The performance gap widens further as data grows—for 100,000 heart rate readings (a month of continuous monitoring), the difference becomes approximately 7,500×. This is why the Health app can instantly sort years of data without freezing.
 
 ### Best, average, and worst cases
 
@@ -129,11 +131,11 @@ The choice of pivot significantly impacts performance:
 
 ## Practical applications
 
-Quicksort excels in situations where memory is limited, since it uses minimal additional space through its in-place partitioning strategy. The algorithm typically runs faster than other `O(n log n)` algorithms in practice when average-case performance matters more than worst-case guarantees. Since Quicksort modifies the original array rather than creating copies, it's preferred when in-place sorting is required.
+Quicksort excels in situations where memory is limited, since it uses minimal additional space through its in-place partitioning strategy. On iOS devices where memory management matters, this in-place sorting is particularly valuable. When a fitness app sorts thousands of workouts by duration, Quicksort modifies the array directly rather than creating copies, conserving precious memory.
 
-Many programming languages use Quicksort or hybrid algorithms based on it. Swift's standard library uses Introsort, which begins with Quicksort and switches to heapsort if recursion depth exceeds a threshold. This approach guarantees `O(n log n)` worst-case performance while maintaining Quicksort's excellent average-case speed. The algorithm's widespread adoption in production systems demonstrates its practical value despite the theoretical possibility of worst-case behavior.
+The algorithm typically runs faster than other `O(n log n)` algorithms in practice when average-case performance matters more than worst-case guarantees. Workout data, step counts, and calorie burns are essentially random—they have no particular pattern. This randomness produces the balanced partitions that allow Quicksort to achieve its optimal performance.
 
-The algorithm proves particularly effective for general-purpose sorting where the input data has no particular pattern. Random or pseudo-random data produces the balanced partitions that allow Quicksort to achieve its optimal performance. Database systems, operating system utilities, and application frameworks frequently rely on Quicksort or its variants for their sorting operations.
+Many programming languages use Quicksort or hybrid algorithms based on it. Swift's standard library uses Introsort, which begins with Quicksort and switches to heapsort if recursion depth exceeds a threshold. This approach guarantees `O(n log n)` worst-case performance while maintaining Quicksort's excellent average-case speed. When you call `.sorted()` on an array in Swift, you're likely using a Quicksort-based algorithm. The algorithm's widespread adoption in production systems—from the Health app to Strava to AllTrails—demonstrates its practical value despite the theoretical possibility of worst-case behavior.
 
 ## Divide and conquer in action
 

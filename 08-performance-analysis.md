@@ -5,6 +5,8 @@ description: "Understanding algorithmic efficiency, complexity analysis, and rea
 ---
 # Analyzing Algorithms
 
+Your fitness app has 10,000 workouts. Finding your fastest 5K time with linear search: check all 10,000. With binary search on sorted data: check 14. Same result, vastly different performance. Why? Algorithm choice.
+
 We've now explored searching techniques that locate values in collections, sorting methods that organize data, [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)) that breaks problems into smaller pieces, and generics that enable flexible code. Along the way, we've noticed patterns—binary search feels faster than linear search, merge sort handles large datasets better than bubble sort, and some recursive solutions run exponentially slow.
 
 It's time to formalize these observations. In [Chapter 2](02-measuring-performance.md), we learned the vocabulary of performance—[Big O Notation](https://en.wikipedia.org/wiki/Big_O_notation) provides a common language for discussing how [algorithms](https://en.wikipedia.org/wiki/Algorithm) scale. This chapter builds on that foundation, teaching you to analyze the algorithms we've written and make informed decisions about which approaches fit which problems.
@@ -52,10 +54,11 @@ func binarySearch<T: Comparable>(for target: T, in array: [T]) -> Int? {
 
 **Impact at scale:**
 
-| Array Size | Linear Search | Binary Search |
-|------------|---------------|---------------|
-| 1,000 | 1,000 comparisons | 10 comparisons |
-| 1,000,000 | 1,000,000 comparisons | 20 comparisons |
+| Workouts | Linear Search | Binary Search | Real-World Example |
+|----------|---------------|---------------|-------------------|
+| 1,000 | 1,000 comparisons | 10 comparisons | ~3 years of training |
+| 10,000 | 10,000 comparisons | 14 comparisons | Decade of data |
+| 1,000,000 | 1,000,000 comparisons | 20 comparisons | Professional athlete's career + team |
 
 ### Sorting algorithms from Chapters 4-5
 
@@ -252,6 +255,13 @@ Not every algorithm needs optimization. Optimize when you meet ALL these criteri
 func displayWelcomeMessage(for users: [String]) {
     for user in users { print("Welcome, \(user)!") }
 }
+
+// Displays this week's 7 workouts on summary screen
+func displayWeeklyWorkouts(_ workouts: [Workout]) {
+    for workout in workouts.sorted(by: { $0.date > $1.date }) {
+        print("\(workout.title): \(workout.duration) min")
+    }
+}
 ```
 
 **Do optimize:**
@@ -262,6 +272,15 @@ func updateVideoFrame() {
         for col in 0..<videoWidth {
             processPixel(row, col)
         }
+    }
+}
+
+// Processes real-time GPS data every second during outdoor run
+func updateRunningPace(from locationUpdates: [GPSPoint]) {
+    for point in locationUpdates {
+        calculatePace(from: point)
+        updateMapDisplay()
+        checkPaceAlerts()
     }
 }
 ```

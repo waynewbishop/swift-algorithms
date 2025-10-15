@@ -5,9 +5,11 @@ description: "Build and traverse binary search trees"
 ---
 # Binary Search Trees
 
+Your fitness app tracks 10,000 personal records across different distances. Finding your 5K PR from a linked list: traverse all 10,000. From a binary search tree: check ~14 nodes. Same data, 700× faster. This is the power of hierarchical organization.
+
 In [Chapter 10](10-stacks-and-queues.md), you built linear structures where elements connect in a single chain. Binary search trees (BST) extend this concept into hierarchical organization—each node can have up to two children, creating a tree structure. Like the recursive data structures from [Chapter 6](06-recursion.md), trees naturally enable recursive algorithms. But unlike linear structures, BSTs maintain sorted order that enables O(log n) search performance (from [Chapter 8](08-performance-analysis.md)), making them dramatically faster than linked lists for searching.
 
-A [binary search tree](https://en.wikipedia.org/wiki/Binary_search_tree) stores information using a simple rule: values smaller than a node go left, values larger go right. This ordering property transforms an unsorted array into a searchable hierarchy where finding any element requires examining only a small fraction of the data.
+A [binary search tree](https://en.wikipedia.org/wiki/Binary_search_tree) stores information using a simple rule: values smaller than a node go left, values larger go right. This ordering property transforms an unsorted collection into a searchable hierarchy where finding any element requires examining only a small fraction of the data.
 
 ## The BST structure
 
@@ -109,7 +111,7 @@ func search(for value: T) -> Bool {
 }
 ```
 
-For a balanced tree with n elements, search examines only log₂(n) nodes. Searching 1,000 elements requires about 10 comparisons. This matches the binary search from Chapter 3, but BSTs maintain this efficiency even as elements are added and removed.
+For a balanced tree with n elements, search examines only log₂(n) nodes. Searching 1,000 workout records requires about 10 comparisons. Searching 10,000 records requires about 14 comparisons. This matches the binary search from Chapter 3, but BSTs maintain this efficiency even as elements are added and removed—perfect for fitness apps where users constantly log new workouts while querying historical data.
 
 ## Tree traversal
 

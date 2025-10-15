@@ -5,7 +5,9 @@ description: "Learn linear and binary search algorithms in Swift"
 ---
 # Basic Searching
 
-In [Chapter 2](02-measuring-performance.md) we learned the vocabulary of performance—Big O notation provides a common language for discussing algorithmic efficiency. Now it's time to apply that knowledge to your first concrete [algorithms](https://en.wikipedia.org/wiki/Algorithm). Whether we're building a contact app, a music library, or any system that manages information, search functionality is essential.
+Open your Contacts app. Type "Alex." Before you finish typing the name, it's found. With 500+ contacts, how does it work so fast? This is binary search in action—the same algorithm that powers Spotlight, finds songs in Apple Music's 100-million track library, and locates your fastest mile split across years of running data in the Health app.
+
+In [Chapter 2](02-measuring-performance.md) we learned the vocabulary of performance—Big O notation provides a common language for discussing algorithmic efficiency. Now it's time to apply that knowledge to your first concrete [algorithms](https://en.wikipedia.org/wiki/Algorithm). Whether we're building a contact app, a fitness tracker, a music library, or any system that manages information, search functionality is essential.
 
 In this chapter, we'll explore two fundamental approaches to searching: linear search and [binary search](https://en.wikipedia.org/wiki/Binary_search_algorithm). We'll learn how each algorithm works, when to use it, and why the choice between `O(n)` and `O(log n)` makes such a dramatic difference as data grows.
 
@@ -15,11 +17,12 @@ At its core, searching involves answering a simple question: "Is this item in my
 
 Consider these real-world scenarios:
 - Finding a contact in your phone's address book
-- Locating a book in a library catalog
+- Locating your personal record time for a specific distance in a running app
 - Searching for a word in a dictionary
-- Looking up a player's statistics in a sports database
+- Looking up which workout had the highest calorie burn in the Health app
+- Finding a specific song in a playlist of thousands
 
-Each scenario involves the same fundamental challenge, but the optimal approach depends on how the data is organized.
+Each scenario involves the same fundamental challenge, but the optimal approach depends on how the data is organized. An unsorted list of workouts requires checking each one. A sorted list lets you jump directly to the timeframe you're seeking.
 
 ## The brute force approach
 
@@ -107,7 +110,7 @@ Imagine we're looking for "Smith" in a physical phone book. You wouldn't start f
 3. Eliminate half the book and repeat the process
 4. Continue until we find "Smith" or determine it's not there
 
-This intuitive process is exactly how binary search works.
+This intuitive process is exactly how binary search works. Or consider finding a specific workout date in your fitness app's history. If your 500 workouts are sorted chronologically, you wouldn't scroll from the beginning. You'd jump to roughly where you think June 2023 should be, see if you're too early or too late, then narrow down from there. This halving strategy is binary search.
 
 ### Binary search implementation
 
@@ -183,18 +186,18 @@ print("Found 750 at index \(foundIndex ?? -1) in \(steps) steps")
 
 ### The power of logarithmic time
 
-The efficiency of binary search becomes remarkable with large datasets.
+The efficiency of binary search becomes remarkable with large datasets. Consider a fitness app storing years of workout history.
 
 **Note:** These numbers represent the maximum comparisons needed in the worst-case scenario:
 
-| Array Size | Linear Search (worst) | Binary Search (worst) |
-|------------|----------------------|----------------------|
-| 100 | 100 comparisons | 7 comparisons |
-| 1,000 | 1,000 comparisons | 10 comparisons |
-| 10,000 | 10,000 comparisons | 14 comparisons |
-| 1,000,000 | 1,000,000 comparisons | 20 comparisons |
+| Workout Count | Linear Search (worst) | Binary Search (worst) | Real-World Example |
+|---------------|----------------------|----------------------|-------------------|
+| 100 | 100 comparisons | 7 comparisons | 3 months of daily workouts |
+| 1,000 | 1,000 comparisons | 10 comparisons | ~3 years of workouts |
+| 10,000 | 10,000 comparisons | 14 comparisons | Decade of fitness data |
+| 1,000,000 | 1,000,000 comparisons | 20 comparisons | Professional athlete's career |
 
-This table demonstrates why binary search is preferred for large, sorted datasets. The logarithmic growth means that even massive collections can be searched in a reasonable number of steps.
+This table demonstrates why binary search is preferred for large, sorted datasets. The logarithmic growth means that even massive collections—like Apple Health's database of every step you've taken for years—can be searched in a reasonable number of steps. A million entries require just 20 comparisons with binary search versus potentially a million with linear search.
 
 ## Sorted data
 
@@ -240,6 +243,8 @@ The decision between linear and binary search depends on several factors:
 ## Practical considerations
 
 Consider a contact application where users frequently search for names but rarely add new contacts. Sorting the contacts once and using binary search for all subsequent lookups would be more efficient than using linear search repeatedly.
+
+Similarly, in a fitness app where users regularly query their workout history ("What was my fastest 5K?", "When did I last run 10 miles?"), keeping workouts sorted by date or distance enables binary search. The cost of maintaining sorted order pays off quickly when searches outnumber insertions—which is typical for historical fitness data.
 
 ```swift
 // Contact struct for demonstrating binary search in a contact manager application

@@ -5,6 +5,8 @@ description: "Understanding recursive algorithms and techniques"
 ---
 # Recursion
 
+Your fitness app needs to calculate total calories burned across all workouts this month. You could write a loop. Or you could think recursively: "Total calories = this workout's calories + total calories from remaining workouts." This self-referential thinking is recursion, and it powers some of the most elegant algorithms in computer science.
+
 In [Chapter 5](05-advanced-sorting.md), we saw how Quicksort uses [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)) to partition and sort arrays. Now it's time to explore recursion more deeply as a fundamental programming technique. Understanding recursion is crucial as we move forward to more complex data structures like trees and graphs, where recursive thinking becomes essential.
 
 Recursion is a coding technique where a function calls itself to solve smaller versions of the same problem. While this might seem circular at first, recursion provides an elegant way to solve problems that have a naturally recursive structure. In this chapter, we'll explore how to think recursively and implement recursive solutions in Swift.
@@ -259,7 +261,7 @@ print("Cache contains: \(memoCache)")
 
 ## Recursive array processing
 
-Recursion shines when processing arrays and other collections. Here are some common patterns:
+Recursion shines when processing arrays and other collections. Here are some common patterns that are particularly useful in fitness and health applications:
 
 ### Recursive sum
 
@@ -277,6 +279,11 @@ func recursiveSum(_ array: [Int]) -> Int {
 
 let numbers = [1, 2, 3, 4, 5]
 print("Sum: \(recursiveSum(numbers))")
+
+//fitness example: total calories burned across all workouts
+let workoutCalories = [450, 320, 580, 410, 395]
+let totalCalories = recursiveSum(workoutCalories)
+print("Total calories burned: \(totalCalories)")  //2,155 calories
 ```
 
 ### Recursive maximum
@@ -302,6 +309,12 @@ func recursiveMax(_ array: [Int]) -> Int? {
 }
 
 print("Maximum: \(recursiveMax(numbers) ?? 0)")
+
+//fitness example: find peak heart rate across all workouts
+let heartRates = [145, 168, 152, 180, 139]
+if let peakHeartRate = recursiveMax(heartRates) {
+    print("Peak heart rate: \(peakHeartRate) bpm")  //180 bpm
+}
 ```
 
 ## Tail recursion

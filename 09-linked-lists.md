@@ -5,6 +5,8 @@ description: "Implement singly and doubly linked lists"
 ---
 # Linked Lists
 
+Imagine a playlist in Apple Music. Songs aren't stored in one continuous block—they're scattered across your device with each song pointing to the next. Adding a song mid-playlist doesn't require shifting thousands of items. This is a linked list in action.
+
 In [Chapter 6](06-recursion.md), you encountered linked list nodes as self-referential structures perfect for recursive algorithms. In [Chapter 8](08-performance-analysis.md), we learned that different data structures offer different performance trade-offs. Now it's time to build a complete [linked list](https://en.wikipedia.org/wiki/Linked_list) implementation—a fundamental data structure that trades random access speed for insertion and deletion flexibility.
 
 A linked list provides similar functionality to an [array](https://en.wikipedia.org/wiki/Array_data_structure)—the ability to insert, retrieve, update, and remove elements. However, because elements are managed independently (scattered in memory) rather than contiguously (in a single block), linked lists excel when dealing with frequent modifications to large datasets.
@@ -48,8 +50,8 @@ Before implementing linked lists, understand when to choose them over Swift's bu
 - Working with Swift's functional methods (map, filter, reduce)
 
 **Real-world examples:**
-- Linked lists: UIKit responder chain, browser navigation history, undo/redo systems
-- Arrays: UITableView data sources, configuration settings, most app data models
+- Linked lists: UIKit responder chain, browser navigation history, undo/redo systems, music playlists (add/remove songs), workout interval training (modify exercises mid-workout)
+- Arrays: UITableView data sources, configuration settings, most app data models, weekly workout summaries, step count history
 
 ## The node structure
 
