@@ -10,7 +10,7 @@ The Swift language has become the cornerstone of Apple development, powering sol
 ## What you'll learn
 
 - Master Big O notation and learn to evaluate algorithmic efficiency
-- Implement linear search, binary search, constant time operations and sorting algorithms
+- Comparing linear and binary search, understand constant time operations and sorting algorithms
 - Build type-safe, reusable code using Swift's generic system
 - Create linked lists, stacks, queues, trees, graphs, and hash tables from scratch
 - Explore tries, heaps, dynamic programming, and graph algorithms like PageRank
