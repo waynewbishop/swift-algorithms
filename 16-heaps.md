@@ -5,7 +5,9 @@ description: "Implement priority queues with heap data structures"
 ---
 # Heaps
 
-[Heaps](https://en.wikipedia.org/wiki/Heap_(data_structure)) are specialized [tree](https://en.wikipedia.org/wiki/Tree_(data_structure))-based data structures that maintain a specific ordering property, making them ideal for [priority queues](https://en.wikipedia.org/wiki/Priority_queue) and efficient sorting [algorithms](https://en.wikipedia.org/wiki/Algorithm). Unlike [binary search trees](https://en.wikipedia.org/wiki/Binary_search_tree) from Chapters 11-12 that maintain left-right ordering, heaps focus on parent-child relationships to ensure the most important element is always accessible in constant time.
+Your iPhone is juggling dozens of tasks right now—downloading email, syncing Health data, updating apps in the background, processing your latest workout. Which task runs next? That's a priority queue, and iOS uses heap algorithms to decide. High-priority tasks (user taps screen) jump to the front. Low-priority tasks (background sync) wait. Heaps maintain this ordering instantly, ensuring your phone stays responsive.
+
+Beyond iOS itself, heaps power the algorithms that optimize your fitness data. Finding your top 10 fastest runs from thousands of workouts? Heap algorithm. Processing GPS points in time-stamped order during a run? Priority queue. Scheduling interval training alerts? Heap manages the timer queue. These operations need to maintain sorted order while constantly adding and removing items—exactly what heaps excel at.
 
 Heaps combine concepts from throughout this book. They use generic types (Chapter 7) with Comparable constraints, achieve O(log n) operations (Chapter 8), can be implemented as specialized queues (Chapter 10), and dramatically optimize graph algorithms like Dijkstra's (Chapter 13). The heap property—parent nodes are always more extreme than their children—creates a complete binary tree that's both simple to implement and remarkably efficient.
 
@@ -29,6 +31,10 @@ This ordering ensures that the minimum (or maximum) element is always at the roo
 | Search Time | O(log n) for specific values | O(n) for specific values |
 | Extract Min/Max | O(log n) | O(log n) |
 
+Consider tracking your workout times with heaps. A min-heap keeps your fastest 5K time at the root, always accessible in O(1). Adding a new workout? O(log n) to maintain sorted order. Extracting your personal record? O(log n) to get and remove the best time. A max-heap for calorie burns keeps your highest calorie workout at the root, perfect for a "top 10 workouts" feature that maintains sorted order as you log new sessions.
+
+Why not use a sorted array instead? Inserting into a sorted array requires shifting everything—O(n) operations. Heap insert only bubbles up one path—O(log n). For 10,000 workouts, that's 10,000 operations versus ~14 operations. This performance difference makes heaps the right choice when you need to maintain sorted order while frequently adding and removing items.
+
 ## Array representation
 
 Heaps are typically implemented using arrays, which provides several advantages:
@@ -42,6 +48,25 @@ For any element at index `i`:
 - Parent: `(i - 1) / 2`
 - **Left Child**: `2 * i + 1`
 - **Right Child**: `2 * i + 2`
+
+Consider storing your top workout times in an array-based min-heap:
+
+```swift
+// Min-heap: fastest times (smallest numbers at top)
+// Array: [18.5, 19.2, 19.8, 20.1, 21.3, 22.0, 20.5]
+//
+// Visualized as tree:
+//              18.5 (index 0) - PR time
+//             /    \
+//         19.2      19.8     (indices 1, 2)
+//        /   \     /   \
+//     20.1  21.3 22.0 20.5   (indices 3-6)
+
+// Parent of index 3: (3-1)/2 = 1 → value 19.2
+// Left child of index 1: 2*1+1 = 3 → value 20.1
+```
+
+No pointers needed. The array indices encode the tree structure through math. This makes heaps cache-friendly—the data sits in contiguous memory, unlike pointer-based trees that scatter across RAM.
 
 
 ## Modern heap implementation
@@ -453,6 +478,30 @@ let numbers = [3, 1, 4, 1, 5, 9, 2, 6, 5]
 let top3 = numbers.topKLargest(3)
 print(top3) // [9, 6, 5]
 ```
+
+## Heaps in iOS frameworks
+
+While you can't directly access Apple's heap implementations, iOS uses priority queues throughout. DispatchQueue manages task scheduling with priority levels:
+
+```swift
+// High-priority task (user interaction)
+DispatchQueue.main.async {  // Jumps to front of queue
+    updateUI()
+}
+
+// Low-priority background work
+DispatchQueue.global(qos: .background).async {  // Waits its turn
+    syncHealthData()
+}
+```
+
+Behind the scenes, iOS uses heap structures to manage these priority levels. High-priority items bubble to the top, low-priority items sink down.
+
+When you set multiple workout interval timers, iOS maintains them in a priority queue (likely heap-based). Consider timers for 30-second warm-up, 2-minute high-intensity, and 1-minute recovery intervals. The heap ensures the earliest timer fires first, regardless of the order you created them.
+
+Processing GPS points during a run requires handling them in time-stamped order. A min-heap sorted by timestamp ensures you always process the next chronological point, even if GPS signals arrive out of order due to satellite delays.
+
+Finding your top 10 best workouts demonstrates a classic heap problem. Maintain a max-heap of size 10. For each new workout, if it's better than the worst in the heap, replace it in O(log 10) time. The heap automatically maintains your top 10. This approach achieves O(n log k) time where k=10, better than sorting all n workouts which would take O(n log n).
 
 ## Performance analysis
 

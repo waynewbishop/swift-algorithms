@@ -5,9 +5,9 @@ description: "Explore graph data structures and algorithms"
 ---
 # Graphs
 
-A [graph](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)) is a data structure that shows a relationship (e.g., connection) between two or more objects. Because of their flexibility, graphs are one of the most widely used structures in modern computing. Popular tools and services like online maps, social networks, and even the Internet as a whole are based on how objects relate to one another.
+Open Maps on your iPhone. Search for "nearest trail." Within seconds, the app shows every hiking trail near you, how they connect, and which route gets you there fastest. This is a graph in action—vertices (trail intersections) connected by edges (trail segments), with weights (distances or elevation gain). Every time you navigate, plan a route, or let AllTrails suggest a loop hike, you're using graph algorithms.
 
-Graphs generalize the tree structures from [Chapters 11-12](11-binary-search-trees.md). While trees enforce a strict parent-child hierarchy, graphs allow any vertex to connect to any other vertex, creating cycles and multiple paths between nodes. This flexibility makes graphs perfect for modeling real-world networks where relationships are more complex than simple hierarchies.
+Graphs generalize the tree structures from [Chapters 11-12](11-binary-search-trees.md). While trees enforce a strict parent-child hierarchy, graphs allow any vertex to connect to any other vertex, creating cycles and multiple paths between nodes. This flexibility makes graphs perfect for modeling real-world networks—from trail systems to workout route planning to how iOS apps share data.
 
 In this chapter, we'll highlight the key features of graphs and demonstrate how to create graph structures with Swift. You'll also learn Dijkstra's shortest path algorithm—one of the most important algorithms in computer science, powering everything from GPS navigation to Internet routing.
 
@@ -24,10 +24,21 @@ As shown above, there are many ways to configure a graph. An additional option i
 
 A service like Google Maps is a great example of a directed graph. Unlike an undirected graph, directed graphs only support a one-way connection between source vertices and their destinations. So, for example, vertex A could be connected to B, but A wouldn't necessarily be reachable through B. To show the varying relationship between vertices, directed graphs are drawn with lines and arrows.
 
+Consider Strava's route builder. When you plan a run, some streets allow you to run in both directions (undirected edges), while others might be one-way roads or paths with gates that only open one direction (directed edges). The graph must model these constraints to provide valid routes. If you've ever had Strava suggest a route that includes a one-way street in the wrong direction, that's a directed graph problem—the algorithm failed to account for edge directionality.
+
 ## Edges & weights
 
 Regardless of graph type, it's common to represent the level of connectedness between vertices. Normally associated with an edge, the weight is a numerical value tracked for this purpose. As we'll see, modeling of graphs with edge weights can be used to solve a variety of problems.
 
+In AllTrails, edge weights represent different metrics depending on your goals. Planning the shortest hike? Weights are distances in miles. Want the easiest route? Weights represent elevation gain. Optimizing for time? Weights reflect estimated duration based on terrain difficulty. The same trail graph with different edge weights produces completely different "optimal" paths. This is why AllTrails can offer multiple route suggestions for the same destination—each optimizes a different weight function.
+
+## Graphs in iOS and fitness apps
+
+Every time you navigate in Maps, the app uses graph algorithms on road networks. Vertices represent intersections, edges represent road segments, and weights represent distance, time, or traffic conditions.
+
+Fitness apps rely heavily on graph structures. AllTrails models trail systems as graphs where intersections are vertices and trail segments are edges. Strava uses graphs for route suggestions based on segment popularity and elevation profiles. Running apps find loops that return you to your starting point using cycle detection algorithms. Even the Health app tracks relationships between data types as graphs of correlations—sleep quality affects workout performance, workout intensity affects heart rate recovery. These causal relationships form a graph of health metrics.
+
+iOS frameworks use graphs extensively. App dependencies form directed acyclic graphs. The responder chain uses graph traversal to pass events through the view hierarchy. Understanding graphs helps you reason about these systems and build better iOS applications.
 
 ## The vertex
 

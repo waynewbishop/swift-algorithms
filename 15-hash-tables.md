@@ -5,7 +5,9 @@ description: "Build hash tables with collision handling"
 ---
 # Hash tables
 
-[Hash tables](https://en.wikipedia.org/wiki/Hash_table) are fundamental data structures that provide extremely fast insertion, deletion, and lookup operations through clever use of [hash functions](https://en.wikipedia.org/wiki/Hash_function). While Swift's built-in `Dictionary` type implements hash table functionality, understanding how to build your own hash table from scratch is essential for mastering computer science fundamentals.
+Type `var workouts = [String: Int]()` in Swift. That bracket syntax? You just created a Dictionary. Add `workouts["Monday Run"] = 450` and Swift instantly stores that value. Retrieve it with `workouts["Monday Run"]` and you get 450 back—no searching, no iteration, instant lookup from thousands of entries. Magic? No. Hash tables.
+
+Swift's Dictionary is a hash table. Every time you use Dictionary, you're using hash table algorithms—the same structure that powers session management in web apps, caches in iOS, and fast lookups throughout Foundation. Understanding how Dictionary works under the hood transforms you from someone who uses dictionaries to someone who knows when and why to reach for them.
 
 In this chapter, we'll explore hash table design principles and implement a robust, modern hash table in Swift using [generics](https://en.wikipedia.org/wiki/Generic_programming) from Chapter 7 and collision resolution via linked lists from [Chapter 9](09-linked-lists.md).
 
@@ -21,6 +23,10 @@ Compared to other data structures:
 - **Hash Tables**: Combine the best of both worlds - fast `O(1)` average case operations with flexible key-based access
 
 A well-designed hash table can achieve constant time `O(1)` for insertion, deletion, and lookup operations, making it one of the most efficient data structures available.
+
+iOS apps use hash tables extensively. UserDefaults stores app preferences as key-value pairs for instant lookup. HTTP headers in network requests are stored as dictionaries. Workout tracking apps use hash tables for quick lookup of today's stats by date, beating the alternative of iterating through all dates. Caching systems store expensive computations (like formatted strings) in dictionaries for instant retrieval.
+
+When you write `workouts["Monday Run"]`, Swift hashes the string "Monday Run" to a number (like 74829), calculates `74829 % arraySize` to get a bucket index, and jumps directly to that bucket in O(1) time. No loops. No comparisons. Just math. This is why Dictionary operations feel instant even with thousands of entries.
 
 ## Hash function fundamentals
 
@@ -46,6 +52,19 @@ A good hash function should be:
 ### Bucket storage
 
 Values are stored in non-contiguous "buckets" within an array. The hash function determines which bucket to use, enabling direct access without searching through the entire structure.
+
+Consider hashing workout dates to bucket indices. Different keys hash to different buckets, avoiding collisions and maintaining O(1) lookup:
+
+```swift
+// How Swift hashes workout dates to bucket indices
+let workouts = [String: Int]()
+
+"2024-01-15" → hash() → 872349 → % 16 → bucket 13
+"2024-01-16" → hash() → 103847 → % 16 → bucket 7
+"2024-01-17" → hash() → 445092 → % 16 → bucket 4
+```
+
+The hash function transforms any string (workout date, exercise name, user ID) into an integer. The modulo operation (%) wraps that integer into a valid bucket index. This is why you can store millions of workout records and still get instant lookups—you're not searching, you're calculating where the data lives.
 
 ## Modern hash table implementation
 
@@ -203,7 +222,22 @@ Our implementation uses Swift's robust hashing system which implements:
 
 ## Collision resolution strategies
 
-Even with excellent hash functions, collisions are inevitable. [Collisions](https://en.wikipedia.org/wiki/Hash_collision) occur when different keys map to the same index. Our implementation uses **separate chaining** with linked lists (Chapter 9) to handle these situations:
+Even with excellent hash functions, collisions are inevitable. [Collisions](https://en.wikipedia.org/wiki/Hash_collision) occur when different keys map to the same index. Our implementation uses **separate chaining** with linked lists (Chapter 9) to handle these situations.
+
+Consider what happens when two different workout names hash to the same bucket:
+
+```swift
+// Two workouts colliding at the same bucket
+"Morning Run" → hash() → 582934 → % 16 → bucket 6
+"Evening Walk" → hash() → 647766 → % 16 → bucket 6  // Collision!
+
+// Solution: Chain them in a linked list at bucket 6
+Bucket 6: [("Morning Run", 450)] → [("Evening Walk", 320)] → nil
+```
+
+Even with collisions, lookups remain fast. Instead of checking all workouts, you only check the 2-3 items that happened to hash to the same bucket. This is why Dictionary maintains O(1) average case even with millions of entries—collisions are rare and shallow.
+
+Here's how our implementation handles collisions:
 
 ```swift
 // Handle collisions by chaining nodes in linked list - O(1) insertion, O(k) search where k=chain length
@@ -371,6 +405,33 @@ Hash tables offer excellent performance characteristics when properly implemente
 | Delete | `O(n)` | `O(n)` | `O(log n)` | `O(1)` avg |
 | Ordered Traversal | ✓ | ✗ | ✓ | ✗ |
 | Memory Overhead | Low | Medium | Medium | Medium-High |
+
+## Hash tables in iOS development
+
+Every iOS app uses hash tables, whether you realize it or not. Data caching provides one of the most common use cases. Rather than repeatedly formatting the same distance value, cache the result in a Dictionary:
+
+```swift
+// Cache formatted strings to avoid repeated work
+var formattedDistances = [Double: String]()
+
+if let cached = formattedDistances[5.2] {
+    return cached  // O(1) lookup
+} else {
+    let formatted = formatDistance(5.2)
+    formattedDistances[5.2] = formatted  // O(1) store
+    return formatted
+}
+```
+
+Session management in web applications relies on hash tables to map session IDs to user data. With one billion users, hash tables still deliver O(1) lookup performance. Workout aggregation benefits from hash tables too. Grouping workouts by month becomes trivial:
+
+```swift
+// Group workouts by month using hash table
+var workoutsByMonth = [String: [Workout]]()
+workoutsByMonth["2024-01"] = [...]  // Instant grouping
+```
+
+Why does Dictionary beat arrays for lookups? With arrays, finding a workout by name requires checking every element—O(n) time. With Dictionary, you hash directly to the workout—O(1) time. For 10 workouts, the difference doesn't matter. For 10,000 workouts, Dictionary wins by 10,000× in the worst case.
 
 ## Building algorithmic intuition
 
