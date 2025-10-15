@@ -5,13 +5,13 @@ description: "Build type-safe, reusable code with Swift generics"
 ---
 # Generics
 
-In the previous chapters, you implemented search algorithms that work with any comparable type and sorting algorithms that handle integers, strings, and custom objects equally well. In [Chapter 6](06-recursion.md), you created `ListNode<T>` and `TreeNode<T>` structures that work with any type. We've been using Swift's most powerful feature all along—[generics](https://en.wikipedia.org/wiki/Generic_programming). Now it's time to understand how they work.
+In the previous chapters, you implemented search algorithms that work with any comparable type and sorting algorithms that handle integers, strings, and custom objects equally well. These implementations use Swift's most powerful feature—[generics](https://en.wikipedia.org/wiki/Generic_programming)—to create type-safe code that works with any type. Now it's time to understand how they work and how you'll use them to build the data structures in upcoming chapters.
 
 Without generics, you'd need separate implementations of every data structure for every type. A linked list for integers. Another for strings. Another for custom objects. Generics solve this problem by allowing you to write one implementation that works with any type while maintaining complete type safety.
 
 ## The code duplication problem
 
-In Chapter 6, you saw `ListNode<T>` as a generic structure. But what if Swift didn't have generics? You'd need separate implementations for each type.
+Consider a linked list node structure. Without generics, you'd need separate implementations for each type.
 
 Here's a linked list node for integers:
 
@@ -47,7 +47,7 @@ The code is nearly identical—only the type differs. This duplication creates m
 
 ## Generic types solve duplication
 
-Generics eliminate duplication by using type parameters—placeholders for actual types specified when you create an instance. Here's the generic version from Chapter 6:
+Generics eliminate duplication by using type parameters—placeholders for actual types specified when you create an instance. Here's how the generic version looks:
 
 ```swift
 // Single generic implementation works with any type
@@ -282,10 +282,10 @@ extension Array where Element: Comparable & Hashable {
 
 ## Understanding recursive generic types
 
-In Chapter 6, we learned why recursive data structures require classes rather than structs. Let's examine how generics work with recursive types:
+Recursive data structures require classes rather than structs because they contain references to themselves. Let's examine how generics work with recursive types:
 
 ```swift
-// Generic linked list node from Chapter 6
+// Generic linked list node
 class ListNode<T> {
     var value: T
     var next: ListNode<T>?
@@ -301,10 +301,10 @@ Notice how the generic parameter flows through the entire structure. `ListNode<T
 
 ### Generic tree nodes
 
-The same principle applies to tree structures from Chapter 6:
+The same principle applies to tree structures:
 
 ```swift
-// Generic binary tree node from Chapter 6
+// Generic binary tree node
 class TreeNode<T> {
     var value: T?
     var left: TreeNode<T>?
@@ -385,7 +385,7 @@ The compiler generates two separate, optimized implementations—one for Int, on
 
 Understanding generics prepares you for the data structures in upcoming chapters. Each uses generics to provide type-safe, reusable implementations:
 
-**Chapter 9: Linked Lists** - Build complete linked list structures using the `ListNode<T>` pattern from Chapter 6
+**Chapter 9: Linked Lists** - Build complete linked list structures using the `ListNode<T>` pattern we learned here
 
 **Chapter 10: Stacks and Queues** - Generic collections with constrained element types
 
@@ -399,4 +399,4 @@ Understanding generics prepares you for the data structures in upcoming chapters
 
 **Chapter 15: Heaps** - Generic priority queues with comparable elements
 
-Every data structure in this book uses the same generic patterns we've learned here. The search and sorting algorithms from Chapters 3-5 demonstrated generics in action. The recursive structures from Chapter 6 showed how generics work with self-referential types. Now you understand the mechanism—type parameters, protocol constraints, and where clauses working together to enable reusable, type-safe code with zero performance penalty.
+Every data structure in this book uses the same generic patterns we've learned here. The search and sorting algorithms from Chapters 3-5 demonstrated generics in action. The recursive structures we explored in this chapter show how generics work with self-referential types. Now you understand the mechanism—type parameters, protocol constraints, and where clauses working together to enable reusable, type-safe code with zero performance penalty.
