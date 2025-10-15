@@ -50,8 +50,8 @@ Before implementing linked lists, understand when to choose them over Swift's bu
 - Working with Swift's functional methods (map, filter, reduce)
 
 **Real-world examples:**
-- Linked lists: UIKit [responder chain](https://developer.apple.com/documentation/uikit/using-responders-and-the-responder-chain-to-handle-events), browser navigation history, undo/redo systems, music playlists (add/remove songs), workout interval training (modify exercises mid-workout)
-- Arrays: UITableView data sources, configuration settings, most app data models, weekly workout summaries, step count history
+- Linked lists: iOS [responder chain](https://developer.apple.com/documentation/uikit/using-responders-and-the-responder-chain-to-handle-events), browser navigation history, undo/redo systems, music playlists (add/remove songs), workout interval training (modify exercises mid-workout)
+- Arrays: SwiftUI List data sources, configuration settings, most app data models, weekly workout summaries, step count history
 
 ## The node structure
 

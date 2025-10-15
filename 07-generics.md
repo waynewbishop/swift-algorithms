@@ -380,23 +380,3 @@ let stringNode = ListNode<String>(value: "Hello")
 ```
 
 The compiler generates two separate, optimized implementations—one for Int, one for String. Your generic code runs as fast as if you had written type-specific versions manually, but you only maintain one implementation.
-
-## Looking ahead
-
-Understanding generics prepares you for the data structures in upcoming chapters. Each uses generics to provide type-safe, reusable implementations:
-
-**Chapter 9: Linked Lists** - Build complete linked list structures using the `ListNode<T>` pattern we learned here
-
-**Chapter 10: Stacks and Queues** - Generic collections with constrained element types
-
-**Chapter 11: Binary Search Trees** - Extend the `TreeNode<T>` structure with search and insertion algorithms
-
-**Chapter 12: Graphs** - Generic vertices and edges working with any type
-
-**Chapter 13: Tries** - Generic prefix trees for efficient string operations
-
-**Chapter 14: Hash Tables** - Generic key-value storage requiring Hashable elements
-
-**Chapter 15: Heaps** - Generic priority queues with comparable elements
-
-Every data structure in this book uses the same generic patterns we've learned here. The search and sorting algorithms from Chapters 3-5 demonstrated generics in action. The recursive structures we explored in this chapter show how generics work with self-referential types. Now you understand the mechanism—type parameters, protocol constraints, and where clauses working together to enable reusable, type-safe code with zero performance penalty.

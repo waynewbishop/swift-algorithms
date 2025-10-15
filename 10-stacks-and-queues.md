@@ -11,7 +11,7 @@ In [Chapter 9](09-linked-lists.md), you built linked lists—collections where e
 
 ## Real-world applications
 
-Stacks reverse order—the last item added is first removed. This makes them perfect for undo/redo systems (track history, pop to undo), navigation (push views, pop to go back), and function call tracking (debugger shows call stack). iOS uses stacks extensively: `UINavigationController` maintains a view stack, the [responder chain](https://developer.apple.com/documentation/uikit/using-responders-and-the-responder-chain-to-handle-events) propagates touches through a stack, and modal presentations form a stack.
+Stacks reverse order—the last item added is first removed. This makes them perfect for undo/redo systems (track history, pop to undo), navigation (push views, pop to go back), and function call tracking (debugger shows call stack). iOS uses stacks extensively: `NavigationStack` maintains a view stack, the [responder chain](https://developer.apple.com/documentation/uikit/using-responders-and-the-responder-chain-to-handle-events) passes events through a stack, and sheet presentations form a stack.
 
 Queues preserve order—the first item added is first removed. This ensures fairness in task scheduling (process requests in order received), breadth-first graph traversal (Chapter 12 uses queues to explore graphs level-by-level), and buffering (network requests, print jobs, video frames). Foundation frameworks rely on queues: DispatchQueue schedules tasks, OperationQueue manages concurrent operations, and NotificationCenter posts notifications in order.
 

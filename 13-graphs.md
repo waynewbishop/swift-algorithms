@@ -38,7 +38,7 @@ Every time you navigate in Maps, the app uses graph algorithms on road networks.
 
 Fitness apps rely heavily on graph structures. AllTrails models trail systems as graphs where intersections are vertices and trail segments are edges. Strava uses graphs for route suggestions based on segment popularity and elevation profiles. Running apps find loops that return you to your starting point using cycle detection algorithms. Even the Health app tracks relationships between data types as graphs of correlations—sleep quality affects workout performance, workout intensity affects heart rate recovery. These causal relationships form a graph of health metrics.
 
-iOS frameworks use graphs extensively. App dependencies form directed acyclic graphs. The [responder chain](https://developer.apple.com/documentation/uikit/using-responders-and-the-responder-chain-to-handle-events) uses graph traversal to pass events through the view hierarchy. Understanding graphs helps you reason about these systems and build better iOS applications.
+iOS frameworks use graphs extensively. App dependencies form directed acyclic graphs. The [responder chain](https://developer.apple.com/documentation/uikit/using-responders-and-the-responder-chain-to-handle-events) uses graph traversal to pass events through the view tree. Understanding graphs helps you reason about these systems and build better iOS applications.
 
 ## The vertex
 
