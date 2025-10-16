@@ -125,7 +125,7 @@ In-order traversal visits nodes in sorted order: left subtree, current node, rig
 // In-order traversal produces sorted output - O(n)
 func traverseInOrder(visit: (T) -> Void) {
     left?.traverseInOrder(visit: visit)
-    if let key = key { visit(key) }
+    if let tvalue = tvalue { visit(tvalue) }
     right?.traverseInOrder(visit: visit)
 }
 
@@ -145,7 +145,7 @@ Pre-order traversal visits the current node first, then children: current node, 
 ```swift
 // Pre-order traversal visits root first - O(n)
 func traversePreOrder(visit: (T) -> Void) {
-    if let key = key { visit(key) }
+    if let tvalue = tvalue { visit(tvalue) }
     left?.traversePreOrder(visit: visit)
     right?.traversePreOrder(visit: visit)
 }
@@ -168,7 +168,7 @@ Post-order traversal visits children first, then the current node: left subtree,
 func traversePostOrder(visit: (T) -> Void) {
     left?.traversePostOrder(visit: visit)
     right?.traversePostOrder(visit: visit)
-    if let key = key { visit(key) }
+    if let tvalue = tvalue { visit(tvalue) }
 }
 
 // Print values in post-order
@@ -187,13 +187,13 @@ The BST property makes finding extreme values trivial—minimum is the leftmost 
 ```swift
 // Find minimum value (leftmost node) - O(log n) average
 func minimum() -> T? {
-    if left == nil { return key }
+    if left == nil { return tvalue }
     return left?.minimum()
 }
 
 // Find maximum value (rightmost node) - O(log n) average
 func maximum() -> T? {
-    if right == nil { return key }
+    if right == nil { return tvalue }
     return right?.maximum()
 }
 

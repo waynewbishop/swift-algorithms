@@ -54,8 +54,8 @@ extension AVLTree {
 
     // Calculate and set height based on children's heights
     mutating func setElementHeight() {
-        guard key != nil else {
-            print("No key provided.")
+        guard tvalue != nil else {
+            print("No tvalue provided.")
             return
         }
 
@@ -82,7 +82,7 @@ In Swift, these elements can be checked with the `isTreeBalanced` method:
 // Check if node maintains balance property
 extension AVLTree {
     func isTreeBalanced() -> Bool {
-        guard key != nil else {
+        guard tvalue != nil else {
             print("No element provided.")
             return false
         }
@@ -111,14 +111,14 @@ extension AVLTree {
     mutating func rightRotate() {
         guard let leftChild = left else { return }
 
-        let newRoot = AVLTree(key: leftChild.key)
-        newRoot.right = AVLTree(key: key)
+        let newRoot = AVLTree(tvalue: leftChild.tvalue)
+        newRoot.right = AVLTree(tvalue: tvalue)
         newRoot.left = leftChild.left
 
         newRoot.right?.right = right
         newRoot.right?.left = leftChild.right
 
-        key = newRoot.key
+        tvalue = newRoot.tvalue
         left = newRoot.left
         right = newRoot.right
 

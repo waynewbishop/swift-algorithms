@@ -188,7 +188,6 @@ func fibonacci(_ n: Int) -> Int {
     return fibonacci(n - 1) + fibonacci(n - 2)
 }
 
-//generate sequence using recursive function
 // Generate sequence of Fibonacci numbers using recursive calculation
 func fibonacciSequence(_ count: Int) -> [Int] {
     var sequence: [Int] = []

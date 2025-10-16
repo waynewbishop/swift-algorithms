@@ -55,10 +55,10 @@ public class Queue<T> {
     }
 
     // Add element to back of queue - O(n)
-    public func enQueue(_ tvalue: T) {
+    public func enQueue(_ key: T) {
         // Handle empty queue
         guard top?.tvalue != nil else {
-            top?.tvalue = tvalue
+            top?.tvalue = key
             return
         }
 
@@ -71,7 +71,7 @@ public class Queue<T> {
         }
 
         // Append new node
-        childToUse.tvalue = tvalue
+        childToUse.tvalue = key
         current?.next = childToUse
     }
 
