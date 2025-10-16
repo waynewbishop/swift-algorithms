@@ -153,9 +153,9 @@ Both Quicksort and merge sort achieve `O(n log n)` time complexity, but they dif
 
 | Characteristic | Quicksort | Merge Sort |
 |----------------|-----------|------------|
-| Average case | `O(n log n)` | `O(n log n)` |
-| Worst case | `O(n²)` | `O(n log n)` |
-| Space complexity | `O(log n)` | `O(n)` |
+| Average case | O(n log n) | O(n log n) |
+| Worst case | O(n²) | O(n log n) |
+| Space complexity | O(log n) | O(n) |
 | In-place | Yes | No |
 | Stable | No | Yes |
 | Practical speed | Usually faster | Predictable |

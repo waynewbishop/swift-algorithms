@@ -394,15 +394,15 @@ Hash tables offer excellent performance characteristics when properly implemente
 | 0.50 | 0.50 | Very Good (balanced) |
 | 0.75 | 0.75 | Good (our resize threshold) |
 | 1.00 | 1.00 | Fair (getting slower) |
-| 2.00 | 2.00 | Poor (approaching `O(n)`) |
+| 2.00 | 2.00 | Poor (approaching O(n)) |
 
 ### Comparison with other data structures
 
 | Operation | Array | Linked List (Ch 9) | BST (Ch 11) | Hash Table |
 |-----------|-------|-------------|-----|------------|
-| Search | `O(n)` | `O(n)` | `O(log n)` | `O(1)` avg |
-| Insert | `O(n)` | `O(1)` | `O(log n)` | `O(1)` avg |
-| Delete | `O(n)` | `O(n)` | `O(log n)` | `O(1)` avg |
+| Search | O(n) | O(n) | O(log n) | O(1) avg |
+| Insert | O(n) | O(1) | O(log n) | O(1) avg |
+| Delete | O(n) | O(n) | O(log n) | O(1) avg |
 | Ordered Traversal | ✓ | ✗ | ✓ | ✗ |
 | Memory Overhead | Low | Medium | Medium | Medium-High |
 

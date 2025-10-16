@@ -65,8 +65,8 @@ Some algorithms' performance explodes exponentially. The naive recursive Fibonac
 
 Let's see how these complexities compare with actual numbers. This table reveals why algorithmic efficiency matters. An `O(n²)` algorithm that works fine with 100 elements becomes painfully slow with 10,000 elements. But an `O(log n)` algorithm barely notices the difference:
 
-| Input Size | `O(1)` | `O(log n)` | `O(n)` | `O(n log n)` | `O(n²)` |
-|------------|--------|------------|--------|--------------|---------|
+| Input Size | O(1) | O(log n) | O(n) | O(n log n) | O(n²) |
+|------------|------|----------|------|------------|-------|
 | 10         | 1      | 3          | 10     | 30           | 100     |
 | 100        | 1      | 7          | 100    | 700          | 10,000  |
 | 1,000      | 1      | 10         | 1,000  | 10,000       | 1,000,000|

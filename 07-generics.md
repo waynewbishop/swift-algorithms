@@ -142,9 +142,9 @@ Swift's standard library uses descriptive names:
 
 | Convention | Usage | Example |
 |------------|-------|---------|
-| `T` | Single generic parameter | `class ListNode<T>` |
-| `Element` | Collection types | `Array<Element>` |
-| `Key`, `Value` | Dictionary-like types | `Dictionary<Key, Value>` |
+| T | Single generic parameter | class ListNode<T> |
+| Element | Collection types | Array<Element> |
+| Key, Value | Dictionary-like types | Dictionary<Key, Value> |
 
 For the data structures we'll build in upcoming chapters, use `Element` for collections and `T` for simple generic types.
 
