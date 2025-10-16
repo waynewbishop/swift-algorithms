@@ -264,23 +264,18 @@ func findSimilar(
     topK: Int = 5
 ) -> [(index: Int, score: Double)] {
 
-    var results: [(Int, Double)] = []
-
-    // Compare query to every vector in database using Quiver
-    for (index, vector) in database.enumerated() {
-        let similarity = query.cosineOfAngle(with: vector)  // Quiver method
-        results.append((index, similarity))
-    }
+    // Compute all similarities at once using Quiver's batch operation
+    let similarities = database.cosineSimilarities(to: query)
 
     // Sort by similarity (highest first) and return top K
-    return results
+    return similarities.enumerated()
         .sorted { $0.1 > $1.1 }
         .prefix(topK)
         .map { $0 }
 }
 ```
 
-The algorithm has three phases. First, it iterates through all n documents in the database, computing cosine similarity between the query and each document. This produces n similarity scores. Second, it sorts these scores in descending order. Third, it selects the top k entries and returns them.
+The algorithm has three phases. First, it computes cosine similarity between the query and all n documents in the database using Quiver's batch operation. This produces n similarity scores. Second, it sorts these scores in descending order. Third, it selects the top k entries and returns them.
 
 The [time complexity](https://en.wikipedia.org/wiki/Time_complexity) is O(n × d + n log n), where n is the number of documents and d is the vector dimensionality. The first term (n × d) comes from computing n cosine similarities, each requiring O(d) operations for the dot product and magnitude calculations. The second term (n log n) comes from sorting n scores. For typical values where d is 50 and k is much smaller than n, the sorting dominates when n is small, but the similarity computation dominates for large databases.
 
@@ -373,15 +368,12 @@ struct SemanticSearch {
 
     func search(_ query: String, topK: Int = 5) -> [SearchResult] {
         let queryVector = embedText(query, embeddings: embeddings)
-        var results: [(Document, Double)] = []
+        let documentVectors = documents.map { $0.vector }
 
-        // Use Quiver's cosineOfAngle for all similarity calculations
-        for document in documents {
-            let similarity = queryVector.cosineOfAngle(with: document.vector)
-            results.append((document, similarity))
-        }
+        // Compute all similarities using Quiver's batch operation
+        let similarities = documentVectors.cosineSimilarities(to: queryVector)
 
-        return results
+        return zip(documents, similarities)
             .sorted { $0.1 > $1.1 }
             .prefix(topK)
             .map { doc, score in
@@ -391,7 +383,7 @@ struct SemanticSearch {
 }
 ```
 
-The initializer loads GloVe embeddings once at startup. The `add` method converts text to a vector and stores both. The `search` method converts the query to a vector, computes similarity with all documents using Quiver's `cosineOfAngle`, sorts by similarity, and returns the top k results.
+The initializer loads GloVe embeddings once at startup. The `add` method converts text to a vector and stores both. The `search` method converts the query to a vector, computes similarity with all documents using Quiver's batch `cosineSimilarities` operation, sorts by similarity, and returns the top k results.
 
 This design separates concerns cleanly. Embedding logic stays in `embedText`, similarity computation leverages Quiver's vector operations, and the search system coordinates the overall workflow. Each component can be tested independently.
 
@@ -458,14 +450,11 @@ struct SemanticSearch {
             documents.filter { $0.category == cat }
         } ?? documents
 
-        // Compute similarities on filtered set
-        var results: [(Document, Double)] = []
-        for document in filtered {
-            let similarity = queryVector.cosineOfAngle(with: document.vector)
-            results.append((document, similarity))
-        }
+        // Compute similarities on filtered set using Quiver's batch operation
+        let filteredVectors = filtered.map { $0.vector }
+        let similarities = filteredVectors.cosineSimilarities(to: queryVector)
 
-        return results
+        return zip(filtered, similarities)
             .sorted { $0.1 > $1.1 }
             .prefix(topK)
             .map { doc, score in
