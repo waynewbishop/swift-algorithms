@@ -119,10 +119,10 @@ These pre-trained embeddings require no machine learning expertise to use. The t
 
 Word embeddings provide vector representations for individual words, but semantic search operates on documents: sentences, paragraphs, or full articles. We need an algorithm to convert a multi-word document into a single vector that captures its overall meaning.
 
-The simplest effective approach averages the word vectors. Given a document with words w₁, w₂, ..., wₙ and their corresponding embeddings v₁, v₂, ..., vₙ, the document embedding is the element-wise average:
+The simplest effective approach averages the word vectors. Given a document with words `w₁`, `w₂`, ..., `wₙ` and their corresponding embeddings `v₁`, `v₂`, ..., `vₙ`, the document embedding is the element-wise average:
 
 ```
-document_vector = (v₁ + v₂ + ... + vₙ) / n
+document_vector = (`v₁` + `v₂` + ... + `vₙ`) / `n`
 ```
 
 This averaging preserves semantic properties. If a document contains words like "lightweight," "cushioned," "running," and "athletic," the averaged vector will point toward the general region of "athletic footwear" in the embedding space. The individual words contribute their semantic information, and the average represents their combined meaning.
@@ -182,10 +182,10 @@ Once documents are represented as vectors, measuring their semantic similarity r
 
 Cosine similarity computes the cosine of the angle between two vectors. Vectors pointing in the same direction (parallel) have cosine 1, vectors at right angles (orthogonal) have cosine 0, and vectors pointing in opposite directions have cosine -1. For document vectors, this translates to semantic similarity: documents about the same topic point in similar directions in the embedding space.
 
-The formula for cosine similarity between vectors a and b is:
+The formula for cosine similarity between vectors `a` and `b` is:
 
 ```
-cosine_similarity = (a · b) / (||a|| × ||b||)
+cosine_similarity = (`a` · `b`) / (||`a`|| × ||`b`||)
 ```
 
 The numerator is the dot product: the sum of element-wise products. The denominator normalizes by the magnitudes of both vectors. This normalization makes cosine similarity independent of vector length—it measures direction, not magnitude.
@@ -250,9 +250,9 @@ These thresholds vary by domain and application. Academic paper search might use
 
 ## Similarity search algorithm
 
-Semantic search requires finding the most similar documents to a query from a collection. Given a query vector and a database of document vectors, we need to identify the top k most similar documents. This is the [k-nearest neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm) problem in high-dimensional space.
+Semantic search requires finding the most similar documents to a query from a collection. Given a query vector and a database of document vectors, we need to identify the top `k` most similar documents. This is the [k-nearest neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm) problem in high-dimensional space.
 
-The brute-force algorithm compares the query vector against every document vector, computes cosine similarity for each, sorts by similarity, and returns the top k results:
+The brute-force algorithm compares the query vector against every document vector, computes cosine similarity for each, sorts by similarity, and returns the top `k` results:
 
 ```swift
 import Quiver
@@ -275,9 +275,9 @@ func findSimilar(
 }
 ```
 
-The algorithm has three phases. First, it computes cosine similarity between the query and all n documents in the database using Quiver's batch operation. This produces n similarity scores. Second, it sorts these scores in descending order. Third, it selects the top k entries and returns them.
+The algorithm has three phases. First, it computes cosine similarity between the query and all `n` documents in the database using Quiver's batch operation. This produces `n` similarity scores. Second, it sorts these scores in descending order. Third, it selects the top `k` entries and returns them.
 
-The [time complexity](https://en.wikipedia.org/wiki/Time_complexity) is O(n × d + n log n), where n is the number of documents and d is the vector dimensionality. The first term (n × d) comes from computing n cosine similarities, each requiring O(d) operations for the dot product and magnitude calculations. The second term (n log n) comes from sorting n scores. For typical values where d is 50 and k is much smaller than n, the sorting dominates when n is small, but the similarity computation dominates for large databases.
+The [time complexity](https://en.wikipedia.org/wiki/Time_complexity) is `O(n × d + n log n)`, where `n` is the number of documents and `d` is the vector dimensionality. The first term `(n × d)` comes from computing `n` cosine similarities, each requiring `O(d)` operations for the dot product and magnitude calculations. The second term `(n log n)` comes from sorting `n` scores. For typical values where `d` is 50 and `k` is much smaller than `n`, the sorting dominates when `n` is small, but the similarity computation dominates for large databases.
 
 Consider a concrete example with a small document collection:
 
@@ -314,12 +314,6 @@ for (index, score) in results {
 ```
 
 The first result has high similarity because it directly mentions running shoes and training-related attributes. The second result scores well due to shared athletic footwear vocabulary. The third result has good similarity through the running and athletic connection. The dress shoes and machine learning documents receive low scores and don't appear in the top 3.
-
-For larger databases, performance becomes a concern. Computing similarity for 10,000 documents with 50-dimensional vectors requires 10,000 × 50 = 500,000 multiplication operations plus sorting 10,000 scores. Modern CPUs handle this in tens of milliseconds. Scaling to 100,000 documents pushes into hundreds of milliseconds. At millions of documents, brute-force search becomes impractical.
-
-Approximate nearest neighbor algorithms address this scaling challenge by trading some accuracy for dramatic speedup. Techniques like locality-sensitive hashing, hierarchical navigable small worlds (HNSW), and product quantization reduce search time from O(n × d) to O(log n × d) or even O(√n × d). These advanced methods enable semantic search over millions or billions of documents, though they introduce complexity beyond the scope of this chapter.
-
-For many applications, brute-force search over moderately-sized collections (under 100,000 documents) provides acceptable performance while maintaining perfect accuracy and simple, understandable code. The algorithm is straightforward to implement, easy to debug, and produces exact results.
 
 ## Building a semantic search system
 
@@ -383,7 +377,7 @@ struct SemanticSearch {
 }
 ```
 
-The initializer loads GloVe embeddings once at startup. The `add` method converts text to a vector and stores both. The `search` method converts the query to a vector, computes similarity with all documents using Quiver's batch `cosineSimilarities` operation, sorts by similarity, and returns the top k results.
+The initializer loads GloVe embeddings once at startup. The `add` method converts text to a vector and stores both. The `search` method converts the query to a vector, computes similarity with all documents using Quiver's batch `cosineSimilarities` operation, sorts by similarity, and returns the top `k` results.
 
 This design separates concerns cleanly. Embedding logic stays in `embedText`, similarity computation leverages Quiver's vector operations, and the search system coordinates the overall workflow. Each component can be tested independently.
 
@@ -483,52 +477,12 @@ Processing documents in batches reduces overhead and enables optimizations like 
 
 The complete system demonstrates how simple algorithmic components combine to create useful functionality. Word embeddings capture meaning, vector averaging extends to documents, cosine similarity measures relatedness, k-nearest neighbors finds similar items, and clean abstractions tie everything together. This architecture scales from small experiments to production systems serving thousands of queries per second.
 
-## Performance and practical considerations
-
-The brute-force semantic search algorithm has predictable performance characteristics. Every search compares the query vector against n document vectors, where n is the collection size. Each comparison performs d multiplications and additions for the dot product, plus d multiplications and additions for the magnitudes, where d is the vector dimensionality. This gives O(n × d) time complexity for computing similarities.
-
-For 50-dimensional GloVe vectors, each similarity computation requires approximately 200 floating-point operations. Modern processors execute billions of floating-point operations per second, making individual similarities very fast. The bottleneck emerges from the n factor—the number of documents searched.
-
-Performance scales linearly with collection size. Searching 1,000 documents requires roughly 200,000 operations, completing in 1-2 milliseconds on typical hardware. Searching 10,000 documents requires 2,000,000 operations, taking 10-20 milliseconds. Searching 100,000 documents requires 20,000,000 operations, taking 100-200 milliseconds. This linear scaling means performance degrades predictably as collections grow.
-
-The sorting phase adds O(n log n) complexity, but for practical values this rarely dominates. Sorting 100,000 scores requires roughly 1.7 million comparisons, less than the 20 million operations for similarity computation. Only for very small collections or very high-dimensional vectors does sorting become the bottleneck.
-
-Memory requirements depend on the document collection size and vector dimensionality. Each 50-dimensional vector requires 400 bytes (50 doubles × 8 bytes per double). Storing 100,000 documents requires roughly 40 MB for vectors alone, plus memory for the original text. The GloVe embeddings themselves occupy about 160 MB for 400,000 words × 50 dimensions. Total memory footprint for a 100,000 document collection stays under 250 MB, easily fitting in modern RAM.
-
-Several optimizations improve performance without changing the fundamental algorithm. Pre-computing and caching document vector magnitudes eliminates redundant square root operations during similarity computation. Storing vectors in contiguous memory improves cache locality. Using SIMD instructions parallelizes the dot product computation across vector elements. These optimizations provide 2-5× speedups while maintaining exact results.
-
-For collections exceeding 100,000 documents, approximate nearest neighbor algorithms become attractive. Techniques like HNSW (Hierarchical Navigable Small Worlds) reduce search time from O(n × d) to O(log n × d) by building graph-based indexes that allow navigating to similar documents without examining every vector. These methods trade small amounts of accuracy (missing the true top k in perhaps 1-5% of queries) for dramatic speedups, enabling billion-document collections.
-
-The choice between exact and approximate search depends on application requirements. E-commerce product search might tolerate 95% accuracy for 100× speedup. Academic paper search might require exact results to ensure important related work isn't missed. Customer support systems might prefer exact search on smaller, curated document sets. Understanding these tradeoffs informs architectural decisions.
-
 ## Semantic search applications
 
 Semantic search applications span numerous domains, demonstrating the versatility of vector-based similarity. E-commerce platforms use semantic search to find products matching customer intent rather than exact keywords. When a shopper searches for "comfortable running shoes," the system surfaces results for "athletic footwear" and "jogging sneakers" that keyword matching would miss. This improves discovery and reduces zero-result searches.
 
 Content recommendation systems leverage semantic similarity to find articles similar to what users recently read. News applications suggest related stories based on topic overlap rather than manual categorization. Educational platforms recommend learning materials that build on concepts a student just studied. These systems create personalized content journeys by understanding semantic relationships between documents.
 
-Customer support systems route questions to relevant documentation using semantic search. When a user asks "How do I reset my password," the system finds help articles about "account recovery" and "security settings" even without exact keyword matches. This reduces support ticket volume and improves self-service success rates by surfacing relevant answers regardless of how questions are phrased.
-
-Research tools employ semantic search to find related academic papers. Scholars searching for work on "neural network optimization" discover papers about "deep learning training techniques" and "gradient descent improvements." Citation networks complement semantic similarity to surface foundational work and recent advances, accelerating literature review and identifying research gaps.
-
-Code search systems find similar functions across large codebases using semantic embeddings of code and comments. Developers can search for "parse JSON response" and find relevant parsing utilities even if they're named "deserializeHTTPPayload." This accelerates code reuse, helps onboard new team members, and reveals existing implementations before writing duplicates.
-
 Question-answering systems retrieve context relevant to user questions before generating responses. Given the question "What causes the seasons," the system retrieves paragraphs about Earth's axial tilt and orbital mechanics. This retrieved context guides the answer generation, grounding responses in factual sources rather than relying solely on model parameters.
 
 The fundamental algorithmic pattern remains consistent across these applications: convert text to vectors using embeddings, store vectors alongside documents, compute query vectors, find nearest neighbors, return ranked results. Domain-specific variations add metadata filtering, different similarity thresholds, hybrid scoring combining semantic and keyword signals, or multi-stage retrieval pipelines. But the core semantic search algorithm provides the foundation.
-
-## Advanced techniques
-
-Modern production systems build on these fundamentals with additional sophistication. They might combine GloVe or similar static embeddings with contextualized embeddings from transformer models like BERT. While GloVe assigns each word a single vector regardless of context, transformers generate different vectors for "bank" in "river bank" versus "savings bank." This context-awareness improves semantic precision for ambiguous terms.
-
-Learned re-ranking models refine initial similarity scores by analyzing query-document pairs with neural networks. The semantic search provides candidate documents, then the re-ranker examines features like keyword overlap, document structure, and user interaction signals to reorder results. This two-stage approach balances the efficiency of vector search with the accuracy of complex relevance models.
-
-User interaction signals personalize results based on individual preferences and behavior. Click-through rates, dwell time, and explicit feedback inform which similarity scores indicate genuine relevance for each user. A system might learn that one user prefers technical documentation while another prefers beginner tutorials, adjusting result rankings accordingly even for identical queries.
-
-Hybrid scoring combines semantic similarity with traditional keyword matching to handle both concept-based and specific-term queries. Searching for "iPhone 15 Pro" benefits from exact keyword matching, while "smartphone with good camera" requires semantic understanding. Weighted combinations of BM25 keyword scores and vector similarity provide robust performance across query types.
-
-Multi-stage retrieval pipelines use cheap approximate search to identify candidates, then apply expensive re-ranking to a small subset. This architecture enables semantic search over billions of documents by constraining costly operations to promising results. The first stage might return 100 candidates in milliseconds, then sophisticated models spend seconds analyzing just those 100 to select the final 10.
-
-For interview preparation, semantic search problems test multiple skills. Implement cosine similarity efficiently. Design a document retrieval system with specified latency and accuracy requirements. Optimize search for millions of documents. Explain tradeoffs between exact and approximate nearest neighbor methods. Discuss how to handle vocabulary mismatch and rare terms. These questions assess both algorithmic understanding and system design thinking.
-
-The algorithms in this chapter demonstrate how vector mathematics from [Chapter 20](20-vectors) enables practical AI applications. Cosine similarity, originally an abstract geometric concept, becomes a semantic relatedness measure. k-nearest neighbors, originally a classification algorithm, becomes a semantic search engine. Pre-trained embeddings eliminate machine learning complexity while still capturing semantic meaning. Together, these pieces create systems that understand text meaning rather than just matching characters.
