@@ -5,7 +5,13 @@ description: "Understanding algorithms and their importance in Swift development
 ---
 # Introduction
 
-If we're learning Swift development, we may be asking: do I need to know AI and machine learning to be relevant, why learn algorithms when AI can generate code for me, or how do recommendation systems work—the ones that power Netflix and Spotify? These are the right questions. The surprising answer is they all lead back to the same place—fundamental algorithms that have existed for decades.
+If you're learning Swift development, you may be asking: 
+
+- Do I need to know AI and machine learning to be relevant?
+- Why learn algorithms when AI can generate code for me? 
+- How do recommendation systems work—the ones that power Netflix and Spotify? 
+
+These are the right questions. The surprising answer is they all lead back to the same place—fundamental algorithms that have existed for decades.
 
 These days technology is amazing. Generative AI understands your questions. Instagram knows what you'll like next. Google autocomplete predicts what we're typing after just three letters. Your iPhone unlocks instantly with Face ID. But here's the secret: it's not magic. It's mathematics—specifically, algorithms that computer scientists developed between 1946 and the early 2000s, now applied in ways their creators never imagined.
 
