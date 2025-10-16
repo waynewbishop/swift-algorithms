@@ -5,15 +5,15 @@ description: "Solve complex problems with memoization"
 ---
 # Dynamic Programming
 
-In our exploration of algorithms, we've applied many techniques to produce results. Some concepts have used iOS-specific patterns while others have been more generalized. Although it hasn't been explicitly mentioned, some of our solutions have used a particular programming style called dynamic programming. While straightforward in theory, its application can sometimes be nuanced. When applied correctly, dynamic programming can have a powerful effect on how you write code. In this chapter, we'll introduce the concept and implementation of dynamic programming.
+In our exploration of algorithms, we've applied many techniques to produce results. Some concepts have used iOS-specific patterns while others have been more generalized. Although it hasn't been explicitly mentioned, some of our solutions have used a particular programming style called dynamic programming. While straightforward in theory, its application can sometimes be nuanced. When applied correctly, dynamic programming can have a powerful effect on how we write code. In this chapter, we'll introduce the concept and implementation of dynamic programming.
 
 ## Save for later
 
-If you've purchased something through Amazon.com, you'll be familiar with the site term "Save For Later." As the phrase implies, shoppers are provided the option to add items to their cart or save them to a "Wish List" for later viewing. When writing algorithms, we often face a similar choice of completing actions (performing computations) as data is being interpreted or storing the results for later use. Examples include retrieving JSON data from a RESTful service or using the Core Data Framework.
+If we've purchased something through Amazon.com, we'll be familiar with the site term "Save For Later." As the phrase implies, shoppers are provided the option to add items to their cart or save them to a "Wish List" for later viewing. When writing algorithms, we often face a similar choice of completing actions (performing computations) as data is being interpreted or storing the results for later use. Examples include retrieving JSON data from a RESTful service or using the Core Data Framework.
 
 In iOS, design patterns can help us time and coordinate how data is processed. Specific techniques include multi-threaded operations (e.g. Grand Central Dispatch), Notifications and Delegation. Dynamic programming on the other hand, isn't necessarily a single coding technique, but rather how to think about actions (e.g. sub problems) that occur as a function operates. The resulting solution could differ depending on the problem. In its simplest form, dynamic programming relies on data storage and reuse to increase algorithm efficiency. The process of data reuse is also called memoization and can take many forms. As we'll see, this style of programming provides numerous benefits.
 
-Dynamic programming builds on recursion from [Chapter 6](06-recursion), but adds memoization—storing results in a cache (typically an Array or a Dictionary from [Chapter 14](14-hash-tables)) to avoid redundant calculations. This transforms exponential O(2^n) algorithms into linear O(n) solutions, demonstrating the dramatic space-time tradeoffs analyzed in [Chapter 8](08-performance-analysis). Where naive recursion uses the call stack ([Chapter 10](10-stacks-and-queues)'s stack concept), dynamic programming uses explicit data structures to track subproblem solutions.
+Dynamic programming builds on recursion from [Chapter 6](06-recursion), but adds memoization—storing results in a cache (typically an Array or a Dictionary from [Chapter 15](15-hash-tables)) to avoid redundant calculations. This transforms exponential O(2^n) algorithms into linear O(n) solutions, demonstrating the dramatic space-time tradeoffs analyzed in [Chapter 8](08-performance-analysis). Where naive recursion uses the call stack ([Chapter 10](10-stacks-and-queues)'s stack concept), dynamic programming uses explicit data structures to track subproblem solutions.
 
 ## Fibonacci revisited
 
@@ -34,7 +34,7 @@ func fibRecursive(n: Int) -> Int {
 }
 ```
 
-At first glance, it appears this seemingly small function would also be efficient. However, upon further analysis, we see numerous recursive calls must be made for it to calculate any result. Since `fibRecursive` cannot store previously calculated values, its recursive calls increase exponentially. When you calculate `fibonacci(5)`, the function calculates `fibonacci(3)` three separate times and `fibonacci(2)` five separate times. For `fibonacci(40)`, the function makes over 330 million function calls. The time complexity is O(2^n)—exponential. For larger numbers, this approach becomes unusable.
+At first glance, it appears this seemingly small function would also be efficient. However, upon further analysis, we see numerous recursive calls must be made for it to calculate any result. Since `fibRecursive` cannot store previously calculated values, its recursive calls increase exponentially. When we calculate `fibonacci(5)`, the function calculates `fibonacci(3)` three separate times and `fibonacci(2)` five separate times. For `fibonacci(40)`, the function makes over 330 million function calls. The time complexity is O(2^n)—exponential. For larger numbers, this approach becomes unusable.
 
 ## Fibonacci memoized
 
@@ -159,7 +159,7 @@ Each value considers all possible coin choices and keeps the minimum. This neste
 
 ## Shortest paths
 
-Code memoization can also improve a program's efficiency to the point of making seemingly difficult or nearly unsolvable questions answerable. An example of this can be seen with Dijkstra's Algorithm and Shortest Paths from [Chapter 12](12-graphs). To review, we created a unique data structure named Path with the goal of storing specific traversal metadata:
+Code memoization can also improve a program's efficiency to the point of making seemingly difficult or nearly unsolvable questions answerable. An example of this can be seen with Dijkstra's Algorithm and Shortest Paths from [Chapter 17](17-shortest-paths). To review, we created a unique data structure named Path with the goal of storing specific traversal metadata:
 
 ```swift
 // Path class maintains objects that comprise the "frontier"
@@ -182,4 +182,4 @@ What makes Path useful is its ability to store data on nodes previously visited.
 
 Dynamic programming with memoization is effective because it trades a small amount of memory (storing previously computed results) for dramatic speed improvements. By remembering what we've already calculated, we avoid repeating expensive computations. This pattern appears throughout algorithm design—whether building Fibonacci sequences with Arrays, optimizing choices in problems like making change, or navigating graphs with Path objects.
 
-The key insight is recognizing when your problem has overlapping subproblems that can be cached and reused. We've seen two fundamental DP patterns: counting (Fibonacci adds previous values) and optimization (coin change finds the minimum). Once you spot these patterns, memoization transforms intractable exponential algorithms into practical linear-time solutions. Whether you use Arrays, Dictionaries, or custom data structures to store your results, the principle remains the same: calculate once, use many times. This is why dynamic programming remains one of the most powerful optimization techniques in computer science.
+The key insight is recognizing when our problem has overlapping subproblems that can be cached and reused. We've seen two fundamental DP patterns: counting (Fibonacci adds previous values) and optimization (coin change finds the minimum). Once we spot these patterns, memoization transforms intractable exponential algorithms into practical linear-time solutions. Whether we use Arrays, Dictionaries, or custom data structures to store our results, the principle remains the same: calculate once, use many times. This is why dynamic programming remains one of the most powerful optimization techniques in computer science.

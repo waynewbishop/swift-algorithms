@@ -13,7 +13,7 @@ To start, let's revisit our original example. Array values from `numberList` wer
 
 Our model achieved balance not only through usage of the BST append algorithm but also by the way keys were inserted. In reality, there could be numerous ways to populate a tree. Without considering other factors, this can produce unexpected results.
 
-Consider inserting sorted data into a BST. Building a tree from `[1, 2, 3, 4, 5]` creates a degenerate case—every node has only a right child, forming a linked list. Searching for 5 requires examining all 5 nodes (O(n)), not the 3 comparisons (O(log 5) ≈ 2.3) a balanced tree would need.
+Consider inserting sorted data into a BST. Building a tree from `[1, 2, 3, 4, 5]` creates a degenerate case—every node has only a right child, forming a linked list. Searching for 5 requires examining all 5 nodes `(O(n))`, not the 3 comparisons `(O(log 5) ≈ 2.3)` a balanced tree would need.
 
 This scenario isn't rare. Any monotonically increasing sequence (timestamps, auto-increment IDs, sorted imports) triggers worst-case behavior. Without balancing, BSTs become unreliable in real systems.
 
@@ -101,7 +101,7 @@ With 29 and 26 added, we can proceed to insert the final value (23). Like before
 let rootVal = abs((1) - (-1)) // equals 2 (unbalanced)
 ```
 
-For the tree to maintain its BST property, we need to change its performance from O(n) to O(log n). This can be achieved through a process called rotation. Since the model has more nodes to the left, we'll balance it by performing a right rotation sequence.
+For the tree to maintain its BST property, we need to change its performance from `O(n)` to `O(log n)`. This can be achieved through a process called rotation. Since the model has more nodes to the left, we'll balance it by performing a right rotation sequence.
 
 After the rotation, the BST is rebalanced. Node 29, originally the root, is now positioned as the right leaf. Node 26 has moved to the root. In Swift, these changes can be achieved with the following:
 
@@ -128,7 +128,7 @@ extension AVLTree {
 }
 ```
 
-Even though we undergo a series of steps, the process occurs in O(1) time. Meaning, its performance is unaffected by other factors such as number of leaf nodes, descendants, or tree height. In addition, even though we've completed a right rotation, similar steps could be implemented to resolve both left and right imbalances.
+Even though we undergo a series of steps, the process occurs in `O(1)` time. Meaning, its performance is unaffected by other factors such as number of leaf nodes, descendants, or tree height. In addition, even though we've completed a right rotation, similar steps could be implemented to resolve both left and right imbalances.
 
 ## The Results
 

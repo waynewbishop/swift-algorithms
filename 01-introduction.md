@@ -13,7 +13,7 @@ These days technology is amazing. Generative AI understands your questions. Inst
 
 ## The platform
 
-When Swift debuted in 2014, it was Apple's answer to modern iOS development. Ten years later, Swift has evolved into something far more powerful—a full-stack language that spans far beyond the iPhone. Today's Swift gives you SwiftUI for declarative, reactive interfaces across iOS, macOS and watchOS. Swift Concurrency with a`sync/await` makes asynchronous code as readable as synchronous code—crucial for network requests, database operations, and AI model inference. Swift Package Manager lets you share your algorithm implementations as reusable libraries. Swift Testing provides modern, expressive test suites that verify your algorithms work correctly at scale. And solutions like [Vapor](https://github.com/vapor/vapor) take Swift to the server, allowing you to create backend APIs that power websites, online services, and cloud-based applications. You can build your iOS app and its backend API in the same language, sharing the same algorithm implementations.
+When Swift debuted in 2014, it was Apple's answer to modern iOS development. Ten years later, Swift has evolved into something far more powerful—a full-stack language that spans far beyond the iPhone. Today's Swift gives you SwiftUI for declarative, reactive interfaces across iOS, macOS and watchOS. Swift Concurrency with `async/await` makes asynchronous code as readable as synchronous code—crucial for network requests, database operations, and AI model inference. Swift Package Manager lets you share your algorithm implementations as reusable libraries. Swift Testing provides modern, expressive test suites that verify your algorithms work correctly at scale. And solutions like [Vapor](https://github.com/vapor/vapor) take Swift to the server, allowing you to create backend APIs that power websites, online services, and cloud-based applications. You can build your iOS app and its backend API in the same language, sharing the same algorithm implementations.
 
 ## The algorithm lineage
 
@@ -29,7 +29,7 @@ We'll start with searching and sorting algorithms in Chapters 3-5, building intu
 
 The advanced chapters demonstrate how these fundamentals power modern systems. Chapter 18 teaches dynamic programming, the optimization technique behind route planning and recommendation systems. Chapter 19 covers PageRank, Google's original algorithm that revolutionized web search and influenced modern AI architectures. Chapters 20-21 introduce vectors and matrices with the Quiver framework, and Chapter 22 shows how to build semantic search systems using word embeddings and cosine similarity—the same techniques that power AI-driven search and recommendations.
 
-By the end, we'll understand how classical computer science enables modern AI, and we'll have production-ready Swift implementations we can use in your own projects.
+By the end, we'll understand how classical computer science enables modern AI, and we'll have production-ready Swift implementations we can use in our own projects.
 
 ## Audience
 

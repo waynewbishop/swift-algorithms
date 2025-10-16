@@ -222,7 +222,7 @@ public func insert(_ tvalue: T, at index: Int) {
 }
 ```
 
-Once at the correct position, insertion is O(1)—just adjust a few pointers. The O(n) cost comes from finding the position.
+Once at the correct position, insertion is `O(1)`—just adjust a few pointers. The `O(n)` cost comes from finding the position.
 
 ## Removing elements
 

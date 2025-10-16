@@ -3,7 +3,7 @@ layout: chapter
 title: "Chapter 5: Advanced Sorting"
 description: "Master the Quicksort algorithm and divide & conquer strategy"
 ---
-# Advanced sorting
+# Advanced Sorting
 
 You've logged 5,000 workouts over five years. Your fitness app needs to display them sorted by calorie burn—highest first. Using bubble sort or insertion sort would take noticeable seconds, maybe minutes. Using Quicksort? Milliseconds.
 

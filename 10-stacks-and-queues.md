@@ -184,13 +184,13 @@ Both structures excel at their core operations:
 
 | Operation | Stack | Queue | Notes |
 |-----------|-------|-------|-------|
-| Push/Enqueue | O(1) | O(1)* | Add element |
-| Pop/Dequeue | O(1) | O(1) | Remove element |
-| Peek | O(1) | O(1) | View top/front |
-| isEmpty check | O(1) | O(1) | Check if empty |
-| Search | O(n) | O(n) | Not their purpose |
+| Push/Enqueue | `O(1)` | `O(1)`* | Add element |
+| Pop/Dequeue | `O(1)` | `O(1)` | Remove element |
+| Peek | `O(1)` | `O(1)` | View top/front |
+| isEmpty check | `O(1)` | `O(1)` | Check if empty |
+| Search | `O(n)` | `O(n)` | Not their purpose |
 
-\* This implementation's enqueue is O(n). With a tail pointer, it becomes O(1).
+\* This implementation's enqueue is `O(n)`. With a tail pointer, it becomes `O(1)`.
 
 The `O(1)` performance means these operations take constant time regardless of size. Adding the millionth element takes the same time as adding the first:
 

@@ -9,7 +9,7 @@ Open Maps on your iPhone. Search for "nearest trail." Within seconds, the app sh
 
 Graphs generalize the tree structures from [Chapters 11-12](11-binary-search-trees.md). While trees enforce a strict parent-child hierarchy, graphs allow any vertex to connect to any other vertex, creating cycles and multiple paths between nodes. This flexibility makes graphs perfect for modeling real-world networks—from trail systems to workout route planning to how iOS apps share data.
 
-In this chapter, we'll highlight the key features of graphs and demonstrate how to create graph structures with Swift. You'll also learn Dijkstra's shortest path algorithm—one of the most important algorithms in computer science, powering everything from GPS navigation to Internet routing.
+In this chapter, we'll highlight the key features of graphs and demonstrate how to create graph structures with Swift. We'll explore how to represent vertices and edges, build graph data structures, and implement graph traversal algorithms that enable applications to navigate complex networks of connected data.
 
 ## The basics
 

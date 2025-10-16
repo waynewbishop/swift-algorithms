@@ -3,7 +3,7 @@ layout: chapter
 title: "Chapter 4: Basic Sorting"
 description: "Master bubble sort, insertion sort, and selection sort"
 ---
-# Basic sorting
+# Basic Sorting
 
 Your fitness app displays this week's workouts. But they're in the order you logged them, not sorted by duration or calorie burn. You want to see your hardest workout first. How does the app reorganize that data? Through sorting algorithms.
 
