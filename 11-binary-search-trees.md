@@ -18,13 +18,13 @@ Here's the binary search tree structure. Using [generics](https://en.wikipedia.o
 ```swift
 // Binary search tree node with left and right children
 public class BST<T: Comparable> {
-    var key: T?
+    var tvalue: T?  // 'tvalue' means 'typed value' (matches production BSNode)
     var left: BST<T>?
     var right: BST<T>?
 }
 ```
 
-The `Comparable` constraint ensures elements can be compared using `<` and `>`, which is essential for determining left vs right placement. Each node contains a value (`key`) and optional pointers to left and right subtrees.
+The `Comparable` constraint ensures elements can be compared using `<` and `>`, which is essential for determining left vs right placement. Each node contains a value (`tvalue`) and optional pointers to left and right subtrees.
 
 ## Building a tree
 
@@ -45,19 +45,19 @@ The `append` method uses [recursion](https://en.wikipedia.org/wiki/Recursion_(co
 ```swift
 // Insert element into BST maintaining sort order - O(log n) average
 public class BST<T: Comparable> {
-    var key: T?
+    var tvalue: T?  // 'tvalue' means 'typed value'
     var left: BST<T>?
     var right: BST<T>?
 
     func append(element: T) {
-        if let key = self.key {
-            if element < key {
+        if let tvalue = self.tvalue {
+            if element < tvalue {
                 // Value is smaller - go left
                 if let left = self.left {
                     left.append(element: element)
                 } else {
                     let newNode = BST<T>()
-                    newNode.key = element
+                    newNode.tvalue = element
                     self.left = newNode
                 }
             } else {
@@ -66,13 +66,13 @@ public class BST<T: Comparable> {
                     right.append(element: element)
                 } else {
                     let newNode = BST<T>()
-                    newNode.key = element
+                    newNode.tvalue = element
                     self.right = newNode
                 }
             }
         } else {
             // Empty tree - this becomes root
-            self.key = element
+            self.tvalue = element
         }
     }
 }
@@ -98,10 +98,10 @@ Searching exploits the BST property. If the target is smaller than the current n
 ```swift
 // Search for value in BST - O(log n) average
 func search(for value: T) -> Bool {
-    if let key = self.key {
-        if value == key {
+    if let tvalue = self.tvalue {
+        if value == tvalue {
             return true
-        } else if value < key {
+        } else if value < tvalue {
             return left?.search(for: value) ?? false
         } else {
             return right?.search(for: value) ?? false

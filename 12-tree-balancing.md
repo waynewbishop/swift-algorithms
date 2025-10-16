@@ -33,7 +33,7 @@ With a model in place, we can calculate the element's height. This is done by co
 ```swift
 // Self-balancing tree node with height tracking for balance detection
 class AVLTree<T: Comparable> {
-    var key: T?
+    var tvalue: T?  // 'tvalue' means 'typed value' (matches production)
     var left: AVLTree?
     var right: AVLTree?
     var height: Int = 0

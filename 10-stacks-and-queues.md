@@ -30,11 +30,11 @@ Both stacks and queues use a simple singly-linked node structure. Unlike the dou
 ```swift
 // Simple singly-linked node for stacks and queues
 public class Node<T> {
-    var key: T?
+    var tvalue: T?  // 'tvalue' means 'typed value' (matches production)
     var next: Node?
 
-    init(key: T? = nil) {
-        self.key = key
+    init(tvalue: T? = nil) {
+        self.tvalue = tvalue
     }
 }
 ```
@@ -48,17 +48,17 @@ Queues follow "first-in, first-out" ordering. Elements enter at the back and exi
 ```swift
 // Generic queue implementation with FIFO ordering
 public class Queue<T> {
-    private var top: Node<T>?
+    public var top: Node<T>?  // Public to match production code
 
     public init() {
         top = Node<T>()
     }
 
     // Add element to back of queue - O(n)
-    public func enqueue(_ key: T) {
+    public func enQueue(_ tvalue: T) {
         // Handle empty queue
-        guard top?.key != nil else {
-            top?.key = key
+        guard top?.tvalue != nil else {
+            top?.tvalue = tvalue
             return
         }
 
@@ -71,19 +71,19 @@ public class Queue<T> {
         }
 
         // Append new node
-        childToUse.key = key
+        childToUse.tvalue = tvalue
         current?.next = childToUse
     }
 
     // Remove element from front of queue - O(1)
-    public func dequeue() -> T? {
+    public func deQueue() -> T? {
         // Check if queue is empty
-        guard top?.key != nil else {
+        guard top?.tvalue != nil else {
             return nil
         }
 
         // Retrieve front item
-        let queueItem: T? = top?.key
+        let queueItem: T? = top?.tvalue
 
         // Move top pointer to next item
         if let nextItem = top?.next {
@@ -97,12 +97,12 @@ public class Queue<T> {
 
     // View front element without removing - O(1)
     public func peek() -> T? {
-        return top?.key
+        return top?.tvalue
     }
 
     // Check if queue is empty - O(1)
     public var isEmpty: Bool {
-        return top?.key == nil
+        return top?.tvalue == nil
     }
 }
 ```
@@ -116,7 +116,7 @@ Stacks follow "last-in, first-out" ordering. Elements are added and removed from
 ```swift
 // Generic stack implementation with LIFO ordering
 public class Stack<T> {
-    private var top: Node<T>
+    public var top: Node<T>  // Public to match production code
     private var counter: Int = 0
 
     public init() {
@@ -129,17 +129,17 @@ public class Stack<T> {
     }
 
     // Add element to top of stack - O(1)
-    public func push(_ key: T) {
+    public func push(_ tvalue: T) {
         // Handle empty stack
-        guard top.key != nil else {
-            top.key = key
+        guard top.tvalue != nil else {
+            top.tvalue = tvalue
             counter += 1
             return
         }
 
         // Create new node
         let childToUse = Node<T>()
-        childToUse.key = key
+        childToUse.tvalue = tvalue
 
         // Insert at top (new node points to current top)
         childToUse.next = top
@@ -151,22 +151,22 @@ public class Stack<T> {
     // Remove element from top of stack - O(1)
     @discardableResult
     public func pop() -> T? {
-        guard let key = top.key else { return nil }
+        guard let tvalue = top.tvalue else { return nil }
 
         if counter > 1 {
             top = top.next!
             counter -= 1
         } else {
-            top.key = nil
+            top.tvalue = nil
             counter = 0
         }
 
-        return key
+        return tvalue
     }
 
     // View top element without removing - O(1)
     public func peek() -> T? {
-        return top.key
+        return top.tvalue
     }
 
     // Check if stack is empty - O(1)
@@ -198,12 +198,12 @@ The `O(1)` performance means these operations take constant time regardless of s
 // Process 1 million items with consistent performance
 for i in 0..<1_000_000 {
     stack.push(i)           // Each push: O(1)
-    queue.enqueue(i)        // Each enqueue: O(1)*
+    queue.enQueue(i)        // Each enQueue: O(1)*
 }
 
 for _ in 0..<1_000_000 {
     stack.pop()             // Each pop: O(1)
-    queue.dequeue()         // Each dequeue: O(1)
+    queue.deQueue()         // Each deQueue: O(1)
 }
 ```
 

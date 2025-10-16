@@ -52,18 +52,18 @@ Generics eliminate duplication by using type parameters—placeholders for actua
 ```swift
 // Single generic implementation works with any type
 class ListNode<T> {
-    var value: T
+    var tvalue: T  // 'tvalue' means 'typed value' (matches production)
     var next: ListNode<T>?
 
-    init(value: T, next: ListNode<T>? = nil) {
-        self.value = value
+    init(tvalue: T, next: ListNode<T>? = nil) {
+        self.tvalue = tvalue
         self.next = next
     }
 }
 
 // Same implementation, different types
-let intNode = ListNode(value: 42)
-let stringNode = ListNode(value: "Hello")
+let intNode = ListNode(tvalue: 42)
+let stringNode = ListNode(tvalue: "Hello")
 ```
 
 One implementation maintains type safety across all uses. Swift ensures you can't accidentally mix types—trying to set an integer node's `next` to a string node produces a compile-time error. You maintain type safety while eliminating duplication.
@@ -287,17 +287,17 @@ Recursive data structures require classes rather than structs because they conta
 ```swift
 // Generic linked list node
 class ListNode<T> {
-    var value: T
+    var tvalue: T  // 'tvalue' means 'typed value'
     var next: ListNode<T>?
 
-    init(value: T, next: ListNode<T>? = nil) {
-        self.value = value
+    init(tvalue: T, next: ListNode<T>? = nil) {
+        self.tvalue = tvalue
         self.next = next
     }
 }
 ```
 
-Notice how the generic parameter flows through the entire structure. `ListNode<T>` contains a property of type `ListNode<T>?`. When you create `ListNode<Int>`, Swift generates specialized code where both `value` is `Int` and `next` is `ListNode<Int>?`. The type safety extends through the entire recursive structure.
+Notice how the generic parameter flows through the entire structure. `ListNode<T>` contains a property of type `ListNode<T>?`. When you create `ListNode<Int>`, Swift generates specialized code where both `tvalue` is `Int` and `next` is `ListNode<Int>?`. The type safety extends through the entire recursive structure.
 
 ### Generic tree nodes
 
@@ -306,21 +306,21 @@ The same principle applies to tree structures:
 ```swift
 // Generic binary tree node
 class TreeNode<T> {
-    var value: T?
+    var tvalue: T?  // 'tvalue' means 'typed value'
     var left: TreeNode<T>?
     var right: TreeNode<T>?
 
-    init(value: T?) {
-        self.value = value
+    init(tvalue: T?) {
+        self.tvalue = tvalue
     }
 }
 
 // Recursive traversal works with any type
 func printTree<T>(_ node: TreeNode<T>?) {
-    guard let node = node, let value = node.value else { return }
+    guard let node = node, let tvalue = node.tvalue else { return }
 
     printTree(node.left)
-    print(value)
+    print(tvalue)
     printTree(node.right)
 }
 ```
@@ -375,8 +375,8 @@ The `Comparable` constraint enables `<=` comparison in the partitioning logic. T
 Generics in Swift have zero runtime overhead. The compiler generates specialized code for each concrete type you use—a process called monomorphization. When we write:
 
 ```swift
-let intNode = ListNode<Int>(value: 42)
-let stringNode = ListNode<String>(value: "Hello")
+let intNode = ListNode<Int>(tvalue: 42)
+let stringNode = ListNode<String>(tvalue: "Hello")
 ```
 
 The compiler generates two separate, optimized implementations—one for Int, one for String. Your generic code runs as fast as if you had written type-specific versions manually, but you only maintain one implementation.

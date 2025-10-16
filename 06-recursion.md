@@ -85,12 +85,12 @@ The struct version fails because Swift can't determine the size of a struct that
 ```swift
 //classes are reference types - this works!
 class TreeNode<T> {
-    var value: T?
+    var tvalue: T?  // 'tvalue' means 'typed value'
     var left: TreeNode?
     var right: TreeNode?
 
-    init(value: T?) {
-        self.value = value
+    init(tvalue: T?) {
+        self.tvalue = tvalue
     }
 }
 ```
@@ -108,11 +108,11 @@ Let's see this with a simple linked list node:
 ```swift
 // Node that links to another node of the same type
 class ListNode<T> {
-    var value: T
+    var tvalue: T  // 'tvalue' means 'typed value' (matches production LLNode)
     var next: ListNode<T>?
 
-    init(value: T, next: ListNode<T>? = nil) {
-        self.value = value
+    init(tvalue: T, next: ListNode<T>? = nil) {
+        self.tvalue = tvalue
         self.next = next
     }
 }
@@ -123,16 +123,16 @@ func printList<T>(_ node: ListNode<T>?) {
     guard let currentNode = node else { return }
 
     //process current node
-    print(currentNode.value)
+    print(currentNode.tvalue)
 
     //recursive case: process rest of list
     printList(currentNode.next)
 }
 
 //create a simple linked list: 1 -> 2 -> 3
-let node3 = ListNode(value: 3)
-let node2 = ListNode(value: 2, next: node3)
-let node1 = ListNode(value: 1, next: node2)
+let node3 = ListNode(tvalue: 3)
+let node2 = ListNode(tvalue: 2, next: node3)
+let node1 = ListNode(tvalue: 1, next: node2)
 
 printList(node1)  //prints: 1, 2, 3
 ```
