@@ -27,6 +27,16 @@ This book is designed for:
 - Developers interested in data science
 - Educators looking for teaching materials related to computer science or mathematics
 
+## Contributing
+
+This book is actively maintained and continuously improved. Your feedback helps make it better:
+
+- **Found a typo or code error?** Submit a small PR for obvious corrections
+- **Something unclear?** [Open an issue](https://github.com/waynewbishop/swift-algorithms/issues) to suggest improvements
+- **Have a question?** Start a [discussion](https://github.com/waynewbishop/swift-algorithms/discussions)
+
+All substantive content decisions remain with the author to maintain pedagogical consistency and voice.
+
 ## Related Projects
 
 - [Quiver Package](https://github.com/waynewbishop/bishop-algorithms-quiver-package) - A Swift package that provides vector mathematics, numerical computing, and statistical operations.
