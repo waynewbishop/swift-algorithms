@@ -299,6 +299,93 @@ let vector = [1.0, 0.0]
 let result = combined.transform(vector)  // Rotated 45° and scaled 2×
 ```
 
+## Transforming multiple vectors efficiently
+
+The examples above show transforming individual vectors, but real-world applications often need to transform hundreds or thousands of data points simultaneously. Matrix-matrix multiplication enables batch transformations, processing entire datasets in a single operation.
+
+### Understanding matrix multiplication
+
+When you multiply two matrices A (n×k) and B (k×m), the result is a matrix C (n×m). Each element in C comes from the dot product of a row from A and a column from B:
+
+```
+[1  2]   [5  6]   [1×5+2×7  1×6+2×8]   [19  22]
+[3  4] × [7  8] = [3×5+4×7  3×6+4×8] = [43  50]
+```
+
+> Note: the number of columns in the first matrix must equal the number of rows in the second matrix. For an (n×k) matrix and a (k×m) matrix, the k dimension must match.
+
+This operation extends what you already know about matrix-vector multiplication. Where `.transform()` applies a matrix to a single vector, `.multiplyMatrix()` applies a transformation to multiple vectors represented as columns in a matrix.
+
+### Batch transformations
+
+Consider tracking performance metrics for multiple athletes. Instead of transforming each athlete's vector individually, organize all data into a matrix where each column represents one athlete:
+
+```swift
+// Matrix where each column is one athlete's [speed, strength] vector
+import Quiver
+
+let athleteData = [
+    [8.0, 7.0, 9.0],  // Speed values for athletes 1, 2, 3
+    [6.0, 9.0, 5.0]   // Strength values for athletes 1, 2, 3
+]
+
+// Rotate all athlete vectors 90° counterclockwise
+let rotation90 = [[0.0, -1.0], [1.0, 0.0]]
+let rotatedData = rotation90.multiplyMatrix(athleteData)
+
+// Result: All three athletes rotated simultaneously
+// Athlete 1: [8,6] → [-6,8]
+// Athlete 2: [7,9] → [-9,7]
+// Athlete 3: [9,5] → [-5,9]
+```
+
+This single matrix multiplication replaces three separate vector transformations. For 100 athletes, it replaces 100 separate operations. For machine learning datasets with thousands of samples, this efficiency becomes essential.
+
+### Why this matters
+
+Compare two approaches to rotating 100 athlete performance vectors:
+
+```swift
+// Approach 1: Individual transformations (100 separate operations)
+var rotatedAthletes = [[Double]]()
+for athlete in athletes {
+    let rotated = rotation.transform(athlete)
+    rotatedAthletes.append(rotated)
+}
+
+// Approach 2: Batch transformation (single matrix operation)
+let rotatedAll = rotation.multiplyMatrix(athleteMatrix)
+```
+
+### Verifying transformation properties
+
+Matrix multiplication preserves key properties of transformations. For example, four 90° rotations should return to the identity matrix:
+
+```swift
+// Four 90° rotations = full circle
+import Quiver
+
+let rotate90 = [[0.0, -1.0], [1.0, 0.0]]
+let rotate180 = rotate90.multiplyMatrix(rotate90)
+let rotate270 = rotate180.multiplyMatrix(rotate90)
+let rotate360 = rotate270.multiplyMatrix(rotate90)
+
+// Result: [[1, 0], [0, 1]] - back to identity
+```
+
+Similarly, composing two scaling transformations multiplies their effects:
+
+```swift
+// 2× scaling composed with 3× scaling = 6× scaling
+let scale2x = [[2.0, 0.0], [0.0, 2.0]]
+let scale3x = [[3.0, 0.0], [0.0, 3.0]]
+let scale6x = scale2x.multiplyMatrix(scale3x)
+
+// Result: [[6, 0], [0, 6]]
+```
+
+Matrix multiplication is not commutative—the order matters. Rotating then scaling produces different results than scaling then rotating. This reflects how transformation sequences work: the operations apply right-to-left, matching mathematical function composition.
+
 ## Building algorithmic intuition
 
 Matrices provide two essential capabilities: organizing multi-dimensional data and transforming it systematically. The row-column structure naturally represents relationships—whether sensor readings over time, feature values across samples, or transformation coefficients for geometric operations.
