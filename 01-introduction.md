@@ -5,11 +5,7 @@ description: "Understanding algorithms and their importance in Swift development
 ---
 # Introduction
 
-If you're learning Swift development, you may be asking: 
-
-- Do I need to know AI and machine learning to be relevant?
-- Why learn algorithms when AI can generate code for me? 
-- How do recommendation systems work—the ones that power Netflix and Spotify? 
+If you're learning Swift development you may be asking if you need to know AI and machine learning to be relevant, why learn algorithms when AI can generate code for me, or how do recommendation systems work—the ones that power Netflix and Spotify? 
 
 These are the right questions. The surprising answer is they all lead back to the same place—fundamental algorithms that have existed for decades.
 
