@@ -189,7 +189,7 @@ Bubble sort, while pedagogically valuable for teaching sorting concepts due to i
 
 Selection sort offers a unique advantage when minimizing the number of swap operations is critical. The algorithm performs at most n-1 swaps regardless of the initial arrangement of data, making it valuable in situations where memory writes are expensive. Like insertion sort, selection sort is best suited for small datasets where its `O(n²)` time complexity remains acceptable.
 
-These algorithms become inappropriate when dealing with large datasets, when performance is critical, or when we have more than 50-100 elements to sort. If your fitness app needs to sort a year's worth of daily step counts (365 entries) or a professional athlete's complete workout history (thousands of sessions), basic sorting algorithms will lag noticeably. In such cases, advanced algorithms like merge sort and quick sort (covered in [Chapter 5](05-advanced-sorting.md)), or Swift's built-in `sorted()` method, provide dramatically better performance through their `O(n log n)` time complexity.
+These algorithms become inappropriate when dealing with large datasets, when performance is critical, or when we have more than 50-100 elements to sort. If your fitness app needs to sort a year's worth of daily step counts (365 entries) or a professional athlete's complete workout history (thousands of sessions), basic sorting algorithms will lag noticeably. In such cases, advanced algorithms like quicksort (covered in [Chapter 5](05-advanced-sorting.md)), or Swift's built-in `sorted()` method, provide dramatically better performance through their `O(n log n)` time complexity.
 
 ### Comparison table
 
@@ -206,7 +206,7 @@ Stability means equal elements maintain their relative order after sorting. This
 // Demonstrate how dataset size affects basic O(n²) sorting algorithms
 let small = [5, 2, 8, 1, 9]        // This week's workouts - all three work fine
 let medium = Array(1...100).shuffled()  // Quarter's workouts - noticeable slowdown
-let large = Array(1...10000).shuffled()  // Years of data - too slow, use merge/quick sort
+let large = Array(1...10000).shuffled()  // Years of data - too slow, use quicksort
 ```
 
 The lesson: basic sorting algorithms are fine for small, localized data (this week's workouts, today's exercises). For historical data spanning months or years, you need the advanced algorithms from [Chapter 5](05-advanced-sorting.md).

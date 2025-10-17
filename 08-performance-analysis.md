@@ -7,7 +7,7 @@ description: "Understanding algorithmic efficiency, complexity analysis, and rea
 
 Your fitness app has 10,000 workouts. Finding your fastest 5K time with linear search: check all 10,000. With binary search on sorted data: check 14. Same result, vastly different performance. Why? Algorithm choice.
 
-We've now explored searching techniques that locate values in collections, sorting methods that organize data, [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)) that breaks problems into smaller pieces, and generics that enable flexible code. Along the way, we've noticed patterns—binary search feels faster than linear search, merge sort handles large datasets better than bubble sort, and some recursive solutions run exponentially slow.
+We've now explored searching techniques that locate values in collections, sorting methods that organize data, [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)) that breaks problems into smaller pieces, and generics that enable flexible code. Along the way, we've noticed patterns—binary search feels faster than linear search, quicksort handles large datasets better than bubble sort, and some recursive solutions run exponentially slow.
 
 It's time to formalize these observations. In [Chapter 2](02-measuring-performance.md), we learned the vocabulary of performance—[Big O Notation](https://en.wikipedia.org/wiki/Big_O_notation) provides a common language for discussing how [algorithms](https://en.wikipedia.org/wiki/Algorithm) scale. This chapter builds on that foundation, teaching you to analyze the algorithms we've written and make informed decisions about which approaches fit which problems.
 
@@ -197,37 +197,6 @@ func countHalvings(_ n: Int) -> Int {
 }
 ```
 
-**Divide and conquer: O(n log n)**
-```swift
-// Split recursively (log n levels), process all data at each level (n work)
-extension Array where Element: Comparable {
-    func mergeSort() -> [Element] {
-        guard count > 1 else { return self }
-        let mid = count / 2
-        let left = Array(self[0..<mid]).mergeSort()
-        let right = Array(self[mid..<count]).mergeSort()
-        return merge(left, right)
-    }
-
-    private func merge(_ left: [Element], _ right: [Element]) -> [Element] {
-        var result: [Element] = []
-        var leftIndex = 0, rightIndex = 0
-
-        while leftIndex < left.count && rightIndex < right.count {
-            if left[leftIndex] <= right[rightIndex] {
-                result.append(left[leftIndex])
-                leftIndex += 1
-            } else {
-                result.append(right[rightIndex])
-                rightIndex += 1
-            }
-        }
-        result.append(contentsOf: left[leftIndex...])
-        result.append(contentsOf: right[rightIndex...])
-        return result
-    }
-}
-```
 
 ## Space complexity matters
 
@@ -236,8 +205,7 @@ extension Array where Element: Comparable {
 | Algorithm | Time | Space | When to use |
 |-----------|------|-------|-------------|
 | Insertion Sort | O(n²) | O(1) | Small datasets, limited memory |
-| Merge Sort | O(n log n) | O(n) | Large datasets, memory available |
-| Quicksort | O(n log n) avg | O(log n) | General purpose, in-place needed |
+| Quicksort | O(n log n) avg | O(log n) | General purpose, in-place sorting |
 
 Understanding space complexity helps you choose algorithms based on memory constraints. Mobile devices with limited RAM might prefer in-place algorithms even if they're slightly slower.
 
@@ -262,10 +230,10 @@ Production implementations use random pivot selection or median-of-three to avoi
 
 Not every algorithm needs optimization. Optimize when you meet ALL these criteria:
 
-- ✅ Code runs frequently (in a loop, per frame, per request)
-- ✅ Handles large data (thousands to millions of items)
-- ✅ Users notice slowness (lag, stuttering, delays)
-- ✅ Profiling confirms it's a bottleneck
+- Code runs frequently (in a loop, per frame, per request)
+- Handles large data (thousands to millions of items)
+- Users notice slowness (lag, stuttering, delays)
+- Profiling confirms it's a bottleneck
 
 **Don't optimize:**
 ```swift
@@ -316,7 +284,7 @@ Use Xcode's Time Profiler (Product → Profile → Time Profiler) to find actual
 - Key insight: Nested loops create quadratic complexity
 
 **Chapter 5: Advanced Sorting**
-- Merge sort: O(n log n), quicksort: O(n log n) average
+- Quicksort: O(n log n) average
 - Key insight: Divide and conquer achieves linearithmic time
 
 **Chapter 6: Recursion**

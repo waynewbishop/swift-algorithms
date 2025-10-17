@@ -47,7 +47,7 @@ Linear time operations are sometimes called brute force because they make no ass
 
 ## Linearithmic time
 
-This pattern combines linear and logarithmic behavior. [Merge sort](https://en.wikipedia.org/wiki/Merge_sort) and [quicksort](https://en.wikipedia.org/wiki/Quicksort) (Chapter 5) demonstrate `O(n log n)` performance. They divide data recursively (the log n part) and process each piece (the n part). This is often the best we can achieve for comparison-based sorting.
+This pattern combines linear and logarithmic behavior. [Quicksort](https://en.wikipedia.org/wiki/Quicksort) (Chapter 5) demonstrates `O(n log n)` performance. It divides data recursively (the log n part) and processes each piece (the n part). This is often the best we can achieve for comparison-based sorting.
 
 ## Quadratic time
 

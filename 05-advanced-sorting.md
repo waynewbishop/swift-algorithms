@@ -143,33 +143,27 @@ Quicksort exemplifies the divide and conquer strategy by breaking the sorting pr
 
 Unlike some divide and conquer algorithms that require significant work to combine solutions, Quicksort's combination phase is trivial. Once both segments are sorted, the entire array is sorted with no additional work needed. This efficient combination is possible because the partitioning phase does the heavy lifting of positioning elements relative to the pivot.
 
-The divide and conquer approach appears throughout computer science, from binary search to merge sort to the graph algorithms we'll explore later in this book. Understanding how Quicksort applies this strategy provides a foundation for recognizing the pattern in other contexts. The key insight is that many complex problems become tractable when broken into smaller instances of the same problem.
+The divide and conquer approach appears throughout computer science, from binary search to the graph algorithms we'll explore later in this book. Understanding how Quicksort applies this strategy provides a foundation for recognizing the pattern in other contexts. The key insight is that many complex problems become tractable when broken into smaller instances of the same problem.
 
 We'll explore recursion more deeply in [Chapter 6](06-recursion.md), where we'll see how functions that call themselves enable elegant solutions to complex problems. Quicksort serves as an excellent introduction to recursive thinking, demonstrating how a few lines of code can express a powerful algorithm through self-reference.
 
-## Quicksort vs merge sort
+## When to use Quicksort
 
-Both Quicksort and merge sort achieve `O(n log n)` time complexity, but they differ in important ways:
+Quicksort achieves O(n log n) average time complexity with excellent practical performance:
 
-| Characteristic | Quicksort | Merge Sort |
-|----------------|-----------|------------|
-| Average case | O(n log n) | O(n log n) |
-| Worst case | O(n²) | O(n log n) |
-| Space complexity | O(log n) | O(n) |
-| In-place | Yes | No |
-| Stable | No | Yes |
-| Practical speed | Usually faster | Predictable |
+| Characteristic | Value |
+|----------------|-------|
+| Average case | O(n log n) |
+| Worst case | O(n²) |
+| Space complexity | O(log n) |
+| In-place | Yes |
+| Stable | No |
 
-**When to choose Quicksort:**
+**Quicksort is ideal when:**
 - Memory is limited (in-place sorting)
-- Average-case performance matters more than worst-case guarantees
+- Average-case performance is sufficient
 - Stability (preserving order of equal elements) is not required
-- Data is random or unpredictable
-
-**When to choose merge sort:**
-- Worst-case guarantees are essential
-- Stability is required (sorting objects with multiple fields)
-- Extra memory is available
-- Data is already partially sorted or has patterns
+- Working with random or unpredictable data
+- General-purpose sorting for large datasets
 
 Swift's standard library uses Introsort, which starts with Quicksort and switches to heapsort if recursion depth becomes excessive. This hybrid approach combines Quicksort's speed with guaranteed `O(n log n)` worst-case performance.
