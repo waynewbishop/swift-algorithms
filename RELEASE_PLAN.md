@@ -47,6 +47,127 @@
 
 ## 📋 Complete Action Plan
 
+### Step 0: Update Package READMEs (10 minutes)
+
+**IMPORTANT: Do this BEFORE creating releases. Requires final book URL.**
+
+Both package READMEs need updates to reference the published book.
+
+#### Structures Package README
+
+**File**: `/Users/waynebishop/Projects/bishop-algorithms-swift-package/README.md`
+
+**Current issues:**
+- Line 4: References old book URL `bishop-algorithms-book` (incorrect)
+- Line 83: Same outdated book link
+- Missing Swift Package Manager installation instructions
+- Missing reference to v1.0.0 release
+
+**Required updates:**
+1. Replace old book URL with final published URL
+2. Update "The Book" section (line 80-83) with new book details
+3. Add Swift Package Manager installation section
+4. Update Swift version to 5.9+ (currently mentions 5.9)
+5. Add link to GitHub release page
+
+**Template for updated section:**
+
+```markdown
+## 📚 The Book
+
+This package is featured in **Swift Algorithms & Data Structures** by Wayne Bishop.
+
+The book provides comprehensive coverage of:
+- All data structures in this package with detailed explanations
+- Performance analysis and Big O complexity
+- Real-world use cases and examples
+- Complete implementation walkthroughs
+
+**Read the book**: [FINAL_BOOK_URL_HERE]
+
+## 📦 Installation
+
+### Swift Package Manager
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/waynewbishop/bishop-algorithms-swift-package", from: "1.0.0")
+]
+```
+
+### In Xcode
+1. File → Add Package Dependencies
+2. Enter: `https://github.com/waynewbishop/bishop-algorithms-swift-package`
+3. Select version: `1.0.0`
+```
+
+---
+
+#### Quiver Package README
+
+**File**: `/Users/waynebishop/Projects/bishop-algorithms-quiver-package/README.md`
+
+**Current issues:**
+- No book reference at all
+- Should mention it's featured in Chapters 20-22
+
+**Required updates:**
+1. Add book reference section
+2. Mention specific chapters (20: Vectors, 21: Matrices, 22: Semantic Search)
+
+**Template for new section (add after "Documentation" section, line 56):**
+
+```markdown
+## 📚 Featured in Book
+
+This framework is featured in **Swift Algorithms & Data Structures** by Wayne Bishop:
+
+- **Chapter 20: Vector Mathematics** - Core vector operations and spatial calculations
+- **Chapter 21: Matrix Operations** - Matrix multiplication and transformations
+- **Chapter 22: Semantic Search** - Using vectors for AI/ML similarity search
+
+The book provides detailed tutorials on using Quiver for real-world applications including game physics, data visualization, and semantic search systems.
+
+**Read the book**: [FINAL_BOOK_URL_HERE]
+```
+
+---
+
+#### Commit Changes
+
+After updating both READMEs:
+
+```bash
+# Structures package
+cd /Users/waynebishop/Projects/bishop-algorithms-swift-package
+git add README.md
+git commit -m "Update README for v1.0.0 release
+
+- Updated book reference with published book URL
+- Added Swift Package Manager installation instructions
+- Corrected book URL from old bishop-algorithms-book repo
+- Added reference to v1.0.0 release
+
+Prepares README for v1.0.0 release."
+git push
+
+# Quiver package
+cd /Users/waynebishop/Projects/bishop-algorithms-quiver-package
+git add README.md
+git commit -m "Add book reference to README
+
+- Added 'Featured in Book' section
+- Referenced Chapters 20-22 coverage
+- Linked to published book
+
+Prepares README for use with v1.0.0 release."
+git push
+```
+
+**Note**: Complete this step BEFORE proceeding to Step 1. The v1.0.0 tags should include these README updates.
+
+---
+
 ### Step 1: Verify Current State (5 minutes)
 
 Run these commands to check what's changed since v0.5.2:
@@ -372,9 +493,22 @@ git push
 
 Use this checklist when executing the release:
 
+### Prerequisites (Before Starting)
+- [ ] Book images are added and complete
+- [ ] Final book URL is determined (GitHub Pages or custom domain)
+- [ ] Book is in publishable state
+
+### Step 0: Update Package READMEs
+- [ ] Determine final book URL (e.g., https://waynewbishop.github.io/swift-algorithms/)
+- [ ] Update Structures README (line 4, 83) with new book URL
+- [ ] Add SPM installation instructions to Structures README
+- [ ] Add "Featured in Book" section to Quiver README
+- [ ] Commit and push both README changes
+- [ ] Verify README renders correctly on GitHub
+
 ### Pre-Release Verification
 - [ ] Navigate to Structures package directory
-- [ ] Run `git status` (should be clean)
+- [ ] Run `git status` (should be clean - README already committed)
 - [ ] Run `swift test` (all tests pass)
 - [ ] Run `swift build` (builds successfully)
 - [ ] Check `git log v0.5.2..HEAD` to see if HEAD is ahead
@@ -454,16 +588,18 @@ Use this checklist when executing the release:
 **Prerequisites:**
 1. Book images are added (your final work)
 2. Book is in final publishable state
-3. You have 30-45 minutes uninterrupted time
+3. Final book URL is determined (GitHub Pages or custom domain)
+4. You have 50-60 minutes uninterrupted time
 
 **Execution order:**
-1. Run Step 1 (verification) - 5 minutes
-2. Run Step 2A or 2B (tagging) - 5 minutes
-3. Run Step 3 (GitHub release) - 15 minutes
-4. Run Step 4 (book docs) - 10 minutes
-5. Post-release verification - 5 minutes
+1. Run Step 0 (update package READMEs) - 10 minutes
+2. Run Step 1 (verification) - 5 minutes
+3. Run Step 2A or 2B (tagging) - 5 minutes
+4. Run Step 3 (GitHub release) - 15 minutes
+5. Run Step 4 (book docs) - 10 minutes
+6. Post-release verification - 5 minutes
 
-**Total time**: ~40 minutes
+**Total time**: ~50 minutes
 
 ---
 
