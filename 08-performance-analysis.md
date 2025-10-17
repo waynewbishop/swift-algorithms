@@ -65,41 +65,59 @@ func binarySearch<T: Comparable>(for target: T, in array: [T]) -> Int? {
 ```swift
 // Bubble sort: O(n²) - nested loops over array
 extension Array where Element: Comparable {
-    mutating func bubbleSort() {
-        for i in 0..<count {                    // n iterations
-            for j in 0..<(count - i - 1) {      // n iterations
-                if self[j] > self[j + 1] {
-                    swapAt(j, j + 1)
+    func bubbleSort() -> Array<Element> {
+        guard count > 1 else { return self }
+
+        var output: Array<Element> = self
+
+        for pindex in 0..<output.count {
+            let range = (output.count - 1) - pindex
+
+            for sindex in 0..<range {
+                let key = output[sindex]
+
+                if (key >= output[sindex + 1]) {
+                    output.swapAt(sindex, sindex + 1)
                 }
             }
         }
+
+        return output
     }
 }
 
 // Quicksort: O(n log n) average, O(n²) worst case
 extension Array where Element: Comparable {
-    mutating func quickSort() {
-        quickSortHelper(0, count - 1)
-    }
-
-    private mutating func quickSortHelper(_ low: Int, _ high: Int) {
-        guard low < high else { return }
-        let pivot = partition(low, high)
-        quickSortHelper(low, pivot - 1)
-        quickSortHelper(pivot + 1, high)
-    }
-
-    private mutating func partition(_ low: Int, _ high: Int) -> Int {
-        let pivot = self[high]
-        var i = low
-        for j in low..<high {
-            if self[j] <= pivot {
-                swapAt(i, j)
-                i += 1
+    mutating func quickSort() -> Array<Element> {
+        func qSort(start startIndex: Int, _ pivot: Int) {
+            if (startIndex < pivot) {
+                let iPivot = qPartition(start: startIndex, pivot)
+                qSort(start: startIndex, iPivot - 1)
+                qSort(start: iPivot + 1, pivot)
             }
         }
-        swapAt(i, high)
-        return i
+
+        qSort(start: 0, self.endIndex - 1)
+        return self
+    }
+
+    mutating func qPartition(start startIndex: Int, _ pivot: Int) -> Int {
+        var wallIndex: Int = startIndex
+
+        for currentIndex in wallIndex..<pivot {
+            if self[currentIndex] <= self[pivot] {
+                if wallIndex != currentIndex {
+                    self.swapAt(currentIndex, wallIndex)
+                }
+                wallIndex += 1
+            }
+        }
+
+        if wallIndex != pivot {
+            self.swapAt(wallIndex, pivot)
+        }
+
+        return wallIndex
     }
 }
 ```

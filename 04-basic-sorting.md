@@ -35,20 +35,20 @@ extension Array where Element: Comparable {
         //mutated copy
         var output: Array<Element> = self
 
-        for primaryIndex in 0..<output.count {
+        for primaryindex in 0..<output.count {
 
-            let key = output[primaryIndex]
-            var secondaryIndex = primaryIndex
+            let key = output[primaryindex]
+            var secondaryindex = primaryindex
 
-            while secondaryIndex > -1 {
-                if key < output[secondaryIndex] {
+            while secondaryindex > -1 {
+                if key < output[secondaryindex] {
 
                     //move to correct position
-                    output.remove(at: secondaryIndex + 1)
-                    output.insert(key, at: secondaryIndex)
+                    output.remove(at: secondaryindex + 1)
+                    output.insert(key, at: secondaryindex)
                 }
 
-                secondaryIndex -= 1
+                secondaryindex -= 1
             }
 
         }
@@ -79,18 +79,18 @@ extension Array where Element: Comparable {
         //mutated copy
         var output: Array<Element> = self
 
-        for primaryIndex in 0..<self.count {
+        for pindex in 0..<output.count {
 
-            let passes = (output.count - 1) - primaryIndex
+            let range = (output.count - 1) - pindex
 
             //"half-open" range operator
-            for secondaryIndex in 0..<passes {
+            for sindex in 0..<range {
 
-                let key = output[secondaryIndex]
+                let key = output[sindex]
 
                 //compare / swap positions
-                if (key > output[secondaryIndex + 1]) {
-                    output.swapAt(secondaryIndex, secondaryIndex + 1)
+                if (key >= output[sindex + 1]) {
+                    output.swapAt(sindex, sindex + 1)
                 }
             }
         }
@@ -121,23 +121,23 @@ extension Array where Element: Comparable {
         //mutated copy
         var output: Array<Element> = self
 
-        for primaryIndex in 0..<output.count {
+        for primaryindex in 0..<output.count {
 
-            var minimum = primaryIndex
-            var secondaryIndex = primaryIndex + 1
+            var minimum = primaryindex
+            var secondaryindex = primaryindex + 1
 
-            while secondaryIndex < output.count {
+            while secondaryindex < output.count {
                 //store lowest value as minimum
-                if output[minimum] > output[secondaryIndex] {
-                    minimum = secondaryIndex
+                if output[minimum] > output[secondaryindex] {
+                    minimum = secondaryindex
                 }
 
-                secondaryIndex += 1
+                secondaryindex += 1
             }
 
             //swap minimum value with array iteration
-            if primaryIndex != minimum {
-                output.swapAt(primaryIndex, minimum)
+            if primaryindex != minimum {
+                output.swapAt(primaryindex, minimum)
             }
 
         }
