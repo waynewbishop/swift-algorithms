@@ -53,7 +53,7 @@ Run these commands to check what's changed since v0.5.2:
 
 ```bash
 # Navigate to Structures package
-cd "/Users/waynebishop/Dropbox (Personal)/iPhone Development/Packages/Structures"
+cd "/Users/waynebishop/Projects/bishop-algorithms-swift-package"
 
 # Check current status
 git status
@@ -426,7 +426,7 @@ Use this checklist when executing the release:
 - **Book**: https://github.com/waynewbishop/swift-algorithms
 
 ### Package Locations
-- **Structures**: `/Users/waynebishop/Dropbox (Personal)/iPhone Development/Packages/Structures`
+- **Structures**: `/Users/waynebishop/Projects/bishop-algorithms-swift-package`
 - **Quiver**: `/Users/waynebishop/Projects/bishop-algorithms-quiver-package`
 - **Book**: `/Users/waynebishop/Projects/swift-algorithms`
 
