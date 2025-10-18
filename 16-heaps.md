@@ -9,7 +9,7 @@ Your iPhone is juggling dozens of tasks right now—downloading email, syncing H
 
 Beyond iOS itself, heaps power the algorithms that optimize your fitness data. Finding your top 10 fastest runs from thousands of workouts? Heap algorithm. Processing GPS points in time-stamped order during a run? Priority queue. Scheduling interval training alerts? Heap manages the timer queue. These operations need to maintain sorted order while constantly adding and removing items—exactly what heaps excel at.
 
-Heaps combine concepts from throughout this book. They use generic types (Chapter 7) with Comparable constraints, achieve O(log n) operations (Chapter 8), can be implemented as specialized queues (Chapter 10), and dramatically optimize graph algorithms like Dijkstra's (Chapter 13). The heap property—parent nodes are always more extreme than their children—creates a complete binary tree that's both simple to implement and remarkably efficient.
+Heaps combine concepts from throughout this book. They use generic types ([Chapter 7](07-generics.md)) with Comparable constraints, achieve O(log n) operations ([Chapter 8](08-performance-analysis.md)), can be implemented as specialized queues ([Chapter 10](10-stacks-and-queues.md)), and dramatically optimize graph algorithms like Dijkstra's ([Chapter 13](13-graphs.md)). The heap property—parent nodes are always more extreme than their children—creates a complete binary tree that's both simple to implement and remarkably efficient.
 
 In this chapter, we'll explore heap fundamentals and build a complete heap implementation in Swift.
 

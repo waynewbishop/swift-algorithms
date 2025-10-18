@@ -293,8 +293,8 @@ Tries demonstrate several important algorithmic concepts:
 
 1. **Space-Time Trade-offs**: Uses more memory to achieve faster prefix operations
 2. **Shared Structure**: Common prefixes are stored only once
-3. **Recursive Patterns**: Tree traversal follows recursive patterns from Chapter 6
-4. **Hash Table Integration**: Modern implementation uses hash tables (Chapter 15) for child storage
+3. **Recursive Patterns**: Tree traversal follows recursive patterns from [Chapter 6](06-recursion.md)
+4. **Hash Table Integration**: Modern implementation uses hash tables ([Chapter 15](15-hash-tables.md)) for child storage
 
 When to choose tries:
 - **Autocomplete systems** - Natural fit for prefix-based searches

@@ -42,7 +42,7 @@ iOS frameworks use graphs extensively. App dependencies form directed acyclic gr
 
 ## The vertex
 
-With our understanding of graphs in place, let's build a graph using [generics](https://en.wikipedia.org/wiki/Generic_programming) from Chapter 7. This allows the graph to work with any data type. Here's the data structure for a vertex:
+With our understanding of graphs in place, let's build a graph using [generics](https://en.wikipedia.org/wiki/Generic_programming) from [Chapter 7](07-generics.md). This allows the graph to work with any data type. Here's the data structure for a vertex:
 
 ```swift
 // Generic vertex with neighbors array and traversal tracking
@@ -139,7 +139,7 @@ Graph traversal is the process of visiting every vertex in a graph exactly once.
 
 ### Breadth-first search (BFS)
 
-Breadth-First Search explores all vertices at the current depth before moving to vertices at the next depth level. It uses a [queue](https://en.wikipedia.org/wiki/Queue_(abstract_data_type)) data structure from Chapter 10. Recall that queues maintain first-in, first-out (FIFO) ordering, which ensures we process vertices level by level:
+Breadth-First Search explores all vertices at the current depth before moving to vertices at the next depth level. It uses a [queue](https://en.wikipedia.org/wiki/Queue_(abstract_data_type)) data structure from [Chapter 10](10-stacks-and-queues.md). Recall that queues maintain first-in, first-out (FIFO) ordering, which ensures we process vertices level by level:
 
 ```swift
 // BFS traversal using queue for level-by-level exploration - O(V + E)

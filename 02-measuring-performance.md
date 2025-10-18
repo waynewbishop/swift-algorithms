@@ -29,13 +29,13 @@ The `O` stands for order of magnitude—it tells us the scale of how an algorith
 
 Some operations take the same amount of time regardless of data size. Accessing a specific array index is `O(1)`—whether your array has 10 items or 10 million items, getting `array[5]` is instant. The computer knows exactly where to find that position in memory.
 
-Think of it like using a bookmark in a book. Finding the bookmarked page takes the same amount of time whether the book has 100 pages or 1,000 pages—you just open to the bookmark. In a fitness app, looking up your profile settings works this way—whether you have 10 workouts logged or 10,000 workouts, accessing your preferred units (miles vs kilometers) is instant. [Hash table](https://en.wikipedia.org/wiki/Hash_table) lookups (Chapter 14) work this way: they jump directly to the answer without searching.
+Think of it like using a bookmark in a book. Finding the bookmarked page takes the same amount of time whether the book has 100 pages or 1,000 pages—you just open to the bookmark. In a fitness app, looking up your profile settings works this way—whether you have 10 workouts logged or 10,000 workouts, accessing your preferred units (miles vs kilometers) is instant. [Hash table](https://en.wikipedia.org/wiki/Hash_table) lookups ([Chapter 15](15-hash-tables.md)) work this way: they jump directly to the answer without searching.
 
 ## Logarithmic time
 
 [Binary search](https://en.wikipedia.org/wiki/Binary_search_algorithm) demonstrates logarithmic performance. Each comparison eliminates half the remaining possibilities. For 1,000 items, we need about 10 comparisons. For 1 million items, only about 20 comparisons. Doubling the data size only adds one more step.
 
-This halving pattern appears throughout computer science. When a running app finds your personal record 5K time from a sorted list of thousands of runs, it uses binary search—checking the middle run, then eliminating half the remaining data, repeatedly narrowing down to your PR. Balanced [binary search trees](https://en.wikipedia.org/wiki/Binary_search_tree) (Chapter 11) maintain `O(log n)` operations by keeping data organized in a way that allows cutting the search space in half repeatedly.
+This halving pattern appears throughout computer science. When a running app finds your personal record 5K time from a sorted list of thousands of runs, it uses binary search—checking the middle run, then eliminating half the remaining data, repeatedly narrowing down to your PR. Balanced [binary search trees](https://en.wikipedia.org/wiki/Binary_search_tree) ([Chapter 11](11-binary-search-trees.md)) maintain `O(log n)` operations by keeping data organized in a way that allows cutting the search space in half repeatedly.
 
 ## Linear time
 
@@ -43,15 +43,15 @@ When an algorithm must examine each element once, we call it linear time or `O(n
 
 If you wanted to find which workout had the highest average heart rate, and your workouts weren't organized by heart rate, you'd need to check every single workout. Double your workout count, double your search time. This is linear time in action.
 
-Linear time operations are sometimes called brute force because they make no assumptions about the data organization. They're often the simplest solution but not always the fastest. Chapter 3 explores searching, including when linear search is appropriate.
+Linear time operations are sometimes called brute force because they make no assumptions about the data organization. They're often the simplest solution but not always the fastest. [Chapter 3](03-basic-searching.md) explores searching, including when linear search is appropriate.
 
 ## Linearithmic time
 
-This pattern combines linear and logarithmic behavior. [Quicksort](https://en.wikipedia.org/wiki/Quicksort) (Chapter 5) demonstrates `O(n log n)` performance. It divides data recursively (the log n part) and processes each piece (the n part). This is often the best we can achieve for comparison-based sorting.
+This pattern combines linear and logarithmic behavior. [Quicksort](https://en.wikipedia.org/wiki/Quicksort) ([Chapter 5](05-advanced-sorting.md)) demonstrates `O(n log n)` performance. It divides data recursively (the log n part) and processes each piece (the n part). This is often the best we can achieve for comparison-based sorting.
 
 ## Quadratic time
 
-Nested loops often produce quadratic time complexity. Bubble sort, insertion sort, and selection sort (Chapter 4) all exhibit `O(n²)` behavior. The performance degrades dramatically: doubling the data size roughly quadruples the time. For 100 items, we might do 10,000 operations. For 1,000 items, about 1,000,000 operations.
+Nested loops often produce quadratic time complexity. Bubble sort, insertion sort, and selection sort ([Chapter 4](04-basic-sorting.md)) all exhibit `O(n²)` behavior. The performance degrades dramatically: doubling the data size roughly quadruples the time. For 100 items, we might do 10,000 operations. For 1,000 items, about 1,000,000 operations.
 
 Imagine comparing every workout to every other workout to find which pairs were run on the same day. For 100 workouts, that's 10,000 comparisons. For 1,000 workouts, it's 1,000,000 comparisons. Your app would freeze.
 
@@ -59,7 +59,7 @@ Quadratic algorithms work fine for small datasets but become impractical as data
 
 ## Exponential time
 
-Some algorithms' performance explodes exponentially. The naive recursive Fibonacci calculation (Chapter 16) demonstrates this—calculating fib(40) requires over a billion operations. These algorithms are typically unusable for n larger than about 30-40.
+Some algorithms' performance explodes exponentially. The naive recursive Fibonacci calculation ([Chapter 16](16-dynamic-programming.md)) demonstrates this—calculating fib(40) requires over a billion operations. These algorithms are typically unusable for n larger than about 30-40.
 
 ## Visualizing the difference
 
@@ -149,6 +149,6 @@ Starting with 2n + 2:
 
 The algorithm must examine each element once to find the maximum. Doubling the array size doubles the number of comparisons. This is the hallmark of linear time complexity.
 
-Whether you're analyzing 100 heart rate readings or 100,000, this algorithm's behavior is predictable: the time grows proportionally with your data. For finding a maximum value from unsorted data, `O(n)` is optimal—we can't avoid examining each value at least once. But as we'll see in Chapter 3, when data is organized differently (like sorted arrays), we can achieve better than `O(n)` performance for other operations.
+Whether you're analyzing 100 heart rate readings or 100,000, this algorithm's behavior is predictable: the time grows proportionally with your data. For finding a maximum value from unsorted data, `O(n)` is optimal—we can't avoid examining each value at least once. But as we'll see in [Chapter 3](03-basic-searching.md), when data is organized differently (like sorted arrays), we can achieve better than `O(n)` performance for other operations.
 
 Understanding Big O notation gives you the vocabulary to discuss performance and the framework to analyze your own code. With this foundation, we can now explore how different algorithms achieve different performance characteristics—starting with search algorithms in the next chapter.

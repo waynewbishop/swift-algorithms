@@ -13,9 +13,9 @@ It's time to formalize these observations. In [Chapter 2](02-measuring-performan
 
 ## Applying Big O to algorithms you know
 
-In Chapter 2, we learned that O(n) means linear time, O(log n) means logarithmic time, and O(n²) means quadratic time. Now let's apply this knowledge to every algorithm we've implemented.
+In [Chapter 2](02-measuring-performance.md), we learned that O(n) means linear time, O(log n) means logarithmic time, and O(n²) means quadratic time. Now let's apply this knowledge to every algorithm we've implemented.
 
-### Search algorithms from Chapter 3
+### Search algorithms from [Chapter 3](03-basic-searching.md)
 
 ```swift
 // Linear search: O(n) - must check every element in worst case
@@ -128,7 +128,7 @@ extension Array where Element: Comparable {
 
 **Quicksort:** Good pivot splits array in half (log n levels × n work per level) = O(n log n) average. Poor pivot creates unbalanced splits = O(n²) worst case. Space: O(log n) for recursion stack.
 
-### Recursive algorithms from Chapter 6
+### Recursive algorithms from [Chapter 6](06-recursion.md)
 
 ```swift
 // Naive Fibonacci: O(2^n) - exponentially slow
@@ -275,23 +275,23 @@ Use Xcode's Time Profiler (Product → Profile → Time Profiler) to find actual
 
 ## Looking back at the algorithms we've learned
 
-**Chapter 3: Searching**
+**[Chapter 3](03-basic-searching.md): Searching**
 - Linear search: O(n), binary search: O(log n)
 - Key insight: Sorted data enables logarithmic search
 
-**Chapter 4: Basic Sorting**
+**[Chapter 4](04-basic-sorting.md): Basic Sorting**
 - Bubble, insertion, selection sort: O(n²)
 - Key insight: Nested loops create quadratic complexity
 
-**Chapter 5: Advanced Sorting**
+**[Chapter 5](05-advanced-sorting.md): Advanced Sorting**
 - Quicksort: O(n log n) average
 - Key insight: Divide and conquer achieves linearithmic time
 
-**Chapter 6: Recursion**
+**[Chapter 6](06-recursion.md): Recursion**
 - Naive Fibonacci: O(2^n), memoized: O(n)
 - Key insight: Caching eliminates exponential duplicate work
 
-**Chapter 7: Generics**
+**[Chapter 7](07-generics.md): Generics**
 - Generics provide flexibility with zero runtime cost
 
 **Upcoming chapters:**

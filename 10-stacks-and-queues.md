@@ -13,7 +13,7 @@ In [Chapter 9](09-linked-lists.md), you built linked lists—collections where e
 
 Stacks reverse order—the last item added is first removed. This makes them perfect for undo/redo systems (track history, pop to undo), navigation (push views, pop to go back), and function call tracking (debugger shows call stack). iOS uses stacks extensively: `NavigationStack` maintains a view stack, the [responder chain](https://developer.apple.com/documentation/uikit/using-responders-and-the-responder-chain-to-handle-events) passes events through a stack, and sheet presentations form a stack.
 
-Queues preserve order—the first item added is first removed. This ensures fairness in task scheduling (process requests in order received), breadth-first graph traversal (Chapter 12 uses queues to explore graphs level-by-level), and buffering (network requests, print jobs, video frames). Foundation frameworks rely on queues: DispatchQueue schedules tasks, OperationQueue manages concurrent operations, and NotificationCenter posts notifications in order.
+Queues preserve order—the first item added is first removed. This ensures fairness in task scheduling (process requests in order received), breadth-first graph traversal ([Chapter 13](13-graphs.md) uses queues to explore graphs level-by-level), and buffering (network requests, print jobs, video frames). Foundation frameworks rely on queues: DispatchQueue schedules tasks, OperationQueue manages concurrent operations, and NotificationCenter posts notifications in order.
 
 | Use Stack When | Use Queue When |
 |----------------|----------------|
@@ -25,7 +25,7 @@ Queues preserve order—the first item added is first removed. This ensures fair
 
 ## The node structure
 
-Both stacks and queues use a simple singly-linked node structure. Unlike the doubly-linked `LLNode<T>` from Chapter 9 (which needs `previous` pointers for bidirectional traversal), stacks and queues only traverse in one direction:
+Both stacks and queues use a simple singly-linked node structure. Unlike the doubly-linked `LLNode<T>` from [Chapter 9](09-linked-lists.md) (which needs `previous` pointers for bidirectional traversal), stacks and queues only traverse in one direction:
 
 ```swift
 // Simple singly-linked node for stacks and queues

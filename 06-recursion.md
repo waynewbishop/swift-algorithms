@@ -139,7 +139,7 @@ printList(node1)  //prints: 1, 2, 3
 
 Notice how the structure (node pointing to node) perfectly matches the algorithm (process node, recurse on next node). This isn't coincidence—it's by design. The recursive structure enables recursive algorithms, which are often simpler than their iterative equivalents.
 
-This pattern appears throughout the data structures we'll build in upcoming chapters. In Chapter 9, we'll see how linked lists use this exact node-to-node pattern for insertion and deletion. Chapter 11 introduces binary search trees, where each node has two recursive references (left and right children), enabling elegant search, insertion, and traversal algorithms. Chapter 13 explores graphs, where vertices connect to other vertices through edges, creating networks that require recursive traversal algorithms like depth-first search. Chapter 14 covers tries, where each node contains a dictionary of child nodes, forming a tree structure optimized for string operations.
+This pattern appears throughout the data structures we'll build in upcoming chapters. In [Chapter 9](09-linked-lists.md), we'll see how linked lists use this exact node-to-node pattern for insertion and deletion. [Chapter 11](11-binary-search-trees.md) introduces binary search trees, where each node has two recursive references (left and right children), enabling elegant search, insertion, and traversal algorithms. [Chapter 13](13-graphs.md) explores graphs, where vertices connect to other vertices through edges, creating networks that require recursive traversal algorithms like depth-first search. [Chapter 14](14-tries.md) covers tries, where each node contains a dictionary of child nodes, forming a tree structure optimized for string operations.
 
 The key insight is that recursive structures don't just solve a technical problem—they provide a natural way to model hierarchical relationships and enable algorithms that mirror the structure itself. When we see `node.left` and `node.right` in a binary tree, we're not just seeing pointers—we're seeing a recursive definition that says "a tree is a node plus two smaller trees." This recursive thinking transforms complex problems into elegant solutions.
 
@@ -224,7 +224,7 @@ let result = fibonacciWithCounting(10, callCount: &calls)
 print("fibonacci(10) = \(result) required \(calls) function calls")
 ```
 
-This demonstrates why understanding algorithm complexity (from Chapter 2) is crucial when designing recursive solutions. The naive recursive approach runs in `O(2^n)` time, while the memoized version improves to `O(n)`.
+This demonstrates why understanding algorithm complexity (from [Chapter 2](02-measuring-performance.md)) is crucial when designing recursive solutions. The naive recursive approach runs in `O(2^n)` time, while the memoized version improves to `O(n)`.
 
 ## Optimizing recursion with memoization
 
@@ -340,7 +340,7 @@ func factorialTailRecursive(_ n: Int, accumulator: Int = 1) -> Int {
 
 ## When to use recursion
 
-Recursion is particularly well-suited for problems with naturally recursive structure. Tree traversals and graph searches become elegant when expressed recursively, as do divide and conquer algorithms like the quicksort we explored in Chapter 5. Mathematical sequences such as Fibonacci numbers, factorials, and combinatorics problems often have simple recursive definitions that mirror their mathematical formulas. Finally, recursion excels at processing nested data, whether parsing JSON, traversing file systems, or navigating nested arrays and dictionaries. The key is recognizing when a problem can be naturally decomposed into smaller instances of itself.
+Recursion is particularly well-suited for problems with naturally recursive structure. Tree traversals and graph searches become elegant when expressed recursively, as do divide and conquer algorithms like the quicksort we explored in [Chapter 5](05-advanced-sorting.md). Mathematical sequences such as Fibonacci numbers, factorials, and combinatorics problems often have simple recursive definitions that mirror their mathematical formulas. Finally, recursion excels at processing nested data, whether parsing JSON, traversing file systems, or navigating nested arrays and dictionaries. The key is recognizing when a problem can be naturally decomposed into smaller instances of itself.
 
 ## Recursion pitfalls to avoid
 
@@ -366,7 +366,7 @@ Very deep recursion can exhaust the call stack. Consider iterative alternatives 
 
 ## Looking ahead
 
-Understanding recursion is essential for the data structures we'll explore next. In Chapter 9, we'll see how linked lists use recursive insertion and deletion. Chapter 11 introduces binary search trees, where recursive tree operations become fundamental. Chapter 13 explores graphs with recursive traversal algorithms. Finally, Chapter 18 covers dynamic programming, which relies on recursive problem decomposition combined with memoization techniques. The recursive thinking patterns you learn here will make these advanced topics much more approachable.
+Understanding recursion is essential for the data structures we'll explore next. In [Chapter 9](09-linked-lists.md), we'll see how linked lists use recursive insertion and deletion. [Chapter 11](11-binary-search-trees.md) introduces binary search trees, where recursive tree operations become fundamental. [Chapter 13](13-graphs.md) explores graphs with recursive traversal algorithms. Finally, [Chapter 18](18-dynamic-programming.md) covers dynamic programming, which relies on recursive problem decomposition combined with memoization techniques. The recursive thinking patterns you learn here will make these advanced topics much more approachable.
 
 ## Building recursive intuition
 

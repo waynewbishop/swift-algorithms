@@ -68,10 +68,10 @@ The hash function transforms any string (workout date, exercise name, user ID) i
 
 ## Modern hash table implementation
 
-Our hash table implementation uses [generics](https://en.wikipedia.org/wiki/Generic_programming) from Chapter 7 and modern Swift patterns for type safety and performance. We'll start with the supporting structures:
+Our hash table implementation uses [generics](https://en.wikipedia.org/wiki/Generic_programming) from [Chapter 7](07-generics.md) and modern Swift patterns for type safety and performance. We'll start with the supporting structures:
 
 ```swift
-// Generic node for collision resolution via chaining (linked list from Chapter 9)
+// Generic node for collision resolution via chaining (linked list from [Chapter 9](09-linked-lists.md))
 public class HashNode<Key: Hashable, Value> {
     public let key: Key
     public var value: Value
@@ -190,7 +190,7 @@ extension HashTable {
 Any type can be used as a key by conforming to `Hashable`:
 
 ```swift
-// Example: Custom vertex type for graph algorithms (Chapter 13)
+// Example: Custom vertex type for graph algorithms ([Chapter 13](13-graphs.md))
 struct Vertex: Hashable {
     let id: String
     let coordinates: (x: Int, y: Int)
@@ -222,7 +222,7 @@ Our implementation uses Swift's robust hashing system which implements:
 
 ## Collision resolution strategies
 
-Even with excellent hash functions, collisions are inevitable. [Collisions](https://en.wikipedia.org/wiki/Hash_collision) occur when different keys map to the same index. Our implementation uses **separate chaining** with linked lists (Chapter 9) to handle these situations.
+Even with excellent hash functions, collisions are inevitable. [Collisions](https://en.wikipedia.org/wiki/Hash_collision) occur when different keys map to the same index. Our implementation uses **separate chaining** with linked lists ([Chapter 9](09-linked-lists.md)) to handle these situations.
 
 Consider what happens when two different workout names hash to the same bucket:
 

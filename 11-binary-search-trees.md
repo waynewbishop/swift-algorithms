@@ -13,7 +13,7 @@ A [binary search tree](https://en.wikipedia.org/wiki/Binary_search_tree) stores 
 
 ## The BST structure
 
-Here's the binary search tree structure. Using [generics](https://en.wikipedia.org/wiki/Generic_programming) from Chapter 7, it works with any comparable type:
+Here's the binary search tree structure. Using [generics](https://en.wikipedia.org/wiki/Generic_programming) from [Chapter 7](07-generics.md), it works with any comparable type:
 
 ```swift
 // Binary search tree node with left and right children
@@ -40,7 +40,7 @@ The tree organizes itself: 8 becomes the root, values less than 8 (2, 1, 7) filt
 
 ## Inserting elements
 
-The `append` method uses [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)) to find the correct insertion point. Recall from Chapter 6 how recursion simplifies tree operations—each child is another BST, so we recursively call `append` on the appropriate subtree:
+The `append` method uses [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)) to find the correct insertion point. Recall from [Chapter 6](06-recursion.md) how recursion simplifies tree operations—each child is another BST, so we recursively call `append` on the appropriate subtree:
 
 ```swift
 // Insert element into BST maintaining sort order - O(log n) average
@@ -111,7 +111,7 @@ func search(for value: T) -> Bool {
 }
 ```
 
-For a balanced tree with n elements, search examines only log₂(n) nodes. Searching 1,000 workout records requires about 10 comparisons. Searching 10,000 records requires about 14 comparisons. This matches the binary search from Chapter 3, but BSTs maintain this efficiency even as elements are added and removed—perfect for fitness apps where users constantly log new workouts while querying historical data.
+For a balanced tree with n elements, search examines only log₂(n) nodes. Searching 1,000 workout records requires about 10 comparisons. Searching 10,000 records requires about 14 comparisons. This matches the binary search from [Chapter 3](03-basic-searching.md), but BSTs maintain this efficiency even as elements are added and removed—perfect for fitness apps where users constantly log new workouts while querying historical data.
 
 ## Tree traversal
 
@@ -218,9 +218,9 @@ BST performance depends on tree balance. A balanced tree has roughly equal numbe
 
 **Why O(log n) for balanced trees?** Each comparison eliminates half the remaining nodes, just like binary search. A tree with 1,000 nodes has height ~10, requiring at most 10 comparisons.
 
-**Why O(n) for unbalanced trees?** If we insert sorted data [1, 2, 3, 4, 5], the tree degenerates into a linked list—every node has only a right child. Searching becomes linear, no better than traversing a linked list from Chapter 9.
+**Why O(n) for unbalanced trees?** If we insert sorted data [1, 2, 3, 4, 5], the tree degenerates into a linked list—every node has only a right child. Searching becomes linear, no better than traversing a linked list from [Chapter 9](09-linked-lists.md).
 
-This is why tree balancing (Chapter 12) is critical for production use. Balanced trees guarantee O(log n) performance regardless of insertion order.
+This is why tree balancing ([Chapter 12](12-tree-balancing.md)) is critical for production use. Balanced trees guarantee O(log n) performance regardless of insertion order.
 
 ## Real-world applications
 
@@ -232,7 +232,7 @@ Binary search trees power systems requiring fast search with dynamic updates:
 
 **Symbol tables:** Compilers use BSTs to store variables and their types during compilation. Fast lookup enables efficient semantic analysis.
 
-**Autocomplete systems:** Tries (Chapter 13) extend the BST concept to efficiently store and search strings, powering autocomplete in search engines.
+**Autocomplete systems:** Tries ([Chapter 14](14-tries.md)) extend the BST concept to efficiently store and search strings, powering autocomplete in search engines.
 
 **When to use BSTs:**
 - Need sorted data with dynamic inserts/deletes
@@ -241,6 +241,6 @@ Binary search trees power systems requiring fast search with dynamic updates:
 - Building more complex structures (tries, B-trees)
 
 **When to avoid BSTs:**
-- Need O(1) lookups (use hash tables from Chapter 14)
+- Need O(1) lookups (use hash tables from [Chapter 15](15-hash-tables.md))
 - Data rarely changes (use sorted array with binary search)
-- Can't guarantee balanced insertions (need AVL/Red-Black trees from Chapter 12)
+- Can't guarantee balanced insertions (need AVL/Red-Black trees from [Chapter 12](12-tree-balancing.md))
