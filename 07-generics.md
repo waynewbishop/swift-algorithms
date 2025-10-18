@@ -74,7 +74,7 @@ The `<T>` syntax defines a type parameter—a placeholder that gets replaced wit
 
 Every search and sorting algorithm from previous chapters uses generics. Let's examine what we've been writing.
 
-### Generic search from [Chapter 3](03-basic-searching.md)
+### Generic search from Chapter 3
 
 ```swift
 // Linear search works with any Equatable type
@@ -94,7 +94,7 @@ linearSearch(for: "Bob", in: ["Alice", "Bob", "Charlie"])
 
 The `<T: Equatable>` syntax defines a generic type parameter `T` that must conform to [Equatable](https://en.wikipedia.org/wiki/Relational_operator). This allows comparison with `==` while working with any type that supports equality.
 
-### Generic sorting from [Chapter 4](04-basic-sorting.md)
+### Generic sorting from Chapter 4
 
 ```swift
 // Bubble sort works with any Comparable type

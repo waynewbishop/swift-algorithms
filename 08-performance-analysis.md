@@ -15,7 +15,7 @@ It's time to formalize these observations. In [Chapter 2](02-measuring-performan
 
 In [Chapter 2](02-measuring-performance.md), we learned that O(n) means linear time, O(log n) means logarithmic time, and O(n²) means quadratic time. Now let's apply this knowledge to every algorithm we've implemented.
 
-### Search algorithms from [Chapter 3](03-basic-searching.md)
+### Search algorithms from Chapter 3
 
 ```swift
 // Linear search: O(n) - must check every element in worst case
@@ -128,7 +128,7 @@ extension Array where Element: Comparable {
 
 **Quicksort:** Good pivot splits array in half (log n levels × n work per level) = O(n log n) average. Poor pivot creates unbalanced splits = O(n²) worst case. Space: O(log n) for recursion stack.
 
-### Recursive algorithms from [Chapter 6](06-recursion.md)
+### Recursive algorithms from Chapter 6
 
 ```swift
 // Naive Fibonacci: O(2^n) - exponentially slow
