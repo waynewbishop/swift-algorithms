@@ -100,7 +100,7 @@ let jogging = embeddings["jogging"]!
 let shoes = embeddings["shoes"]!
 let sneakers = embeddings["sneakers"]!
 
-// Measure similarity using Quiver's cosineOfAngle (from [Chapter 20: Vectors](20-vectors.md))
+// Measure similarity using Quiver's cosineOfAngle (from Chapter 20: Vectors)
 running.cosineOfAngle(with: jogging)     // ~0.78 (both athletic activities)
 shoes.cosineOfAngle(with: sneakers)      // ~0.82 (both footwear)
 running.cosineOfAngle(with: shoes)       // ~0.45 (related: running shoes)

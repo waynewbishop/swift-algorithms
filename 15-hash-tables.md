@@ -71,7 +71,7 @@ The hash function transforms any string (workout date, exercise name, user ID) i
 Our hash table implementation uses [generics](https://en.wikipedia.org/wiki/Generic_programming) from [Chapter 7](07-generics.md) and modern Swift patterns for type safety and performance. We'll start with the supporting structures:
 
 ```swift
-// Generic node for collision resolution via chaining (linked list from [Chapter 9](09-linked-lists.md))
+// Generic node for collision resolution via chaining (linked list from Chapter 9)
 public class HashNode<Key: Hashable, Value> {
     public let key: Key
     public var value: Value
@@ -190,7 +190,7 @@ extension HashTable {
 Any type can be used as a key by conforming to `Hashable`:
 
 ```swift
-// Example: Custom vertex type for graph algorithms ([Chapter 13](13-graphs.md))
+// Example: Custom vertex type for graph algorithms (Chapter 13)
 struct Vertex: Hashable {
     let id: String
     let coordinates: (x: Int, y: Int)
