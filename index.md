@@ -40,7 +40,7 @@ All substantive content decisions remain with the author to maintain pedagogical
 ## Related Projects
 
 - [Quiver Package](https://github.com/waynewbishop/bishop-algorithms-quiver-package) - A Swift package that provides vector mathematics, numerical computing, and statistical operations.
-- [Structures Package](https://github.com/waynewbishop/bishop-algorithms-structures) - Examples of commonly used algorithms and data structures in Swift Package format.
+- [Structures Package](https://github.com/waynewbishop/bishop-algorithms-swift-package) - Examples of commonly used algorithms and data structures in Swift Package format.
 
 ## About the Author
 
