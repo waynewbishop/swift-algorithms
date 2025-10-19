@@ -1,155 +1,850 @@
 ---
 ---
 
-@import "{{ site.theme }}";
+/* ========================================
+   Apple Developer Documentation Theme
+   ======================================== */
 
-/* Import JetBrains Mono font */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+/* CSS Variables */
+:root {
+  /* Colors - Apple Developer Palette */
+  --color-text-primary: #1d1d1f;
+  --color-text-secondary: #6e6e73;
+  --color-text-tertiary: #86868b;
+  --color-link: #0066cc;
+  --color-link-hover: #0077ed;
+  --color-border: #d2d2d7;
+  --color-background: #ffffff;
+  --color-background-secondary: #f5f5f7;
+  --color-sidebar: #fafafa;
+  --color-code-bg: #f7f7f7;
+  --color-code-text: #1d1d1f;
+  --color-keyword: #ad3da4;
+  --color-string: #d12f1b;
+  --color-number: #272ad8;
+  --color-comment: #6e6e73;
 
-/* Body text - matches DocC articles */
+  /* Typography */
+  --font-family-base: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-family-mono: "SF Mono", Monaco, Menlo, Consolas, "Courier New", monospace;
+
+  /* Spacing */
+  --sidebar-width: 260px;
+  --header-height: 52px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-medium: 250ms ease;
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif !important;
-  font-size: 17px !important;
-  line-height: 1.47 !important;
-  font-weight: 400 !important;
-  letter-spacing: 0 !important;
-  color: #424245 !important;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family-base);
+  font-size: 17px;
+  line-height: 1.47059;
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
 }
 
-/* Headings */
+/* ========================================
+   Layout Container
+   ======================================== */
+
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: var(--sidebar-width);
+  min-width: 0;
+}
+
+/* ========================================
+   Sidebar
+   ======================================== */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  background-color: var(--color-sidebar);
+  border-right: 1px solid var(--color-border);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
+
+.sidebar-header {
+  padding: var(--spacing-lg) var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sidebar-title {
+  text-decoration: none;
+  color: var(--color-text-primary);
+  display: block;
+}
+
+.sidebar-title-main {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.33;
+  letter-spacing: -0.01em;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: var(--spacing-md) 0;
+}
+
+.nav-section {
+  margin-bottom: var(--spacing-xl);
+}
+
+.nav-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-sm) 0;
+  padding: 0 var(--spacing-md);
+}
+
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-item {
+  margin: 0;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 6px var(--spacing-md);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  font-size: 15px;
+  line-height: 1.47059;
+  transition: background-color var(--transition-fast);
+  border-left: 3px solid transparent;
+}
+
+.nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.nav-link.active {
+  background-color: rgba(0, 102, 204, 0.08);
+  border-left-color: var(--color-link);
+  font-weight: 500;
+}
+
+.nav-link-external {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.external-icon {
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.nav-section-resources {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.sidebar-footer {
+  padding: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+  margin-top: auto;
+}
+
+.sidebar-author {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+.sidebar-links {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.sidebar-link {
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.sidebar-link:hover {
+  color: var(--color-link);
+}
+
+/* ========================================
+   Header
+   ======================================== */
+
+.main-header {
+  position: sticky;
+  top: 0;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-lg);
+  background-color: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 50;
+}
+
+.sidebar-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color var(--transition-fast);
+}
+
+.sidebar-toggle:hover {
+  background-color: var(--color-background-secondary);
+}
+
+.header-breadcrumb {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 13px;
+  overflow: hidden;
+}
+
+.breadcrumb-home {
+  color: var(--color-link);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.breadcrumb-home:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-separator {
+  color: var(--color-text-tertiary);
+}
+
+.breadcrumb-current {
+  color: var(--color-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.header-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--color-text-secondary);
+  border-radius: 6px;
+  transition: all var(--transition-fast);
+}
+
+.header-action:hover {
+  background-color: var(--color-background-secondary);
+  color: var(--color-text-primary);
+}
+
+/* ========================================
+   Main Content
+   ======================================== */
+
+.main-content {
+  flex: 1;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: var(--spacing-2xl) var(--spacing-lg);
+  width: 100%;
+}
+
+.home-content,
+.chapter-content {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
+   Typography
+   ======================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 var(--spacing-md) 0;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+}
+
 h1 {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif !important;
-  font-size: 40px !important;
-  font-weight: 700 !important;
-  line-height: 1.1 !important;
-  letter-spacing: -0.003em !important;
-  color: #1d1d1f !important;
-}
-
-/* Subtitle text (first paragraph after h1) */
-h1 + p {
-  font-size: 21px !important;
-  line-height: 1.381 !important;
-  font-weight: 400 !important;
-  color: #86868b !important;
-  margin-top: 0.5em !important;
+  font-size: 40px;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  margin-bottom: var(--spacing-lg);
 }
 
 h2 {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif !important;
-  font-size: 32px !important;
-  font-weight: 600 !important;
-  line-height: 1.125 !important;
-  letter-spacing: -0.009em !important;
-  color: #1d1d1f !important;
+  font-size: 28px;
+  line-height: 1.14286;
+  margin-top: var(--spacing-2xl);
+  margin-bottom: var(--spacing-md);
 }
 
 h3 {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif !important;
-  font-size: 24px !important;
-  font-weight: 600 !important;
-  line-height: 1.167 !important;
-  letter-spacing: -0.019em !important;
-  color: #1d1d1f !important;
+  font-size: 22px;
+  line-height: 1.18182;
+  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-md);
 }
 
-h4, h5, h6 {
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif !important;
-  color: #1d1d1f !important;
+h4 {
+  font-size: 20px;
+  line-height: 1.19048;
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-sm);
 }
 
-/* Code and monospace */
-code, pre {
-  font-family: "JetBrains Mono", Menlo, "Roboto Mono", Inconsolata, Monaco, "Courier New", monospace !important;
-  font-size: 14.5px !important;
-  line-height: 1.6 !important;
-  font-weight: 400 !important;
-  color: #1d1d1f !important;
+p {
+  margin: 0 0 var(--spacing-md) 0;
+  line-height: 1.47059;
 }
 
-/* Code blocks - Clean minimal style */
-pre {
-  background-color: #f5f5f7 !important;
-  border: none !important;
-  border-radius: 8px !important;
-  padding: 16px !important;
-  overflow-x: auto !important;
+a {
+  color: var(--color-link);
+  text-decoration: none;
 }
 
-pre code {
-  background: transparent !important;
-  padding: 0 !important;
-  color: #1d1d1f !important;
+a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 600;
+}
+
+ul, ol {
+  margin: 0 0 var(--spacing-md) 0;
+  padding-left: var(--spacing-lg);
+}
+
+li {
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.47059;
+}
+
+blockquote {
+  margin: var(--spacing-lg) 0;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-left: 4px solid var(--color-border);
+  background-color: var(--color-background-secondary);
+  color: var(--color-text-secondary);
+}
+
+/* ========================================
+   Code - Apple Style with Tight Spacing
+   ======================================== */
+
+code {
+  font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.85em;
+  font-weight: 400;
+  color: var(--color-code-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Inline code */
-code {
-  background-color: #f5f5f7 !important;
-  padding: 2px 6px !important;
-  border-radius: 4px !important;
-  font-size: 1em !important;
-  color: #1d1d1f !important;
+:not(pre) > code {
+  background-color: var(--color-code-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
 }
 
-/* Syntax highlighting - minimal with purple keywords */
-.highlight .k, .highlight .kd, .highlight .kt { color: #ad3da4 !important; font-weight: 400 !important; }
-.highlight .s, .highlight .s1, .highlight .s2 { color: #1d1d1f !important; }
-.highlight .n, .highlight .nf, .highlight .nc { color: #1d1d1f !important; }
-.highlight .o, .highlight .p { color: #1d1d1f !important; }
-.highlight .c, .highlight .c1, .highlight .cm { color: #6e6e73 !important; font-style: italic !important; }
+/* Code blocks */
+pre {
+  background-color: var(--color-code-bg);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin: var(--spacing-lg) 0;
+  overflow-x: auto;
+  line-height: 1.5;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
 
-/* Top navigation - home button */
+pre code {
+  background: none;
+  padding: 0;
+  margin: 0;
+  font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 14.5px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: block;
+}
+
+/* Remove extra spacing from syntax highlighted lines */
+.highlight pre {
+  margin: var(--spacing-lg) 0;
+}
+
+.highlight pre code {
+  line-height: 1.5;
+}
+
+.highlight .highlight {
+  background: transparent;
+}
+
+/* Ensure no extra spacing on code lines */
+pre code .line,
+pre code > span {
+  display: inline;
+  line-height: 1.5;
+}
+
+/* ========================================
+   Syntax Highlighting - Apple Colors
+   ======================================== */
+
+/* Keywords (extension, func, for, if, return, struct, var, let, private, etc.) */
+.highlight .k,
+.highlight .kd,
+.highlight .kt,
+.highlight .kn,
+.highlight .kp,
+.highlight .kr {
+  color: #ad3da4;
+  font-weight: 400;
+}
+
+/* Types and Classes (Array, Element, Scene, Int, String, etc.) */
+.highlight .nc,
+.highlight .nb,
+.highlight .bp {
+  color: #0068d6;
+  font-weight: 400;
+}
+
+/* Strings */
+.highlight .s,
+.highlight .s1,
+.highlight .s2,
+.highlight .sb,
+.highlight .sc,
+.highlight .sd,
+.highlight .sh,
+.highlight .si,
+.highlight .sx {
+  color: #d12f1b;
+  font-weight: 400;
+}
+
+/* Numbers */
+.highlight .m,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .mo {
+  color: #0068d6;
+  font-weight: 400;
+}
+
+/* Comments */
+.highlight .c,
+.highlight .c1,
+.highlight .cm,
+.highlight .cp,
+.highlight .cs {
+  color: #6C7986;
+  font-weight: 400;
+}
+
+/* Function names */
+.highlight .nf {
+  color: #1d1d1f;
+  font-weight: 400;
+}
+
+/* Variables and identifiers */
+.highlight .n,
+.highlight .nv,
+.highlight .vi,
+.highlight .vg {
+  color: #1d1d1f;
+  font-weight: 400;
+}
+
+/* Operators and punctuation */
+.highlight .o,
+.highlight .p {
+  color: #1d1d1f;
+  font-weight: 400;
+}
+
+/* Jekyll syntax highlighting wrapper */
+.highlight {
+  background-color: var(--color-code-bg);
+  border-radius: 12px;
+}
+
+.highlight pre {
+  background-color: transparent;
+  border: none;
+}
+
+/* ========================================
+   Tables
+   ======================================== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--spacing-lg) 0;
+  font-size: 15px;
+}
+
+thead {
+  background-color: var(--color-background-secondary);
+}
+
+th {
+  text-align: left;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-weight: 600;
+  border-bottom: 2px solid var(--color-border);
+}
+
+td {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* ========================================
+   Chapter Navigation
+   ======================================== */
+
 .top-nav {
-  margin-bottom: 30px !important;
-  padding-bottom: 15px !important;
-  border-bottom: 1px solid #e5e5e5 !important;
+  margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .top-nav a {
-  color: #007aff !important;
-  text-decoration: none !important;
-  font-size: 15px !important;
-  padding: 8px 16px !important;
-  border-radius: 6px !important;
-  transition: background-color 0.2s !important;
-  display: inline-block !important;
+  font-size: 14px;
+  color: var(--color-link);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
 }
 
 .top-nav a:hover {
-  background-color: #f5f5f7 !important;
+  text-decoration: underline;
 }
 
-.top-nav a::before {
-  content: "← " !important;
+/* Hide Table of Contents link on desktop - sidebar provides navigation */
+@media (min-width: 1025px) {
+  .top-nav {
+    display: none;
+  }
 }
 
-/* Chapter navigation - bottom pagination */
 .chapter-nav {
-  margin-top: 60px !important;
-  padding-top: 30px !important;
-  border-top: 1px solid #e5e5e5 !important;
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  font-size: 16px !important;
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-2xl);
+  padding-top: var(--spacing-xl);
+  border-top: 1px solid var(--color-border);
+  gap: var(--spacing-md);
 }
 
 .chapter-nav a {
-  color: #007aff !important;
-  text-decoration: none !important;
-  padding: 10px 20px !important;
-  border-radius: 6px !important;
-  transition: background-color 0.2s !important;
+  padding: var(--spacing-md);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: background-color var(--transition-fast);
+  text-align: left;
+}
+
+.chapter-nav-next {
+  text-align: right;
 }
 
 .chapter-nav a:hover {
-  background-color: #f5f5f7 !important;
+  background-color: var(--color-background-secondary);
+  text-decoration: none;
 }
 
-.chapter-nav .prev::before {
-  content: "← " !important;
+.chapter-nav a strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 15px;
+  color: var(--color-text-primary);
 }
 
-.chapter-nav .next::after {
-  content: " →" !important;
+/* ========================================
+   Footer
+   ======================================== */
+
+.main-footer {
+  margin-top: auto;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  text-align: center;
+}
+
+.main-footer p {
+  margin: var(--spacing-xs) 0;
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+@media (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform var(--transition-medium);
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  .main-wrapper {
+    margin-left: 0;
+  }
+
+  .sidebar-toggle {
+    display: flex;
+  }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 99;
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --header-height: 48px;
+  }
+
+  .main-content {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  h1 {
+    font-size: 36px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+
+  .chapter-nav {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  pre {
+    margin-left: calc(-1 * var(--spacing-md));
+    margin-right: calc(-1 * var(--spacing-md));
+    border-radius: 0;
+  }
+}
+
+/* ========================================
+   Print Styles
+   ======================================== */
+
+@media print {
+  .sidebar,
+  .main-header,
+  .chapter-nav,
+  .top-nav,
+  .main-footer {
+    display: none;
+  }
+
+  .main-wrapper {
+    margin-left: 0;
+  }
+
+  .main-content {
+    max-width: 100%;
+  }
+
+  a {
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+
+  pre {
+    border: 1px solid var(--color-border);
+    page-break-inside: avoid;
+  }
+}
+
+/* ========================================
+   Dark Mode
+   ======================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark mode colors */
+    --color-text-primary: #f5f5f7;
+    --color-text-secondary: #a1a1a6;
+    --color-text-tertiary: #86868b;
+    --color-link: #2997ff;
+    --color-link-hover: #409cff;
+    --color-border: #38383a;
+    --color-background: #000000;
+    --color-background-secondary: #1c1c1e;
+    --color-sidebar: #161616;
+    --color-code-bg: #1c1c1e;
+    --color-code-text: #f5f5f7;
+    --color-keyword: #ff7ab2;
+    --color-string: #ff8170;
+    --color-number: #d9c97c;
+    --color-comment: #6c7986;
+  }
+
+  .main-header {
+    background-color: rgba(0, 0, 0, 0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+
+  .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .nav-link.active {
+    background-color: rgba(41, 151, 255, 0.15);
+  }
+
+  .header-action:hover {
+    background-color: var(--color-background-secondary);
+  }
+
+  .sidebar-toggle:hover {
+    background-color: var(--color-background-secondary);
+  }
+
+  pre {
+    border: 1px solid var(--color-border);
+  }
+
+  /* Default code text, operators, and punctuation - white in dark mode */
+  .highlight .n,
+  .highlight .nf,
+  .highlight .nv,
+  .highlight .vi,
+  .highlight .vg,
+  .highlight .o,
+  .highlight .p,
+  .highlight pre code {
+    color: #ffffff;
+  }
 }

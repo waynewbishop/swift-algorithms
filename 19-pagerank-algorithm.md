@@ -1,17 +1,15 @@
 ---
 layout: chapter
-title: "Chapter 18: PageRank Algorithm"
+title: "Chapter 19: PageRank Algorithm"
 description: "Implement Google's PageRank in Swift"
 ---
+# PageRank
 
-<div class="top-nav">
-  <a href="index">Table of Contents</a>
-</div>
+The [PageRank](https://en.wikipedia.org/wiki/PageRank) algorithm stands as one of the most influential algorithms in modern computing, powering the original Google search engine and fundamentally changing how we navigate information. Conceived at Stanford University in 1996 by Larry Page and Sergey Brin, PageRank introduced a revolutionary approach to determining web page importance through mathematical modeling of human browsing behavior.
 
+PageRank synthesizes concepts from throughout this book. It builds on graph structures from [Chapter 13](13-graphs), using vertices and edges to model web pages and links. The iterative computation mirrors the tabulation approach from dynamic programming ([Chapter 18](18-dynamic-programming)), repeatedly refining estimates until convergence. Generic types from [Chapter 7](07-generics) allow PageRank to work with any vertex data, while performance analysis from [Chapter 8](08-performance-analysis) reveals `O(V + E)` complexity per iteration. Hash table lookups from [Chapter 15](15-hash-tables) enable efficient vertex finding in the canvas array. Even recursion patterns from [Chapter 6](06-recursion) appear in the authority distribution calculations that flow through the graph.
 
-# PageRank algorithm
-
-The PageRank algorithm stands as one of the most influential algorithms in modern computing, powering the original Google search engine and fundamentally changing how we navigate information. Conceived at Stanford University in 1996 by Larry Page and Sergey Brin, PageRank introduced a revolutionary approach to determining web page importance through mathematical modeling of human browsing behavior. In this chapter, we'll explore how PageRank works, implement an educational version in Swift, and understand its broader applications beyond search engines.
+In this chapter, we'll explore how PageRank works, implement an educational version in Swift, and understand its broader applications beyond search engines.
 
 ## Understanding PageRank
 
@@ -33,11 +31,11 @@ This probabilistic approach captures something profound about web browsing: impo
 
 ### From web pages to graph theory
 
-The beauty of PageRank lies in how it transforms the abstract concept of web importance into concrete graph theory:
+The beauty of PageRank lies in how it transforms the abstract concept of web importance into concrete [graph](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)) theory:
 
 **Web Structure as a Directed Graph:**
-- Vertices: Web pages
-- Edges: Hyperlinks between pages
+- [Vertices](https://en.wikipedia.org/wiki/Vertex_(graph_theory)): Web pages
+- [Edges](https://en.wikipedia.org/wiki/Glossary_of_graph_theory#edge): Hyperlinks between pages
 - Direction: Links point from source page to destination page
 
 ```swift
@@ -47,7 +45,6 @@ The beauty of PageRank lies in how it transforms the abstract concept of web imp
 // Page C links to page A
 ```
 
-[diagram: Graph showing page link structure between A, B, and C]
 
 This mathematical representation allows us to apply rigorous algorithms to measure page importance based on link structure.
 
@@ -189,9 +186,10 @@ Let's implement an educational PageRank algorithm that demonstrates core concept
 
 ### Graph structure design
 
-Our implementation builds on the graph structures from Chapter 11, extending vertices to support PageRank calculations:
+Our implementation builds on the graph structures from [Chapter 13](13-graphs), extending vertices to support PageRank calculations:
 
 ```swift
+// Generic vertex with PageRank history array - stores rank across iterations
 // Enhanced Vertex class for PageRank
 public class Vertex<T>: Equatable {
     var tvalue: T?
@@ -223,6 +221,7 @@ public class Vertex<T>: Equatable {
 Here's our educational PageRank implementation with sink node handling:
 
 ```swift
+// Educational PageRank with sink node handling - 3 fixed iterations O(V + E)
 extension Graph {
     public func processPageRankWithSink() {
         // Starting rank: equal probability for all pages
@@ -420,451 +419,3 @@ func hasConverged() -> Bool {
 ```
 
 **The Damping Factor:** Google's original PageRank includes a damping factor (typically 0.85) that models the probability that a random surfer continues clicking links versus starting fresh at a random page. This improves stability and reflects more realistic browsing behavior.
-
-## Real-world applications
-
-PageRank's influence extends far beyond search engines, providing a general framework for measuring importance in networked systems.
-
-### Search engines and ranking
-
-```swift
-// Simplified search ranking integration
-struct SearchResult {
-    let page: Vertex<String>
-    let contentScore: Float      // Based on keyword relevance
-    let pageRankScore: Float     // Based on link authority
-
-    var totalScore: Float {
-        // Combine content relevance with link authority
-        return contentScore * 0.6 + pageRankScore * 0.4
-    }
-}
-
-func rankSearchResults(_ results: [SearchResult]) -> [SearchResult] {
-    return results.sorted { $0.totalScore > $1.totalScore }
-}
-```
-
-Modern search engines use PageRank as one signal among hundreds, but it remains fundamental to understanding web page authority.
-
-### Social network analysis
-
-PageRank adapts naturally to social networks for influence measurement:
-
-```swift
-// Social network PageRank application
-class SocialInfluenceAnalyzer {
-    private var socialGraph = Graph<String>()
-
-    func addConnection(from follower: String, to influencer: String) {
-        let followerVertex = findOrCreateVertex(follower)
-        let influencerVertex = findOrCreateVertex(influencer)
-
-        // Social connections represent endorsement/attention flow
-        socialGraph.addEdge(source: followerVertex,
-                          neighbor: influencerVertex,
-                          weight: 1)
-    }
-
-    func calculateInfluenceScores() {
-        socialGraph.processPageRankWithSink()
-
-        // Higher PageRank indicates greater social influence
-        for vertex in socialGraph.canvas {
-            if let finalRank = vertex.rank.last {
-                print("\(vertex.tvalue!) influence score: \(finalRank)")
-            }
-        }
-    }
-}
-```
-
-### Recommendation systems
-
-PageRank can power recommendation engines by modeling user interest flow:
-
-```swift
-// Product recommendation using PageRank
-class ProductRecommendationEngine {
-    private var productGraph = Graph<String>()
-
-    func addPurchaseConnection(from product1: String, to product2: String) {
-        // "Users who bought X also bought Y"
-        let sourceProduct = findOrCreateVertex(product1)
-        let targetProduct = findOrCreateVertex(product2)
-
-        productGraph.addEdge(source: sourceProduct,
-                           neighbor: targetProduct,
-                           weight: 1)
-    }
-
-    func getRecommendations(for user: [String]) -> [String] {
-        productGraph.processPageRankWithSink()
-
-        // Rank all products by PageRank score
-        let rankedProducts = productGraph.canvas
-            .sorted { $0.rank.last! > $1.rank.last! }
-            .compactMap { $0.tvalue }
-            .filter { !user.contains($0) }  // Exclude already purchased
-
-        return Array(rankedProducts.prefix(5))  // Top 5 recommendations
-    }
-}
-```
-
-### Academic citation networks
-
-PageRank measures academic paper importance through citation analysis:
-
-```swift
-// Academic paper ranking
-struct AcademicPaper {
-    let title: String
-    let authors: [String]
-    let year: Int
-    var citationScore: Float = 0.0
-}
-
-class CitationAnalyzer {
-    private var citationGraph = Graph<AcademicPaper>()
-
-    func addCitation(from citing: AcademicPaper, to cited: AcademicPaper) {
-        let citingVertex = findOrCreateVertex(citing)
-        let citedVertex = findOrCreateVertex(cited)
-
-        // Citations flow authority from citing paper to cited paper
-        citationGraph.addEdge(source: citingVertex,
-                            neighbor: citedVertex,
-                            weight: 1)
-    }
-
-    func calculatePaperImportance() {
-        citationGraph.processPageRankWithSink()
-
-        // Update paper importance scores
-        for vertex in citationGraph.canvas {
-            if let paper = vertex.tvalue,
-               let importance = vertex.rank.last {
-                vertex.tvalue?.citationScore = importance
-                print("\(paper.title): \(importance)")
-            }
-        }
-    }
-}
-```
-
-## Performance analysis
-
-### Time complexity
-
-**Our Educational Implementation:**
-- Initialization: O(V) where V is the number of vertices
-- **Each iteration**: O(V + E) where E is the number of edges
-- **Total time**: O(k × (V + E)) where k is the number of iterations
-- **Fixed iterations**: O(V + E) since k = 3 is constant
-
-**Production PageRank:**
-- **Convergence-based**: O(i × (V + E)) where i is iterations until convergence
-- **Large graphs**: i typically ranges from 50-100 iterations
-- Optimization: Sparse matrix operations reduce effective complexity
-
-### Space complexity
-
-**Memory Requirements:**
-- **Vertex storage**: O(V) for storing PageRank values
-- **Edge storage**: O(E) for graph representation
-- **Iteration history**: O(k × V) for debugging and analysis
-- **Total space**: O(V + E + k × V) = O(V + E) for fixed k
-
-**Optimization Opportunities:**
-```swift
-// Memory optimization for large graphs
-class OptimizedPageRank {
-    private var currentRanks: [Float]
-    private var nextRanks: [Float]
-
-    // Only store current and next iteration values
-    // Reduces memory from O(k × V) to O(V)
-    func optimizedPageRank() {
-        while !hasConverged() {
-            calculateNextIteration()
-            swapRankArrays()  // Reuse memory
-        }
-    }
-}
-```
-
-### Comparison with other centrality measures
-
-| Algorithm | Time Complexity | Best Use Case | Implementation Complexity |
-|-----------|-----------------|---------------|---------------------------|
-| PageRank | O(k × (V + E)) | Web-scale networks | Medium |
-| Betweenness Centrality | O(V³) | Social network analysis | High |
-| Closeness Centrality | O(V²) | Small networks | Low |
-| Degree Centrality | O(V + E) | Quick influence estimates | Very Low |
-
-**PageRank Advantages:**
-- Scales to massive networks (billions of pages)
-- Considers global graph structure
-- Robust against manipulation attempts
-- Well-studied mathematical properties
-
-## Building algorithmic intuition
-
-### PageRank design patterns
-
-Understanding when and how to apply PageRank concepts:
-
-#### 1. Authority flow modeling
-```swift
-// Pattern: Model how influence/authority flows through networks
-protocol AuthorityFlowNetwork {
-    associatedtype Node
-
-    func distributeAuthority(from source: Node,
-                           to destinations: [Node],
-                           amount: Float)
-    func calculateFinalAuthority() -> [Node: Float]
-}
-```
-
-#### 2. Importance through consensus
-```swift
-// Pattern: Measure importance through collective endorsement
-func consensusBasedRanking<T>(_ graph: Graph<T>) -> [T: Float] {
-    // Important items are those endorsed by other important items
-    graph.processPageRankWithSink()
-    return extractRankings(from: graph)
-}
-```
-
-#### 3. Iterative refinement
-```swift
-// Pattern: Iteratively improve estimates until convergence
-func iterativeRefinement(initialEstimate: [Float],
-                        refinementFunction: ([Float]) -> [Float]) -> [Float] {
-    var current = initialEstimate
-    var iterations = 0
-
-    repeat {
-        let next = refinementFunction(current)
-        if hasConverged(current, next) { break }
-        current = next
-        iterations += 1
-    } while iterations < maxIterations
-
-    return current
-}
-```
-
-#### 4. Sink node normalization
-```swift
-// Pattern: Handle edge cases that break mathematical assumptions
-func normalizeForSinkNodes(_ ranks: inout [Float],
-                          sinkNodes: [Int],
-                          totalNodes: Int) {
-    for sinkIndex in sinkNodes {
-        let redistributedRank = ranks[sinkIndex] / Float(totalNodes - 1)
-
-        for i in 0..<totalNodes {
-            if i != sinkIndex {
-                ranks[i] += redistributedRank
-            }
-        }
-        ranks[sinkIndex] = 0
-    }
-}
-```
-
-### Common pitfalls and solutions
-
-#### Link manipulation resistance
-```swift
-// Problem: Attempts to game PageRank through artificial links
-// Solution: PageRank's mathematical properties provide natural resistance
-
-// Artificial link farms dilute authority rather than concentrating it
-func demonstrateLinkDilution() {
-    // Creating many low-quality links reduces per-link authority
-    let artificialAuthority = totalAuthority / Float(artificialLinkCount)
-    // As artificial links increase, per-link value decreases
-}
-```
-
-#### Damping factor importance
-```swift
-// Problem: Without damping, PageRank can become trapped in link cycles
-// Solution: Damping factor models realistic browsing behavior
-
-extension Graph {
-    func pageRankWithDamping(dampingFactor: Float = 0.85) -> [Float] {
-        // (1 - d) represents probability of random jump to any page
-        // d represents probability of following a link
-        let randomJumpProbability = (1 - dampingFactor) / Float(canvas.count)
-
-        // Modified PageRank formula:
-        // PR(A) = (1-d)/N + d * Σ(PR(Ti)/C(Ti))
-        return calculateWithDamping(randomJumpProbability, dampingFactor)
-    }
-}
-```
-
-#### Convergence considerations
-```swift
-// Problem: Determining when PageRank calculation is complete
-// Solution: Monitor changes between iterations
-
-func checkConvergence(_ oldRanks: [Float], _ newRanks: [Float]) -> Bool {
-    let maxChange = zip(oldRanks, newRanks)
-        .map { abs($0 - $1) }
-        .max() ?? 0
-
-    return maxChange < convergenceThreshold  // Typically 0.0001
-}
-```
-
-### Integration with other algorithms
-
-PageRank enhances many algorithms covered in previous chapters:
-
-#### Enhanced graph traversal (Chapter 11)
-```swift
-// Priority-guided traversal using PageRank
-func pageRankGuidedTraversal(_ graph: Graph<String>) {
-    graph.processPageRankWithSink()
-
-    // Visit vertices in PageRank order
-    let sortedVertices = graph.canvas.sorted {
-        $0.rank.last! > $1.rank.last!
-    }
-
-    for vertex in sortedVertices {
-        processHighImportanceVertex(vertex)
-    }
-}
-```
-
-#### Search optimization (Chapter 3)
-```swift
-// PageRank-weighted search results
-func searchWithPageRank(_ query: String,
-                       _ documents: [Document]) -> [Document] {
-    let relevanceScores = calculateRelevance(query, documents)
-    let pageRankScores = calculatePageRank(documents)
-
-    return documents.sorted { doc1, doc2 in
-        let score1 = relevanceScores[doc1]! * 0.7 + pageRankScores[doc1]! * 0.3
-        let score2 = relevanceScores[doc2]! * 0.7 + pageRankScores[doc2]! * 0.3
-        return score1 > score2
-    }
-}
-```
-
-## When to use PageRank
-
-### Decision framework
-
-**Use PageRank when:**
-- Analyzing networks with directed relationships (links, citations, endorsements)
-- Measuring importance through collective consensus
-- Building recommendation systems based on user behavior
-- Ranking elements in large-scale networked systems
-- Need algorithm resistant to gaming/manipulation
-
-**Consider alternatives when:**
-- Working with undirected networks (use eigenvector centrality)
-- Need real-time ranking updates (PageRank requires batch processing)
-- Graph structure changes frequently (recalculation is expensive)
-- Simple degree-based metrics suffice for the application
-- Working with very small networks (overhead may not be worthwhile)
-
-### Modern applications beyond search
-
-**Content Discovery:**
-- Social media feed ranking
-- News article prioritization
-- Video recommendation systems
-- Podcast discovery algorithms
-
-**Scientific Analysis:**
-- Protein interaction networks
-- Brain connectivity mapping
-- Economic influence modeling
-- Epidemic spread prediction
-
-**Business Intelligence:**
-- Customer influence scoring
-- Product cross-selling optimization
-- Supply chain risk assessment
-- Market research analysis
-
-## Advanced concepts
-
-### Personalized PageRank
-
-Standard PageRank can be personalized for individual users:
-
-```swift
-class PersonalizedPageRank<T> {
-    private var graph: Graph<T>
-    private var personalizedVector: [Float]  // User-specific preferences
-
-    func calculatePersonalizedRank(for userPreferences: [T: Float]) -> [T: Float] {
-        // Modify random jump distribution based on user preferences
-        // Instead of uniform distribution, weight jumps toward preferred pages
-
-        let totalPreference = userPreferences.values.reduce(0, +)
-        let normalizedPreferences = userPreferences.mapValues { $0 / totalPreference }
-
-        // Apply personalized PageRank algorithm
-        return processPersonalizedPageRank(with: normalizedPreferences)
-    }
-}
-```
-
-### Topic-sensitive PageRank
-
-PageRank can be calculated separately for different topics:
-
-```swift
-enum Topic {
-    case technology, science, sports, entertainment
-}
-
-class TopicSensitivePageRank<T> {
-    private var graphs: [Topic: Graph<T>] = [:]
-
-    func calculateTopicRanks(for topic: Topic) -> [T: Float] {
-        guard let topicGraph = graphs[topic] else { return [:] }
-
-        // Calculate PageRank within topic-specific subgraph
-        topicGraph.processPageRankWithSink()
-        return extractRankings(from: topicGraph)
-    }
-}
-```
-
-### Distributed PageRank computation
-
-For web-scale computation, PageRank is distributed across multiple machines:
-
-```swift
-// Simplified distributed PageRank concept
-protocol DistributedPageRankNode {
-    func calculateLocalPageRank(_ vertices: [Vertex<String>]) -> [Float]
-    func exchangeRankUpdates(with neighbors: [DistributedPageRankNode])
-    func synchronizeGlobalState() -> Bool
-}
-
-// Each machine processes a subset of the web graph
-// Machines exchange rank updates after each iteration
-// Process continues until global convergence
-```
-
-
----
-
-<div class="chapter-nav">
-  <a href="17-linear-algebra" class="prev">Previous Chapter</a>
-  <a href="index">Table of Contents</a>
-</div>
