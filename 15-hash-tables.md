@@ -3,7 +3,7 @@ layout: chapter
 title: "Chapter 15: Hash Tables"
 description: "Build hash tables with collision handling"
 ---
-# Hash tables
+# Hash Tables
 
 A fitness app tracking hundreds of workouts across months needs to find this week's Monday run. Linear search through an unsorted list means checking every entry until finding the match—taking `O(n)` time. With 365 days of workouts, that's potentially 365 comparisons just to find one value.
 
