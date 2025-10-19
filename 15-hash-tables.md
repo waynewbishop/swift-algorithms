@@ -24,7 +24,7 @@ Compared to other data structures:
 
 A well-designed hash table can achieve constant time `O(1)` for insertion, deletion, and lookup operations, making it one of the most efficient data structures available.
 
-iOS apps use hash tables extensively. UserDefaults stores app preferences as key-value pairs for instant lookup. HTTP headers in network requests use hash table lookups. Workout tracking apps retrieve today's stats by date using hash calculations instead of iterating through all dates. Caching systems store expensive computations for instant retrieval.
+iOS apps use hash tables extensively. [UserDefaults](https://developer.apple.com/documentation/foundation/userdefaults) stores app preferences as key-value pairs for instant lookup. HTTP headers in network requests use hash table lookups. Workout tracking apps retrieve today's stats by date using hash calculations instead of iterating through all dates. Caching systems store expensive computations for instant retrieval.
 
 The mechanics are elegant: hash the key to produce a number, use modulo to convert that number into an array index, jump directly to that position in `O(1)` time. No loops. No comparisons. Just mathematics. This is why key-value lookups feel instant even with thousands of entries.
 
