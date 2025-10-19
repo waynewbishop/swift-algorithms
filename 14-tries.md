@@ -433,22 +433,8 @@ For typical autocomplete with lowercase letters, each node averages 2-3 children
 
 ## Building algorithmic intuition
 
-Tries demonstrate several important algorithmic concepts:
+Tries provide two essential capabilities: prefix-based searching in `O(p)` time and shared storage of common prefixes. The hierarchical structure naturally represents string relationships—autocomplete suggestions, spell checking, and network routing all benefit from navigating character-by-character rather than comparing entire strings.
 
-1. **Space-Time Trade-offs**: Uses more memory to achieve faster prefix operations than linear search
-2. **Shared Structure**: Common prefixes are stored only once, reducing total space compared to storing full strings
-3. **BFS Application**: Shows how graph traversal ([Chapter 13](13-graphs.md)) generalizes to trees
-4. **Queue Usage**: Leverages Queue structures ([Chapter 10](10-stacks-and-queues.md)) for level-order traversal
-5. **Design Choices**: Array vs dictionary children shows how implementation details affect performance
+The BFS pattern demonstrated here generalizes beyond tries. The same breadth-first search from [Chapter 13](13-graphs.md) works identically on trees and graphs. The Queue structure from [Chapter 10](10-stacks-and-queues.md) provides level-order traversal whether exploring social networks or collecting word suggestions. Recognizing these reusable patterns lets you transfer algorithmic knowledge between different data structures.
 
-When to choose tries:
-- **Autocomplete systems** - Natural fit for prefix-based searches
-- **Spell checkers** - Efficient word validation and suggestion
-- **IP routing tables** - Network prefix matching
-- **Text processing** - When prefix operations are frequent
-
-When to avoid tries:
-- **Simple word lookup** - Hash tables are simpler and faster (`O(1)` vs `O(m)`)
-- **No prefix operations** - Memory overhead not justified
-- **Very large alphabet** - Space complexity grows with alphabet size (Unicode text)
-- **Infrequent updates** - Sorted array with binary search may be simpler
+Understanding when to choose tries versus alternatives completes the picture. Use tries when prefix operations dominate—autocomplete systems and spell checkers are ideal candidates. Avoid tries for simple word lookup where hash tables provide `O(1)` performance, or for very large alphabets like Unicode where the space complexity becomes impractical.
