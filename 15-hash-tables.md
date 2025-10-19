@@ -9,8 +9,6 @@ A fitness app tracking hundreds of workouts across months needs to find this wee
 
 Hash tables solve this problem with mathematics instead of searching. A hash function transforms a key like "Monday Run" into a number. That number becomes an array index, allowing instant `O(1)` access regardless of collection size. One calculation, direct retrieval—no iteration required.
 
-Swift's Dictionary uses hash table algorithms under the hood. Storing and retrieving values by key leverages the same techniques that power UserDefaults storage, HTTP header lookups, and caching systems throughout iOS. Understanding these algorithms transforms how we use Dictionary—from basic usage to informed decisions about when and why to reach for it.
-
 In this chapter, we'll explore hash table design principles and implement a robust, modern hash table in Swift using generics from [Chapter 7](07-generics.md) and collision resolution via linked lists from [Chapter 9](09-linked-lists.md).
 
 ## Understanding hash tables
@@ -20,7 +18,7 @@ Hash tables solve a fundamental problem in computer science: how do we store and
 ### Keys & values
 
 Compared to other data structures:
-- [Linked Lists](https://en.wikipedia.org/wiki/Linked_list): Flexible but require `O(n)` search time due to sequential traversal
+- Linked Lists: Flexible but require `O(n)` search time due to sequential traversal
 - Arrays: Fast indexed access but require knowing the exact position
 - Hash Tables: Combine the best of both worlds - fast `O(1)` average case operations with flexible key-based access
 
