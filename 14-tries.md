@@ -113,9 +113,42 @@ for word in words {
 
 Insertion is `O(m)` where m is the word length. The algorithm navigates through existing nodes for shared prefixes, only creating new nodes when necessary. This prefix-sharing is what makes tries memory-efficient despite storing many words.
 
-## Searching with breadth-first traversal
+## Breadth-first search for trie operations
 
-The primary advantage of tries is efficient prefix-based searching. Our production implementation uses breadth-first search (BFS) from [Chapter 13](13-graphs.md) to find all words matching a prefix. This demonstrates how graph traversal algorithms apply to tree structures:
+The primary advantage of tries is efficient prefix-based searching. Our production implementation uses breadth-first search (BFS) from [Chapter 13](13-graphs.md) to traverse the trie hierarchy and collect matching words. This demonstrates how graph traversal algorithms apply to tree structures—the same BFS pattern that worked for graph exploration works equally well for tree operations.
+
+### The BFS pattern for tries
+
+All trie search operations follow a consistent BFS pattern with two phases:
+
+**Phase 1: Navigate to starting node**
+- Find the specific node where search begins (prefix node, root, etc.)
+- Validate the starting point exists
+- Return early if search is impossible
+
+**Phase 2: Level-order traversal**
+- Initialize Queue and enqueue starting node
+- Process all nodes at level N before moving to level N+1
+- Check condition at each node (collect word, match pattern, etc.)
+- Enqueue children for next level
+
+The Queue from [Chapter 10](10-stacks-and-queues.md) acts as a "to-visit" list, ensuring systematic exploration. This guarantees we find all matching words without missing any branches.
+
+### Why BFS over alternatives?
+
+The BFS approach offers several advantages for trie traversal:
+
+1. **Level-order results**: BFS naturally returns words in order of length. Users expect shorter suggestions first: "app" before "application". Depth-first search might return "application" before "app", which feels less intuitive for autocomplete.
+
+2. **Memory efficiency**: Queue-based iteration uses less stack space than recursive approaches. For tries with deep branches (long words), this matters.
+
+3. **Familiar pattern**: Reuses the Queue structure from [Chapter 10](10-stacks-and-queues.md) and BFS algorithm from [Chapter 13](13-graphs.md). No new concepts to learn.
+
+4. **Iterative control**: Easy to add limits on number of results, maximum word length, or timeout conditions. Just check before processing each node.
+
+### Application 1: Autocomplete with traverse
+
+The `traverse(using:)` method demonstrates the BFS pattern for autocomplete suggestions:
 
 ```swift
 // Employs Breadth-First Search to find values based on a keyword prefix
@@ -128,7 +161,7 @@ func traverse(using keyword: String) -> Array<String>? {
     var current: TrieNode = root
     var wordList = Array<String>()
 
-    // Navigate to the prefix node
+    // Phase 1: Navigate to the prefix node
     while keyword.count != current.level {
         let searchKey = keyword.prefix(current.level + 1)
         var isFound: Bool = false
@@ -147,7 +180,7 @@ func traverse(using keyword: String) -> Array<String>? {
         }
     }
 
-    // Initiate BFS process from the prefix node
+    // Phase 2: BFS process from the prefix node
     let trieQueue: Queue<TrieNode> = Queue<TrieNode>()
 
     // Queue the starting node (represents the prefix)
@@ -191,18 +224,77 @@ if let suggestions = trie.traverse(using: "ba") {
 }
 ```
 
-The traverse method combines two phases. First, it navigates to the node representing the prefix (`O(p)` where p is prefix length). Second, it uses BFS to visit all descendants, collecting complete words (`O(n)` where n is the number of matching words). Total complexity is `O(p + n)`.
+The method combines both phases: navigate to prefix (`O(p)` where p is prefix length), then BFS to collect all descendant words (`O(n)` where n is the number of matching words). Total complexity is `O(p + n)`.
 
-## Why breadth-first search?
+### Application 2: Pattern matching with filter
 
-The BFS approach offers several advantages for trie traversal:
+The same BFS pattern applies to more complex queries. The [Structures package](https://github.com/waynewbishop/bishop-algorithms-swift-package) includes a `filter` method that finds words matching both start AND end characters:
 
-1. **Level-order results**: BFS naturally returns words in order of length, which is often desirable for autocomplete
-2. **Memory efficiency**: Queue-based iteration uses less stack space than recursive approaches
-3. **Familiar pattern**: Reuses the Queue structure from [Chapter 10](10-stacks-and-queues.md) and BFS from [Chapter 13](13-graphs.md)
-4. **Iterative control**: Easy to add limits on number of results or maximum word length
+```swift
+// Determines if the trie contains at least one word with specified start and end characters
+func filter(_ start: String, _ end: String) -> Bool {
+    let current: TrieNode = root
+    var isFirst: Bool = false
 
-The Queue acts as a "to-visit" list, ensuring we explore all nodes at level N before moving to level N+1. This systematic exploration guarantees we find all words with the given prefix.
+    // Phase 1: Check if any word starts with the specified character
+    for child in current.children {
+        if let tvalue = child.tvalue {
+            if tvalue == start {
+                isFirst = true
+                break
+            }
+        }
+    }
+
+    guard isFirst == true else {
+        return false
+    }
+
+    // Phase 2: BFS to find word ending with specified character
+    let trieQueue: Queue<TrieNode> = Queue<TrieNode>()
+    trieQueue.enQueue(current)
+
+    while !trieQueue.isEmpty() {
+        guard let leaf = trieQueue.deQueue() else {
+            break
+        }
+
+        // Add unvisited trie nodes to the queue
+        for child in leaf.children {
+            let leafValue = child.tvalue ?? "nil"
+            print("adding leaf: \(leafValue) to queue..")
+            trieQueue.enQueue(child)
+        }
+
+        // Check for qualifying value (different condition than traverse)
+        if leaf.isFinal == true {
+            if let tvalue = leaf.tvalue {
+                if tvalue.last == Character(end) {
+                    return true
+                }
+            }
+        }
+
+        let leafValue = leaf.tvalue ?? "nil"
+        print("traversed leaf: \(leafValue)..")
+    }
+
+    print("traversal complete..")
+    return false
+}
+
+// Example: Check if any word starts with "b" and ends with "t"
+if trie.filter("b", "t") {
+    print("Found word starting with 'b' and ending with 't'")
+    // True: "bat" matches this pattern
+}
+```
+
+**Key insight**: Both methods use identical BFS structure—the while loop, Queue operations, and child iteration are the same. Only the processing logic differs:
+- `traverse`: Collects all `isFinal` nodes → returns `Array<String>?`
+- `filter`: Checks if `isFinal` node matches end character → returns `Bool`
+
+This demonstrates how BFS provides a flexible, reusable pattern for various trie operations. Once you understand the BFS template, you can apply it to any trie traversal problem by changing just the node processing logic.
 
 ## Using the subscript shortcut
 
@@ -228,72 +320,6 @@ if trie["cat"] != nil {
 ```
 
 This subscript syntax provides a cleaner interface while maintaining the same functionality as the explicit `traverse(using:)` method.
-
-## Filtering by start and end characters
-
-The [Structures package](https://github.com/waynewbishop/bishop-algorithms-swift-package) includes an additional `filter` method that demonstrates a more complex BFS application. It finds whether any word exists starting with one character and ending with another:
-
-```swift
-// Determines if the trie contains at least one word with specified start and end characters
-func filter(_ start: String, _ end: String) -> Bool {
-    let current: TrieNode = root
-    var isFirst: Bool = false
-
-    // Check if any word starts with the specified character
-    for child in current.children {
-        if let tvalue = child.tvalue {
-            if tvalue == start {
-                isFirst = true
-                break
-            }
-        }
-    }
-
-    guard isFirst == true else {
-        return false
-    }
-
-    // Initiate BFS to find word ending with specified character
-    let trieQueue: Queue<TrieNode> = Queue<TrieNode>()
-    trieQueue.enQueue(current)
-
-    while !trieQueue.isEmpty() {
-        guard let leaf = trieQueue.deQueue() else {
-            break
-        }
-
-        // Add unvisited trie nodes to the queue
-        for child in leaf.children {
-            let leafValue = child.tvalue ?? "nil"
-            print("adding leaf: \(leafValue) to queue..")
-            trieQueue.enQueue(child)
-        }
-
-        // Check for qualifying value
-        if leaf.isFinal == true {
-            if let tvalue = leaf.tvalue {
-                if tvalue.last == Character(end) {
-                    return true
-                }
-            }
-        }
-
-        let leafValue = leaf.tvalue ?? "nil"
-        print("traversed leaf: \(leafValue)..")
-    }
-
-    print("traversal complete..")
-    return false
-}
-
-// Example: Check if any word starts with "b" and ends with "t"
-if trie.filter("b", "t") {
-    print("Found word starting with 'b' and ending with 't'")
-    // True: "bat" matches this pattern
-}
-```
-
-This demonstrates how BFS naturally handles complex filtering conditions during tree traversal.
 
 ## Real-world applications
 
