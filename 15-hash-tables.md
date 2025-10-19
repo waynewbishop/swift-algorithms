@@ -5,11 +5,11 @@ description: "Build hash tables with collision handling"
 ---
 # Hash tables
 
-You track hundreds of workouts across months. Finding this week's Monday run from an unsorted list means checking every entry until you find the match—linear search taking O(n) time. With 365 days of workouts, that's potentially 365 comparisons just to find one value.
+A fitness app tracking hundreds of workouts across months needs to find this week's Monday run. Linear search through an unsorted list means checking every entry until finding the match—taking `O(n)` time. With 365 days of workouts, that's potentially 365 comparisons just to find one value.
 
-Hash tables solve this problem with mathematics instead of searching. A hash function transforms a key like "Monday Run" into a number. That number becomes an array index, allowing instant O(1) access regardless of collection size. One calculation, direct retrieval—no iteration required.
+Hash tables solve this problem with mathematics instead of searching. A hash function transforms a key like "Monday Run" into a number. That number becomes an array index, allowing instant `O(1)` access regardless of collection size. One calculation, direct retrieval—no iteration required.
 
-Swift's Dictionary uses hash table algorithms under the hood. When you store and retrieve values by key, you're leveraging the same techniques that power UserDefaults storage, HTTP header lookups, and caching systems throughout iOS. Understanding these algorithms transforms you from someone who uses Dictionary to someone who knows precisely when and why to reach for it.
+Swift's Dictionary uses hash table algorithms under the hood. Storing and retrieving values by key leverages the same techniques that power UserDefaults storage, HTTP header lookups, and caching systems throughout iOS. Understanding these algorithms transforms how we use Dictionary—from basic usage to informed decisions about when and why to reach for it.
 
 In this chapter, we'll explore hash table design principles and implement a robust, modern hash table in Swift using generics from [Chapter 7](07-generics.md) and collision resolution via linked lists from [Chapter 9](09-linked-lists.md).
 
@@ -20,21 +20,21 @@ Hash tables solve a fundamental problem in computer science: how do we store and
 ### Keys & values
 
 Compared to other data structures:
-- **[Linked Lists](https://en.wikipedia.org/wiki/Linked_list)**: Flexible but require `O(n)` search time due to sequential traversal
+- [Linked Lists](https://en.wikipedia.org/wiki/Linked_list): Flexible but require `O(n)` search time due to sequential traversal
 - Arrays: Fast indexed access but require knowing the exact position
-- **Hash Tables**: Combine the best of both worlds - fast `O(1)` average case operations with flexible key-based access
+- Hash Tables: Combine the best of both worlds - fast `O(1)` average case operations with flexible key-based access
 
 A well-designed hash table can achieve constant time `O(1)` for insertion, deletion, and lookup operations, making it one of the most efficient data structures available.
 
 iOS apps use hash tables extensively. UserDefaults stores app preferences as key-value pairs for instant lookup. HTTP headers in network requests use hash table lookups. Workout tracking apps retrieve today's stats by date using hash calculations instead of iterating through all dates. Caching systems store expensive computations for instant retrieval.
 
-The mechanics are elegant: hash the key to produce a number, use modulo to convert that number into an array index, jump directly to that position in O(1) time. No loops. No comparisons. Just mathematics. This is why key-value lookups feel instant even with thousands of entries.
+The mechanics are elegant: hash the key to produce a number, use modulo to convert that number into an array index, jump directly to that position in `O(1)` time. No loops. No comparisons. Just mathematics. This is why key-value lookups feel instant even with thousands of entries.
 
 ## Hash function fundamentals
 
 A hash table consists of two essential components:
-1. **Hash Function**: Transforms keys into array indices
-2. **Bucket Array**: Stores the actual key-value pairs
+1. Hash Function: Transforms keys into array indices
+2. Bucket Array: Stores the actual key-value pairs
 
 The hash function is the heart of any hash table. It takes an input key and produces a numeric hash value that determines where to store the data:
 
@@ -49,13 +49,13 @@ A good hash function should be:
 - Deterministic: Same input always produces same output
 - Fast: `O(1)` computation time
 - Uniform: Distributes keys evenly across buckets
-- **Avalanche Effect**: Small input changes create large output changes
+- Avalanche Effect: Small input changes create large output changes
 
 ### Bucket storage
 
 Values are stored in non-contiguous "buckets" within an array. The hash function determines which bucket to use, enabling direct access without searching through the entire structure.
 
-Consider hashing workout dates to bucket indices. Different keys hash to different buckets, avoiding collisions and maintaining O(1) lookup:
+Consider hashing workout dates to bucket indices. Different keys hash to different buckets, avoiding collisions and maintaining `O(1)` lookup:
 
 ```
 Key transformation example:
@@ -64,7 +64,7 @@ Key transformation example:
 "2024-01-17" → hash() → 445092 → % 16 → bucket 4
 ```
 
-The hash function transforms any string (workout date, exercise name, user ID) into an integer. The modulo operation wraps that integer into a valid bucket index (0 to capacity-1). This is why you can store millions of workout records and still get instant lookups—you're calculating where the data lives, not searching for it.
+The hash function transforms any string (workout date, exercise name, user ID) into an integer. The modulo operation wraps that integer into a valid bucket index (0 to capacity-1). This is why hash tables can store millions of workout records with instant lookups—calculating where data lives rather than searching for it.
 
 ## Modern hash table implementation
 
@@ -215,14 +215,11 @@ let vertexTable = HashTable<Vertex, String>()
 
 ### Hash function quality
 
-Our implementation uses Swift's robust hashing system which implements:
-- **SipHash**: Cryptographically secure hash function
-- **Seed Randomization**: Different hash values across program runs
-- **Collision Resistance**: Minimizes hash collisions
+Our implementation uses Swift's robust hashing system which implements SipHash (a cryptographically secure hash function), seed randomization (producing different hash values across program runs), and collision resistance to minimize hash collisions.
 
 ## Collision resolution strategies
 
-Even with excellent hash functions, collisions are inevitable. [Collisions](https://en.wikipedia.org/wiki/Hash_collision) occur when different keys map to the same index. Our implementation uses **separate chaining** with linked lists ([Chapter 9](09-linked-lists.md)) to handle these situations.
+Even with excellent hash functions, collisions are inevitable. [Collisions](https://en.wikipedia.org/wiki/Hash_collision) occur when different keys map to the same index. Our implementation uses separate chaining with linked lists ([Chapter 9](09-linked-lists.md)) to handle these situations.
 
 Consider what happens when two different workout names hash to the same bucket:
 
@@ -235,7 +232,7 @@ Consider what happens when two different workout names hash to the same bucket:
 Bucket 6: [("Morning Run", 450)] → [("Evening Walk", 320)] → nil
 ```
 
-Even with collisions, lookups remain fast. Instead of checking all workouts, you only check the 2-3 items that happened to hash to the same bucket. This is why Dictionary maintains O(1) average case even with millions of entries—collisions are rare and shallow.
+Even with collisions, lookups remain fast. Instead of checking all workouts, lookups only check the 2-3 items that happened to hash to the same bucket. This is why Dictionary maintains `O(1)` average case even with millions of entries—collisions are rare and shallow.
 
 Here's how our implementation handles collisions:
 
@@ -276,9 +273,9 @@ extension HashTable {
 ### Alternative collision resolution
 
 While we use chaining, other strategies include:
-- **Open Addressing**: Find next available slot
-- **Robin Hood Hashing**: Minimize variance in probe distances
-- **Cuckoo Hashing**: Guarantees `O(1)` worst-case lookup
+- Open Addressing: Find next available slot
+- Robin Hood Hashing: Minimize variance in probe distances
+- Cuckoo Hashing: Guarantees `O(1)` worst-case lookup
 
 ## Complete CRUD operations
 
@@ -382,8 +379,8 @@ extension HashTable {
 Hash tables offer excellent performance characteristics when properly implemented, as analyzed using [Chapter 8](08-performance-analysis.md) principles:
 
 ### Time complexity
-- **Average Case**: `O(1)` for insert, search, delete
-- **Worst Case**: `O(n)` when all keys hash to same bucket
+- Average Case: `O(1)` for insert, search, delete
+- Worst Case: `O(n)` when all keys hash to same bucket
 - Space: `O(n)` where n is the number of elements
 
 ### Load factor impact
@@ -408,7 +405,7 @@ Hash tables offer excellent performance characteristics when properly implemente
 
 ## Hash tables in iOS development
 
-Every iOS app uses hash tables, whether you realize it or not. Data caching provides one of the most common use cases. Rather than repeatedly formatting the same distance value, cache the result in a Dictionary:
+Every iOS app uses hash tables. Data caching provides one of the most common use cases. Rather than repeatedly formatting the same distance value, cache the result in a Dictionary:
 
 ```swift
 // Cache formatted strings to avoid repeated work
@@ -423,7 +420,7 @@ if let cached = formattedDistances[5.2] {
 }
 ```
 
-Session management in web applications relies on hash tables to map session IDs to user data. With one billion users, hash tables still deliver O(1) lookup performance. Workout aggregation benefits from hash tables too. Grouping workouts by month becomes trivial:
+Session management in web applications relies on hash tables to map session IDs to user data. With one billion users, hash tables still deliver `O(1)` lookup performance. Workout aggregation benefits from hash tables too. Grouping workouts by month becomes trivial:
 
 ```swift
 // Group workouts by month using hash table
@@ -431,13 +428,8 @@ var workoutsByMonth = [String: [Workout]]()
 workoutsByMonth["2024-01"] = [...]  // Instant grouping
 ```
 
-Why does Dictionary beat arrays for lookups? With arrays, finding a workout by name requires checking every element—O(n) time. With Dictionary, you hash directly to the workout—O(1) time. For 10 workouts, the difference doesn't matter. For 10,000 workouts, Dictionary wins by 10,000× in the worst case.
+Why does Dictionary beat arrays for lookups? With arrays, finding a workout by name requires checking every element—`O(n)` time. With Dictionary, hashing directly to the workout takes `O(1)` time. For 10 workouts, the difference doesn't matter. For 10,000 workouts, Dictionary wins by 10,000× in the worst case.
 
 ## Building algorithmic intuition
 
-Hash tables demonstrate several key algorithmic concepts:
-
-1. **Trade-offs**: Memory for speed - we use extra space to achieve faster operations
-2. **Amortized Analysis**: Resize operations are expensive but occur infrequently
-3. **Hash Function Design**: The quality of the hash function affects performance dramatically
-4. **Load Factor Management**: We must balance between space and time efficiency
+Hash tables demonstrate several key algorithmic concepts. Trade-offs between memory and speed show how we use extra space to achieve faster operations. Amortized analysis explains why expensive resize operations don't hurt average performance when they occur infrequently. Hash function design proves critical, as the quality of the hash function affects performance dramatically. Load factor management requires balancing space and time efficiency—too low wastes memory, too high degrades performance.
