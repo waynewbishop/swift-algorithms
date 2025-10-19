@@ -231,7 +231,7 @@ This subscript syntax provides a cleaner interface while maintaining the same fu
 
 ## Filtering by start and end characters
 
-The Structures package includes an additional `filter` method that demonstrates a more complex BFS application. It finds whether any word exists starting with one character and ending with another:
+The [Structures package](https://github.com/waynewbishop/bishop-algorithms-swift-package) includes an additional `filter` method that demonstrates a more complex BFS application. It finds whether any word exists starting with one character and ending with another:
 
 ```swift
 // Determines if the trie contains at least one word with specified start and end characters
