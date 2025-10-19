@@ -1,4 +1,4 @@
-# Swift Algorithms & Data Structures
+# Swift Algorithms & Data Structures - 5th Edition
 
 [This book](index.md) is a comprehensive guide to algorithms and data structures, designed for developers who want to master essential Swift syntax and computer science fundamentals while building practical, type-safe implementations.
 
