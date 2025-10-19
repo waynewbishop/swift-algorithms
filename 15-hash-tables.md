@@ -5,11 +5,13 @@ description: "Build hash tables with collision handling"
 ---
 # Hash tables
 
-Type `var workouts = [String: Int]()` in Swift. That bracket syntax? You just created a Dictionary. Add `workouts["Monday Run"] = 450` and Swift instantly stores that value. Retrieve it with `workouts["Monday Run"]` and you get 450 back—no searching, no iteration, instant lookup from thousands of entries. Magic? No. Hash tables.
+You track hundreds of workouts across months. Finding this week's Monday run from an unsorted list means checking every entry until you find the match—linear search taking O(n) time. With 365 days of workouts, that's potentially 365 comparisons just to find one value.
 
-Swift's Dictionary is a hash table. Every time you use Dictionary, you're using hash table algorithms—the same structure that powers session management in web apps, caches in iOS, and fast lookups throughout Foundation. Understanding how Dictionary works under the hood transforms you from someone who uses dictionaries to someone who knows when and why to reach for them.
+Hash tables solve this problem with mathematics instead of searching. A hash function transforms a key like "Monday Run" into a number. That number becomes an array index, allowing instant O(1) access regardless of collection size. One calculation, direct retrieval—no iteration required.
 
-In this chapter, we'll explore hash table design principles and implement a robust, modern hash table in Swift using [generics](https://en.wikipedia.org/wiki/Generic_programming) from Chapter 7 and collision resolution via linked lists from [Chapter 9](09-linked-lists.md).
+Swift's Dictionary uses hash table algorithms under the hood. When you store and retrieve values by key, you're leveraging the same techniques that power UserDefaults storage, HTTP header lookups, and caching systems throughout iOS. Understanding these algorithms transforms you from someone who uses Dictionary to someone who knows precisely when and why to reach for it.
+
+In this chapter, we'll explore hash table design principles and implement a robust, modern hash table in Swift using generics from [Chapter 7](07-generics.md) and collision resolution via linked lists from [Chapter 9](09-linked-lists.md).
 
 ## Understanding hash tables
 
@@ -24,9 +26,9 @@ Compared to other data structures:
 
 A well-designed hash table can achieve constant time `O(1)` for insertion, deletion, and lookup operations, making it one of the most efficient data structures available.
 
-iOS apps use hash tables extensively. UserDefaults stores app preferences as key-value pairs for instant lookup. HTTP headers in network requests are stored as dictionaries. Workout tracking apps use hash tables for quick lookup of today's stats by date, beating the alternative of iterating through all dates. Caching systems store expensive computations (like formatted strings) in dictionaries for instant retrieval.
+iOS apps use hash tables extensively. UserDefaults stores app preferences as key-value pairs for instant lookup. HTTP headers in network requests use hash table lookups. Workout tracking apps retrieve today's stats by date using hash calculations instead of iterating through all dates. Caching systems store expensive computations for instant retrieval.
 
-When you write `workouts["Monday Run"]`, Swift hashes the string "Monday Run" to a number (like 74829), calculates `74829 % arraySize` to get a bucket index, and jumps directly to that bucket in O(1) time. No loops. No comparisons. Just math. This is why Dictionary operations feel instant even with thousands of entries.
+The mechanics are elegant: hash the key to produce a number, use modulo to convert that number into an array index, jump directly to that position in O(1) time. No loops. No comparisons. Just mathematics. This is why key-value lookups feel instant even with thousands of entries.
 
 ## Hash function fundamentals
 
@@ -55,16 +57,14 @@ Values are stored in non-contiguous "buckets" within an array. The hash function
 
 Consider hashing workout dates to bucket indices. Different keys hash to different buckets, avoiding collisions and maintaining O(1) lookup:
 
-```swift
-// How Swift hashes workout dates to bucket indices
-let workouts = [String: Int]()
-
+```
+Key transformation example:
 "2024-01-15" → hash() → 872349 → % 16 → bucket 13
 "2024-01-16" → hash() → 103847 → % 16 → bucket 7
 "2024-01-17" → hash() → 445092 → % 16 → bucket 4
 ```
 
-The hash function transforms any string (workout date, exercise name, user ID) into an integer. The modulo operation (%) wraps that integer into a valid bucket index. This is why you can store millions of workout records and still get instant lookups—you're not searching, you're calculating where the data lives.
+The hash function transforms any string (workout date, exercise name, user ID) into an integer. The modulo operation wraps that integer into a valid bucket index (0 to capacity-1). This is why you can store millions of workout records and still get instant lookups—you're calculating where the data lives, not searching for it.
 
 ## Modern hash table implementation
 
