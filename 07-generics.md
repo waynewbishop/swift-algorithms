@@ -92,7 +92,7 @@ linearSearch(for: 42, in: [1, 2, 3, 42, 5])
 linearSearch(for: "Bob", in: ["Alice", "Bob", "Charlie"])
 ```
 
-The `<T: Equatable>` syntax defines a generic type parameter `T` that must conform to [Equatable](https://en.wikipedia.org/wiki/Relational_operator). This allows comparison with `==` while working with any type that supports equality.
+Notice the `<T: Equatable>` syntax—this constrains `T` to types that support equality comparison. We'll explore what this means shortly.
 
 ### Generic sorting from Chapter 4
 
@@ -120,7 +120,7 @@ extension Array where Element: Comparable {
 ["dog", "cat", "bird"].bubbleSort()  // ["bird", "cat", "dog"]
 ```
 
-The `where Element: Comparable` clause constrains the generic `Element` type to types that support comparison operators. This allows using `>` in the sorting logic.
+The `where Element: Comparable` clause constrains the generic type to types that support comparison operators like `>`. These constraints are called protocol constraints, which we'll examine in depth after understanding type parameter naming.
 
 ## Type parameter naming
 
@@ -172,25 +172,13 @@ The constraint `T: Equatable` means "T can be any type, as long as it conforms t
 
 ### Equatable protocol
 
-[Equatable](https://en.wikipedia.org/wiki/Relational_operator) enables equality comparison with `==` and `!=`. Linear search from [Chapter 3](03-basic-searching.md) requires Equatable because it must compare elements:
-
-```swift
-// Requires Equatable for == comparison
-func linearSearch<T: Equatable>(for target: T, in array: [T]) -> Int? {
-    for (index, element) in array.enumerated() {
-        if element == target {  // Requires Equatable
-            return index
-        }
-    }
-    return nil
-}
-```
+[Equatable](https://developer.apple.com/documentation/Swift/Equatable) enables equality comparison with `==` and `!=`. Recall the linear search from [Chapter 3](03-basic-searching.md) we saw earlier—it requires `<T: Equatable>` because the algorithm must compare elements with the `==` operator. Without the Equatable constraint, the compiler can't guarantee that `T` supports equality comparison.
 
 Most Swift built-in types (Int, Double, String, Bool) conform to Equatable automatically.
 
 ### Comparable protocol
 
-[Comparable](https://en.wikipedia.org/wiki/Relational_operator) enables ordering operations using `<`, `>`, `<=`, and `>=`. All sorting algorithms require Comparable:
+[Comparable](https://developer.apple.com/documentation/Swift/Comparable) enables ordering operations using `<`, `>`, `<=`, and `>=`. All sorting algorithms require Comparable:
 
 ```swift
 // Binary search requires Comparable for < and > comparisons
