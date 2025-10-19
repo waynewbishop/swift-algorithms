@@ -1,76 +1,94 @@
-# GitHub Release Plan - Structures & Quiver Packages
+# Release Plan - Swift Algorithms Book & Packages
 
 **Created**: 2025-01-17
-**Status**: READY FOR EXECUTION (after book images are added)
+**Last Updated**: 2025-10-19
+**Status**: READY FOR EXECUTION
 **Author**: Wayne Bishop
+
+---
+
+## 📖 Overview
+
+This plan coordinates the v1.0.0 releases for three repositories:
+
+1. **Structures Package** (v0.5.2 → v1.0.0) - Core data structures & algorithms
+2. **Quiver Package** (v1.0.0 ✓) - Already released, README update only
+3. **Book Repository** (NEW: v1.0.0) - 5th edition milestone
+
+**Total Time**: ~90 minutes across 3 phases
+**Prerequisites**: Book finalized, images added, final URL determined
 
 ---
 
 ## 📊 Current Status
 
-### ✅ Quiver Package - Complete
-- **Version**: v1.0.0 ✓
-- **Repository**: `bishop-algorithms-quiver-package`
-- **GitHub Release**: https://github.com/waynewbishop/bishop-algorithms-quiver-package/releases/tag/1.0.0
-- **Status**: DONE - Formal release exists
+| Repository | Current Version | Target Version | Status |
+|------------|----------------|----------------|---------|
+| **Quiver** | v1.0.0 | v1.0.0 | ✅ Released |
+| **Structures** | v0.5.2 (tag only) | v1.0.0 | ⚠️ Needs release |
+| **Book** | Untagged | v1.0.0 | ❌ Not released |
 
-### ⚠️ Structures Package - Needs Release
-- **Current Version**: v0.5.2 (tagged, no release page)
-- **Repository**: `bishop-algorithms-swift-package`
-- **GitHub Tag**: https://github.com/waynewbishop/bishop-algorithms-swift-package/releases/tag/0.5.2
-- **Status**: Tag exists, but NO formal GitHub Release created
-- **Recommended Action**: Bump to v1.0.0 and create release
+### Repository URLs
+- **Structures**: https://github.com/waynewbishop/bishop-algorithms-swift-package
+- **Quiver**: https://github.com/waynewbishop/bishop-algorithms-quiver-package
+- **Book**: https://github.com/waynewbishop/swift-algorithms
 
----
-
-## 🎯 Recommendation: Go to v1.0.0
-
-### Why Bump from 0.5.2 → 1.0.0?
-
-**Rationale:**
-1. **Book alignment**: Published book references both packages at production quality
-2. **Consistency**: Quiver is already at 1.0.0, Structures should match
-3. **Production-ready**: Code has been used in production for years
-4. **API stability**: All book examples verified 100% aligned with package code
-5. **Natural milestone**: Book publication is perfect time to declare 1.0
-6. **User perception**: "0.5.2" suggests experimental, but code is battle-tested
-
-**Version mismatch problem:**
-- Quiver v1.0.0 says "production ready"
-- Structures v0.5.2 says "pre-release, API may change"
-- Book references both as stable → Mixed signals to users
-
-**Release notes will explain:**
-> "This package has been in production use for years. The 1.0.0 designation reflects API stability, comprehensive testing, and feature completeness as documented in the companion book."
+### Local Paths
+- **Structures**: `/Users/waynebishop/Projects/bishop-algorithms-swift-package`
+- **Quiver**: `/Users/waynebishop/Projects/bishop-algorithms-quiver-package`
+- **Book**: `/Users/waynebishop/Projects/swift-algorithms`
 
 ---
 
-## 📋 Complete Action Plan
+## ✅ Prerequisites
 
-### Step 0: Update Package READMEs (10 minutes)
+**Before starting, ensure:**
 
-**IMPORTANT: Do this BEFORE creating releases. Requires final book URL.**
+- [ ] Book content is finalized (all 22 chapters complete)
+- [ ] Images/diagrams are added to all chapters
+- [ ] Final book URL is determined (e.g., `https://waynewbishop.github.io/swift-algorithms/`)
+- [ ] You have 90 minutes of uninterrupted time
+- [ ] All repositories have clean working directories (`git status`)
+- [ ] You're on the main/master branch in all repos
 
-Both package READMEs need updates to reference the published book.
+**Check prerequisites:**
 
-#### Structures Package README
+```bash
+# Verify book is ready
+cd /Users/waynebishop/Projects/swift-algorithms
+git status  # Should be clean
+git branch  # Should be on 'main'
+
+# Verify Structures package
+cd /Users/waynebishop/Projects/bishop-algorithms-swift-package
+git status  # Should be clean
+swift test  # All tests should pass
+
+# Verify Quiver package
+cd /Users/waynebishop/Projects/bishop-algorithms-quiver-package
+git status  # Should be clean
+```
+
+---
+
+## 🚀 Phase 1: Package Releases (45 minutes)
+
+**Goal**: Release Structures v1.0.0 and update Quiver README
+
+### Step 1.1: Update Package READMEs (15 minutes)
+
+**Why first?** The v1.0.0 tags should include README updates that reference the published book.
+
+#### Update Structures README
 
 **File**: `/Users/waynebishop/Projects/bishop-algorithms-swift-package/README.md`
 
-**Current issues:**
-- Line 4: References old book URL `bishop-algorithms-book` (incorrect)
-- Line 83: Same outdated book link
-- Missing Swift Package Manager installation instructions
-- Missing reference to v1.0.0 release
+**Changes needed:**
+1. Replace old book URL (`bishop-algorithms-book`) with final URL (lines 4, 83)
+2. Add Swift Package Manager installation section
+3. Update "The Book" section with v1.0.0 release info
 
-**Required updates:**
-1. Replace old book URL with final published URL
-2. Update "The Book" section (line 80-83) with new book details
-3. Add Swift Package Manager installation section
-4. Update Swift version to 5.9+ (currently mentions 5.9)
-5. Add link to GitHub release page
-
-**Template for updated section:**
+**Template to add/update:**
 
 ```markdown
 ## 📚 The Book
@@ -83,7 +101,7 @@ The book provides comprehensive coverage of:
 - Real-world use cases and examples
 - Complete implementation walkthroughs
 
-**Read the book**: [FINAL_BOOK_URL_HERE]
+**Read the book**: [YOUR_FINAL_URL_HERE]
 
 ## 📦 Installation
 
@@ -101,21 +119,32 @@ dependencies: [
 3. Select version: `1.0.0`
 ```
 
----
+**Commit:**
 
-#### Quiver Package README
+```bash
+cd /Users/waynebishop/Projects/bishop-algorithms-swift-package
+# Make your edits to README.md
+git add README.md
+git commit -m "Prepare README for v1.0.0 release
+
+- Updated book URL to published GitHub Pages site
+- Added Swift Package Manager installation instructions
+- Added v1.0.0 reference in installation section
+- Corrected outdated book repository link
+
+Prepares package for v1.0.0 release."
+git push
+```
+
+#### Update Quiver README
 
 **File**: `/Users/waynebishop/Projects/bishop-algorithms-quiver-package/README.md`
 
-**Current issues:**
-- No book reference at all
-- Should mention it's featured in Chapters 20-22
+**Changes needed:**
+1. Add "Featured in Book" section (after line 56, "Documentation" section)
+2. Reference Chapters 20-22
 
-**Required updates:**
-1. Add book reference section
-2. Mention specific chapters (20: Vectors, 21: Matrices, 22: Semantic Search)
-
-**Template for new section (add after "Documentation" section, line 56):**
+**Template to add:**
 
 ```markdown
 ## 📚 Featured in Book
@@ -128,31 +157,14 @@ This framework is featured in **Swift Algorithms & Data Structures** by Wayne Bi
 
 The book provides detailed tutorials on using Quiver for real-world applications including game physics, data visualization, and semantic search systems.
 
-**Read the book**: [FINAL_BOOK_URL_HERE]
+**Read the book**: [YOUR_FINAL_URL_HERE]
 ```
 
----
-
-#### Commit Changes
-
-After updating both READMEs:
+**Commit:**
 
 ```bash
-# Structures package
-cd /Users/waynebishop/Projects/bishop-algorithms-swift-package
-git add README.md
-git commit -m "Update README for v1.0.0 release
-
-- Updated book reference with published book URL
-- Added Swift Package Manager installation instructions
-- Corrected book URL from old bishop-algorithms-book repo
-- Added reference to v1.0.0 release
-
-Prepares README for v1.0.0 release."
-git push
-
-# Quiver package
 cd /Users/waynebishop/Projects/bishop-algorithms-quiver-package
+# Make your edits to README.md
 git add README.md
 git commit -m "Add book reference to README
 
@@ -160,60 +172,53 @@ git commit -m "Add book reference to README
 - Referenced Chapters 20-22 coverage
 - Linked to published book
 
-Prepares README for use with v1.0.0 release."
+Coordinates with book v1.0.0 release."
 git push
 ```
 
-**Note**: Complete this step BEFORE proceeding to Step 1. The v1.0.0 tags should include these README updates.
-
 ---
 
-### Step 1: Verify Current State (5 minutes)
+### Step 1.2: Verify Structures Package (5 minutes)
 
-Run these commands to check what's changed since v0.5.2:
+**Check what's changed since v0.5.2:**
 
 ```bash
-# Navigate to Structures package
-cd "/Users/waynebishop/Projects/bishop-algorithms-swift-package"
+cd /Users/waynebishop/Projects/bishop-algorithms-swift-package
 
-# Check current status
-git status
-
-# See what commit v0.5.2 points to
-git show v0.5.2 --quiet
-
-# See what's changed since v0.5.2
+# See commits since v0.5.2
 git log v0.5.2..HEAD --oneline
-
-# Check current branch
-git branch --show-current
 
 # Verify tests pass
 swift test
 
 # Verify clean build
 swift build
+
+# Check current branch
+git branch --show-current  # Should be 'main' or 'master'
 ```
 
 **Decision point:**
-- If `git log` shows no commits → HEAD is same as v0.5.2 → Use Step 2A
-- If `git log` shows commits → HEAD is ahead → Use Step 2B
+- **If `git log` shows 0 commits** (README commit is the only change): Use Step 1.3A (retag)
+- **If `git log` shows commits**: Use Step 1.3B (tag current HEAD)
 
 ---
 
-### Step 2A: If HEAD is Same as v0.5.2 (Retag Approach)
+### Step 1.3A: Tag v1.0.0 (Retag Approach) (5 minutes)
 
-Use this if no changes have been made since v0.5.2 was tagged.
+**Use this if:** HEAD is same as v0.5.2 (only README was updated)
 
 ```bash
+cd /Users/waynebishop/Projects/bishop-algorithms-swift-package
+
 # Delete old local tag
 git tag -d v0.5.2
 
 # Delete remote tag
 git push origin :refs/tags/v0.5.2
 
-# Create new v1.0.0 tag at same commit
-git tag -a v1.0.0 -m "Release 1.0.0
+# Create v1.0.0 tag
+git tag -a v1.0.0 -m "Release 1.0.0 - Production Ready
 
 First stable release of Structures package.
 
@@ -226,30 +231,30 @@ Features:
 - Sorting algorithms: Bubble, Insertion, Selection, Quicksort
 - Search algorithms: Linear, Binary
 - Graph algorithms: BFS, DFS, Dijkstra (array and heap variants)
-- Complete test suite
-- 100% alignment with book code examples
+- Complete test suite with 100% alignment to book examples
 
 Version history: 0.5.2 → 1.0.0 (marking production stability)
 
-This release corresponds to the code examples in 'Swift Algorithms & Data
-Structures' book by Wayne Bishop."
+Swift 5.5+ | iOS 13.0+ | macOS 10.15+"
 
-# Push new tag to GitHub
+# Push tag
 git push origin v1.0.0
 
-# Verify tag exists
+# Verify
 git tag -l "v1.0.0"
 ```
 
 ---
 
-### Step 2B: If HEAD is Ahead of v0.5.2 (Tag Current HEAD)
+### Step 1.3B: Tag v1.0.0 (Current HEAD Approach) (5 minutes)
 
-Use this if changes have been committed since v0.5.2.
+**Use this if:** HEAD is ahead of v0.5.2 (changes have been committed)
 
 ```bash
-# Tag current HEAD as v1.0.0
-git tag -a v1.0.0 -m "Release 1.0.0
+cd /Users/waynebishop/Projects/bishop-algorithms-swift-package
+
+# Tag current HEAD
+git tag -a v1.0.0 -m "Release 1.0.0 - Production Ready
 
 First stable release of Structures package.
 
@@ -262,49 +267,42 @@ Features:
 - Sorting algorithms: Bubble, Insertion, Selection, Quicksort
 - Search algorithms: Linear, Binary
 - Graph algorithms: BFS, DFS, Dijkstra (array and heap variants)
-- Complete test suite
-- 100% alignment with book code examples
+- Complete test suite with 100% alignment to book examples
 
 Changes since 0.5.2:
-- [Add specific changes here if any]
-- Bug fixes and improvements
-- Updated documentation
-- Production testing and validation
+- Added HashTable<Key: Hashable, Value> implementation
+- Updated README with book reference and installation instructions
+- Bug fixes and documentation improvements
+- Production validation and testing
 
 Version history: 0.5.2 → 1.0.0 (marking production stability)
 
-This release corresponds to the code examples in 'Swift Algorithms & Data
-Structures' book by Wayne Bishop."
+Swift 5.5+ | iOS 13.0+ | macOS 10.15+"
 
-# Push tag to GitHub
+# Push tag
 git push origin v1.0.0
 
-# Verify tag exists
+# Verify
 git tag -l "v1.0.0"
 ```
 
 ---
 
-### Step 3: Create GitHub Release (15 minutes)
-
-After pushing the v1.0.0 tag, create the formal GitHub Release:
+### Step 1.4: Create Structures GitHub Release (20 minutes)
 
 **URL**: https://github.com/waynewbishop/bishop-algorithms-swift-package/releases/new
 
 **Steps:**
-1. Click "Releases" in right sidebar
-2. Click "Draft a new release"
-3. Choose tag: `v1.0.0` (from dropdown)
-4. Release title: `Structures v1.0.0 - Production Ready`
-5. Copy description from template below
-6. Check "Set as the latest release"
-7. Click "Publish release"
+1. Go to Structures repository on GitHub
+2. Click "Releases" in right sidebar
+3. Click "Draft a new release"
+4. Choose tag: `v1.0.0` from dropdown
+5. Release title: `Structures v1.0.0 - Production Ready`
+6. Copy description from template below
+7. Check "Set as the latest release"
+8. Click "Publish release"
 
----
-
-### GitHub Release Description Template
-
-Copy this into the release description box:
+**Release Description Template:**
 
 ```markdown
 # Structures v1.0.0 🎉
@@ -329,7 +327,7 @@ dependencies: [
 
 ### In Xcode
 1. File → Add Package Dependencies
-2. Enter repository URL: `https://github.com/waynewbishop/bishop-algorithms-swift-package`
+2. Enter: `https://github.com/waynewbishop/bishop-algorithms-swift-package`
 3. Select version: `1.0.0`
 
 ## ✨ What's Included
@@ -341,7 +339,7 @@ dependencies: [
 - **Binary Search Tree** (`BSNode`) - Self-organizing tree with O(log n) search
 - **Graph** - Directed/undirected graphs with `Vertex`, `Edge`, `Path`
 - **Trie** - Prefix tree for efficient string operations
-- **Hash Table** (`Table`) - O(1) average lookup with collision resolution
+- **Hash Table** (`Table`, `HashTable`) - O(1) average lookup with collision resolution
 - **Heap** - Priority queue with O(log n) operations
 
 ### Algorithms
@@ -364,7 +362,7 @@ queue.deQueue()
 
 ## 📚 Documentation
 
-This package is featured extensively in [Swift Algorithms & Data Structures](https://github.com/waynewbishop/swift-algorithms) book with:
+This package is featured extensively in [Swift Algorithms & Data Structures](YOUR_BOOK_URL_HERE) book with:
 - Detailed explanations of each data structure
 - Performance analysis and Big O complexity
 - Real-world use cases and examples
@@ -399,15 +397,19 @@ LinkedIn: [linkedin.com/in/waynebishop](https://www.linkedin.com/in/waynebishop/
 GitHub: [@waynewbishop](https://github.com/waynewbishop)
 ```
 
+**Remember to replace** `YOUR_BOOK_URL_HERE` with your actual book URL!
+
 ---
 
-### Step 4: Update Book Documentation (10 minutes)
+## 📖 Phase 2: Book Release (30 minutes)
 
-After creating the GitHub Release, update the book's README to reference both v1.0.0 packages.
+**Goal**: Tag the book repository as v1.0.0 (5th Edition)
+
+### Step 2.1: Update Book README (15 minutes)
 
 **File**: `/Users/waynebishop/Projects/swift-algorithms/README.md`
 
-Add this section (or update existing installation section):
+**Add this section** (or update existing installation section):
 
 ```markdown
 ## 📦 Swift Package Dependencies
@@ -415,7 +417,8 @@ Add this section (or update existing installation section):
 The code examples in this book use the following production packages:
 
 ### Structures Package
-Essential data structures and algorithms.
+
+Essential data structures and algorithms featured throughout the book.
 
 **Installation via Swift Package Manager:**
 
@@ -435,6 +438,7 @@ dependencies: [
 ---
 
 ### Quiver Framework
+
 Vector mathematics for AI/ML workflows (Chapters 20-22).
 
 **Installation via Swift Package Manager:**
@@ -472,10 +476,11 @@ let magnitude = vector.magnitude
 ```
 ```
 
-**Then commit and push:**
+**Commit:**
 
 ```bash
 cd /Users/waynebishop/Projects/swift-algorithms
+# Make your edits to README.md
 git add README.md
 git commit -m "Add Swift Package Manager installation instructions
 
@@ -483,52 +488,219 @@ Added installation instructions for both packages:
 - Structures package v1.0.0
 - Quiver framework v1.0.0
 
-Includes SPM and Xcode installation methods with direct links to releases."
+Includes SPM and Xcode installation methods with links to releases.
+
+Prepares book for v1.0.0 release."
 git push
 ```
 
 ---
 
-### Step 5: Configure Google Analytics (10 minutes)
+### Step 2.2: Tag Book v1.0.0 (5 minutes)
 
-**IMPORTANT: Do this AFTER setting up your custom domain or GitHub Pages URL.**
+**Tag the 5th edition:**
 
-Once the book is live at its final URL, add Google Analytics tracking to monitor readership and engagement.
+```bash
+cd /Users/waynebishop/Projects/swift-algorithms
 
-#### Prerequisites
-- [ ] Domain name is configured (custom domain OR GitHub Pages default)
-- [ ] Site is live and accessible at final URL
+git tag -a v1.0.0 -m "Swift Algorithms & Data Structures - 5th Edition (v1.0.0)
+
+First tagged release of the 5th edition.
+
+This edition features:
+- 22 chapters covering essential algorithms and data structures
+- Apple documentation design with Jekyll/GitHub Pages
+- Integration with Structures package v1.0.0
+- Integration with Quiver framework v1.0.0
+- Progressive learning path from basics to AI/ML applications
+- Comprehensive coverage: searching, sorting, recursion, generics, data structures,
+  graph algorithms, dynamic programming, vectors, matrices, and semantic search
+
+Published: 2025-10-19
+Platform: GitHub Pages
+Target Audience: Intermediate Swift developers
+
+Chapters:
+1. Introduction
+2. Measuring Performance
+3. Basic Searching
+4. Basic Sorting
+5. Advanced Sorting
+6. Recursion
+7. Generics
+8. Performance Analysis
+9-16. Core Data Structures
+17-22. Advanced Topics & AI/ML"
+
+git push origin v1.0.0
+
+# Verify tag
+git tag -l "v1.0.0"
+```
+
+---
+
+### Step 2.3: Create Book GitHub Release (10 minutes)
+
+**URL**: https://github.com/waynewbishop/swift-algorithms/releases/new
+
+**Steps:**
+1. Go to book repository on GitHub
+2. Click "Releases" in right sidebar
+3. Click "Draft a new release"
+4. Choose tag: `v1.0.0` from dropdown
+5. Release title: `Swift Algorithms & Data Structures - 5th Edition (v1.0.0)`
+6. Copy description from template below
+7. Check "Set as the latest release"
+8. Click "Publish release"
+
+**Release Description Template:**
+
+```markdown
+# Swift Algorithms & Data Structures - 5th Edition 📚
+
+First tagged release of the 5th edition - a comprehensive guide to algorithms and data structures in Swift.
+
+## 🎯 About This Edition
+
+The 5th edition represents a complete modernization of the book with Apple-inspired design, enhanced pedagogy, and integration with production Swift packages.
+
+**Read online**: [YOUR_GITHUB_PAGES_URL_HERE]
+
+## ✨ What's New in 5th Edition
+
+- **Modern Design**: Apple documentation aesthetic with Jekyll/GitHub Pages
+- **22 Comprehensive Chapters**: From basics to AI/ML applications
+- **Production Code**: All examples verified against Structures v1.0.0 and Quiver v1.0.0
+- **Progressive Learning**: Carefully scaffolded from fundamentals to advanced topics
+- **AI/ML Integration**: Semantic search, vector mathematics, and matrix operations
+
+## 📖 Table of Contents
+
+### Fundamentals (Ch 1-2)
+- Introduction & Measuring Performance
+
+### Algorithms (Ch 3-6)
+- Basic & Advanced Searching
+- Basic & Advanced Sorting
+- Recursion
+
+### Swift Concepts (Ch 7-8)
+- Generics & Type Systems
+- Performance Analysis & Big O
+
+### Data Structures (Ch 9-16)
+- Linked Lists, Stacks, Queues
+- Binary Search Trees & Tree Balancing
+- Graphs & Shortest Paths
+- Tries, Hash Tables, Heaps
+- Dynamic Programming
+
+### Advanced Topics (Ch 17-22)
+- Shortest Paths (Dijkstra, Bellman-Ford)
+- Dynamic Programming
+- PageRank Algorithm
+- Vector Mathematics
+- Matrix Operations
+- Semantic Search (AI/ML)
+
+## 📦 Swift Packages
+
+This book uses two production packages:
+
+### Structures v1.0.0
+Core data structures and algorithms.
+
+```swift
+.package(url: "https://github.com/waynewbishop/bishop-algorithms-swift-package", from: "1.0.0")
+```
+
+[View Structures Package →](https://github.com/waynewbishop/bishop-algorithms-swift-package)
+
+### Quiver v1.0.0
+Vector mathematics for AI/ML (Chapters 20-22).
+
+```swift
+.package(url: "https://github.com/waynewbishop/bishop-algorithms-quiver-package", from: "1.0.0")
+```
+
+[View Quiver Package →](https://github.com/waynewbishop/bishop-algorithms-quiver-package)
+
+## 🎓 Who This Book Is For
+
+- **Intermediate Swift developers** comfortable with Swift basics
+- Developers preparing for **technical interviews**
+- Engineers wanting to **strengthen CS fundamentals**
+- Anyone building **AI/ML applications** in Swift
+
+## 🔗 Related Projects
+
+- [Structures Package](https://github.com/waynewbishop/bishop-algorithms-swift-package) - Production implementations
+- [Quiver Framework](https://github.com/waynewbishop/bishop-algorithms-quiver-package) - Vector mathematics
+- [RunBuddy App](https://github.com/waynewbishop/bishop-app-runbuddy-swift) - Real-world Swift application
+
+## 📄 License
+
+This content is available for both commercial and open-source projects. Attribution to waynewbishop.com is appreciated. See LICENSE file for details.
+
+## 👤 Author
+
+**Wayne Bishop**
+Website: [waynewbishop.com](http://www.waynewbishop.com)
+LinkedIn: [linkedin.com/in/waynebishop](https://www.linkedin.com/in/waynebishop/)
+GitHub: [@waynewbishop](https://github.com/waynewbishop)
+
+---
+
+**Published**: October 19, 2025
+**Edition**: 5th Edition
+**Version**: 1.0.0
+```
+
+**Remember to replace** `YOUR_GITHUB_PAGES_URL_HERE` with your actual site URL!
+
+---
+
+## 📊 Phase 3: Analytics Setup (15 minutes)
+
+**Goal**: Add Google Analytics tracking to monitor readership
+
+**⚠️ IMPORTANT**: Do this AFTER your site is live with final URL (can be done days/weeks later)
+
+### Step 3.1: Get Google Analytics Measurement ID (5 minutes)
+
+**Prerequisites:**
+- [ ] Book site is live at final URL
 - [ ] Google Analytics account created at https://analytics.google.com/
-- [ ] GA4 property created for the book website
 
-#### Get Your Measurement ID
+**Get your ID:**
+1. Log in to Google Analytics
+2. Create GA4 property for book website (if not done)
+3. Go to **Admin** → **Data Streams** → Select web stream
+4. Copy **Measurement ID** (format: `G-XXXXXXXXXX`)
 
-1. Log in to Google Analytics: https://analytics.google.com/
-2. Create a new GA4 property for the book (if not done already)
-3. Go to **Admin** → **Data Streams** → Select your web stream
-4. Copy your **Measurement ID** (format: `G-XXXXXXXXXX`)
+---
 
-#### Add to _config.yml
+### Step 3.2: Add Analytics to Site (10 minutes)
+
+#### Update _config.yml
 
 **File**: `/Users/waynebishop/Projects/swift-algorithms/_config.yml`
 
-Add this line after the `author` line (around line 5):
+Add after the `author` line:
 
 ```yaml
 author: Wayne Bishop
-google_analytics: G-XXXXXXXXXX  # Replace with your actual GA4 measurement ID
+google_analytics: G-XXXXXXXXXX  # Replace with your actual ID
 ```
 
-#### Add Tracking Script to head.html
+#### Update head.html
 
 **File**: `/Users/waynebishop/Projects/swift-algorithms/_includes/head.html`
 
-Add this code **before the closing `</head>` tag** (after the favicon link, around line 20):
+Add before closing `</head>` tag:
 
 ```html
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="{{ '/assets/images/favicon.png' | relative_url }}">
-
   <!-- Google Analytics -->
   {% if site.google_analytics %}
   <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
@@ -547,8 +719,6 @@ Add this code **before the closing `</head>` tag** (after the favicon link, arou
 ```bash
 cd /Users/waynebishop/Projects/swift-algorithms
 
-# Make changes to _config.yml and _includes/head.html
-
 git add _config.yml _includes/head.html
 git commit -m "Add Google Analytics tracking
 
@@ -561,97 +731,132 @@ Measurement ID: G-XXXXXXXXXX"
 git push
 ```
 
-#### Verify Installation
+#### Verify Installation (after GitHub Pages rebuilds)
 
-After pushing (GitHub Pages rebuilds in ~1-2 minutes):
+1. Wait 1-2 minutes for GitHub Pages rebuild
+2. Visit your book site
+3. Open DevTools (F12) → **Network** tab
+4. Reload page → Look for `googletagmanager.com` requests
+5. Go to Google Analytics → **Reports** → **Realtime**
+6. Your visit should appear within 30 seconds
 
-1. Visit your book site in a browser
-2. Open browser DevTools (F12)
-3. Go to **Network** tab
-4. Reload page
-5. Look for requests to `googletagmanager.com` and `google-analytics.com`
-6. In Google Analytics, go to **Reports** → **Realtime**
-7. You should see your visit appear within 30 seconds
-
-#### Benefits
-- ✅ Track page views and popular chapters
-- ✅ Understand reader engagement and time on page
-- ✅ See which chapters readers visit most
-- ✅ Monitor traffic sources (social media, search engines, direct links)
-- ✅ Geographic data (where readers are located)
-- ✅ Easy to disable (just remove the line from _config.yml)
+**Benefits:**
+- Track page views and popular chapters
+- Understand reader engagement
+- Monitor traffic sources
+- Geographic data
 
 ---
 
-## 📝 Complete Release Checklist
+## ✅ Verification & Testing
 
-Use this checklist when executing the release:
+### Package Installation Testing
 
-### Prerequisites (Before Starting)
-- [ ] Book images are added and complete
-- [ ] Final book URL is determined (GitHub Pages or custom domain)
-- [ ] Book is in publishable state
+**Test Structures v1.0.0:**
 
-### Step 0: Update Package READMEs
-- [ ] Determine final book URL (e.g., https://waynewbishop.github.io/swift-algorithms/)
-- [ ] Update Structures README (line 4, 83) with new book URL
-- [ ] Add SPM installation instructions to Structures README
-- [ ] Add "Featured in Book" section to Quiver README
-- [ ] Commit and push both README changes
-- [ ] Verify README renders correctly on GitHub
+```bash
+# Create test project
+mkdir ~/test-structures && cd ~/test-structures
+swift package init --type executable
 
-### Pre-Release Verification
-- [ ] Navigate to Structures package directory
-- [ ] Run `git status` (should be clean - README already committed)
-- [ ] Run `swift test` (all tests pass)
-- [ ] Run `swift build` (builds successfully)
-- [ ] Check `git log v0.5.2..HEAD` to see if HEAD is ahead
-- [ ] Verify current branch is `main` or `master`
+# Add to Package.swift dependencies:
+.package(url: "https://github.com/waynewbishop/bishop-algorithms-swift-package", from: "1.0.0")
 
-### Tagging
-- [ ] Decide which approach: Retag 0.5.2 (Step 2A) or Tag current HEAD (Step 2B)
-- [ ] Delete v0.5.2 tag if retagging (Step 2A only)
-- [ ] Create v1.0.0 annotated tag with full message
-- [ ] Push v1.0.0 tag to GitHub: `git push origin v1.0.0`
-- [ ] Verify tag on GitHub: https://github.com/waynewbishop/bishop-algorithms-swift-package/tags
+# Add to target dependencies:
+.product(name: "Structures", package: "bishop-algorithms-swift-package")
 
-### GitHub Release Creation
-- [ ] Go to releases page: https://github.com/waynewbishop/bishop-algorithms-swift-package/releases/new
-- [ ] Select v1.0.0 tag from dropdown
-- [ ] Enter release title: "Structures v1.0.0 - Production Ready"
-- [ ] Copy/paste release description from template above
-- [ ] Check "Set as the latest release"
-- [ ] Click "Publish release"
-- [ ] Verify release appears: https://github.com/waynewbishop/bishop-algorithms-swift-package/releases
+# Test
+swift build
+```
 
-### Book Documentation Update
-- [ ] Open `/Users/waynebishop/Projects/swift-algorithms/README.md`
-- [ ] Add/update "Swift Package Dependencies" section
-- [ ] Include installation instructions for both packages
-- [ ] Link to both v1.0.0 releases
-- [ ] Commit changes: `git add README.md`
-- [ ] Push to GitHub: `git push`
-- [ ] Verify README renders correctly on GitHub
+**Test Quiver v1.0.0:**
 
-### Post-Release Verification
-- [ ] Test SPM installation in a new Xcode project
-- [ ] Verify both package URLs resolve correctly
-- [ ] Check that v1.0.0 is marked as "Latest" on GitHub
-- [ ] Verify book README installation instructions work
+```bash
+# Create test project
+mkdir ~/test-quiver && cd ~/test-quiver
+swift package init --type executable
 
-### Google Analytics Setup (After Domain Configuration)
-**Note: Do this AFTER domain is set up and site is live**
-- [ ] Create Google Analytics GA4 property for book website
-- [ ] Copy Measurement ID from GA4 (format: G-XXXXXXXXXX)
-- [ ] Add `google_analytics: G-XXXXXXXXXX` to `_config.yml`
-- [ ] Add GA tracking script to `_includes/head.html` (see Step 5 above)
-- [ ] Commit and push changes to GitHub
-- [ ] Wait for GitHub Pages rebuild (~1-2 minutes)
-- [ ] Verify tracking in browser DevTools Network tab
-- [ ] Check Google Analytics Realtime reports for live visits
+# Add to Package.swift dependencies:
+.package(url: "https://github.com/waynewbishop/bishop-algorithms-quiver-package", from: "1.0.0")
+
+# Add to target dependencies:
+.product(name: "Quiver", package: "bishop-algorithms-quiver-package")
+
+# Test
+swift build
+```
+
+### GitHub Release Verification
+
+**Check all releases exist:**
+- [ ] https://github.com/waynewbishop/bishop-algorithms-swift-package/releases/tag/v1.0.0
+- [ ] https://github.com/waynewbishop/bishop-algorithms-quiver-package/releases/tag/1.0.0 (already exists)
+- [ ] https://github.com/waynewbishop/swift-algorithms/releases/tag/v1.0.0
+
+**Verify "Latest" badges:**
+- [ ] Structures shows green "Latest" badge
+- [ ] Quiver shows green "Latest" badge
+- [ ] Book shows green "Latest" badge
+
+### Book Site Verification
+
+**Check GitHub Pages:**
+- [ ] Site is live at expected URL
+- [ ] All 22 chapters load correctly
+- [ ] Navigation works (sidebar, pagination)
+- [ ] Package installation links work
+- [ ] Google Analytics tracking (if Phase 3 complete)
+
+---
+
+## 📋 Complete Checklist
+
+### Phase 1: Package Releases ⏱ 45 min
+
+- [ ] **Step 1.1**: Update Structures README (book URL, installation)
+- [ ] **Step 1.1**: Update Quiver README (add book reference)
+- [ ] **Step 1.1**: Commit and push both README changes
+- [ ] **Step 1.2**: Run `git log v0.5.2..HEAD` on Structures
+- [ ] **Step 1.2**: Run `swift test` and `swift build` (all pass)
+- [ ] **Step 1.3A or 1.3B**: Tag Structures v1.0.0
+- [ ] **Step 1.3**: Push tag: `git push origin v1.0.0`
+- [ ] **Step 1.4**: Create Structures GitHub Release
+- [ ] **Step 1.4**: Verify release shows "Latest" badge
+
+### Phase 2: Book Release ⏱ 30 min
+
+- [ ] **Step 2.1**: Update book README (add package installation section)
+- [ ] **Step 2.1**: Commit and push book README changes
+- [ ] **Step 2.2**: Tag book v1.0.0 with comprehensive message
+- [ ] **Step 2.2**: Push tag: `git push origin v1.0.0`
+- [ ] **Step 2.3**: Create book GitHub Release
+- [ ] **Step 2.3**: Replace `YOUR_GITHUB_PAGES_URL_HERE` with actual URL
+- [ ] **Step 2.3**: Verify book release shows "Latest" badge
+
+### Phase 3: Analytics Setup ⏱ 15 min (AFTER site is live)
+
+- [ ] **Step 3.1**: Create GA4 property in Google Analytics
+- [ ] **Step 3.1**: Copy Measurement ID (G-XXXXXXXXXX)
+- [ ] **Step 3.2**: Add `google_analytics:` to _config.yml
+- [ ] **Step 3.2**: Add GA script to _includes/head.html
+- [ ] **Step 3.2**: Commit and push analytics changes
+- [ ] **Step 3.2**: Wait for GitHub Pages rebuild (~2 minutes)
+- [ ] **Step 3.2**: Verify tracking in DevTools Network tab
+- [ ] **Step 3.2**: Check Google Analytics Realtime reports
+
+### Verification
+
+- [ ] Test Structures SPM installation in new project
+- [ ] Test Quiver SPM installation in new project
+- [ ] Verify all 3 releases have "Latest" badges
+- [ ] Check book site loads correctly
+- [ ] Verify package links in book README work
+- [ ] Test analytics tracking (if Phase 3 complete)
 
 ### Optional: Announcement
-- [ ] Social media post (LinkedIn, Twitter/X)
+
+- [ ] LinkedIn post announcing v1.0.0 releases
+- [ ] Twitter/X post with links
 - [ ] Blog post on waynewbishop.com
 - [ ] Update LinkedIn profile projects section
 
@@ -659,22 +864,7 @@ Use this checklist when executing the release:
 
 ## 🎯 Quick Reference
 
-### Repository URLs
-- **Structures**: https://github.com/waynewbishop/bishop-algorithms-swift-package
-- **Quiver**: https://github.com/waynewbishop/bishop-algorithms-quiver-package
-- **Book**: https://github.com/waynewbishop/swift-algorithms
-
-### Package Locations
-- **Structures**: `/Users/waynebishop/Projects/bishop-algorithms-swift-package`
-- **Quiver**: `/Users/waynebishop/Projects/bishop-algorithms-quiver-package`
-- **Book**: `/Users/waynebishop/Projects/swift-algorithms`
-
-### Version Numbers
-- **Structures Current**: v0.5.2 (tagged, no release)
-- **Structures Target**: v1.0.0 (recommended)
-- **Quiver**: v1.0.0 (complete ✓)
-
-### Installation Code (for users)
+### Installation Commands (for users)
 
 **Structures:**
 ```swift
@@ -686,39 +876,41 @@ Use this checklist when executing the release:
 .package(url: "https://github.com/waynewbishop/bishop-algorithms-quiver-package", from: "1.0.0")
 ```
 
----
+### Repository URLs
 
-## 🚀 When You're Ready to Execute
+- **Structures**: https://github.com/waynewbishop/bishop-algorithms-swift-package
+- **Quiver**: https://github.com/waynewbishop/bishop-algorithms-quiver-package
+- **Book**: https://github.com/waynewbishop/swift-algorithms
 
-**Prerequisites:**
-1. Book images are added (your final work)
-2. Book is in final publishable state
-3. Final book URL is determined (GitHub Pages or custom domain)
-4. You have 50-60 minutes uninterrupted time
+### Local Paths
 
-**Execution order (Package Release):**
-1. Run Step 0 (update package READMEs) - 10 minutes
-2. Run Step 1 (verification) - 5 minutes
-3. Run Step 2A or 2B (tagging) - 5 minutes
-4. Run Step 3 (GitHub release) - 15 minutes
-5. Run Step 4 (book docs) - 10 minutes
-6. Post-release verification - 5 minutes
+- **Structures**: `/Users/waynebishop/Projects/bishop-algorithms-swift-package`
+- **Quiver**: `/Users/waynebishop/Projects/bishop-algorithms-quiver-package`
+- **Book**: `/Users/waynebishop/Projects/swift-algorithms`
 
-**Total time (packages)**: ~50 minutes
+### Release URLs (after execution)
 
-**Later (After Domain Setup):**
-7. Run Step 5 (Google Analytics) - 10 minutes
-   - Do this AFTER your domain is configured and site is live
-   - Can be done days/weeks after initial release
-   - Separate task from package release
+- **Structures v1.0.0**: https://github.com/waynewbishop/bishop-algorithms-swift-package/releases/tag/v1.0.0
+- **Quiver v1.0.0**: https://github.com/waynewbishop/bishop-algorithms-quiver-package/releases/tag/1.0.0
+- **Book v1.0.0**: https://github.com/waynewbishop/swift-algorithms/releases/tag/v1.0.0
 
 ---
 
-## 💡 Future Releases
+## 🔮 Future Releases
 
-### For Patch Releases (1.0.0 → 1.0.1)
+### Semantic Versioning
 
-**When to use**: Bug fixes only, no new features
+Follow [Semantic Versioning 2.0.0](https://semver.org/):
+
+**Format**: `MAJOR.MINOR.PATCH`
+
+- **MAJOR**: Breaking changes (e.g., 1.0.0 → 2.0.0)
+- **MINOR**: New features, backward compatible (e.g., 1.0.0 → 1.1.0)
+- **PATCH**: Bug fixes only (e.g., 1.0.0 → 1.0.1)
+
+### Patch Releases (1.0.0 → 1.0.1)
+
+**When**: Bug fixes only, no new features
 
 ```bash
 git tag -a v1.0.1 -m "Release 1.0.1
@@ -726,15 +918,15 @@ git tag -a v1.0.1 -m "Release 1.0.1
 Bug fixes:
 - Fixed memory leak in Graph BFS traversal
 - Corrected edge case in Hash Table resizing
-- Updated documentation
+- Updated documentation typos
 
 No API changes, drop-in replacement for 1.0.0"
 git push origin v1.0.1
 ```
 
-### For Minor Releases (1.0.0 → 1.1.0)
+### Minor Releases (1.0.0 → 1.1.0)
 
-**When to use**: New features, backward compatible
+**When**: New features, backward compatible
 
 ```bash
 git tag -a v1.1.0 -m "Release 1.1.0
@@ -742,29 +934,51 @@ git tag -a v1.1.0 -m "Release 1.1.0
 New features:
 - Added doubly-linked list implementation
 - New batch operations for Graph algorithms
-- Performance improvements
+- Performance improvements for large datasets
 
 Backward compatible with 1.0.x"
 git push origin v1.1.0
 ```
 
-### For Major Releases (1.1.0 → 2.0.0)
+### Major Releases (1.1.0 → 2.0.0)
 
-**When to use**: Breaking changes
+**When**: Breaking changes
 
 ```bash
 git tag -a v2.0.0 -m "Release 2.0.0
 
 BREAKING CHANGES:
 - Renamed enQueue() to enqueue() for Swift conventions
-- Changed tvalue to value for clarity
+- Changed tvalue to value for consistency
 - Removed deprecated methods
+- Updated minimum Swift version to 6.0
 
-Migration guide: See CHANGELOG.md
+Migration guide available in CHANGELOG.md
 
 New features:
 - Swift 6 compatibility
-- Improved error handling"
+- Improved error handling with Result types
+- Async/await support for heavy operations"
+git push origin v2.0.0
+```
+
+### Book Edition Releases
+
+**Next edition (6th edition):**
+
+```bash
+# When 6th edition is complete
+git tag -a v2.0.0 -m "Swift Algorithms & Data Structures - 6th Edition (v2.0.0)
+
+Major updates for 6th edition:
+- Updated for Swift 6.0
+- New chapters on [topics]
+- Refreshed code examples
+- Updated package references
+- Enhanced AI/ML coverage
+
+Published: [DATE]
+Previous edition: v1.0.0 (5th Edition)"
 git push origin v2.0.0
 ```
 
@@ -772,23 +986,18 @@ git push origin v2.0.0
 
 ## 📚 Additional Resources
 
-### Semantic Versioning
-- Official spec: https://semver.org/
-- Format: MAJOR.MINOR.PATCH
-- Increment MAJOR for breaking changes
-- Increment MINOR for new features
-- Increment PATCH for bug fixes
+### Documentation
 
-### Git Tagging
-- Annotated tags (recommended): `git tag -a v1.0.0 -m "message"`
-- Lightweight tags (not recommended for releases): `git tag v1.0.0`
-- Delete local tag: `git tag -d v1.0.0`
-- Delete remote tag: `git push origin :refs/tags/v1.0.0`
+- **Semantic Versioning**: https://semver.org/
+- **Git Tagging**: https://git-scm.com/book/en/v2/Git-Basics-Tagging
+- **GitHub Releases**: https://docs.github.com/en/repositories/releasing-projects-on-github
+- **Google Analytics GA4**: https://support.google.com/analytics/answer/9304153
 
-### GitHub Releases
-- Official docs: https://docs.github.com/en/repositories/releasing-projects-on-github
-- Best practices: https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases
-- Markdown formatting: https://docs.github.com/en/get-started/writing-on-github
+### Support
+
+- **Issues**: Report problems via GitHub Issues in respective repos
+- **Questions**: Reach out via LinkedIn or website contact form
+- **Contributions**: Pull requests welcome (follow CONTRIBUTING.md guidelines)
 
 ---
 
@@ -796,33 +1005,39 @@ git push origin v2.0.0
 
 You'll know the release is successful when:
 
-1. **GitHub shows v1.0.0 as "Latest Release"**
-   - Green "Latest" badge appears
-   - Release notes are visible
-   - Download links work
+### Package Releases
+- ✅ Structures v1.0.0 shows green "Latest" badge on GitHub
+- ✅ Quiver README references the book (v1.0.0 already released)
+- ✅ SPM installation works via Xcode "Add Package Dependencies"
+- ✅ Test projects build successfully with both packages
 
-2. **SPM Installation Works**
-   - Can add package via Xcode: File → Add Package Dependencies
-   - Xcode shows v1.0.0 in version selector
-   - Code builds and imports successfully
+### Book Release
+- ✅ Book v1.0.0 shows green "Latest" badge on GitHub
+- ✅ GitHub Pages site is live and accessible
+- ✅ All 22 chapters load correctly
+- ✅ Package installation links in README work
+- ✅ Navigation and pagination work correctly
 
-3. **Book Documentation is Complete**
-   - README has installation instructions
-   - Links to releases work
-   - Code examples reference correct versions
+### Analytics (if Phase 3 complete)
+- ✅ Google Analytics tracking script loads
+- ✅ Realtime reports show visits
+- ✅ Page view tracking works for all chapters
 
-4. **Consistency Achieved**
-   - Both Structures and Quiver at v1.0.0
-   - Book references match released versions
-   - No version mismatches in documentation
+### Consistency
+- ✅ All three repos tagged v1.0.0
+- ✅ Book references match released package versions
+- ✅ No version mismatches in documentation
+- ✅ Clean, professional presentation across all repos
 
 ---
 
-**Notes:**
-- Keep this file updated if plans change
-- Mark checkboxes as you complete each step
-- Save any custom modifications to templates
-- Document any issues encountered during release
+**Execution Tips:**
 
-**Last Updated**: 2025-01-17
-**Next Review**: Before executing release
+1. **Work sequentially**: Complete Phase 1 before Phase 2, Phase 2 before Phase 3
+2. **Test as you go**: Verify each step before moving to next
+3. **Save your book URL**: You'll need it multiple times across phases
+4. **Take breaks**: 90 minutes is long - pause between phases if needed
+5. **Keep terminal open**: You'll switch between repos frequently
+6. **Proofread release notes**: Check for typos and correct URLs before publishing
+
+**Good luck with your release! 🚀**
