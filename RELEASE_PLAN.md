@@ -489,6 +489,100 @@ git push
 
 ---
 
+### Step 5: Configure Google Analytics (10 minutes)
+
+**IMPORTANT: Do this AFTER setting up your custom domain or GitHub Pages URL.**
+
+Once the book is live at its final URL, add Google Analytics tracking to monitor readership and engagement.
+
+#### Prerequisites
+- [ ] Domain name is configured (custom domain OR GitHub Pages default)
+- [ ] Site is live and accessible at final URL
+- [ ] Google Analytics account created at https://analytics.google.com/
+- [ ] GA4 property created for the book website
+
+#### Get Your Measurement ID
+
+1. Log in to Google Analytics: https://analytics.google.com/
+2. Create a new GA4 property for the book (if not done already)
+3. Go to **Admin** → **Data Streams** → Select your web stream
+4. Copy your **Measurement ID** (format: `G-XXXXXXXXXX`)
+
+#### Add to _config.yml
+
+**File**: `/Users/waynebishop/Projects/swift-algorithms/_config.yml`
+
+Add this line after the `author` line (around line 5):
+
+```yaml
+author: Wayne Bishop
+google_analytics: G-XXXXXXXXXX  # Replace with your actual GA4 measurement ID
+```
+
+#### Add Tracking Script to head.html
+
+**File**: `/Users/waynebishop/Projects/swift-algorithms/_includes/head.html`
+
+Add this code **before the closing `</head>` tag** (after the favicon link, around line 20):
+
+```html
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{{ '/assets/images/favicon.png' | relative_url }}">
+
+  <!-- Google Analytics -->
+  {% if site.google_analytics %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{{ site.google_analytics }}');
+  </script>
+  {% endif %}
+</head>
+```
+
+#### Commit and Deploy
+
+```bash
+cd /Users/waynebishop/Projects/swift-algorithms
+
+# Make changes to _config.yml and _includes/head.html
+
+git add _config.yml _includes/head.html
+git commit -m "Add Google Analytics tracking
+
+Added GA4 tracking to monitor book readership:
+- Added google_analytics property to _config.yml
+- Integrated GA tracking script in head.html
+- Conditional loading (only when google_analytics is set)
+
+Measurement ID: G-XXXXXXXXXX"
+git push
+```
+
+#### Verify Installation
+
+After pushing (GitHub Pages rebuilds in ~1-2 minutes):
+
+1. Visit your book site in a browser
+2. Open browser DevTools (F12)
+3. Go to **Network** tab
+4. Reload page
+5. Look for requests to `googletagmanager.com` and `google-analytics.com`
+6. In Google Analytics, go to **Reports** → **Realtime**
+7. You should see your visit appear within 30 seconds
+
+#### Benefits
+- ✅ Track page views and popular chapters
+- ✅ Understand reader engagement and time on page
+- ✅ See which chapters readers visit most
+- ✅ Monitor traffic sources (social media, search engines, direct links)
+- ✅ Geographic data (where readers are located)
+- ✅ Easy to disable (just remove the line from _config.yml)
+
+---
+
 ## 📝 Complete Release Checklist
 
 Use this checklist when executing the release:
@@ -545,6 +639,17 @@ Use this checklist when executing the release:
 - [ ] Check that v1.0.0 is marked as "Latest" on GitHub
 - [ ] Verify book README installation instructions work
 
+### Google Analytics Setup (After Domain Configuration)
+**Note: Do this AFTER domain is set up and site is live**
+- [ ] Create Google Analytics GA4 property for book website
+- [ ] Copy Measurement ID from GA4 (format: G-XXXXXXXXXX)
+- [ ] Add `google_analytics: G-XXXXXXXXXX` to `_config.yml`
+- [ ] Add GA tracking script to `_includes/head.html` (see Step 5 above)
+- [ ] Commit and push changes to GitHub
+- [ ] Wait for GitHub Pages rebuild (~1-2 minutes)
+- [ ] Verify tracking in browser DevTools Network tab
+- [ ] Check Google Analytics Realtime reports for live visits
+
 ### Optional: Announcement
 - [ ] Social media post (LinkedIn, Twitter/X)
 - [ ] Blog post on waynewbishop.com
@@ -591,7 +696,7 @@ Use this checklist when executing the release:
 3. Final book URL is determined (GitHub Pages or custom domain)
 4. You have 50-60 minutes uninterrupted time
 
-**Execution order:**
+**Execution order (Package Release):**
 1. Run Step 0 (update package READMEs) - 10 minutes
 2. Run Step 1 (verification) - 5 minutes
 3. Run Step 2A or 2B (tagging) - 5 minutes
@@ -599,7 +704,13 @@ Use this checklist when executing the release:
 5. Run Step 4 (book docs) - 10 minutes
 6. Post-release verification - 5 minutes
 
-**Total time**: ~50 minutes
+**Total time (packages)**: ~50 minutes
+
+**Later (After Domain Setup):**
+7. Run Step 5 (Google Analytics) - 10 minutes
+   - Do this AFTER your domain is configured and site is live
+   - Can be done days/weeks after initial release
+   - Separate task from package release
 
 ---
 
