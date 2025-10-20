@@ -29,6 +29,7 @@ Each scenario involves the same fundamental challenge, but the optimal approach 
 We've already encountered [linear search](https://en.wikipedia.org/wiki/Linear_search) in our Big O chapter, but let's examine it more thoroughly. Linear search represents the most straightforward approach to finding data: check every item until we find what we're looking for.
 
 ```swift
+// Implement linear search as an Array extension using Equatable protocol
 extension Array where Element: Equatable {
     // Search for an element using linear search, returning its index if found
     func linearSearch(for target: Element) -> Int? {
@@ -61,7 +62,7 @@ Linear search has several advantages that make it valuable in certain situations
 3. **Consistent performance** - No best or worst case surprises
 4. **Memory efficient** - Uses no additional storage
 
-### Linear search performance analysis
+## Linear search performance analysis
 
 As we learned in the Big O chapter, linear search operates in `O(n)` time. But let's break down what this means in practice:
 
@@ -112,9 +113,10 @@ Imagine we're looking for "Smith" in a physical phone book. You wouldn't start f
 
 This intuitive process is exactly how binary search works. Or consider finding a specific workout date in your fitness app's history. If your 500 workouts are sorted chronologically, you wouldn't scroll from the beginning. You'd jump to roughly where you think June 2023 should be, see if you're too early or too late, then narrow down from there. This halving strategy is binary search.
 
-### Binary search implementation
+## Binary search implementation
 
 ```swift
+// Implement binary search as an Array extension using Comparable protocol
 extension Array where Element: Comparable {
     // Search for an element using binary search on a sorted array
     func binarySearch(for target: Element) -> Int? {
@@ -149,7 +151,7 @@ if let index = sortedNumbers.binarySearch(for: 17) {
 }
 ```
 
-### Understanding binary search performance
+## Understanding binary search performance
 
 Binary search achieves `O(log n)` [time complexity](https://en.wikipedia.org/wiki/Time_complexity). This logarithmic performance means that doubling the data size only adds one more step to the search process.
 
@@ -287,11 +289,12 @@ class ContactManager {
 }
 ```
 
-### Memory vs. time trade-offs
+## Memory vs. time trade-offs
 
 Sometimes we might maintain both sorted and unsorted versions of your data, trading memory for faster access patterns:
 
 ```swift
+// Dual-array data structure trading memory for fast search and insertion-order access
 class OptimizedDataStore<T: Comparable> {
     private var insertionOrder: [T] = []  //for maintaining order of addition
     private var sortedData: [T] = []      //for fast searching

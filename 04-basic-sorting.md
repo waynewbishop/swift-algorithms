@@ -23,6 +23,7 @@ Insertion sort is one of the more basic algorithms in computer science. The algo
 The set is divided into sorted and unsorted halves and repeats until all elements are sorted.
 
 ```swift
+// Implement insertion sort as an Array extension - O(n²) with O(n) best case
 extension Array where Element: Comparable {
     // Sort array using insertion sort - efficient for nearly-sorted data
     func insertionSort() -> Array<Element> {
@@ -67,6 +68,7 @@ let results: Array<Int> = numberList.insertionSort()
 The bubble sort is another common sorting technique. Like insertion sort, the bubble sort algorithm combines a series of steps with an invariant. The function works by evaluating pairs of values. Once compared, the position of the largest value is swapped with the smaller value. Completed enough times, this "bubbling" effect eventually sorts all elements in the list.
 
 ```swift
+// Implement bubble sort as an Array extension - O(n²) in all cases
 extension Array where Element: Comparable {
     // Sort array using bubble sort - repeatedly swaps adjacent elements
     func bubbleSort() -> Array<Element> {
@@ -109,6 +111,7 @@ let results: Array<Int> = numberList.bubbleSort()
 Similar to bubble sort, the selection sort algorithm ranks elements by iterating through a collection and swaps elements based on their value. The set is divided into sorted and unsorted halves and repeats until all elements are sorted.
 
 ```swift
+// Implement selection sort as an Array extension - O(n²) with minimal swaps
 extension Array where Element: Comparable {
     // Sort array using selection sort - minimizes swap operations
     func selectionSort() -> Array<Element> {
@@ -155,7 +158,7 @@ let results: Array<Int> = numberList.selectionSort()
 
 Now that we've seen the three algorithms in action, let's analyze what makes them similar and different.
 
-### Why O(n²)
+## Why O(n²)
 
 The three algorithms in this chapter—insertion sort, bubble sort, and selection sort—all have **`O(n²)` [time complexity](https://en.wikipedia.org/wiki/Time_complexity)** in their average and [worst cases](https://en.wikipedia.org/wiki/Best,_worst_and_average_case). This means that as your data doubles in size, the sorting time roughly quadruples.
 
@@ -177,7 +180,7 @@ Total: 10 comparisons for 4 elements
 
 For 8 elements, you'd need about 40 comparisons—quadrupling the work for double the data.
 
-### When to use basic sorting algorithms
+## When to use basic sorting algorithms
 
 Despite their `O(n²)` complexity, these algorithms have legitimate use cases. Understanding when to apply each algorithm requires considering the characteristics of your data and the constraints of your environment.
 

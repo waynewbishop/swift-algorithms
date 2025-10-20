@@ -139,7 +139,7 @@ This mechanism serves dual purposes:
 - Maintains mathematical validity of the probability model
 - Provides residual benefit to pages that might otherwise receive no incoming authority
 
-### The damping factor: Modeling realistic browsing
+## The damping factor
 
 The **damping factor** (typically denoted as *d*) represents the probability that a random surfer will continue clicking links rather than jumping to a completely random page. Google's original PageRank uses a damping factor of 0.85, meaning:
 
@@ -184,7 +184,7 @@ let dampingFactor: Float = 0.85
 
 Let's implement an educational PageRank algorithm that demonstrates core concepts while remaining accessible for learning.
 
-### Graph structure design
+## Graph structure design
 
 Our implementation builds on the graph structures from [Chapter 13](13-graphs), extending vertices to support PageRank calculations:
 
@@ -216,7 +216,7 @@ public class Vertex<T>: Equatable {
 - **Generic support**: Works with any vertex type (String, Int, custom objects)
 - **UUID equality**: Ensures consistent vertex identification regardless of content changes
 
-### Core PageRank algorithm
+## Core PageRank algorithm
 
 Here's our educational PageRank implementation with sink node handling:
 
@@ -273,7 +273,7 @@ extension Graph {
 }
 ```
 
-### Enhanced algorithm with damping factor
+## Enhanced algorithm with damping factor
 
 Here's an enhanced version of your PageRank algorithm that includes the damping factor for more accurate and stable results:
 
@@ -367,7 +367,7 @@ extension Graph {
 4. Stability: Damping factor prevents rank accumulation issues and ensures convergence
 5. **Backward compatibility**: Still populates your three-slot rank array format
 
-### Choosing the right convergence threshold
+## Choosing convergence thresholds
 
 The convergence threshold (default: 0.0001) represents the maximum change in any page's PageRank value between iterations. This choice balances computational efficiency with result accuracy:
 
@@ -390,7 +390,7 @@ The convergence threshold (default: 0.0001) represents the maximum change in any
 
 No changes needed to your existing `Vertex<T>` class—the enhanced algorithm works with your current structure while providing more accurate results.
 
-### Educational vs. production considerations
+## Educational vs. production implementations
 
 Our original implementation prioritizes learning over optimization:
 
