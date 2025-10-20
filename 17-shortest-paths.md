@@ -150,7 +150,7 @@ For sparse graphs where the number of edges is much smaller than `V²`, this per
 
 ## Heap-optimized implementation
 
-[Chapter 16](16-heaps) introduced heaps as priority queues with `O(log n)` insertion and `O(1)` minimum element access. By replacing the array-based frontier with a `heap`, we transform the expensive minimum-finding operation into a constant-time O(1) `peek` followed by a logarithmic `dequeue`:
+[Chapter 16](16-heaps) introduced heaps as priority queues with `O(log n)` insertion and `O(1)` minimum element access. By replacing the array-based frontier with a `heap`, we transform the expensive minimum-finding operation into a constant-time `O(1)` `peek` followed by a logarithmic `dequeue`:
 
 ```swift
 // Dijkstra's shortest path using heap-based frontier - O((V + E) log V)
@@ -219,8 +219,8 @@ The choice between array-based and heap-based implementations depends on graph c
 
 | Implementation | Find Min | Insert | Time Complexity | Best For |
 |---------------|----------|--------|-----------------|----------|
-| Array-based | O(V) scan | O(1) | O(V²) | Dense graphs, small graphs |
-| Heap-based | O(1) peek | O(log V) | O((V + E) log V) | Sparse graphs, large graphs |
+| Array-based | `O(V)` scan | `O(1)` | `O(V²)` | Dense graphs, small graphs |
+| Heap-based | `O(1)` peek | `O(log V)` | `O((V + E) log V)` | Sparse graphs, large graphs |
 
 For small graphs with fewer than 100 vertices, the array-based implementation suffices and its simplicity aids understanding. For large graphs or production systems handling thousands of vertices, the heap-based optimization becomes essential. The logarithmic factor remains manageable even as graphs scale to millions of edges, making heap-based Dijkstra's practical for real-world applications like mapping services and network routing.
 

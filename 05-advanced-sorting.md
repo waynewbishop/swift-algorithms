@@ -149,13 +149,13 @@ We'll explore recursion more deeply in [Chapter 6](06-recursion.md), where we'll
 
 ## When to use Quicksort
 
-Quicksort achieves O(n log n) average time complexity with excellent practical performance:
+Quicksort achieves `O(n log n)` average time complexity with excellent practical performance:
 
 | Characteristic | Value |
 |----------------|-------|
-| Average case | O(n log n) |
-| Worst case | O(n²) |
-| Space complexity | O(log n) |
+| Average case | `O(n log n)` |
+| Worst case | `O(n²)` |
+| Space complexity | `O(log n)` |
 | In-place | Yes |
 | Stable | No |
 

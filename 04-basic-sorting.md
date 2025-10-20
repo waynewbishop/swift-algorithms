@@ -195,9 +195,9 @@ These algorithms become inappropriate when dealing with large datasets, when per
 
 | Algorithm | Best Case | Average Case | Worst Case | Swaps | Stable? | Space |
 |-----------|-----------|--------------|------------|-------|---------|-------|
-| Insertion | O(n) | O(n²) | O(n²) | O(n²) | Yes | O(1) |
-| Bubble | O(n) | O(n²) | O(n²) | O(n²) | Yes | O(1) |
-| Selection | O(n²) | O(n²) | O(n²) | O(n) | No | O(1) |
+| Insertion | `O(n)` | `O(n²)` | `O(n²)` | `O(n²)` | Yes | `O(1)` |
+| Bubble | `O(n)` | `O(n²)` | `O(n²)` | `O(n²)` | Yes | `O(1)` |
+| Selection | `O(n²)` | `O(n²)` | `O(n²)` | `O(n)` | No | `O(1)` |
 
 Stability means equal elements maintain their relative order after sorting. This matters when sorting complex objects.
 

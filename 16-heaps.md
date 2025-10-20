@@ -9,7 +9,7 @@ Your iPhone is juggling dozens of tasks right now—downloading email, syncing H
 
 Beyond iOS itself, heaps power the algorithms that optimize your fitness data. Finding your top 10 fastest runs from thousands of workouts? Heap algorithm. Processing GPS points in time-stamped order during a run? Priority queue. Scheduling interval training alerts? Heap manages the timer queue. These operations need to maintain sorted order while constantly adding and removing items—exactly what heaps excel at.
 
-Heaps combine concepts from throughout this book. They use generic types ([Chapter 7](07-generics.md)) with Comparable constraints, achieve O(log n) operations ([Chapter 8](08-performance-analysis.md)), can be implemented as specialized queues ([Chapter 10](10-stacks-and-queues.md)), and dramatically optimize graph algorithms like Dijkstra's ([Chapter 13](13-graphs.md)). The heap property—parent nodes are always more extreme than their children—creates a complete binary tree that's both simple to implement and remarkably efficient.
+Heaps combine concepts from throughout this book. They use generic types ([Chapter 7](07-generics.md)) with Comparable constraints, achieve `O(log n)` operations ([Chapter 8](08-performance-analysis.md)), can be implemented as specialized queues ([Chapter 10](10-stacks-and-queues.md)), and dramatically optimize graph algorithms like Dijkstra's ([Chapter 13](13-graphs.md)). The heap property—parent nodes are always more extreme than their children—creates a complete binary tree that's both simple to implement and remarkably efficient.
 
 In this chapter, we'll explore heap fundamentals and build a complete heap implementation in Swift.
 
@@ -19,7 +19,7 @@ A heap is a complete [binary tree](https://en.wikipedia.org/wiki/Binary_tree) th
 - **Min-Heap**: Every parent node is smaller than or equal to its children
 - **Max-Heap**: Every parent node is greater than or equal to its children
 
-This ordering ensures that the minimum (or maximum) element is always at the root, enabling O(1) access to the most important element.
+This ordering ensures that the minimum (or maximum) element is always at the root, enabling `O(1)` access to the most important element.
 
 ### Heap vs binary search tree
 
@@ -28,12 +28,12 @@ This ordering ensures that the minimum (or maximum) element is always at the roo
 | Ordering | Left < Parent < Right | Parent ≤/≥ Children |
 | Shape | Can be unbalanced | Always complete |
 | Root Property | No guarantees | Min/Max element |
-| Search Time | O(log n) for specific values | O(n) for specific values |
-| Extract Min/Max | O(log n) | O(log n) |
+| Search Time | `O(log n)` for specific values | `O(n)` for specific values |
+| Extract Min/Max | `O(log n)` | `O(log n)` |
 
-Consider tracking your workout times with heaps. A min-heap keeps your fastest 5K time at the root, always accessible in O(1). Adding a new workout? O(log n) to maintain sorted order. Extracting your personal record? O(log n) to get and remove the best time. A max-heap for calorie burns keeps your highest calorie workout at the root, perfect for a "top 10 workouts" feature that maintains sorted order as you log new sessions.
+Consider tracking your workout times with heaps. A min-heap keeps your fastest 5K time at the root, always accessible in `O(1)`. Adding a new workout? `O(log n)` to maintain sorted order. Extracting your personal record? `O(log n)` to get and remove the best time. A max-heap for calorie burns keeps your highest calorie workout at the root, perfect for a "top 10 workouts" feature that maintains sorted order as you log new sessions.
 
-Why not use a sorted array instead? Inserting into a sorted array requires shifting everything—O(n) operations. Heap insert only bubbles up one path—O(log n). For 10,000 workouts, that's 10,000 operations versus ~14 operations. This performance difference makes heaps the right choice when you need to maintain sorted order while frequently adding and removing items.
+Why not use a sorted array instead? Inserting into a sorted array requires shifting everything—`O(n)` operations. Heap insert only bubbles up one path—`O(log n)`. For 10,000 workouts, that's 10,000 operations versus ~14 operations. This performance difference makes heaps the right choice when you need to maintain sorted order while frequently adding and removing items.
 
 ## Array representation
 
@@ -329,7 +329,7 @@ while let nextTask = taskQueue.dequeue() {
 
 ## Heap sort algorithm
 
-Heaps enable an efficient O(n log n) sorting algorithm:
+Heaps enable an efficient `O(n log n)` sorting algorithm:
 
 ```swift
 // Heap sort using max heap for ascending order - O(n log n) time, O(n) space
@@ -501,31 +501,31 @@ When you set multiple workout interval timers, iOS maintains them in a priority 
 
 Processing GPS points during a run requires handling them in time-stamped order. A min-heap sorted by timestamp ensures you always process the next chronological point, even if GPS signals arrive out of order due to satellite delays.
 
-Finding your top 10 best workouts demonstrates a classic heap problem. Maintain a max-heap of size 10. For each new workout, if it's better than the worst in the heap, replace it in O(log 10) time. The heap automatically maintains your top 10. This approach achieves O(n log k) time where k=10, better than sorting all n workouts which would take O(n log n).
+Finding your top 10 best workouts demonstrates a classic heap problem. Maintain a max-heap of size 10. For each new workout, if it's better than the worst in the heap, replace it in `O(log 10)` time. The heap automatically maintains your top 10. This approach achieves `O(n log k)` time where k=10, better than sorting all n workouts which would take `O(n log n)`.
 
 ## Performance analysis
 
 ### Time complexity
-- Insert: O(log n) - bubble up at most log n levels (worst case when element belongs at root)
-- **Extract Root**: O(log n) - bubble down at most log n levels (worst case when replacement element belongs at leaf)
-- Peek: O(1) - root is always at index 0, no traversal needed
-- **Build Heap**: O(n) - heapify is linear time due to mathematical properties of complete binary trees
-- Search: O(n) - no ordering for arbitrary elements, must check all nodes in worst case
+- Insert: `O(log n)` - bubble up at most log n levels (worst case when element belongs at root)
+- **Extract Root**: `O(log n)` - bubble down at most log n levels (worst case when replacement element belongs at leaf)
+- Peek: `O(1)` - root is always at index 0, no traversal needed
+- **Build Heap**: `O(n)` - heapify is linear time due to mathematical properties of complete binary trees
+- Search: `O(n)` - no ordering for arbitrary elements, must check all nodes in worst case
 
 **Important edge cases for extraction complexity:**
-- **Best case**: O(1) when the heap has only one element
-- **Average case**: O(log n) as the replacement element typically settles near the middle levels
-- **Worst case**: O(log n) when the replacement element (last element) has the worst priority and must sink to the bottom
+- **Best case**: `O(1)` when the heap has only one element
+- **Average case**: `O(log n)` as the replacement element typically settles near the middle levels
+- **Worst case**: `O(log n)` when the replacement element (last element) has the worst priority and must sink to the bottom
 
 ### Space complexity
-- Storage: O(n) - just the array
-- Operations: O(1) - in-place modifications
+- Storage: `O(n)` - just the array
+- Operations: `O(1)` - in-place modifications
 
 ### Comparison with other data structures
 
 | Operation | Array | Linked List | BST | Heap | Hash Table |
 |-----------|-------|-------------|-----|------|------------|
-| Find Min/Max | O(n) | O(n) | O(log n) | O(1) | O(n) |
-| Insert | O(n) | O(1) | O(log n) | O(log n) | O(1) avg |
-| Delete Min/Max | O(n) | O(n) | O(log n) | O(log n) | O(n) |
-| Build from Array | O(1) | O(n) | O(n log n) | O(n) | O(n) |
+| Find Min/Max | `O(n)` | `O(n)` | `O(log n)` | `O(1)` | `O(n)` |
+| Insert | `O(n)` | `O(1)` | `O(log n)` | `O(log n)` | `O(1)` avg |
+| Delete Min/Max | `O(n)` | `O(n)` | `O(log n)` | `O(log n)` | `O(n)` |
+| Build from Array | `O(1)` | `O(n)` | `O(n log n)` | `O(n)` | `O(n)` |

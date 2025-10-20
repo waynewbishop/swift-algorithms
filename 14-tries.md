@@ -5,7 +5,7 @@ description: "Implement prefix trees for efficient string operations"
 ---
 # Tries
 
-[Tries](https://en.wikipedia.org/wiki/Trie) are [tree](https://en.wikipedia.org/wiki/Tree_(data_structure))-based data structures that organize information in a hierarchy. Often pronounced "try", the term comes from the English language verb to retrieve. While most [algorithms](https://en.wikipedia.org/wiki/Algorithm) are designed to manipulate generic data, tries are commonly used with Strings.
+Tries and **tree-based** data structures that organize information in a hierarchy. Often pronounced "try", the term comes from the English language verb to retrieve. While most [algorithms](https://en.wikipedia.org/wiki/Algorithm) are designed to manipulate generic data, tries are commonly used with Strings.
 
 Tries specialize the tree structures from [Chapters 11-12](11-binary-search-trees.md) for string operations. While binary search trees store values in nodes and have two children (left/right), tries store characters in nodes and can have many children (one per character in the alphabet). This makes tries exceptionally efficient for prefix-based operations like autocomplete—a task that would require `O(n)` time with other data structures but takes only `O(p)` time with tries, where p is the prefix length.
 

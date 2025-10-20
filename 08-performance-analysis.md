@@ -13,7 +13,7 @@ It's time to formalize these observations. In [Chapter 2](02-measuring-performan
 
 ## Applying Big O to algorithms you know
 
-In [Chapter 2](02-measuring-performance.md), we learned that O(n) means linear time, O(log n) means logarithmic time, and O(n²) means quadratic time. Now let's apply this knowledge to every algorithm we've implemented.
+In [Chapter 2](02-measuring-performance.md), we learned that `O(n)` means linear time, `O(log n)` means logarithmic time, and `O(n²)` means quadratic time. Now let's apply this knowledge to every algorithm we've implemented.
 
 ### Search algorithms from Chapter 3
 
@@ -48,9 +48,9 @@ func binarySearch<T: Comparable>(for target: T, in array: [T]) -> Int? {
 }
 ```
 
-**Linear search:** Single loop through array = O(n) time, O(1) space
+**Linear search:** Single loop through array = `O(n)` time, `O(1)` space
 
-**Binary search:** Halving pattern (log₂ n comparisons) = O(log n) time, O(1) space
+**Binary search:** Halving pattern (log₂ n comparisons) = `O(log n)` time, `O(1)` space
 
 **Impact at scale:**
 
@@ -122,11 +122,11 @@ extension Array where Element: Comparable {
 }
 ```
 
-**Bubble sort:** Outer loop (n) × inner loop (n) = O(n²) time, O(1) space
+**Bubble sort:** Outer loop (n) × inner loop (n) = `O(n²)` time, `O(1)` space
 
-**Insertion sort:** O(n²) average, but O(n) best case when already sorted, O(1) space
+**Insertion sort:** `O(n²)` average, but `O(n)` best case when already sorted, `O(1)` space
 
-**Quicksort:** Good pivot splits array in half (log n levels × n work per level) = O(n log n) average. Poor pivot creates unbalanced splits = O(n²) worst case. Space: O(log n) for recursion stack.
+**Quicksort:** Good pivot splits array in half (log n levels × n work per level) = `O(n log n)` average. Poor pivot creates unbalanced splits = `O(n²)` worst case. Space: `O(log n)` for recursion stack.
 
 ### Recursive algorithms from Chapter 6
 
@@ -148,9 +148,9 @@ func fibonacciMemoized(_ n: Int, cache: inout [Int: Int]) -> Int {
 }
 ```
 
-**Naive Fibonacci:** Each call spawns two more calls, creating 2^n operations = O(2^n) time, O(n) space
+**Naive Fibonacci:** Each call spawns two more calls, creating 2^n operations = `O(2^n)` time, `O(n)` space
 
-**Memoized Fibonacci:** Each value computed once = O(n) time, O(n) space
+**Memoized Fibonacci:** Each value computed once = `O(n)` time, `O(n)` space
 
 **Performance for fib(40):** Naive takes billions of operations (2-3 seconds), memoized takes 40 operations (< 1 millisecond). Understanding complexity transforms unusable algorithms into instant ones.
 
@@ -158,7 +158,7 @@ func fibonacciMemoized(_ n: Int, cache: inout [Int: Int]) -> Int {
 
 You can often determine complexity by recognizing code patterns.
 
-**Single loop: O(n)**
+**Single loop: `O(n)`**
 ```swift
 // Process each element once
 func findMaximum(in numbers: [Int]) -> Int? {
@@ -170,7 +170,7 @@ func findMaximum(in numbers: [Int]) -> Int? {
 }
 ```
 
-**Nested loops: O(n²)**
+**Nested loops: `O(n²)`**
 ```swift
 // Check all pairs
 func hasDuplicates(in numbers: [Int]) -> Bool {
@@ -183,7 +183,7 @@ func hasDuplicates(in numbers: [Int]) -> Bool {
 }
 ```
 
-**Halving pattern: O(log n)**
+**Halving pattern: `O(log n)`**
 ```swift
 // Each iteration processes half
 func countHalvings(_ n: Int) -> Int {
@@ -204,8 +204,8 @@ func countHalvings(_ n: Int) -> Int {
 
 | Algorithm | Time | Space | When to use |
 |-----------|------|-------|-------------|
-| Insertion Sort | O(n²) | O(1) | Small datasets, limited memory |
-| Quicksort | O(n log n) avg | O(log n) | General purpose, in-place sorting |
+| Insertion Sort | `O(n²)` | `O(1)` | Small datasets, limited memory |
+| Quicksort | `O(n log n)` avg | `O(log n)` | General purpose, in-place sorting |
 
 Understanding space complexity helps you choose algorithms based on memory constraints. Mobile devices with limited RAM might prefer in-place algorithms even if they're slightly slower.
 
@@ -214,15 +214,15 @@ Understanding space complexity helps you choose algorithms based on memory const
 Most algorithms don't perform the same way in every situation.
 
 **Linear search:**
-- Best case: target is first element = O(1)
-- Average case: target in middle = O(n)
-- Worst case: target is last or not present = O(n)
+- Best case: target is first element = `O(1)`
+- Average case: target in middle = `O(n)`
+- Worst case: target is last or not present = `O(n)`
 
-When we say "linear search is O(n)", we typically refer to [worst case](https://en.wikipedia.org/wiki/Best,_worst_and_average_case) unless specified otherwise. Big O provides an upper bound—performance won't get worse than this.
+When we say "linear search is `O(n)`", we typically refer to [worst case](https://en.wikipedia.org/wiki/Best,_worst_and_average_case) unless specified otherwise. Big O provides an upper bound—performance won't get worse than this.
 
 **Quicksort's varying performance:**
-- **Best/Average: O(n log n)** - Good pivot selection, balanced partitions, typical with random data
-- **Worst: O(n²)** - Poor pivot selection (always smallest/largest), happens with sorted/reverse-sorted data
+- **Best/Average: `O(n log n)`** - Good pivot selection, balanced partitions, typical with random data
+- **Worst: `O(n²)`** - Poor pivot selection (always smallest/largest), happens with sorted/reverse-sorted data
 
 Production implementations use random pivot selection or median-of-three to avoid worst case while maintaining fast average performance.
 
@@ -276,19 +276,19 @@ Use Xcode's Time Profiler (Product → Profile → Time Profiler) to find actual
 ## Looking back at the algorithms we've learned
 
 **[Chapter 3](03-basic-searching.md): Searching**
-- Linear search: O(n), binary search: O(log n)
+- Linear search: `O(n)`, binary search: `O(log n)`
 - Key insight: Sorted data enables logarithmic search
 
 **[Chapter 4](04-basic-sorting.md): Basic Sorting**
-- Bubble, insertion, selection sort: O(n²)
+- Bubble, insertion, selection sort: `O(n²)`
 - Key insight: Nested loops create quadratic complexity
 
 **[Chapter 5](05-advanced-sorting.md): Advanced Sorting**
-- Quicksort: O(n log n) average
+- Quicksort: `O(n log n)` average
 - Key insight: Divide and conquer achieves linearithmic time
 
 **[Chapter 6](06-recursion.md): Recursion**
-- Naive Fibonacci: O(2^n), memoized: O(n)
+- Naive Fibonacci: `O(2^n)`, memoized: `O(n)`
 - Key insight: Caching eliminates exponential duplicate work
 
 **[Chapter 7](07-generics.md): Generics**
@@ -297,19 +297,19 @@ Use Xcode's Time Profiler (Product → Profile → Time Profiler) to find actual
 **Upcoming chapters:**
 
 **Data Structures (Chapters 9-15):**
-- Linked Lists: O(n) access, O(1) insert/delete at position
-- Stacks & Queues: O(1) push/pop
-- Binary Search Trees: O(log n) average
-- Graphs: O(V + E) for traversal
-- Tries: O(m) where m is string length
-- Hash Tables: O(1) average
-- Heaps: O(log n) insert/delete
+- Linked Lists: `O(n)` access, `O(1)` insert/delete at position
+- Stacks & Queues: `O(1)` push/pop
+- Binary Search Trees: `O(log n)` average
+- Graphs: `O(V + E)` for traversal
+- Tries: `O(m)` where m is string length
+- Hash Tables: `O(1)` average
+- Heaps: `O(log n)` insert/delete
 
 **Advanced Topics (Chapters 16-19):**
-- Dynamic Programming: O(2^n) → O(n) with memoization
-- Vector operations: O(n) element-wise
+- Dynamic Programming: `O(2^n)` → `O(n)` with memoization
+- Vector operations: `O(n)` element-wise
 - PageRank: Iterative convergence
-- Semantic search: O(n) vector search
+- Semantic search: `O(n)` vector search
 
 ## Building performance intuition
 
@@ -327,8 +327,8 @@ Problem: Store user sessions, need fast lookup by session ID
 
 | Data Structure | Lookup | Insert | Best For |
 |----------------|--------|--------|----------|
-| Array (unsorted) | O(n) | O(1) | Small datasets |
-| Hash Table | O(1) avg | O(1) avg | Fast lookup, dynamic data |
-| Binary Search Tree | O(log n) | O(log n) | Need sorted iteration |
+| Array (unsorted) | `O(n)` | `O(1)` | Small datasets |
+| Hash Table | `O(1)` avg | `O(1)` avg | Fast lookup, dynamic data |
+| Binary Search Tree | `O(log n)` | `O(log n)` | Need sorted iteration |
 
-Answer: Hash table—O(1) average for lookups, dynamic add/remove.
+Answer: Hash table—`O(1)` average for lookups, dynamic add/remove.

@@ -25,13 +25,13 @@ Before implementing linked lists, understand when to choose them over Swift's bu
 
 | Operation | Array | Linked List |
 |-----------|-------|-------------|
-| Access by index | O(1) | O(n) |
-| Insert at beginning | O(n) | O(1) |
-| Insert at end | O(1)* | O(1)** |
-| Remove from beginning | O(n) | O(1) |
-| Search for value | O(n) | O(n) |
+| Access by index | `O(1)` | `O(n)` |
+| Insert at beginning | `O(n)` | `O(1)` |
+| Insert at end | `O(1)`* | `O(1)`** |
+| Remove from beginning | `O(n)` | `O(1)` |
+| Search for value | `O(n)` | `O(n)` |
 
-\* Amortized O(1) with capacity doubling
+\* Amortized `O(1)` with capacity doubling
 \** If maintaining a tail pointer
 
 ### When to use each
@@ -92,7 +92,7 @@ public class LinkedList<T> {
 }
 ```
 
-The `head` node represents the beginning of the list. The `counter` tracks the number of elements for O(1) count operations.
+The `head` node represents the beginning of the list. The `counter` tracks the number of elements for `O(1)` count operations.
 
 ## Appending elements
 
@@ -125,7 +125,7 @@ public func append(_ tvalue: T) {
 }
 ```
 
-This operation is O(n) because we must traverse the entire list to find the end. A production implementation might maintain a `tail` pointer to make appending O(1).
+This operation is `O(n)` because we must traverse the entire list to find the end. A production implementation might maintain a `tail` pointer to make appending `O(1)`.
 
 ## Finding elements
 
@@ -269,7 +269,7 @@ public func remove(at index: Int) {
 }
 ```
 
-Removing from the beginning is O(1), but removing from elsewhere requires O(n) traversal to find the node.
+Removing from the beginning is `O(1)`, but removing from elsewhere requires `O(n)` traversal to find the node.
 
 ## Traversing the list
 

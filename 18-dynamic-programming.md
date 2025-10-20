@@ -13,7 +13,7 @@ If we've purchased something through Amazon.com, we'll be familiar with the site
 
 In iOS, design patterns can help us time and coordinate how data is processed. Specific techniques include multi-threaded operations (e.g. Grand Central Dispatch), Notifications and Delegation. Dynamic programming on the other hand, isn't necessarily a single coding technique, but rather how to think about actions (e.g. sub problems) that occur as a function operates. The resulting solution could differ depending on the problem. In its simplest form, dynamic programming relies on data storage and reuse to increase algorithm efficiency. The process of data reuse is also called memoization and can take many forms. As we'll see, this style of programming provides numerous benefits.
 
-Dynamic programming builds on recursion from [Chapter 6](06-recursion), but adds memoization—storing results in a cache (typically an Array or a Dictionary from [Chapter 15](15-hash-tables)) to avoid redundant calculations. This transforms exponential O(2^n) algorithms into linear O(n) solutions, demonstrating the dramatic space-time tradeoffs analyzed in [Chapter 8](08-performance-analysis). Where naive recursion uses the call stack ([Chapter 10](10-stacks-and-queues)'s stack concept), dynamic programming uses explicit data structures to track subproblem solutions.
+Dynamic programming builds on recursion from [Chapter 6](06-recursion), but adds memoization—storing results in a cache (typically an Array or a Dictionary from [Chapter 15](15-hash-tables)) to avoid redundant calculations. This transforms exponential `O(2^n)` algorithms into linear `O(n)` solutions, demonstrating the dramatic space-time tradeoffs analyzed in [Chapter 8](08-performance-analysis). Where naive recursion uses the call stack ([Chapter 10](10-stacks-and-queues)'s stack concept), dynamic programming uses explicit data structures to track subproblem solutions.
 
 ## Fibonacci revisited
 
@@ -34,7 +34,7 @@ func fibRecursive(n: Int) -> Int {
 }
 ```
 
-At first glance, it appears this seemingly small function would also be efficient. However, upon further analysis, we see numerous recursive calls must be made for it to calculate any result. Since `fibRecursive` cannot store previously calculated values, its recursive calls increase exponentially. When we calculate `fibonacci(5)`, the function calculates `fibonacci(3)` three separate times and `fibonacci(2)` five separate times. For `fibonacci(40)`, the function makes over 330 million function calls. The time complexity is O(2^n)—exponential. For larger numbers, this approach becomes unusable.
+At first glance, it appears this seemingly small function would also be efficient. However, upon further analysis, we see numerous recursive calls must be made for it to calculate any result. Since `fibRecursive` cannot store previously calculated values, its recursive calls increase exponentially. When we calculate `fibonacci(5)`, the function calculates `fibonacci(3)` three separate times and `fibonacci(2)` five separate times. For `fibonacci(40)`, the function makes over 330 million function calls. The time complexity is `O(2^n)`—exponential. For larger numbers, this approach becomes unusable.
 
 ## Fibonacci memoized
 
@@ -75,7 +75,7 @@ extension Int {
 }
 ```
 
-Even though `fibSequence` includes a recursive sequence, its base case is determined by the number of requested Array positions (n). In performance terms, we say `fibSequence` runs in linear time or O(n). This performance improvement is achieved by memoizing the Array sequence needed to calculate the final product. As a result, each sequence permutation is computed once.
+Even though `fibSequence` includes a recursive sequence, its base case is determined by the number of requested Array positions (n). In performance terms, we say `fibSequence` runs in linear time or `O(n)`. This performance improvement is achieved by memoizing the Array sequence needed to calculate the final product. As a result, each sequence permutation is computed once.
 
 ## Comparing approaches
 
@@ -83,8 +83,8 @@ Let's compare naive recursion vs memoization:
 
 | Approach | Time | Space | Fibonacci(40) | Function Calls |
 |----------|------|-------|---------------|----------------|
-| Naive recursion | O(2^n) | O(n) | ~5 seconds | 331,160,281 |
-| Memoization | O(n) | O(n) | Instant | 79 |
+| Naive recursion | `O(2^n)` | `O(n)` | ~5 seconds | 331,160,281 |
+| Memoization | `O(n)` | `O(n)` | Instant | 79 |
 
 The performance difference is dramatic. Exponential algorithms quickly become unusable, while dynamic programming with memoization remains fast even for large inputs.
 

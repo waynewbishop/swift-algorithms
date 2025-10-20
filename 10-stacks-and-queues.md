@@ -111,7 +111,7 @@ Enqueuing is linear time `O(n)` because we must traverse to the end. A productio
 
 ## Building a stack
 
-Stacks follow "last-in, first-out" ordering. Elements are added and removed from the same end (the `top`), like a stack of plates. This enables O(1) insertion and removal:
+Stacks follow "last-in, first-out" ordering. Elements are added and removed from the same end (the `top`), like a stack of plates. This enables `O(1)` insertion and removal:
 
 ```swift
 // Generic stack implementation with LIFO ordering
@@ -184,11 +184,11 @@ Both structures excel at their core operations:
 
 | Operation | Stack | Queue | Notes |
 |-----------|-------|-------|-------|
-| Push/Enqueue | O(1) | O(1)* | Add element |
-| Pop/Dequeue | O(1) | O(1) | Remove element |
-| Peek | O(1) | O(1) | View top/front |
-| isEmpty check | O(1) | O(1) | Check if empty |
-| Search | O(n) | O(n) | Not their purpose |
+| Push/Enqueue | `O(1)` | `O(1)`* | Add element |
+| Pop/Dequeue | `O(1)` | `O(1)` | Remove element |
+| Peek | `O(1)` | `O(1)` | View top/front |
+| isEmpty check | `O(1)` | `O(1)` | Check if empty |
+| Search | `O(n)` | `O(n)` | Not their purpose |
 
 \* This implementation's enqueue is `O(n)`. With a tail pointer, it becomes `O(1)`.
 
