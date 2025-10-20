@@ -33,7 +33,6 @@ This book is actively maintained and continuously improved. Your feedback helps 
 
 - **Found a typo or code error?** Submit a small PR for obvious corrections
 - **Something unclear?** [Open an issue](https://github.com/waynewbishop/swift-algorithms/issues) to suggest improvements
-- **Have a question?** Start a [discussion](https://github.com/waynewbishop/swift-algorithms/discussions)
 
 All substantive content decisions remain with the author to maintain pedagogical consistency and voice.
 
