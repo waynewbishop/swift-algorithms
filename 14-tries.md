@@ -63,7 +63,7 @@ The array-based children approach trades `O(1)` dictionary lookup for `O(k)` arr
 Using the TrieNode data structure, we can add words to our trie using the `append(word:)` method. This implementation builds the tree character by character, creating nodes as needed:
 
 ```swift
-// Builds a tree hierarchy of dictionary content - `O(m)` where m is word length
+// Builds a tree hierarchy of dictionary content - O(m) where m is word length
 func append(word keyword: String) {
     // Trivial case
     guard keyword.count > 0 else {
