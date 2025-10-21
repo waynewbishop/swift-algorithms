@@ -208,3 +208,7 @@ for _ in 0..<1_000_000 {
 ```
 
 This predictable performance makes stacks and queues ideal for systems requiring consistent response times.
+
+## Building algorithmic intuition
+
+Stacks and queues demonstrate how constraining operations creates useful abstractions. Limiting access to specific ends—LIFO for stacks, FIFO for queues—produces structures perfectly suited for particular problems. The distinction between LIFO and FIFO reveals different problem-solving strategies: stacks enable depth-first exploration, while queues enable breadth-first exploration. These foundational structures appear throughout algorithm implementations, from graph traversal ([Chapter 13](13-graphs.md)) to tree operations ([Chapter 11](11-binary-search-trees.md)) to priority queues ([Chapter 16](16-heaps.md)).

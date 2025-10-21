@@ -244,3 +244,9 @@ Binary search trees power systems requiring fast search with dynamic updates:
 - Need O(1) lookups (use hash tables from [Chapter 15](15-hash-tables.md))
 - Data rarely changes (use sorted array with binary search)
 - Can't guarantee balanced insertions (need AVL/Red-Black trees from [Chapter 12](12-tree-balancing.md))
+
+## Building algorithmic intuition
+
+Binary search trees combine the efficiency of binary search with the flexibility of linked structures. The tree property—left children smaller, right children larger—enables `O(log n)` operations when balanced. Recursive tree operations demonstrate natural problem decomposition: most operations reduce to handling the current node plus recursive calls on subtrees, a pattern that appears throughout tree traversal, graph algorithms, and divide-and-conquer strategies.
+
+Understanding BSTs reveals the importance of balance. Unbalanced trees degrade to linked lists, destroying logarithmic guarantees. This motivates balanced tree variants ([Chapter 12](12-tree-balancing.md)) that maintain `O(log n)` operations regardless of insertion order. The fundamental BST concepts learned here—tree navigation, recursive operations, ordering properties—apply to all tree-based structures.

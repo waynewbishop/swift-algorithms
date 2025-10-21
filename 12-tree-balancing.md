@@ -140,3 +140,7 @@ With tree balancing, it is important to note that techniques like rotations impr
 ```
 
 By implementing tree balancing techniques, we ensure that our binary search tree maintains its efficiency, providing consistent O(log n) performance for insertions, deletions, and searches, even as the tree grows and changes over time.
+
+## Building algorithmic intuition
+
+Tree balancing addresses a fundamental challenge in data structures: maintaining guaranteed performance regardless of input order. Self-balancing trees use rotation operations to prevent degradation from `O(log n)` to `O(n)`, demonstrating how local restructuring preserves global properties. Understanding balancing reveals trade-offs between simplicity and guarantees—basic BSTs ([Chapter 11](11-binary-search-trees.md)) offer simpler implementation but no worst-case guarantees, while balanced variants add complexity but ensure `O(log n)` performance. Recognizing when guaranteed performance justifies implementation complexity guides practical data structure choices.

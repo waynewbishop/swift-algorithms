@@ -152,3 +152,7 @@ The algorithm must examine each element once to find the maximum. Doubling the a
 Whether you're analyzing 100 heart rate readings or 100,000, this algorithm's behavior is predictable: the time grows proportionally with your data. For finding a maximum value from unsorted data, `O(n)` is optimal—we can't avoid examining each value at least once. But as we'll see in [Chapter 3](03-basic-searching.md), when data is organized differently (like sorted arrays), we can achieve better than `O(n)` performance for other operations.
 
 Understanding Big O notation gives you the vocabulary to discuss performance and the framework to analyze your own code. With this foundation, we can now explore how different algorithms achieve different performance characteristics—starting with search algorithms in the next chapter.
+
+## Building algorithmic intuition
+
+Big O notation provides a common language for discussing algorithm efficiency. Understanding growth patterns—constant, logarithmic, linear, quadratic—enables quick assessment of whether an algorithm scales. Pattern recognition becomes intuitive with practice: nested loops suggest `O(n²)`, halving data suggests `O(log n)`, examining every element suggests `O(n)`. This vocabulary appears throughout the book and, combined with the comprehensive analysis in [Chapter 8](08-performance-analysis.md), enables informed algorithmic choices throughout software development.

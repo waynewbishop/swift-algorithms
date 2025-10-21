@@ -368,3 +368,9 @@ let stringNode = ListNode<String>(tvalue: "Hello")
 ```
 
 The compiler generates two separate, optimized implementations—one for Int, one for String. Your generic code runs as fast as if you had written type-specific versions manually, but you only maintain one implementation.
+
+## Building algorithmic intuition
+
+Generic types enable writing algorithms once and applying them to any appropriate data—one generic queue implementation serves integers, strings, and custom types instead of requiring separate implementations for each. Protocol constraints provide the key to flexible generic code: `Equatable` enables comparison, `Comparable` enables ordering, `Hashable` enables dictionary storage. Understanding these protocols reveals which operations each data structure supports.
+
+Generics appear in every data structure chapter that follows. Linked lists ([Chapter 9](09-linked-lists.md)), stacks and queues ([Chapter 10](10-stacks-and-queues.md)), binary search trees ([Chapter 11](11-binary-search-trees.md)), and graphs ([Chapter 13](13-graphs.md)) all use generic implementations. The patterns learned here—type parameters, protocol constraints, associated types—provide the foundation for understanding production-quality Swift code throughout the book.

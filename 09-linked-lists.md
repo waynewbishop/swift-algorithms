@@ -290,3 +290,7 @@ public func printValues() {
 ```
 
 This pattern—using a `current` pointer that advances through the list—is fundamental to all linked list operations.
+
+## Building algorithmic intuition
+
+Linked lists demonstrate fundamental trade-offs between data structures: arrays provide fast index access but expensive insertions, while linked lists provide fast insertions but require linear traversal. Pointer manipulation—following `next` pointers, updating references, managing node connections—forms the foundation for more complex structures like stacks and queues ([Chapter 10](10-stacks-and-queues.md)), binary search trees ([Chapter 11](11-binary-search-trees.md)), and graphs ([Chapter 13](13-graphs.md)). Understanding when dynamic structure matters more than random access reveals when linked lists provide the optimal solution.

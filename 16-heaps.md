@@ -529,3 +529,9 @@ Finding your top 10 best workouts demonstrates a classic heap problem. Maintain 
 | Insert | `O(n)` | `O(1)` | `O(log n)` | `O(log n)` | `O(1)` avg |
 | Delete Min/Max | `O(n)` | `O(n)` | `O(log n)` | `O(log n)` | `O(n)` |
 | Build from Array | `O(1)` | `O(n)` | `O(n log n)` | `O(n)` | `O(n)` |
+
+## Building algorithmic intuition
+
+Heaps provide `O(log n)` priority operations through array-based tree storage, demonstrating how mathematical properties—completeness, heap order—enable efficient implementations without pointer overhead. The bubble-up and bubble-down operations maintain heap order through local comparisons, preserving global structure while keeping operations logarithmic. This pattern of local operations maintaining global invariants appears in self-balancing trees and other dynamically maintained structures.
+
+Priority queues built on heaps appear throughout algorithm design. Dijkstra's shortest path algorithm ([Chapter 17](17-shortest-paths.md)) uses priority queues to select minimum-distance vertices, event-driven simulations process events by timestamp priority, and heap sort provides `O(n log n)` sorting with `O(1)` space. Understanding heaps unlocks these applications and reveals when priority-based processing optimizes algorithm performance.

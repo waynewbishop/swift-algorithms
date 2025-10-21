@@ -167,3 +167,7 @@ Quicksort achieves `O(n log n)` average time complexity with excellent practical
 - General-purpose sorting for large datasets
 
 Swift's standard library uses Introsort, which starts with Quicksort and switches to heapsort if recursion depth becomes excessive. This hybrid approach combines Quicksort's speed with guaranteed `O(n log n)` worst-case performance.
+
+## Building algorithmic intuition
+
+Quicksort demonstrates the power of divide-and-conquer thinking—breaking problems into smaller subproblems appears throughout computer science, from binary search ([Chapter 3](03-basic-searching.md)) to graph algorithms. The in-place partitioning strategy shows how algorithms can optimize both space and time complexity simultaneously. Understanding quicksort provides context for recursion ([Chapter 6](06-recursion.md)) and performance trade-offs, illustrating why real-world algorithms often balance average-case performance against worst-case guarantees.

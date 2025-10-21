@@ -244,3 +244,9 @@ BFS has the following complexity from [Chapter 8](08-performance-analysis.md):
 - **Time Complexity**: O(V + E) where V is the number of vertices and E is the number of edges
 - **Space Complexity**: O(V) for storing visited vertices and the queue
 
+## Building algorithmic intuition
+
+Graphs model relationships between entities, making them fundamental to countless applications—social networks, maps, web pages, and recommendation systems all express relationships through graph structures. Traversal algorithms reveal different exploration strategies: depth-first search explores deeply before backtracking (useful for path finding and cycle detection), while breadth-first search explores by distance (ideal for shortest paths and level-order processing).
+
+Graph representations demonstrate trade-offs between space and operation efficiency. Adjacency lists optimize for sparse graphs, adjacency matrices for dense graphs. Understanding these trade-offs connects to advanced graph algorithms like shortest paths ([Chapter 17](17-shortest-paths.md)) and PageRank ([Chapter 19](19-pagerank-algorithm.md)). Mastering basic graph operations provides the foundation for complex network algorithms.
+

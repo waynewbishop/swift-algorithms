@@ -213,3 +213,7 @@ let large = Array(1...10000).shuffled()  // Years of data - too slow, use quicks
 ```
 
 The lesson: basic sorting algorithms are fine for small, localized data (this week's workouts, today's exercises). For historical data spanning months or years, you need the advanced algorithms from [Chapter 5](05-advanced-sorting.md).
+
+## Building algorithmic intuition
+
+Sorting algorithms reveal how algorithm complexity impacts real-world performance. The `O(n²)` behavior of insertion, bubble, and selection sort works acceptably for small datasets but becomes impractical as data grows, demonstrating why understanding Big O notation ([Chapter 2](02-measuring-performance.md)) matters for practical development. Understanding basic sorting establishes the foundation for appreciating advanced algorithms—when quicksort ([Chapter 5](05-advanced-sorting.md)) achieves `O(n log n)` performance, the improvement becomes meaningful by comparison to these `O(n²)` alternatives.

@@ -430,4 +430,6 @@ Why does Dictionary beat arrays for lookups? With arrays, finding a workout by n
 
 ## Building algorithmic intuition
 
-Hash tables demonstrate several key algorithmic concepts. Trade-offs between memory and speed show how we use extra space to achieve faster operations. Amortized analysis explains why expensive resize operations don't hurt average performance when they occur infrequently. Hash function design proves critical, as the quality of the hash function affects performance dramatically. Load factor management requires balancing space and time efficiency—too low wastes memory, too high degrades performance.
+Hash tables achieve `O(1)` average-case performance through clever use of hashing and array indexing. Converting keys to array indices enables direct access, eliminating the need for comparisons. Collision handling reveals different strategies for managing conflicts: separate chaining uses linked lists for simplicity and flexibility, while open addressing probes for alternative locations, optimizing cache performance.
+
+Hash tables complement other data structures throughout this book. Binary search trees ([Chapter 11](11-binary-search-trees.md)) maintain order but require `O(log n)` operations, tries ([Chapter 14](14-tries.md)) excel at prefix searches, and hash tables sacrifice ordering for `O(1)` lookups. Recognizing when constant-time access matters more than ordering determines when hash tables provide the optimal solution.

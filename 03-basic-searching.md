@@ -339,3 +339,7 @@ extension Array where Element: Comparable {
     }
 }
 ```
+
+## Building algorithmic intuition
+
+Searching algorithms demonstrate a fundamental trade-off in computer science: simplicity versus efficiency. Linear search works on any data with minimal assumptions, while binary search requires sorted data but achieves logarithmic performance. This pattern—trading preparation cost for execution speed—appears throughout algorithm design. The divide-and-conquer strategy behind binary search generalizes to quicksort ([Chapter 5](05-advanced-sorting.md)), binary search trees ([Chapter 11](11-binary-search-trees.md)), and many efficient algorithms throughout this book.

@@ -334,3 +334,9 @@ This example demonstrates Dijkstra's greedy approach in action. The direct route
 - Network routing protocols use Dijkstra's algorithm to direct data packets across the internet. Routers maintain graphs representing network topology, with edge weights based on latency, bandwidth, or cost. When forwarding packets, routers consult routing tables precomputed using shortest path algorithms. The Border Gateway Protocol, which routes traffic between autonomous systems on the internet, employs path vector algorithms derived from Dijkstra's work.
 
 - Flight booking systems and logistics companies apply shortest path algorithms to optimize routes and minimize costs. Delivery services like UPS and FedEx use sophisticated variants to plan daily routes for thousands of vehicles. The algorithm considers multiple constraints simultaneously—distance, time, fuel efficiency, and delivery windows—by encoding these factors as edge weights in the graph representation.
+
+## Building algorithmic intuition
+
+Dijkstra's algorithm demonstrates greedy problem-solving: making locally optimal choices at each step leads to globally optimal solutions. The frontier concept—maintaining vertices at the boundary of explored territory—appears throughout graph algorithms and search problems. Priority queues from [Chapter 16](16-heaps.md) enable efficient frontier management, selecting minimum-distance vertices in `O(log n)` time rather than `O(n)` linear search.
+
+Understanding shortest path algorithms reveals how graph theory solves practical routing problems. GPS navigation, network packet routing, and delivery optimization all reduce to weighted graph traversal. The Path class structure—tracking previous vertices to reconstruct routes—generalizes beyond shortest paths to any problem requiring solution path recovery. Mastering Dijkstra's algorithm provides the foundation for understanding graph-based optimization throughout computer science.

@@ -208,6 +208,8 @@ guard let documentVector = wordVectors.averaged() else {
 
 The `.averaged()` method validates that all vectors have the same dimensionality and returns `nil` for empty arrays or inconsistent dimensions. This pattern appears throughout [Chapter 22](22-semantic-search), where the `embedText()` function uses vector averaging to convert search queries and documents into comparable vectors for similarity computation.
 
-## Building intuition
+## Building algorithmic intuition
 
-Vectors provide the mathematical language for representing multi-dimensional data and measuring relationships between points in space. The operations we've explored—magnitude, normalization, dot product, and cosine similarity—form the foundation for semantic search, recommendation systems, and machine learning applications. These same vectors can be organized and transformed systematically using matrices, which we'll explore in [Chapter 21](21-matrices). Together, vectors and matrices create a powerful framework for spatial reasoning, data analysis, and algorithmic problem-solving throughout computer science.
+Vectors provide the mathematical language for representing multi-dimensional data and measuring relationships between points in space. The operations covered—magnitude, normalization, dot product, and cosine similarity—form the foundation for semantic search, recommendation systems, and machine learning applications. Understanding vectors means recognizing how position, direction, and similarity translate into numerical operations.
+
+The Quiver framework bridges classical algorithms and modern AI. Vectors can be organized and transformed systematically using matrices ([Chapter 21](21-matrices.md)), enabling efficient batch operations. Together, vectors and matrices power semantic search ([Chapter 22](22-semantic-search.md)), where word embeddings and cosine similarity find related documents. This connection between geometric concepts and algorithmic applications reveals why linear algebra underpins modern data science and machine learning.

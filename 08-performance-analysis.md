@@ -332,3 +332,9 @@ Problem: Store user sessions, need fast lookup by session ID
 | Binary Search Tree | `O(log n)` | `O(log n)` | Need sorted iteration |
 
 Answer: Hash table—`O(1)` average for lookups, dynamic add/remove.
+
+## Building algorithmic intuition
+
+Performance analysis provides systematic frameworks for comparing algorithms. Big O notation, best/average/worst-case analysis, and space-time trade-offs give us vocabulary to discuss efficiency precisely. Recognizing performance patterns becomes intuitive with practice: nested loops suggest quadratic time, binary division suggests logarithmic time, hash table lookups suggest constant time. These patterns appear consistently across different problems, enabling quick assessment of algorithmic approaches before implementation.
+
+Understanding performance analysis connects to practical decision-making. Choosing between `O(n)` linear search and `O(log n)` binary search means understanding when sorting overhead pays off. Selecting data structures based on operation frequency—frequent lookups favor hash tables, ordered iteration favors trees—requires performance-based reasoning. Combined with the introductory concepts from [Chapter 2](02-measuring-performance.md), this comprehensive analysis enables informed algorithmic choices throughout software development.
