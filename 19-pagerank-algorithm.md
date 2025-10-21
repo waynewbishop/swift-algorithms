@@ -273,149 +273,75 @@ extension Graph {
 }
 ```
 
-### Enhanced algorithm with damping factor
+### Adding damping factor (optional enhancement)
 
-Here's an enhanced version of your PageRank algorithm that includes the damping factor for more accurate and stable results:
+The core algorithm above demonstrates the fundamental PageRank concept. Production implementations like Google's add a damping factor for improved stability. Here's how you could optionally modify the authority distribution:
 
 ```swift
-extension Graph {
-    /// Enhanced PageRank with damping factor and convergence detection
-    /// - Parameters:
-    ///   - dampingFactor: Probability of following links vs random jump (default: 0.85)
-    ///   - maxIterations: Maximum iterations before stopping (default: 100)
-    ///   - convergenceThreshold: Minimum change required to continue (default: 0.0001)
-    ///     This threshold represents the maximum change in any page's rank between iterations.
-    ///     Common values: 0.001 (faster, less precise), 0.0001 (balanced), 0.00001 (slower, high precision)
-    public func processPageRankWithDamping(dampingFactor: Float = 0.85,
-                                         maxIterations: Int = 100,
-                                         convergenceThreshold: Float = 0.0001) {
-
-        // Use mathematical PageRank scale (0.0 to 1.0)
-        let startingRank: Float = 1.0 / Float(self.canvas.count)
-        let randomJumpProbability = (1.0 - dampingFactor) / Float(self.canvas.count)
-
-        var iteration: Int = 0
-        var hasConverged = false
-
-        // Initialize all vertices with equal starting rank
-        for vertex in self.canvas {
-            vertex.rank = [startingRank, 0, 0]  // Only use first two slots
-        }
-
-        while iteration < maxIterations && !hasConverged {
-
-            // Reset next iteration ranks to random jump baseline
-            for vertex in self.canvas {
-                vertex.rank[1] = randomJumpProbability
-            }
-
-            // Calculate authority distribution for this iteration
-            for vertex in self.canvas {
-                let currentRank = vertex.rank[0]
-
-                // Standard case: Distribute rank to neighbors
-                if vertex.neighbors.count > 0 {
-                    let linkContribution = (dampingFactor * currentRank) / Float(vertex.neighbors.count)
-
-                    for edge in vertex.neighbors {
-                        edge.neighbor.rank[1] += linkContribution
-                    }
-                }
-                // Sink node case: Distribute to all other vertices
-                else {
-                    if self.canvas.count > 1 {
-                        let sinkContribution = (dampingFactor * currentRank) / Float(self.canvas.count - 1)
-
-                        for otherVertex in self.canvas {
-                            if vertex != otherVertex {
-                                otherVertex.rank[1] += sinkContribution
-                            }
-                        }
-                    }
-                }
-            }
-
-            // Check for convergence
-            var maxChange: Float = 0
-            for vertex in self.canvas {
-                let change = abs(vertex.rank[1] - vertex.rank[0])
-                maxChange = max(maxChange, change)
-
-                // Move new rank to current rank for next iteration
-                vertex.rank[0] = vertex.rank[1]
-            }
-
-            hasConverged = maxChange < convergenceThreshold
-            iteration += 1
-        }
-
-        // Store final results in the last slot for compatibility
-        for vertex in self.canvas {
-            vertex.rank[2] = vertex.rank[0] * 100  // Scale back to your educational format
-        }
-
-        print("PageRank converged after \(iteration) iterations")
-    }
-}
-```
-
-**Key improvements in the enhanced version:**
-
-1. **Damping factor integration**: Each page gets baseline authority `(1-d)/N` plus link-based authority `d * (incoming contributions)`
-2. **Mathematical accuracy**: Uses 1.0 probability scale internally, converts to your 100-scale for output
-3. **Convergence detection**: Stops when changes become negligible, avoiding unnecessary computation
-4. Stability: Damping factor prevents rank accumulation issues and ensures convergence
-5. **Backward compatibility**: Still populates your three-slot rank array format
-
-### Choosing the right convergence threshold
-
-The convergence threshold (default: 0.0001) represents the maximum change in any page's PageRank value between iterations. This choice balances computational efficiency with result accuracy:
-
-**Threshold selection guidelines:**
-
-- **0.001 (1e-3)**: Fast convergence, suitable for real-time applications or large graphs where approximate results are acceptable. Typical convergence in 10-20 iterations.
-
-- **0.0001 (1e-4)**: Balanced approach, recommended for most applications. Provides good accuracy while maintaining reasonable computation time. Typical convergence in 20-50 iterations.
-
-- **0.00001 (1e-5)**: High precision, suitable for academic research or applications requiring very stable rankings. May require 50-100+ iterations.
-
-**Factors affecting threshold choice:**
-
-1. **Graph size**: Larger graphs may need looser thresholds to avoid excessive computation
-2. **Application requirements**: Search engines prioritize speed; research applications prioritize precision
-3. **Update frequency**: Frequently updated graphs benefit from faster convergence
-4. **Resource constraints**: Limited computational resources favor higher thresholds
-
-**Proposed changes to your Vertex class:**
-
-No changes needed to your existing `Vertex<T>` class—the enhanced algorithm works with your current structure while providing more accurate results.
-
-### Educational vs. production considerations
-
-Our original implementation prioritizes learning over optimization:
-
-**Educational Features:**
-- Fixed iteration count for predictable results
-- Rank history preservation for analysis
-- Simplified probability calculations
-- Clear separation of concerns
-
-**Production Differences:**
-```swift
-// Production PageRank includes additional factors:
-
-// 1. Damping factor (Google uses 0.85)
+// Optional: Add damping factor to the core algorithm
 let dampingFactor: Float = 0.85
-let pageRank = (1 - dampingFactor) + dampingFactor * (sumOfIncomingRanks)
 
-// 2. Convergence testing
-func hasConverged() -> Bool {
-    return maxRankChange < convergenceThreshold
-}
-
-// 3. Sparse matrix optimizations for billions of pages
-// 4. Distributed computation across multiple machines
-// 5. Personalization factors for user-specific rankings
+// Instead of: assignedRank = currentRank / Float(vertex.neighbors.count)
+// Use: assignedRank with baseline probability
+let baselineProbability = (1.0 - dampingFactor) / Float(canvas.count)
+let linkContribution = (dampingFactor * currentRank) / Float(vertex.neighbors.count)
+let assignedRank = baselineProbability + linkContribution
 ```
 
-**The Damping Factor:** Google's original PageRank includes a damping factor (typically 0.85) that models the probability that a random surfer continues clicking links versus starting fresh at a random page. This improves stability and reflects more realistic browsing behavior.
+This modification gives each page a small baseline probability `(1-d)/N` of being visited randomly, plus the link-based authority transfer `d × (rank/neighbors)`. The damping factor prevents rank accumulation in closed loops and models realistic browsing where users occasionally jump to random pages rather than following links indefinitely.
+
+## Practical example
+
+Let's see the PageRank algorithm in action with a simple web graph:
+
+```swift
+// Create a small web graph demonstrating PageRank
+let graph = Graph<String>()
+
+// Create pages
+let pageA = graph.addVertex(with: "Page A")
+let pageB = graph.addVertex(with: "Page B")
+let pageC = graph.addVertex(with: "Page C")
+
+// Create link structure
+graph.addEdge(from: pageA, to: pageB, weight: 1)
+graph.addEdge(from: pageA, to: pageC, weight: 1)
+graph.addEdge(from: pageB, to: pageC, weight: 1)
+graph.addEdge(from: pageC, to: pageA, weight: 1)
+
+// Calculate PageRank
+graph.processPageRankWithSink()
+
+// Display results
+for vertex in graph.canvas {
+    print("\(vertex.tvalue!): \(vertex.rank[2])")
+}
+```
+
+The algorithm iterates through three rounds, redistributing authority based on link structure:
+
+| Page | Round 0 | Round 1 | Round 2 (Final) |
+|------|---------|---------|-----------------|
+| A    | 33.33   | 33.33   | 50.00 |
+| B    | 33.33   | 16.67   | 16.67 |
+| C    | 33.33   | 50.00   | 33.33 |
+
+**Round 0**: All pages start with equal rank (100 ÷ 3 pages = 33.33 each)
+
+**Round 1**: Authority flows through links:
+- A distributes 33.33 equally to B and C (16.67 each)
+- B distributes 33.33 entirely to C
+- C distributes 33.33 entirely to A
+- Result: A=33.33, B=16.67, C=50.00
+
+**Round 2**: Second redistribution stabilizes ranks:
+- A distributes 33.33 to B (16.67) and C (16.67)
+- B distributes 16.67 to C
+- C distributes 50.00 to A
+- Final result: A=50.00, B=16.67, C=33.33
+
+Page C's initial spike to 50.00 results from receiving links from both A and B. In the final iteration, Page A gains authority by receiving C's accumulated rank, demonstrating how authority flows through the network over multiple iterations.
+
+## Real-world applications
+
+PageRank's influence extends far beyond web search. In academic research, the algorithm ranks scientific papers by citation networks—highly-cited papers by other highly-cited papers earn greater authority. Biological research applies PageRank to protein interaction networks, identifying key proteins in cellular processes. Social network analysis uses PageRank variants to identify influential users, measuring not just follower counts but the quality of connections. Recommendation systems employ PageRank to suggest products, articles, or connections by modeling user behavior as graph traversal. The algorithm's fundamental insight—that importance flows through network connections—applies wherever relationships matter more than isolated attributes.
