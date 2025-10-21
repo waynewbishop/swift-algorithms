@@ -261,22 +261,26 @@ This modification gives each page a small baseline probability `(1-d)/N` of bein
 
 ## Practical example
 
-Let's see the PageRank algorithm in action with a simple web graph:
+Let's demonstrate PageRank with a realistic scenario: a major tech company linking to a small startup blog. This example showcases sink node handling and how big sites can dramatically boost smaller sites through backlinks.
 
 ```swift
-// Create a small web graph demonstrating PageRank
+// Realistic web graph: major company boosts startup through backlinks
 let graph = Graph<String>()
 
-// Create pages
-let pageA = graph.addVertex(with: "Page A")
-let pageB = graph.addVertex(with: "Page B")
-let pageC = graph.addVertex(with: "Page C")
+// Create websites representing different authority levels
+let techGiant = graph.addVertex(with: "TechGiant.com")     // Major tech company
+let newsPortal = graph.addVertex(with: "NewsPortal.com")   // Medium-sized news site
+let startupBlog = graph.addVertex(with: "StartupBlog.com") // Small startup (sink node)
 
 // Create link structure
-graph.addEdge(from: pageA, to: pageB, weight: 1)
-graph.addEdge(from: pageA, to: pageC, weight: 1)
-graph.addEdge(from: pageB, to: pageC, weight: 1)
-graph.addEdge(from: pageC, to: pageA, weight: 1)
+// TechGiant links to both NewsPortal and StartupBlog (splitting authority)
+graph.addEdge(from: techGiant, to: newsPortal, weight: 1)
+graph.addEdge(from: techGiant, to: startupBlog, weight: 1)
+
+// NewsPortal also links to StartupBlog
+graph.addEdge(from: newsPortal, to: startupBlog, weight: 1)
+
+// StartupBlog has NO outgoing links (sink node - demonstrates sink handling)
 
 // Calculate PageRank
 graph.processPageRankWithSink()
@@ -289,14 +293,20 @@ for vertex in graph.canvas {
 
 The algorithm iterates through three rounds, redistributing authority based on link structure:
 
-| Page | Round 0 | Round 1 | Round 2 (Final) |
+| Site | Round 0 | Round 1 | Round 2 (Final) |
 |------|---------|---------|-----------------|
-| A    | 33.33   | 33.33   | 50.00 |
-| B    | 33.33   | 16.67   | 16.67 |
-| C    | 33.33   | 50.00   | 33.33 |
+| TechGiant.com | 33.33 | 16.67 | 25.00 |
+| NewsPortal.com | 33.33 | 33.33 | 33.33 |
+| StartupBlog.com | 33.33 | 50.00 | 41.67 |
 
-Page C's initial spike to 50.00 results from receiving links from both A and B. In the final iteration, Page A gains authority by receiving C's accumulated rank, demonstrating how authority flows through the network over multiple iterations.
+StartupBlog achieves the highest rank (41.67) despite being a sink node with zero outgoing links. This happens because both TechGiant and NewsPortal link to it, concentrating authority. The sink node algorithm redistributes StartupBlog's accumulated rank back to TechGiant and NewsPortal, preventing the random surfer from getting trapped. This demonstrates a key PageRank insight: receiving links from authoritative sources matters more than linking out. A small startup blog gains significant authority simply because a major tech company chose to reference it.
 
 ## Real-world applications
 
 PageRank's influence extends far beyond web search. In academic research, the algorithm ranks scientific papers by citation networks—highly-cited papers by other highly-cited papers earn greater authority. Biological research applies PageRank to protein interaction networks, identifying key proteins in cellular processes. Social network analysis uses PageRank variants to identify influential users, measuring not just follower counts but the quality of connections. Recommendation systems employ PageRank to suggest products, articles, or connections by modeling user behavior as graph traversal. The algorithm's fundamental insight—that importance flows through network connections—applies wherever relationships matter more than isolated attributes.
+
+## Building algorithmic intuition
+
+PageRank demonstrates how complex algorithms emerge from combining simpler concepts. Graph traversal from [Chapter 13](13-graphs.md) provides the structure for modeling web links. Iterative refinement mirrors dynamic programming patterns from [Chapter 18](18-dynamic-programming.md), where repeated calculations converge toward optimal solutions. The random surfer model translates human behavior into mathematical probability, showing how algorithms can capture real-world phenomena through abstraction.
+
+Understanding PageRank reveals broader patterns in algorithm design. The sink node problem demonstrates edge case handling—algorithms must account for boundary conditions that violate normal assumptions. Convergence detection shows the trade-off between accuracy and computational cost. Modern variations of PageRank appear throughout machine learning and network analysis, from recommendation systems to influence modeling in social networks. The mathematical foundation extends into linear algebra, where PageRank connects to eigenvector computation using matrices ([Chapter 21](21-matrices.md)) and vector operations ([Chapter 20](20-vectors.md)). Mastering PageRank means understanding not just how Google ranks pages, but how iterative algorithms model authority, influence, and importance across any networked system.
