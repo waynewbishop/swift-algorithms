@@ -295,20 +295,6 @@ The algorithm iterates through three rounds, redistributing authority based on l
 | B    | 33.33   | 16.67   | 16.67 |
 | C    | 33.33   | 50.00   | 33.33 |
 
-**Round 0**: All pages start with equal rank (100 ÷ 3 pages = 33.33 each)
-
-**Round 1**: Authority flows through links:
-- A distributes 33.33 equally to B and C (16.67 each)
-- B distributes 33.33 entirely to C
-- C distributes 33.33 entirely to A
-- Result: A=33.33, B=16.67, C=50.00
-
-**Round 2**: Second redistribution stabilizes ranks:
-- A distributes 33.33 to B (16.67) and C (16.67)
-- B distributes 16.67 to C
-- C distributes 50.00 to A
-- Final result: A=50.00, B=16.67, C=33.33
-
 Page C's initial spike to 50.00 results from receiving links from both A and B. In the final iteration, Page A gains authority by receiving C's accumulated rank, demonstrating how authority flows through the network over multiple iterations.
 
 ## Real-world applications
