@@ -31,12 +31,7 @@ This probabilistic approach captures something profound about web browsing: impo
 
 ### From web pages to graph theory
 
-The beauty of PageRank lies in how it transforms the abstract concept of web importance into concrete [graph](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)) theory:
-
-**Web Structure as a Directed Graph:**
-- [Vertices](https://en.wikipedia.org/wiki/Vertex_(graph_theory)): Web pages
-- [Edges](https://en.wikipedia.org/wiki/Glossary_of_graph_theory#edge): Hyperlinks between pages
-- Direction: Links point from source page to destination page
+The beauty of PageRank lies in how it transforms the abstract concept of web importance into concrete [graph](https://en.wikipedia.org/wiki/Graph_(abstract_data_type)) theory. The web structure becomes a directed graph where [vertices](https://en.wikipedia.org/wiki/Vertex_(graph_theory)) represent web pages and [edges](https://en.wikipedia.org/wiki/Glossary_of_graph_theory#edge) represent hyperlinks between pages. Direction matters because links point from source pages to destination pages, creating a flow of authority through the network.
 
 ```swift
 // Example web structure:
@@ -96,11 +91,7 @@ This creates a flow of authority through the web's link structure, with importan
 
 ### The iterative process
 
-PageRank calculation requires multiple iterations because page importance is interdependent:
-
-1. **Round 1**: Calculate initial authority distribution
-2. **Round 2**: Redistribute authority based on Round 1 results
-3. **Round 3**: Final redistribution incorporating all previous calculations
+PageRank calculation requires multiple iterations because page importance is interdependent. The first round calculates initial authority distribution based on equal starting ranks. The second round redistributes authority using the results from round one, allowing highly-linked pages to accumulate more influence. The third round performs final redistribution, incorporating all previous calculations to produce stable rankings that reflect the true authority structure of the network.
 
 ```swift
 // Iterative dependency example:
@@ -116,13 +107,7 @@ PageRank calculation requires multiple iterations because page importance is int
 
 Convergence in PageRank means the algorithm has reached a stable state where further iterations produce negligible changes in PageRank values. This happens because the iterative process eventually balances authority flow throughout the network.
 
-Think of it like water flowing through a network of pipes—initially there might be turbulence and fluctuation, but eventually the flow reaches a steady state where the amount entering each junction equals the amount leaving. In PageRank, convergence occurs when the authority flowing into each page roughly equals the authority flowing out, creating stable PageRank values.
-
-**Why convergence matters:**
-- Stability: Ensures PageRank values represent true long-term probabilities of the random surfer model
-- Accuracy: Prevents premature stopping that could yield incorrect rankings
-- Efficiency: Avoids unnecessary computation once the stable state is reached
-- Reliability: Provides consistent results regardless of the starting conditions
+Think of it like water flowing through a network of pipes—initially there might be turbulence and fluctuation, but eventually the flow reaches a steady state where the amount entering each junction equals the amount leaving. In PageRank, convergence occurs when the authority flowing into each page roughly equals the authority flowing out, creating stable PageRank values. Convergence ensures stability by representing true long-term probabilities of the random surfer model, prevents premature stopping that could yield incorrect rankings, avoids unnecessary computation once the stable state is reached, and provides consistent results regardless of the starting conditions.
 
 ### Handling sink nodes
 
@@ -135,16 +120,11 @@ Think of it like water flowing through a network of pipes—initially there migh
 // 3. This ensures the random surfer can continue browsing
 ```
 
-This mechanism serves dual purposes:
-- Maintains mathematical validity of the probability model
-- Provides residual benefit to pages that might otherwise receive no incoming authority
+This mechanism maintains the mathematical validity of the probability model while providing residual benefit to pages that might otherwise receive no incoming authority.
 
 ### The damping factor: Modeling realistic browsing
 
-The **damping factor** (typically denoted as *d*) represents the probability that a random surfer will continue clicking links rather than jumping to a completely random page. Google's original PageRank uses a damping factor of 0.85, meaning:
-
-- **85% chance**: User follows a link from the current page
-- **15% chance**: User gets bored and jumps to a random page
+The **damping factor** (typically denoted as *d*) represents the probability that a random surfer will continue clicking links rather than jumping to a completely random page. Google's original PageRank uses a damping factor of 0.85, meaning there's an 85% chance the user follows a link from the current page and a 15% chance the user gets bored and jumps to a random page.
 
 ```swift
 // Damping factor concept:
@@ -158,12 +138,7 @@ let dampingFactor: Float = 0.85
 // - d * (sum of contributions) = probability of arriving via links
 ```
 
-**Why the damping factor is crucial:**
-
-1. **Prevents rank sinks**: Without it, pages could accumulate infinite authority in closed loops
-2. **Models real behavior**: People don't click links forever—they eventually start fresh
-3. **Ensures convergence**: Guarantees the iterative algorithm will reach a stable solution
-4. **Balances authority**: Prevents any single page from capturing all PageRank
+The damping factor proves crucial for several reasons. Without it, pages could accumulate infinite authority in closed loops, creating rank sinks that distort the entire system. It models real browsing behavior—people don't click links forever but eventually start fresh at random pages. The damping factor guarantees the iterative algorithm will reach a stable solution through convergence, and it balances authority distribution by preventing any single page from capturing all PageRank.
 
 **Mathematical impact:**
 ```swift
@@ -175,10 +150,7 @@ let dampingFactor: Float = 0.85
 // Plus proportional share of incoming link authority: d * (incoming contributions)
 ```
 
-**Choosing the damping factor value:**
-- **0.85 (Google's choice)**: Balances realism with mathematical stability
-- **Higher values (0.9-0.95)**: More emphasis on link structure, slower convergence
-- **Lower values (0.7-0.8)**: More random jumping, faster convergence, less link influence
+Choosing the damping factor value involves balancing competing concerns. Google's choice of 0.85 balances realism with mathematical stability. Higher values between 0.9 and 0.95 place more emphasis on link structure but slow convergence. Lower values between 0.7 and 0.8 introduce more random jumping, achieving faster convergence at the cost of reduced link influence.
 
 ## Implementation in Swift
 
@@ -211,10 +183,7 @@ public class Vertex<T>: Equatable {
 }
 ```
 
-**Design Rationale:**
-- **Array storage**: Preserves PageRank history across iterations for debugging and analysis
-- **Generic support**: Works with any vertex type (String, Int, custom objects)
-- **UUID equality**: Ensures consistent vertex identification regardless of content changes
+The design choices reflect educational priorities. Array storage preserves PageRank history across iterations for debugging and analysis. Generic support allows the algorithm to work with any vertex type, whether String, Int, or custom objects. UUID-based equality ensures consistent vertex identification regardless of content changes, maintaining referential integrity throughout the computation.
 
 ### Core PageRank algorithm
 
