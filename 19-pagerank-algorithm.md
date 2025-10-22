@@ -261,26 +261,29 @@ This modification gives each page a small baseline probability `(1-d)/N` of bein
 
 ## Practical example
 
-Let's demonstrate PageRank with a realistic scenario: a major tech company linking to a small startup blog. This example showcases sink node handling and how big sites can dramatically boost smaller sites through backlinks.
+Let's demonstrate PageRank with a graph that shows how a central vertex accumulates authority from multiple sources.
 
 ```swift
-// Realistic web graph: major company boosts startup through backlinks
+// Web graph demonstrating authority accumulation and sink node handling
 let graph = Graph<String>()
 
-// Create websites representing different authority levels
-let techGiant = graph.addVertex(with: "TechGiant.com")     // Major tech company
-let newsPortal = graph.addVertex(with: "NewsPortal.com")   // Medium-sized news site
-let startupBlog = graph.addVertex(with: "StartupBlog.com") // Small startup (sink node)
+// Create vertices
+let vertexA = graph.addVertex(with: "A")  // Central hub
+let vertexB = graph.addVertex(with: "B")
+let vertexC = graph.addVertex(with: "C")  // Sink node
+let vertexD = graph.addVertex(with: "D")
 
-// Create link structure
-// TechGiant links to both NewsPortal and StartupBlog (splitting authority)
-graph.addEdge(from: techGiant, to: newsPortal, weight: 1)
-graph.addEdge(from: techGiant, to: startupBlog, weight: 1)
+// Create link structure - multiple vertices link to A
+graph.addEdge(from: vertexB, to: vertexA, weight: 1)
+graph.addEdge(from: vertexC, to: vertexA, weight: 1)
+graph.addEdge(from: vertexD, to: vertexA, weight: 1)
 
-// NewsPortal also links to StartupBlog
-graph.addEdge(from: newsPortal, to: startupBlog, weight: 1)
+// A links back to B and D
+graph.addEdge(from: vertexA, to: vertexB, weight: 1)
+graph.addEdge(from: vertexA, to: vertexD, weight: 1)
 
-// StartupBlog has NO outgoing links (sink node - demonstrates sink handling)
+// C is a sink node (no outgoing links)
+// Its rank gets redistributed to all other vertices
 
 // Calculate PageRank
 graph.processPageRankWithSink()
@@ -293,13 +296,14 @@ for vertex in graph.canvas {
 
 The algorithm iterates through three rounds, redistributing authority based on link structure:
 
-| Site | Round 0 | Round 1 | Round 2 (Final) |
-|------|---------|---------|-----------------|
-| TechGiant.com | 33.33 | 16.67 | 25.00 |
-| NewsPortal.com | 33.33 | 33.33 | 33.33 |
-| StartupBlog.com | 33.33 | 50.00 | 41.67 |
+| Vertex | Round 0 | Round 1 | Round 2 (Final) |
+|--------|---------|---------|-----------------|
+| A | 25.00 | 75.00 | 87.50 |
+| B | 25.00 | 12.50 | 18.75 |
+| C | 25.00 | 0.00 | 12.50 |
+| D | 25.00 | 12.50 | 6.25 |
 
-StartupBlog achieves the highest rank (41.67) despite being a sink node with zero outgoing links. This happens because both TechGiant and NewsPortal link to it, concentrating authority. The sink node algorithm redistributes StartupBlog's accumulated rank back to TechGiant and NewsPortal, preventing the random surfer from getting trapped. This demonstrates a key PageRank insight: receiving links from authoritative sources matters more than linking out. A small startup blog gains significant authority simply because a major tech company chose to reference it.
+Vertex A achieves the highest rank (87.50) because three other vertices link to it, concentrating authority. In Round 1, A receives authority from B (25.00), C (25.00), and D (25.00), totaling 75.00. Vertex C drops to 0.00 in Round 1 because it's a sink node—after distributing its initial rank to A, it receives no incoming links from other vertices. The sink node algorithm redistributes C's accumulated rank evenly to all other vertices, preventing the random surfer from getting trapped. This demonstrates how PageRank measures authority: vertices that receive many quality backlinks accumulate high rank, while isolated vertices rely on the sink redistribution mechanism to maintain minimal presence in the network.
 
 ## Real-world applications
 
