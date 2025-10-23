@@ -244,6 +244,111 @@ BFS has the following complexity from [Chapter 8](08-performance-analysis.md):
 - **Time Complexity**: O(V + E) where V is the number of vertices and E is the number of edges
 - **Space Complexity**: O(V) for storing visited vertices and the queue
 
+## Topological sort
+
+Topological sorting orders vertices in a directed graph so all edges point forward in the sequence. The algorithm only works on directed acyclic graphs (DAGs)—graphs with no cycles. Common applications include course prerequisites, build systems (Xcode determines Swift file compilation order), and package managers (Swift Package Manager resolves dependency installation order).
+
+### Course prerequisites example
+
+Consider college course dependencies: you need Algebra 101 before Math 500, and Math 500 before Physics. Topological sort finds a valid ordering automatically.
+
+```swift
+// Course prerequisite graph demonstrating topological sort
+let courseGraph = Graph<String>()
+
+let algebra = Vertex(with: "Algebra 101")
+let trig = Vertex(with: "Trigonometry 101")
+let math = Vertex(with: "Math 500")
+let physics = Vertex(with: "Physics")
+
+courseGraph.addVertex(element: algebra)
+courseGraph.addVertex(element: trig)
+courseGraph.addVertex(element: math)
+courseGraph.addVertex(element: physics)
+
+// Define prerequisites (edges point from prerequisite to course)
+courseGraph.addEdge(source: algebra, neighbor: trig, weight: 1)
+courseGraph.addEdge(source: algebra, neighbor: math, weight: 1)
+courseGraph.addEdge(source: trig, neighbor: math, weight: 1)
+courseGraph.addEdge(source: math, neighbor: physics, weight: 1)
+
+// Execute topological sort
+if let ordering = courseGraph.topologicalSort() {
+    for (index, vertex) in ordering.enumerated() {
+        print("\(index + 1). \(vertex.tvalue!)")
+    }
+} else {
+    print("Error: Circular prerequisites detected!")
+}
+```
+
+Output: `[Algebra 101, Trigonometry 101, Math 500, Physics]`
+
+### Implementation
+
+The algorithm uses depth-first search with post-order traversal. Vertices are added to the result after processing all descendants, then the result is reversed. Cycle detection uses a `visiting` array to track vertices currently being processed—encountering a gray node indicates a back edge (cycle).
+
+```swift
+// Topological sort using DFS with cycle detection - O(V + E)
+extension Graph {
+    public func topologicalSort() -> [Vertex<T>]? {
+        var stack: [Vertex<T>] = []
+        var visiting: [Vertex<T>] = []
+        var visited: [Vertex<T>] = []
+
+        for vertex in canvas {
+            vertex.visited = false
+        }
+
+        for vertex in canvas {
+            if !vertex.visited {
+                if !topologicalDFS(vertex, stack: &stack,
+                                  visiting: &visiting, visited: &visited) {
+                    return nil  // Cycle detected
+                }
+            }
+        }
+
+        return stack.reversed()
+    }
+
+    private func topologicalDFS(_ vertex: Vertex<T>,
+                                stack: inout [Vertex<T>],
+                                visiting: inout [Vertex<T>],
+                                visited: inout [Vertex<T>]) -> Bool {
+
+        if visiting.contains(where: { $0 == vertex }) {
+            return false  // Cycle found
+        }
+
+        if visited.contains(where: { $0 == vertex }) {
+            return true  // Already processed
+        }
+
+        visiting.append(vertex)
+
+        for edge in vertex.neighbors {
+            if !topologicalDFS(edge.neighbor, stack: &stack,
+                              visiting: &visiting, visited: &visited) {
+                return false
+            }
+        }
+
+        if let index = visiting.firstIndex(where: { $0 == vertex }) {
+            visiting.remove(at: index)
+        }
+
+        visited.append(vertex)
+        vertex.visited = true
+        stack.append(vertex)
+
+        return true
+    }
+}
+```
+
+The algorithm runs in O(V + E) time, visiting each vertex once and examining each edge once. Returning `nil` for graphs with cycles prevents invalid orderings.
+
 ## Building algorithmic intuition
 
 Graphs model relationships between entities, making them fundamental to countless applications—social networks, maps, web pages, and recommendation systems all express relationships through graph structures. Traversal algorithms reveal different exploration strategies: depth-first search explores deeply before backtracking (useful for path finding and cycle detection), while breadth-first search explores by distance (ideal for shortest paths and level-order processing).
