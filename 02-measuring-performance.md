@@ -61,7 +61,9 @@ Quadratic algorithms work fine for small datasets but become impractical as data
 
 Some algorithms' performance explodes exponentially. The naive recursive Fibonacci calculation ([Chapter 16](16-dynamic-programming.md)) demonstrates this—calculating fib(40) requires over a billion operations. These algorithms are typically unusable for n larger than about 30-40.
 
-![Algorithm complexity growth comparison](Images/svg/algorithm-complexity-graph.svg)
+<div style="text-align: center;">
+  <img src="Images/svg/algorithm-complexity-graph.svg" alt="Algorithm complexity growth comparison" width="600">
+</div>
 
 ## Visualizing the difference
 
