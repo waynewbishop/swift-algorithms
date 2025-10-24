@@ -248,40 +248,7 @@ BFS has the following complexity from [Chapter 8](08-performance-analysis.md):
 
 Topological sorting orders vertices in a directed graph so dependencies come **before** the items that depend on them. Consider college course dependencies: we need Algebra 101 before Math 500, and Math 500 before Physics. Topological sort finds a valid ordering automatically.
 
-Recall from [Chapter 11](11-binary-search-trees.md) that post-order traversal processes children before parents. Topological sort uses this exact same pattern—process all `neighbors` (dependencies) before processing the current `vertex`.
-
-```swift
-// Course prerequisite graph
-let courseGraph = Graph<String>()
-
-let algebra = Vertex(with: "Algebra 101")
-let trig = Vertex(with: "Trigonometry 101")
-let math = Vertex(with: "Math 500")
-let physics = Vertex(with: "Physics")
-
-courseGraph.addVertex(element: algebra)
-courseGraph.addVertex(element: trig)
-courseGraph.addVertex(element: math)
-courseGraph.addVertex(element: physics)
-
-// Define prerequisites (edges point from prerequisite to course)
-courseGraph.addEdge(source: algebra, neighbor: trig, weight: 1)
-courseGraph.addEdge(source: algebra, neighbor: math, weight: 1)
-courseGraph.addEdge(source: trig, neighbor: math, weight: 1)
-courseGraph.addEdge(source: math, neighbor: physics, weight: 1)
-
-// Execute topological sort
-let ordering = courseGraph.topologicalSort(startingFrom: algebra)
-for (index, vertex) in ordering.enumerated() {
-    print("\(index + 1). \(vertex.tvalue!)")
-}
-```
-
-Output: `[Algebra 101, Trigonometry 101, Math 500, Physics]`
-
-### Implementation
-
-Topological sort is simply post-order traversal—the same recursive pattern from Chapter 11:
+Recall from [Chapter 11](11-binary-search-trees.md) that post-order traversal processes children before parents. Topological sort uses this exact same pattern—process all `neighbors` (dependencies) before processing the current `vertex`:
 
 ```swift
 // Topological sort using post-order traversal - O(V + E)
