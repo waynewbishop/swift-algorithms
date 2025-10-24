@@ -38,7 +38,7 @@ Every time you navigate in Maps, the app uses graph algorithms on road networks.
 
 Fitness apps rely heavily on graph structures. AllTrails models trail systems as graphs where intersections are vertices and trail segments are edges. Strava uses graphs for route suggestions based on segment popularity and elevation profiles. Running apps find loops that return you to your starting point using cycle detection algorithms. Even the Health app tracks relationships between data types as graphs of correlations—sleep quality affects workout performance, workout intensity affects heart rate recovery. These causal relationships form a graph of health metrics.
 
-iOS frameworks use graphs extensively. App dependencies form directed acyclic graphs. The [responder chain](https://developer.apple.com/documentation/uikit/using-responders-and-the-responder-chain-to-handle-events) uses graph traversal to pass events through the view tree. Understanding graphs helps you reason about these systems and build better iOS applications.
+iOS frameworks use graphs extensively. App dependencies form graphs showing which frameworks depend on others. The [responder chain](https://developer.apple.com/documentation/uikit/using-responders-and-the-responder-chain-to-handle-events) uses graph traversal to pass events through the view tree. Understanding graphs helps you reason about these systems and build better iOS applications.
 
 ## The vertex
 
@@ -246,14 +246,16 @@ BFS has the following complexity from [Chapter 8](08-performance-analysis.md):
 
 ## Topological sort
 
-Topological sorting orders vertices in a directed graph so all edges point forward in the sequence. The algorithm only works on directed acyclic graphs (DAGs)—graphs with no cycles. Common applications include course prerequisites, build systems (Xcode determines Swift file compilation order), and package managers (Swift Package Manager resolves dependency installation order).
+Topological sorting orders vertices in a directed graph so dependencies come before the items that depend on them. Common applications include course prerequisites, build systems (Xcode determines Swift file compilation order), and package managers (Swift Package Manager resolves dependency installation order).
+
+Recall from [Chapter 11](11-binary-search-trees.md) that post-order traversal processes children before parents. Topological sort uses this exact same pattern—process all neighbors (dependencies) before processing the current vertex.
 
 ### Course prerequisites example
 
-Consider college course dependencies: you need Algebra 101 before Math 500, and Math 500 before Physics. Topological sort finds a valid ordering automatically.
+Consider college course dependencies: we need Algebra 101 before Math 500, and Math 500 before Physics. Topological sort finds a valid ordering automatically.
 
 ```swift
-// Course prerequisite graph demonstrating topological sort
+// Course prerequisite graph
 let courseGraph = Graph<String>()
 
 let algebra = Vertex(with: "Algebra 101")
@@ -273,12 +275,9 @@ courseGraph.addEdge(source: trig, neighbor: math, weight: 1)
 courseGraph.addEdge(source: math, neighbor: physics, weight: 1)
 
 // Execute topological sort
-if let ordering = courseGraph.topologicalSort() {
-    for (index, vertex) in ordering.enumerated() {
-        print("\(index + 1). \(vertex.tvalue!)")
-    }
-} else {
-    print("Error: Circular prerequisites detected!")
+let ordering = courseGraph.topologicalSort(startingFrom: algebra)
+for (index, vertex) in ordering.enumerated() {
+    print("\(index + 1). \(vertex.tvalue!)")
 }
 ```
 
@@ -286,68 +285,41 @@ Output: `[Algebra 101, Trigonometry 101, Math 500, Physics]`
 
 ### Implementation
 
-The algorithm uses depth-first search with post-order traversal. Vertices are added to the result after processing all descendants, then the result is reversed. Cycle detection uses a `visiting` array to track vertices currently being processed—encountering a gray node indicates a back edge (cycle).
+Topological sort is simply post-order traversal—the same recursive pattern from Chapter 11:
 
 ```swift
-// Topological sort using DFS with cycle detection - O(V + E)
+// Topological sort using post-order traversal - O(V + E)
 extension Graph {
-    public func topologicalSort() -> [Vertex<T>]? {
-        var stack: [Vertex<T>] = []
-        var visiting: [Vertex<T>] = []
-        var visited: [Vertex<T>] = []
+    public func topologicalSort(startingFrom start: Vertex<T>) -> [Vertex<T>] {
+        var result: [Vertex<T>] = []
 
+        // Reset visited flags
         for vertex in canvas {
             vertex.visited = false
         }
 
-        for vertex in canvas {
-            if !vertex.visited {
-                if !topologicalDFS(vertex, stack: &stack,
-                                  visiting: &visiting, visited: &visited) {
-                    return nil  // Cycle detected
-                }
-            }
-        }
+        // Perform post-order DFS
+        topologicalDFS(start, result: &result)
 
-        return stack.reversed()
+        return result.reversed()
     }
 
-    private func topologicalDFS(_ vertex: Vertex<T>,
-                                stack: inout [Vertex<T>],
-                                visiting: inout [Vertex<T>],
-                                visited: inout [Vertex<T>]) -> Bool {
-
-        if visiting.contains(where: { $0 == vertex }) {
-            return false  // Cycle found
-        }
-
-        if visited.contains(where: { $0 == vertex }) {
-            return true  // Already processed
-        }
-
-        visiting.append(vertex)
-
-        for edge in vertex.neighbors {
-            if !topologicalDFS(edge.neighbor, stack: &stack,
-                              visiting: &visiting, visited: &visited) {
-                return false
-            }
-        }
-
-        if let index = visiting.firstIndex(where: { $0 == vertex }) {
-            visiting.remove(at: index)
-        }
-
-        visited.append(vertex)
+    // Recursively visit vertex using post-order traversal pattern
+    private func topologicalDFS(_ vertex: Vertex<T>, result: inout [Vertex<T>]) {
         vertex.visited = true
-        stack.append(vertex)
 
-        return true
+        // Process all neighbors first (dependencies)
+        for edge in vertex.neighbors where !edge.neighbor.visited {
+            topologicalDFS(edge.neighbor, result: &result)
+        }
+
+        // Add to result after processing neighbors (post-order)
+        result.append(vertex)
     }
 }
 ```
 
-The algorithm runs in O(V + E) time, visiting each vertex once and examining each edge once. Returning `nil` for graphs with cycles prevents invalid orderings.
+The pattern is identical to BST post-order traversal: process children first, then add current node to result. The algorithm runs in `O(V + E)` time, visiting each vertex once and examining each edge once.
 
 ## Building algorithmic intuition
 

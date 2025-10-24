@@ -46,5 +46,5 @@ All substantive content decisions remain with the author to maintain pedagogical
 Wayne is a technologist dedicated to making complex technology accessible and impactful, with experience spanning software development, technical writing, education, and emerging AI technologies.
 
 - LinkedIn: [waynebishop](https://www.linkedin.com/in/waynebishop)
-- GitHub: [@waynewbishop](https://github.com/waynewbishop)
-- Medium: [@waynewbishop](https://waynewbishop.medium.com)
+- GitHub: [waynewbishop](https://github.com/waynewbishop)
+- Medium: [waynewbishop](https://waynewbishop.medium.com)
