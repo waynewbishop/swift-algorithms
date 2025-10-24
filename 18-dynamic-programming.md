@@ -17,7 +17,7 @@ Dynamic programming builds on recursion from [Chapter 6](06-recursion), but adds
 
 ## Fibonacci revisited
 
-In the chapter on Recursion, we compared building the classic sequence of Array values using both iterative and recursive techniques. As discussed, these algorithms were designed to produce an Array sequence, not to calculate a particular result. Taking this into account, we can create a new version of Fibonacci to return a single Int value:
+In [Chapter 6](06-recursion.md), we compared building the classic sequence of Array values using both iterative and recursive techniques. As discussed, these algorithms were designed to produce an Array sequence, not to calculate a particular result. Taking this into account, we can create a new version of Fibonacci to return a single Int value:
 
 ```swift
 // Naive Fibonacci with exponential time complexity - O(2^n) due to repeated calculations
@@ -43,6 +43,7 @@ Let's try a different technique. Designed as a nested Swift function, `fibMemoiz
 ```swift
 // Memoized Fibonacci using nested functions and Array-based caching - O(n) time
 extension Int {
+    // Calculate Fibonacci number using memoization with nested helper function
     mutating func fibMemoized() -> Int {
         // Builds array sequence
         func fibSequence(_ sequence: Array<Int> = [0, 1]) -> Array<Int> {
