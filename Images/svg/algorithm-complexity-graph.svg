@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="500" height="500">
+  <defs>
+    <style>
+      /* Light mode (default) */
+      .background {
+        fill: #ffffff;
+      }
+      .axis {
+        stroke: #000000;
+        stroke-width: 3;
+        fill: none;
+      }
+      .axis-label {
+        fill: #000000;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+      }
+      .curve-label {
+        fill: #000000;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+        font-size: 15px;
+        font-weight: 400;
+      }
+      .curve-constant {
+        stroke: #5B8DBE;
+        stroke-width: 3;
+        fill: none;
+        stroke-dasharray: 8, 4;
+      }
+      .curve-log {
+        stroke: #C84848;
+        stroke-width: 3;
+        fill: none;
+        stroke-dasharray: 8, 4;
+      }
+      .curve-linear {
+        stroke: #78A55A;
+        stroke-width: 3;
+        fill: none;
+        stroke-dasharray: 8, 4;
+      }
+      .curve-quadratic {
+        stroke: #E89C3F;
+        stroke-width: 3;
+        fill: none;
+        stroke-dasharray: 8, 4;
+      }
+      .arrow-constant {
+        fill: #5B8DBE;
+      }
+      .arrow-log {
+        fill: #C84848;
+      }
+      .arrow-linear {
+        fill: #78A55A;
+      }
+      .arrow-quadratic {
+        fill: #E89C3F;
+      }
+      
+      /* Dark mode */
+      @media (prefers-color-scheme: dark) {
+        .background {
+          fill: #1a1a1a;
+        }
+        .axis {
+          stroke: #ffffff;
+        }
+        .axis-label {
+          fill: #ffffff;
+        }
+        .curve-label {
+          fill: #ffffff;
+        }
+        .curve-constant {
+          stroke: #7BA5D6;
+        }
+        .curve-log {
+          stroke: #E86A6A;
+        }
+        .curve-linear {
+          stroke: #96C076;
+        }
+        .curve-quadratic {
+          stroke: #F5B461;
+        }
+        .arrow-constant {
+          fill: #7BA5D6;
+        }
+        .arrow-log {
+          fill: #E86A6A;
+        }
+        .arrow-linear {
+          fill: #96C076;
+        }
+        .arrow-quadratic {
+          fill: #F5B461;
+        }
+      }
+    </style>
+    
+    <!-- Arrow markers for each curve -->
+    <marker id="arrow-constant" markerWidth="12" markerHeight="12" refX="10" refY="3" orient="auto">
+      <polygon class="arrow-constant" points="0 0, 12 3, 0 6"/>
+    </marker>
+    <marker id="arrow-log" markerWidth="12" markerHeight="12" refX="10" refY="3" orient="auto">
+      <polygon class="arrow-log" points="0 0, 12 3, 0 6"/>
+    </marker>
+    <marker id="arrow-linear" markerWidth="12" markerHeight="12" refX="10" refY="3" orient="auto">
+      <polygon class="arrow-linear" points="0 0, 12 3, 0 6"/>
+    </marker>
+    <marker id="arrow-quadratic" markerWidth="12" markerHeight="12" refX="10" refY="3" orient="auto">
+      <polygon class="arrow-quadratic" points="0 0, 12 3, 0 6"/>
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect class="background" width="600" height="600"/>
+  
+  <!-- Axes -->
+  <!-- Y-axis -->
+  <line class="axis" x1="80" y1="520" x2="80" y2="60"/>
+  
+  <!-- X-axis -->
+  <line class="axis" x1="80" y1="520" x2="560" y2="520"/>
+  
+  <!-- Axis labels -->
+  <text class="axis-label" x="40" y="290" transform="rotate(-90 40 290)" text-anchor="middle">
+    Algorithm Complexity
+  </text>
+  <text class="axis-label" x="320" y="560" text-anchor="middle">
+    Growth of Input (n)
+  </text>
+  
+  <!-- Origin point -->
+  <circle cx="80" cy="520" r="4" fill="#666666"/>
+  
+  <!-- Constant Time - O(1) - Blue horizontal line at bottom -->
+  <path class="curve-constant" 
+        d="M 90,470 L 420,470" 
+        marker-end="url(#arrow-constant)"/>
+  <text class="curve-label" x="432" y="490" text-anchor="start" style="fill: #5B8DBE;">Constant Time - O(1)</text>
+  
+  <!-- Logarithmic Time - O(log n) - Red shallow curve -->
+  <path class="curve-log" 
+        d="M 90,510 Q 180,450 280,380 Q 380,330 470,300" 
+        marker-end="url(#arrow-log)"/>
+  <text class="curve-label" x="482" y="320" text-anchor="start" style="fill: #C84848;">Logarithmic Time - O(log n)</text>
+  
+  <!-- Linear Time - O(n) - Green diagonal line -->
+  <path class="curve-linear" 
+        d="M 90,510 L 500,140" 
+        marker-end="url(#arrow-linear)"/>
+  <text class="curve-label" x="512" y="160" text-anchor="start" style="fill: #78A55A;">Linear Time - O(n)</text>
+  
+  <!-- Quadratic Time - O(n²) - Orange steep curve -->
+  <path class="curve-quadratic" 
+        d="M 90,515 Q 140,500 180,450 Q 230,360 280,240 Q 320,140 350,80" 
+        marker-end="url(#arrow-quadratic)"/>
+  <text class="curve-label" x="362" y="100" text-anchor="start" style="fill: #E89C3F;">O(n²)</text>
+  
+</svg>
