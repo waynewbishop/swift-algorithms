@@ -847,4 +847,9 @@ tr:last-child td {
   .highlight pre code {
     color: #ffffff;
   }
+
+  /* SVG image dark mode support */
+  img[src$=".svg"] {
+    filter: invert(1) hue-rotate(180deg);
+  }
 }
