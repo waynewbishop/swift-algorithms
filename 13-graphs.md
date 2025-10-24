@@ -246,13 +246,9 @@ BFS has the following complexity from [Chapter 8](08-performance-analysis.md):
 
 ## Topological sort
 
-Topological sorting orders vertices in a directed graph so dependencies come before the items that depend on them. Common applications include course prerequisites, build systems (Xcode determines Swift file compilation order), and package managers (Swift Package Manager resolves dependency installation order).
+Topological sorting orders vertices in a directed graph so dependencies come **before** the items that depend on them. Consider college course dependencies: we need Algebra 101 before Math 500, and Math 500 before Physics. Topological sort finds a valid ordering automatically.
 
-Recall from [Chapter 11](11-binary-search-trees.md) that post-order traversal processes children before parents. Topological sort uses this exact same pattern—process all neighbors (dependencies) before processing the current vertex.
-
-### Course prerequisites example
-
-Consider college course dependencies: we need Algebra 101 before Math 500, and Math 500 before Physics. Topological sort finds a valid ordering automatically.
+Recall from [Chapter 11](11-binary-search-trees.md) that post-order traversal processes children before parents. Topological sort uses this exact same pattern—process all `neighbors` (dependencies) before processing the current `vertex`.
 
 ```swift
 // Course prerequisite graph
