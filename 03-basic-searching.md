@@ -96,7 +96,7 @@ let (_, worstCase) = analyzedLinearSearch(for: 15, in: testData)
 print("Worst case: \(worstCase) comparisons")
 ```
 
-This analysis reveals that while linear search is `O(n)` in the worst case, real-world performance varies significantly based on where the target is located.
+This analysis reveals that while linear search is `O(n)` in the worst case, real-world performance varies significantly based on where the target is located:
 
 ![Linear search visualization](Images/svg/linear_search_visualization.svg)
 
@@ -113,7 +113,7 @@ Imagine we're looking for "Smith" in a physical phone book. You wouldn't start f
 3. Eliminate half the book and repeat the process
 4. Continue until we find "Smith" or determine it's not there
 
-This intuitive process is exactly how binary search works. Or consider finding a specific workout date in your fitness app's history. If your 500 workouts are sorted chronologically, you wouldn't scroll from the beginning. You'd jump to roughly where you think June 2023 should be, see if you're too early or too late, then narrow down from there. This halving strategy is binary search.
+This intuitive process is exactly how binary search works. Or consider finding a specific workout date in your fitness app's history. If your 500 workouts are sorted chronologically, you wouldn't scroll from the beginning. You'd jump to roughly where you think June 2023 should be, see if you're too early or too late, then narrow down from there. This halving strategy is binary search:
 
 ![Binary search visualization](Images/svg/binary_search_visualization.svg)
 
