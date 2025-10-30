@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="500" height="500">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
   <defs>
     <style>
       /* Light mode (default) */
@@ -17,21 +17,10 @@
         font-weight: 500;
       }
       .curve-label {
+        fill: #000000;
         font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
         font-size: 15px;
         font-weight: 400;
-      }
-      .curve-label-constant {
-        fill: #5B8DBE;
-      }
-      .curve-label-log {
-        fill: #C84848;
-      }
-      .curve-label-linear {
-        fill: #78A55A;
-      }
-      .curve-label-quadratic {
-        fill: #E89C3F;
       }
       .curve-constant {
         stroke: #5B8DBE;
@@ -81,17 +70,8 @@
         .axis-label {
           fill: #ffffff;
         }
-        .curve-label-constant {
-          fill: #7BA5D6;
-        }
-        .curve-label-log {
-          fill: #E86A6A;
-        }
-        .curve-label-linear {
-          fill: #96C076;
-        }
-        .curve-label-quadratic {
-          fill: #F5B461;
+        .curve-label {
+          fill: #ffffff;
         }
         .curve-constant {
           stroke: #7BA5D6;
@@ -157,27 +137,27 @@
   <circle cx="80" cy="520" r="4" fill="#666666"/>
   
   <!-- Constant Time - O(1) - Blue horizontal line at bottom -->
-  <path class="curve-constant"
-        d="M 90,470 L 420,470"
+  <path class="curve-constant" 
+        d="M 90,470 L 420,470" 
         marker-end="url(#arrow-constant)"/>
-  <text class="curve-label curve-label-constant" x="432" y="490" text-anchor="start">Constant Time - O(1)</text>
-
+  <text class="curve-label" x="432" y="490" text-anchor="start" style="fill: #5B8DBE;">Constant Time - O(1)</text>
+  
   <!-- Logarithmic Time - O(log n) - Red shallow curve -->
-  <path class="curve-log"
-        d="M 90,510 Q 180,450 280,380 Q 380,330 470,300"
+  <path class="curve-log" 
+        d="M 90,510 Q 180,450 280,380 Q 380,330 470,300" 
         marker-end="url(#arrow-log)"/>
-  <text class="curve-label curve-label-log" x="482" y="320" text-anchor="start">Logarithmic Time - O(log n)</text>
-
+  <text class="curve-label" x="482" y="320" text-anchor="start" style="fill: #C84848;">Logarithmic Time - O(log n)</text>
+  
   <!-- Linear Time - O(n) - Green diagonal line -->
-  <path class="curve-linear"
-        d="M 90,510 L 500,140"
+  <path class="curve-linear" 
+        d="M 90,510 L 500,140" 
         marker-end="url(#arrow-linear)"/>
-  <text class="curve-label curve-label-linear" x="512" y="160" text-anchor="start">Linear Time - O(n)</text>
-
+  <text class="curve-label" x="512" y="160" text-anchor="start" style="fill: #78A55A;">Linear Time - O(n)</text>
+  
   <!-- Quadratic Time - O(n²) - Orange steep curve -->
-  <path class="curve-quadratic"
-        d="M 90,515 Q 140,500 180,450 Q 230,360 280,240 Q 320,140 350,80"
+  <path class="curve-quadratic" 
+        d="M 90,515 Q 140,500 180,450 Q 230,360 280,240 Q 320,140 350,80" 
         marker-end="url(#arrow-quadratic)"/>
-  <text class="curve-label curve-label-quadratic" x="362" y="100" text-anchor="start">O(n²)</text>
+  <text class="curve-label" x="362" y="100" text-anchor="start" style="fill: #E89C3F;">O(n²)</text>
   
 </svg>

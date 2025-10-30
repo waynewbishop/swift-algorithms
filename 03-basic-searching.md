@@ -98,6 +98,8 @@ print("Worst case: \(worstCase) comparisons")
 
 This analysis reveals that while linear search is `O(n)` in the worst case, real-world performance varies significantly based on where the target is located.
 
+![Linear search visualization](Images/svg/linear_search_visualization.svg)
+
 ## Divide and conquer
 
 When the data is sorted, we can employ a much more efficient strategy. Binary search uses the [divide and conquer](https://en.wikipedia.org/wiki/Divide-and-conquer_algorithm) approach, eliminating half of the remaining possibilities with each comparison.
@@ -112,6 +114,8 @@ Imagine we're looking for "Smith" in a physical phone book. You wouldn't start f
 4. Continue until we find "Smith" or determine it's not there
 
 This intuitive process is exactly how binary search works. Or consider finding a specific workout date in your fitness app's history. If your 500 workouts are sorted chronologically, you wouldn't scroll from the beginning. You'd jump to roughly where you think June 2023 should be, see if you're too early or too late, then narrow down from there. This halving strategy is binary search.
+
+![Binary search visualization](Images/svg/binary_search_visualization.svg)
 
 ## Binary search implementation
 

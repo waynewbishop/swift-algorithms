@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200">
+  <defs>
+    <style>
+      /* Light mode */
+      .background {
+        fill: #ffffff;
+      }
+      .box {
+        fill: #e8f4f8;
+        stroke: #0d3b66;
+        stroke-width: 2;
+      }
+      .box-checked {
+        fill: #ffd7d7;
+        stroke: #C84848;
+        stroke-width: 2;
+      }
+      .box-target {
+        fill: #d4edda;
+        stroke: #78A55A;
+        stroke-width: 3;
+      }
+      .value-text {
+        fill: #000000;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+        font-size: 24px;
+        font-weight: 600;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+      .index-text {
+        fill: #666666;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+        font-size: 14px;
+        text-anchor: middle;
+      }
+      .arrow {
+        stroke: #C84848;
+        stroke-width: 2;
+        fill: none;
+        marker-end: url(#arrow-red);
+      }
+      .arrow-head {
+        fill: #C84848;
+      }
+      
+      /* Dark mode */
+      @media (prefers-color-scheme: dark) {
+        .background {
+          fill: #1a1a1a;
+        }
+        .box {
+          fill: #2a4a5a;
+          stroke: #4a7a9a;
+        }
+        .box-checked {
+          fill: #4a2a2a;
+          stroke: #E86A6A;
+        }
+        .box-target {
+          fill: #2a4a2a;
+          stroke: #96C076;
+        }
+        .value-text {
+          fill: #ffffff;
+        }
+        .index-text {
+          fill: #aaaaaa;
+        }
+        .arrow {
+          stroke: #E86A6A;
+        }
+        .arrow-head {
+          fill: #E86A6A;
+        }
+      }
+    </style>
+    
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon class="arrow-head" points="0 0, 10 3, 0 6"/>
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect class="background" width="800" height="200"/>
+  
+  <!-- Array elements -->
+  <!-- Index 0 - checked -->
+  <rect class="box-checked" x="50" y="60" width="70" height="70" rx="4"/>
+  <text class="value-text" x="85" y="95">64</text>
+  <text class="index-text" x="85" y="145">[0]</text>
+  
+  <!-- Index 1 - checked -->
+  <rect class="box-checked" x="140" y="60" width="70" height="70" rx="4"/>
+  <text class="value-text" x="175" y="95">34</text>
+  <text class="index-text" x="175" y="145">[1]</text>
+  
+  <!-- Index 2 - checked -->
+  <rect class="box-checked" x="230" y="60" width="70" height="70" rx="4"/>
+  <text class="value-text" x="265" y="95">25</text>
+  <text class="index-text" x="265" y="145">[2]</text>
+  
+  <!-- Index 3 - checked -->
+  <rect class="box-checked" x="320" y="60" width="70" height="70" rx="4"/>
+  <text class="value-text" x="355" y="95">12</text>
+  <text class="index-text" x="355" y="145">[3]</text>
+  
+  <!-- Index 4 - TARGET FOUND -->
+  <rect class="box-target" x="410" y="60" width="70" height="70" rx="4"/>
+  <text class="value-text" x="445" y="95">22</text>
+  <text class="index-text" x="445" y="145">[4]</text>
+  
+  <!-- Arrow pointing to target -->
+  <path class="arrow" d="M 445,40 L 445,55"/>
+  
+  <!-- Index 5 - unchecked -->
+  <rect class="box" x="500" y="60" width="70" height="70" rx="4"/>
+  <text class="value-text" x="535" y="95">11</text>
+  <text class="index-text" x="535" y="145">[5]</text>
+  
+  <!-- Index 6 - unchecked -->
+  <rect class="box" x="590" y="60" width="70" height="70" rx="4"/>
+  <text class="value-text" x="625" y="95">90</text>
+  <text class="index-text" x="625" y="145">[6]</text>
+  
+  <!-- Index 7 - unchecked -->
+  <rect class="box" x="680" y="60" width="70" height="70" rx="4"/>
+  <text class="value-text" x="715" y="95">5</text>
+  <text class="index-text" x="715" y="145">[7]</text>
+</svg>

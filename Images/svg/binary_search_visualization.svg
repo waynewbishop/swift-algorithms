@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380">
+  <defs>
+    <style>
+      /* Light mode */
+      .background {
+        fill: #ffffff;
+      }
+      .box {
+        fill: #e8f4f8;
+        stroke: #0d3b66;
+        stroke-width: 2;
+      }
+      .box-eliminated {
+        fill: #f0f0f0;
+        stroke: #cccccc;
+        stroke-width: 1;
+        opacity: 0.5;
+      }
+      .box-checked {
+        fill: #ffd7d7;
+        stroke: #C84848;
+        stroke-width: 2;
+      }
+      .box-middle {
+        fill: #fff3cd;
+        stroke: #E89C3F;
+        stroke-width: 3;
+      }
+      .box-target {
+        fill: #d4edda;
+        stroke: #78A55A;
+        stroke-width: 3;
+      }
+      .value-text {
+        fill: #000000;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+      .value-text-dim {
+        fill: #999999;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+      .index-text {
+        fill: #666666;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+        font-size: 12px;
+        text-anchor: middle;
+      }
+      .step-label {
+        fill: #666666;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .arrow-line {
+        stroke: #E89C3F;
+        stroke-width: 2;
+        fill: none;
+      }
+      
+      /* Dark mode */
+      @media (prefers-color-scheme: dark) {
+        .background {
+          fill: #1a1a1a;
+        }
+        .box {
+          fill: #2a4a5a;
+          stroke: #4a7a9a;
+        }
+        .box-eliminated {
+          fill: #2a2a2a;
+          stroke: #444444;
+        }
+        .box-checked {
+          fill: #4a2a2a;
+          stroke: #E86A6A;
+        }
+        .box-middle {
+          fill: #4a3a1a;
+          stroke: #F5B461;
+        }
+        .box-target {
+          fill: #2a4a2a;
+          stroke: #96C076;
+        }
+        .value-text {
+          fill: #ffffff;
+        }
+        .value-text-dim {
+          fill: #666666;
+        }
+        .index-text {
+          fill: #aaaaaa;
+        }
+        .step-label {
+          fill: #aaaaaa;
+        }
+        .arrow-line {
+          stroke: #F5B461;
+        }
+      }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect class="background" width="800" height="380"/>
+  
+  <!-- Step 1: Initial array -->
+  <text class="step-label" x="30" y="60">1</text>
+  
+  <rect class="box" x="70" y="45" width="50" height="50" rx="3"/>
+  <text class="value-text" x="95" y="70">1</text>
+  <text class="index-text" x="95" y="105">[0]</text>
+  
+  <rect class="box" x="130" y="45" width="50" height="50" rx="3"/>
+  <text class="value-text" x="155" y="70">3</text>
+  <text class="index-text" x="155" y="105">[1]</text>
+  
+  <rect class="box" x="190" y="45" width="50" height="50" rx="3"/>
+  <text class="value-text" x="215" y="70">5</text>
+  <text class="index-text" x="215" y="105">[2]</text>
+  
+  <rect class="box" x="250" y="45" width="50" height="50" rx="3"/>
+  <text class="value-text" x="275" y="70">7</text>
+  <text class="index-text" x="275" y="105">[3]</text>
+  
+  <rect class="box" x="310" y="45" width="50" height="50" rx="3"/>
+  <text class="value-text" x="335" y="70">9</text>
+  <text class="index-text" x="335" y="105">[4]</text>
+  
+  <rect class="box" x="370" y="45" width="50" height="50" rx="3"/>
+  <text class="value-text" x="395" y="70">11</text>
+  <text class="index-text" x="395" y="105">[5]</text>
+  
+  <rect class="box-middle" x="430" y="45" width="50" height="50" rx="3"/>
+  <text class="value-text" x="455" y="70">13</text>
+  <text class="index-text" x="455" y="105">[6]</text>
+  <line class="arrow-line" x1="455" y1="35" x2="455" y2="43"/>
+  
+  <rect class="box" x="490" y="45" width="50" height="50" rx="3"/>
+  <text class="value-text" x="515" y="70">15</text>
+  <text class="index-text" x="515" y="105">[7]</text>
+  
+  <rect class="box" x="550" y="45" width="50" height="50" rx="3"/>
+  <text class="value-text" x="575" y="70">17</text>
+  <text class="index-text" x="575" y="105">[8]</text>
+  
+  <rect class="box" x="610" y="45" width="50" height="50" rx="3"/>
+  <text class="value-text" x="635" y="70">19</text>
+  <text class="index-text" x="635" y="105">[9]</text>
+  
+  <rect class="box" x="670" y="45" width="50" height="50" rx="3"/>
+  <text class="value-text" x="695" y="70">21</text>
+  <text class="index-text" x="695" y="105">[10]</text>
+  
+  <!-- Step 2: Right half -->
+  <text class="step-label" x="30" y="175">2</text>
+  
+  <!-- Left half eliminated -->
+  <rect class="box-eliminated" x="70" y="160" width="50" height="50" rx="3"/>
+  <text class="value-text-dim" x="95" y="185">1</text>
+  
+  <rect class="box-eliminated" x="130" y="160" width="50" height="50" rx="3"/>
+  <text class="value-text-dim" x="155" y="185">3</text>
+  
+  <rect class="box-eliminated" x="190" y="160" width="50" height="50" rx="3"/>
+  <text class="value-text-dim" x="215" y="185">5</text>
+  
+  <rect class="box-eliminated" x="250" y="160" width="50" height="50" rx="3"/>
+  <text class="value-text-dim" x="275" y="185">7</text>
+  
+  <rect class="box-eliminated" x="310" y="160" width="50" height="50" rx="3"/>
+  <text class="value-text-dim" x="335" y="185">9</text>
+  
+  <rect class="box-eliminated" x="370" y="160" width="50" height="50" rx="3"/>
+  <text class="value-text-dim" x="395" y="185">11</text>
+  
+  <rect class="box-eliminated" x="430" y="160" width="50" height="50" rx="3"/>
+  <text class="value-text-dim" x="455" y="185">13</text>
+  
+  <!-- Active search area -->
+  <rect class="box" x="490" y="160" width="50" height="50" rx="3"/>
+  <text class="value-text" x="515" y="185">15</text>
+  <text class="index-text" x="515" y="220">[7]</text>
+  
+  <rect class="box-middle" x="550" y="160" width="50" height="50" rx="3"/>
+  <text class="value-text" x="575" y="185">17</text>
+  <text class="index-text" x="575" y="220">[8]</text>
+  <line class="arrow-line" x1="575" y1="150" x2="575" y2="158"/>
+  
+  <rect class="box" x="610" y="160" width="50" height="50" rx="3"/>
+  <text class="value-text" x="635" y="185">19</text>
+  <text class="index-text" x="635" y="220">[9]</text>
+  
+  <rect class="box" x="670" y="160" width="50" height="50" rx="3"/>
+  <text class="value-text" x="695" y="185">21</text>
+  <text class="index-text" x="695" y="220">[10]</text>
+  
+  <!-- Step 3: Target found -->
+  <text class="step-label" x="30" y="290">3</text>
+  
+  <!-- All eliminated except target -->
+  <rect class="box-eliminated" x="70" y="275" width="50" height="50" rx="3"/>
+  <text class="value-text-dim" x="95" y="300">1</text>
+  
+  <text class="value-text-dim" x="275" y="300">...</text>
+  
+  <rect class="box-eliminated" x="490" y="275" width="50" height="50" rx="3"/>
+  <text class="value-text-dim" x="515" y="300">15</text>
+  
+  <rect class="box-target" x="550" y="275" width="50" height="50" rx="3"/>
+  <text class="value-text" x="575" y="300">17</text>
+  <text class="index-text" x="575" y="335">[8]</text>
+  
+  <rect class="box-eliminated" x="610" y="275" width="50" height="50" rx="3"/>
+  <text class="value-text-dim" x="635" y="300">19</text>
+  
+  <rect class="box-eliminated" x="670" y="275" width="50" height="50" rx="3"/>
+  <text class="value-text-dim" x="695" y="300">21</text>
+</svg>

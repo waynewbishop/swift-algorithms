@@ -38,13 +38,13 @@ All substantive content decisions remain with the author to maintain pedagogical
 
 ## Related Projects
 
-- [Quiver Package](https://github.com/waynewbishop/bishop-algorithms-quiver-package) - A Swift package that provides vector mathematics, numerical computing, and statistical operations.
 - [Structures Package](https://github.com/waynewbishop/bishop-algorithms-swift-package) - Examples of commonly used algorithms and data structures in Swift Package format.
+- [Quiver Package](https://github.com/waynewbishop/bishop-algorithms-quiver-package) - A Swift package that provides vector mathematics, numerical computing, and statistical operations.
 
 ## About the Author
 
 Wayne is a technologist dedicated to making complex technology accessible and impactful, with experience spanning software development, technical writing, education, and emerging AI technologies.
 
-- LinkedIn: [waynebishop](https://www.linkedin.com/in/waynebishop)
-- GitHub: [waynewbishop](https://github.com/waynewbishop)
-- Medium: [waynewbishop](https://waynewbishop.medium.com)
+- LinkedIn: [@waynebishop](https://www.linkedin.com/in/waynebishop)
+- GitHub: [@waynewbishop](https://github.com/waynewbishop)
+- Substack: [@waynewbishop](https://waynewbishop.substack.com) 
