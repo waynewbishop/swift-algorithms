@@ -5,11 +5,7 @@ description: "Learn linear and binary search algorithms in Swift"
 ---
 # Basic Searching
 
-Open your Contacts app. Type "Alex." Before you finish typing the name, it's found. With 500+ contacts, how does it work so fast? This is binary search in action—the same algorithm that powers Spotlight, finds songs in Apple Music's 100-million track library, and locates your fastest mile split across years of running data in the Health app.
-
-In [Chapter 2](02-measuring-performance.md) we learned the vocabulary of performance—Big O notation provides a common language for discussing algorithmic efficiency. Now it's time to apply that knowledge to your first concrete [algorithms](https://en.wikipedia.org/wiki/Algorithm). Whether we're building a contact app, a fitness tracker, a music library, or any system that manages information, search functionality is essential.
-
-In this chapter, we'll explore two fundamental approaches to searching: linear search and [binary search](https://en.wikipedia.org/wiki/Binary_search_algorithm). We'll learn how each algorithm works, when to use it, and why the choice between `O(n)` and `O(log n)` makes such a dramatic difference as data grows.
+In this chapter, we'll explore two fundamental approaches to searching: linear search and binary search. We'll learn how each algorithm works, when to use it, and why the choice between `O(n)` and `O(log n)` makes such a dramatic difference as data grows.
 
 ## The search problem
 
@@ -26,7 +22,7 @@ Each scenario involves the same fundamental challenge, but the optimal approach 
 
 ## The brute force approach
 
-We've already encountered [linear search](https://en.wikipedia.org/wiki/Linear_search) in our Big O chapter, but let's examine it more thoroughly. Linear search represents the most straightforward approach to finding data: check every item until we find what we're looking for.
+We've mentioned [linear search](https://en.wikipedia.org/wiki/Linear_search) in [Chapter 2](02-measuring-performance.md), but let's examine it more thoroughly. Linear search represents the most straightforward approach to finding data: check every item until we find what we're looking for.
 
 ```swift
 // Implement linear search as an Array extension using Equatable protocol
@@ -64,7 +60,7 @@ Linear search has several advantages that make it valuable in certain situations
 
 ## Linear search performance analysis
 
-As we learned in the Big O chapter, linear search operates in `O(n)` time. But let's break down what this means in practice:
+As we learned in [Chapter 2](02-measuring-performance.md), linear search operates in `O(n)` time. But let's break down what this means in practice:
 
 ```swift
 // Perform linear search while tracking the number of comparisons made
@@ -96,26 +92,20 @@ let (_, worstCase) = analyzedLinearSearch(for: 15, in: testData)
 print("Worst case: \(worstCase) comparisons")
 ```
 
-This analysis reveals that while linear search is `O(n)` in the worst case, real-world performance varies significantly based on where the target is located:
-
-![Linear search visualization](Images/svg/linear_search_visualization.svg)
-
 ## Divide and conquer
 
 When the data is sorted, we can employ a much more efficient strategy. Binary search uses the [divide and conquer](https://en.wikipedia.org/wiki/Divide-and-conquer_algorithm) approach, eliminating half of the remaining possibilities with each comparison.
 
 ### The phone book analogy
 
-Imagine we're looking for "Smith" in a physical phone book. You wouldn't start from page 1 and flip through every page. Instead, you'd:
+Imagine we're looking for "Smith" in a physical phone book. We wouldn't start from page 1 and flip through every page. Instead, we'd:
 
 1. Open to the middle of the book
 2. See if "Smith" comes before or after the names on that page
 3. Eliminate half the book and repeat the process
 4. Continue until we find "Smith" or determine it's not there
 
-This intuitive process is exactly how binary search works. Or consider finding a specific workout date in your fitness app's history. If your 500 workouts are sorted chronologically, you wouldn't scroll from the beginning. You'd jump to roughly where you think June 2023 should be, see if you're too early or too late, then narrow down from there. This halving strategy is binary search:
-
-![Binary search visualization](Images/svg/binary_search_visualization.svg)
+This intuitive process is exactly how binary search works. Or consider finding a specific workout date in our fitness app's history. If we have 500 workouts sorted chronologically, we wouldn't scroll from the beginning. We'd jump to roughly where we think June 2023 should be, see if we're too early or too late, then narrow down from there. This halving strategy is binary search:
 
 ## Binary search implementation
 
@@ -192,9 +182,7 @@ print("Found 750 at index \(foundIndex ?? -1) in \(steps) steps")
 
 ### The power of logarithmic time
 
-The efficiency of binary search becomes remarkable with large datasets. Consider a fitness app storing years of workout history.
-
-**Note:** These numbers represent the maximum comparisons needed in the worst-case scenario:
+The efficiency of binary search becomes notable with large datasets. Consider a fitness app storing years of workout history.
 
 | Workout Count | Linear Search (worst) | Binary Search (worst) | Real-World Example |
 |---------------|----------------------|----------------------|-------------------|
@@ -207,7 +195,7 @@ This table demonstrates why binary search is preferred for large, sorted dataset
 
 ## Sorted data
 
-Binary search's efficiency comes with an important prerequisite: the data must be sorted. This requirement influences how you design your data management strategy.
+Binary search's efficiency comes with an important prerequisite: the data must be **sorted**. This requirement influences how we design our data management strategy.
 
 ```swift
 //demonstrating the sorted data requirement
@@ -218,7 +206,9 @@ let sortedData = unsortedData.sorted()
 print("Searching unsorted data for 22:")
 if let index = unsortedData.binarySearch(for: 22) {
     print("Binary search claims 22 is at index \(index)")
-    print("But actually 22 is at index \(unsortedData.firstIndex(of: 22)!)")
+    if let actualIndex = unsortedData.firstIndex(of: 22) {
+        print("But actually 22 is at index \(actualIndex)")
+    }
 } else {
     print("Binary search couldn't find 22 in unsorted data")
 }
@@ -245,104 +235,6 @@ The decision between linear and binary search depends on several factors:
 - **Large datasets** where the logarithmic advantage is significant
 - **Read-heavy operations** where searches are more frequent than modifications
 - **Performance is critical** and we can maintain sorted order
-
-## Practical considerations
-
-Consider a contact application where users frequently search for names but rarely add new contacts. Sorting the contacts once and using binary search for all subsequent lookups would be more efficient than using linear search repeatedly.
-
-Similarly, in a fitness app where users regularly query their workout history ("What was my fastest 5K?", "When did I last run 10 miles?"), keeping workouts sorted by date or distance enables binary search. The cost of maintaining sorted order pays off quickly when searches outnumber insertions—which is typical for historical fitness data.
-
-```swift
-// Contact struct for demonstrating binary search in a contact manager application
-struct Contact {
-    let name: String
-    let phone: String
-}
-
-// Conform Contact to Comparable protocol to enable binary search by name
-extension Contact: Comparable {
-    static func < (lhs: Contact, rhs: Contact) -> Bool {
-        return lhs.name < rhs.name
-    }
-
-    static func == (lhs: Contact, rhs: Contact) -> Bool {
-        return lhs.name == rhs.name
-    }
-}
-
-class ContactManager {
-    private var contacts: [Contact] = []
-
-    // Add a new contact and maintain sorted order for efficient searching
-    func addContact(_ contact: Contact) {
-        contacts.append(contact)
-        //keep contacts sorted for efficient searching
-        contacts.sort { $0.name < $1.name }
-    }
-
-    // Find a contact by name using binary search
-    func findContact(named name: String) -> Contact? {
-        let searchContact = Contact(name: name, phone: "")
-
-        if let index = contacts.binarySearch(for: searchContact) {
-            return contacts[index]
-        }
-
-        return nil
-    }
-}
-```
-
-## Memory vs. time trade-offs
-
-Sometimes we might maintain both sorted and unsorted versions of your data, trading memory for faster access patterns:
-
-```swift
-// Dual-array data structure trading memory for fast search and insertion-order access
-class OptimizedDataStore<T: Comparable> {
-    private var insertionOrder: [T] = []  //for maintaining order of addition
-    private var sortedData: [T] = []      //for fast searching
-
-    // Add an item to both insertion-order and sorted arrays
-    func add(_ item: T) {
-        insertionOrder.append(item)
-
-        //insert into sorted position
-        let insertIndex = sortedData.binarySearchInsertionPoint(for: item)
-        sortedData.insert(item, at: insertIndex)
-    }
-
-    // Search for an item using binary search on the sorted array
-    func search(for item: T) -> Bool {
-        return sortedData.binarySearch(for: item) != nil
-    }
-
-    // Return items in their original insertion order
-    func itemsInOrder() -> [T] {
-        return insertionOrder
-    }
-}
-
-extension Array where Element: Comparable {
-    // Find the correct insertion point to maintain sorted order
-    func binarySearchInsertionPoint(for target: Element) -> Int {
-        var leftIndex = 0
-        var rightIndex = count
-
-        while leftIndex < rightIndex {
-            let middleIndex = (leftIndex + rightIndex) / 2
-
-            if self[middleIndex] < target {
-                leftIndex = middleIndex + 1
-            } else {
-                rightIndex = middleIndex
-            }
-        }
-
-        return leftIndex
-    }
-}
-```
 
 ## Building algorithmic intuition
 
