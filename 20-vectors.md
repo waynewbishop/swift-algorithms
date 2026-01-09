@@ -5,7 +5,7 @@ description: "Mathematical foundations of vector operations and numerical comput
 ---
 # Vectors
 
-In [Chapter 19](19-pagerank-algorithm), we saw how PageRank uses iterative computation to rank web pages through network analysis. That algorithm operated on graph structures, tracking numerical scores that flowed through connections. Now we'll explore the mathematical foundation that powers many modern algorithms: vectors. Understanding vectors is essential for the semantic search algorithms ahead in [Chapter 22](22-semantic-search), where we'll treat documents as high-dimensional vectors and use mathematical operations to find similar content. 
+  Throughout this book, we've worked with algorithms that process data—sorting arrays, traversing graphs, searching trees. Many modern applications also require mathematical operations on numerical data: measuring similarity between items, transforming coordinates, or representing features in machine learning models. **Vectors** provide the mathematical foundation for these operations.
 
 ## What are vectors?
 
