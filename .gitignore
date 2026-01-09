@@ -7,8 +7,8 @@
 claude.md
 Claude.md
 
-# Ignore local Resources 
-/Resources/
+# Ignore local Planning directory
+/Planning/
 
 # MacOS directory structure
 .DS_Store
