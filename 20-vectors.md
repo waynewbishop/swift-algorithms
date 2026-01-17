@@ -59,7 +59,7 @@ The dot product reveals relationships between vectors. When the dot product equa
 
 Applications span multiple domains. In physics, the dot product calculates work done by computing force · distance. In graphics, it determines if surfaces face light sources, controlling brightness and shadows. In machine learning, measuring similarity between feature vectors through cosine similarity enables recommendation systems to find related items. The dot product transforms geometric intuition into practical computation.
 
-> **Note:** The dot product formula `a · b = |a| × |b| × cos(θ)` reveals why normalized vectors measure similarity: when both have magnitude 1, the dot product *is* the cosine of the angle between them. This geometric insight powers the semantic search in [Chapter 22](22-semantic-search).
+> **Note:** The dot product formula `a · b = |a| × |b| × cos(θ)` reveals why normalized vectors measure similarity: when both have magnitude 1, the dot product *is* the cosine of the angle between them. This geometric insight powers the semantic search in [Chapter 23](23-semantic-search.md).
 
 ## Introducing Quiver
 
@@ -178,7 +178,7 @@ let song2 = [120.0, 0.8, 0.9, 0.7]
 let songSimilarity = song1.cosineOfAngle(with: song2)  // 0.98
 ```
 
-This cosine similarity technique is fundamental to recommendation systems, search engines, and machine learning. It appears throughout [Chapter 22](22-semantic-search), where semantic search uses vector similarity to find related documents.
+This cosine similarity technique is fundamental to recommendation systems, search engines, and machine learning. It appears throughout [Chapter 23](23-semantic-search.md), where semantic search uses vector similarity to find related documents.
 
 ## Vector averaging
 
@@ -206,10 +206,10 @@ guard let documentVector = wordVectors.averaged() else {
 // Result: [0.2, 0.7, 0.5] - points toward "athletic footwear" region
 ```
 
-The `.averaged()` method validates that all vectors have the same dimensionality and returns `nil` for empty arrays or inconsistent dimensions. This pattern appears throughout [Chapter 22](22-semantic-search), where the `embedText()` function uses vector averaging to convert search queries and documents into comparable vectors for similarity computation.
+The `.averaged()` method validates that all vectors have the same dimensionality and returns `nil` for empty arrays or inconsistent dimensions. This pattern appears throughout [Chapter 23](23-semantic-search.md), where the `embedText()` function uses vector averaging to convert search queries and documents into comparable vectors for similarity computation.
 
 ## Building algorithmic intuition
 
 Vectors provide the mathematical language for representing multi-dimensional data and measuring relationships between points in space. The operations covered—magnitude, normalization, dot product, and cosine similarity—form the foundation for semantic search, recommendation systems, and machine learning applications. Understanding vectors means recognizing how position, direction, and similarity translate into numerical operations.
 
-The Quiver framework bridges classical algorithms and modern AI. Vectors can be organized and transformed systematically using matrices ([Chapter 21](21-matrices.md)), enabling efficient batch operations. Together, vectors and matrices power semantic search ([Chapter 22](22-semantic-search.md)), where word embeddings and cosine similarity find related documents. This connection between geometric concepts and algorithmic applications reveals why linear algebra underpins modern data science and machine learning.
+The Quiver framework bridges classical algorithms and modern AI. Vectors can be organized and transformed systematically using matrices ([Chapter 21](21-matrices.md)), enabling efficient batch operations. Together, vectors and matrices power semantic search ([Chapter 23](23-semantic-search.md)), where word embeddings and cosine similarity find related documents. This connection between geometric concepts and algorithmic applications reveals why linear algebra underpins modern data science and machine learning.

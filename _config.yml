@@ -111,8 +111,10 @@ navigation:
         url: "20-vectors"
       - title: "Matrices"
         url: "21-matrices"
+      - title: "Matrix Transformations"
+        url: "22-matrix-transformations"
       - title: "Semantic Search"
-        url: "22-semantic-search"
+        url: "23-semantic-search"
 
 # Exclude from processing
 exclude:

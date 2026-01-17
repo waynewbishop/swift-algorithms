@@ -18,11 +18,9 @@ Consider these real-world scenarios:
 - Looking up which workout had the highest calorie burn in the Health app
 - Finding a specific song in a playlist of thousands
 
-Each scenario involves the same fundamental challenge, but the optimal approach depends on how the data is organized. An unsorted list of workouts requires checking each one. A sorted list lets you jump directly to the timeframe you're seeking.
-
 ## The brute force approach
 
-We've mentioned [linear search](https://en.wikipedia.org/wiki/Linear_search) in [Chapter 2](02-measuring-performance.md), but let's examine it more thoroughly. Linear search represents the most straightforward approach to finding data: check every item until we find what we're looking for.
+We've mentioned linear search in [Chapter 2](02-measuring-performance.md), but let's examine it more thoroughly. Linear search represents the most straightforward approach to finding data: check every item until we find what we're looking for.
 
 ```swift
 // Implement linear search as an Array extension using Equatable protocol
@@ -49,14 +47,14 @@ if let index = numbers.linearSearch(for: 22) {
 }
 ```
 
-### When linear search shines
+### When linear search is best
 
 Linear search has several advantages that make it valuable in certain situations:
 
-1. **Works with any data** - Sorted or unsorted, it doesn't matter
-2. **Simple to implement** - Minimal chance of bugs
-3. **Consistent performance** - No best or worst case surprises
-4. **Memory efficient** - Uses no additional storage
+1. Works with any data - When data is sorted or unsorted
+2. Simple to implement - Minimal chance of bugs
+3. Consistent performance - No best or worst case surprises
+4. Memory efficient - Uses no additional storage
 
 ## Linear search performance analysis
 
@@ -219,22 +217,6 @@ if let index = sortedData.binarySearch(for: 22) {
     print("Found 22 at index \(index) in sorted array")
 }
 ```
-
-## Choosing the right search strategy
-
-The decision between linear and binary search depends on several factors:
-
-### Use linear search when:
-- **Data is unsorted** and sorting is expensive
-- **Small datasets** where the overhead of sorting isn't worth it
-- **Frequently changing data** where maintaining sorted order is costly
-- **Simple implementation** is more important than optimal performance
-
-### Use binary search when:
-- **Data is already sorted** or we can afford to sort it
-- **Large datasets** where the logarithmic advantage is significant
-- **Read-heavy operations** where searches are more frequent than modifications
-- **Performance is critical** and we can maintain sorted order
 
 ## Building algorithmic intuition
 
