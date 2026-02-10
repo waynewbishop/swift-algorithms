@@ -36,7 +36,7 @@ Going beyond pseudocode and theory, every concept is implemented in production-r
 - Some familiarity with Xcode or Swift Playgrounds
 - No prior algorithms or mathematics background required
 
-## Companion Package: Quiver
+## Quiver
 
 [Quiver](https://github.com/waynewbishop/bishop-algorithms-quiver-package) extends Swift's standard `Array` type with mathematical and statistical functions:
 - Calculate statistical measures (mean, median, variance, standard deviation)

@@ -7,8 +7,6 @@ title: Swift Algorithms & Data Structures
 
 iOS and macOS developers work with data constantly—user metrics, sensor readings, analytics, and performance measurements. This book teaches you how to aggregate, analyze, and present that data efficiently using algorithms, data structures, and statistical operations built specifically for Swift.
 
-Going beyond pseudocode and theory, every concept is implemented in production-ready Swift code. From fundamental algorithms to advanced mathematical operations, you'll learn the computational thinking that powers modern iOS development.
-
 ## What you'll learn
 
 **Core Algorithms & Data Structures**
@@ -27,9 +25,7 @@ Going beyond pseudocode and theory, every concept is implemented in production-r
 - Write generic, type-safe algorithms that work with any data type
 - Build reusable components following Swift's API design guidelines
 
-## Companion Package: Quiver
-
-The book teaches algorithmic concepts and data structures. **Quiver provides the statistical operations to apply them.**
+## Quiver
 
 [Quiver](https://github.com/waynewbishop/bishop-algorithms-quiver-package) extends Swift's standard `Array` type with mathematical and statistical functions:
 - Calculate statistical measures (mean, median, variance, standard deviation)
@@ -57,8 +53,6 @@ let user2 = [4.0, 3.0, 5.0, 2.0]
 let similarity = user1.cosineSimilarity(user2)
 ```
 
-The book teaches the concepts; Quiver provides the tools to apply them in your apps.
-
 ## Audience
 
 **This book is for:**
@@ -73,19 +67,13 @@ The book teaches the concepts; Quiver provides the tools to apply them in your a
 - Familiarity with Xcode and Swift Playgrounds
 - No prior algorithms or mathematics background required
 
-## How to Use This Book
+ ## How to Use This Book
 
-**For learning:** Read chapters sequentially, starting with Big O notation and building toward advanced topics. Run the code examples in Xcode Playgrounds to see concepts in action.
-
-**For reference:** Jump to specific chapters when you need a particular algorithm or data structure. Each chapter is self-contained with practical examples.
-
-**For interview prep:** Focus on Chapters 3-14 covering fundamental algorithms and data structures. Practice implementing solutions without looking at the code first.
-
-**For data science:** Start with Chapters 20-21 (Vectors & Matrices), then explore statistical operations in the Quiver documentation.
+  This book supports multiple learning paths: read chapters sequentially from Big O notation through advanced topics to build a complete foundation, or jump directly to specific algorithms and data structures as reference material since each chapter is self-contained. Interview candidates should focus on Chapters **3-14** covering fundamental algorithms and data structures, practicing implementations independently before reviewing solutions. Developers interested in data science can start with Chapters **20-21** on vectors and matrices, then explore statistical operations in the Quiver documentation. 
 
 ## Contributing
 
-This book is actively maintained and continuously improved. Your feedback helps make it better:
+This book is actively maintained. Your feedback helps make it better:
 
 - **Found a typo or code error?** Submit a small PR for obvious corrections
 - **Something unclear?** [Open an issue](https://github.com/waynewbishop/swift-algorithms/issues) to suggest improvements
