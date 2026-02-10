@@ -5,10 +5,6 @@ description: "Find optimal routes with Dijkstra's algorithm and priority queue o
 ---
 # Shortest Paths
 
-Open Maps. Search for home. The app instantly draws a blue line showing our route. But Maps didn't just find a path—it found the optimal path, weighing distance, current traffic, road types, and turn complexity. That blue line represents Dijkstra's algorithm in action, solving a problem in milliseconds that would take humans hours to calculate.
-
-The same algorithm powers AllTrails when we ask for the "shortest hike to the summit" or "easiest route avoiding steep climbs." Strava uses variants of Dijkstra's to suggest popular running routes, weighting segments by how many athletes have run them. Every time we navigate—whether driving, hiking, or planning a training route—we're using shortest path algorithms developed in 1956 but refined over decades to handle modern GPS data and real-time conditions.
-
 When we explored graphs in [Chapter 13](13-graphs), we learned how breadth-first search finds paths by counting edges. But real-world problems aren't that simple. A 1-mile highway segment isn't equivalent to a 1-mile mountain trail with 500 feet of elevation gain. We need algorithms that consider weights—and that's where Dijkstra's algorithm transforms from academic exercise into the navigation system in our pocket.
 
 ## The shortest path problem

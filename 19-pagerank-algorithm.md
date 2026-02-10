@@ -5,7 +5,7 @@ description: "Implement Google's PageRank in Swift"
 ---
 # PageRank
 
-The [PageRank](https://en.wikipedia.org/wiki/PageRank) algorithm stands as one of the most influential algorithms in modern computing, powering the original Google search engine and fundamentally changing how we navigate information. Conceived at Stanford University in 1996 by Larry Page and Sergey Brin, PageRank introduced a revolutionary approach to determining web page importance through mathematical modeling of human browsing behavior.
+The **PageRank** algorithm stands as one of the most influential algorithms in modern computing, powering the original Google search engine and fundamentally changing how we navigate information. Conceived at Stanford University in 1996 by Larry Page and Sergey Brin, PageRank introduced a revolutionary approach to determining web page importance through mathematical modeling of human browsing behavior.
 
 PageRank synthesizes concepts from throughout this book. It builds on graph structures from [Chapter 13](13-graphs), using vertices and edges to model web pages and links. The iterative computation mirrors the tabulation approach from dynamic programming ([Chapter 18](18-dynamic-programming)), repeatedly refining estimates until convergence. Generic types from [Chapter 7](07-generics) allow PageRank to work with any vertex data, while performance analysis from [Chapter 8](08-performance-analysis) reveals `O(V + E)` complexity per iteration. Hash table lookups from [Chapter 15](15-hash-tables) enable efficient vertex finding in the canvas array. Even recursion patterns from [Chapter 6](06-recursion) appear in the authority distribution calculations that flow through the graph.
 

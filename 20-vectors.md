@@ -11,7 +11,7 @@ description: "Mathematical foundations of vector operations and numerical comput
 
 A vector is a mathematical object that represents both magnitude and direction. Unlike a scalar value, which represents only size (like temperature or weight), a vector captures directional information alongside its size. This dual nature makes vectors ideally suited for representing anything that has both how much and which way properties.
 
-Consider everyday examples. Wind isn't just "20 miles per hour" - it's "20 miles per hour from the northwest." That's a vector: magnitude (20 mph) and direction (northwest). When a character moves in a video game, we need both how fast they're moving and in which direction. When analyzing customer preferences across multiple product features, each preference profile can be represented as a vector in multidimensional space.
+Consider everyday examples. Wind isn't just *20 miles per hour* - it's *20 miles per hour from the northwest.* The combination of attributes creates the vector: magnitude (20 mph) and direction (northwest). When a character moves in a video game, we need both how fast they're moving **and** in which direction. When analyzing customer preferences across multiple product features, each preference profile can be represented as a vector in multidimensional space.
 
 Mathematically, vectors are represented as ordered lists of numbers. A two-dimensional vector might be written as `[3, 4]`, representing movement 3 units in one direction and 4 units in another. Three-dimensional vectors add a third component `[x, y, z]`, and we can extend this to any number of dimensions.
 
