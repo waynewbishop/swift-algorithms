@@ -25,9 +25,9 @@ iOS and macOS developers work with data constantly—user metrics, sensor readin
 - Write generic, type-safe algorithms that work with any data type
 - Build reusable components following Swift's API design guidelines
 
-## Quiver
+## Quiver Package
 
-[Quiver](https://github.com/waynewbishop/bishop-algorithms-quiver-package) extends Swift's standard `Array` type with mathematical and statistical functions:
+[Quiver](https://github.com/waynewbishop/bishop-algorithms-quiver-package) is a Swift package that extends Swift's standard `Array` type with mathematical and statistical functions:
 - Calculate statistical measures (mean, median, variance, standard deviation)
 - Detect outliers and validate data quality
 - Aggregate time-series data and compute growth rates
@@ -67,7 +67,7 @@ let similarity = user1.cosineSimilarity(user2)
 - Familiarity with Xcode and Swift Playgrounds
 - No prior algorithms or mathematics background required
 
- ## How to Use This Book
+## How to use this book
 
   This book supports multiple learning paths: read chapters sequentially from Big O notation through advanced topics to build a complete foundation, or jump directly to specific algorithms and data structures as reference material since each chapter is self-contained. Interview candidates should focus on Chapters **3-14** covering fundamental algorithms and data structures, practicing implementations independently before reviewing solutions. Developers interested in data science can start with Chapters **20-21** on vectors and matrices, then explore statistical operations in the Quiver documentation. 
 
