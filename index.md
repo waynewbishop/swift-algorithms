@@ -30,7 +30,7 @@ The Swift language has become the cornerstone of Apple development, powering sol
 
   This book supports multiple learning paths: read chapters sequentially from Big O notation through advanced topics to build a complete foundation, or jump directly to specific algorithms and data structures as reference material since each chapter is self-contained. Interview candidates should focus on **Chapters 3-14** covering fundamental algorithms and data structures, practicing implementations independently before reviewing solutions. Developers interested in data science can start with **Chapters 20-21** on vectors and matrices, then explore statistical operations in the Quiver documentation. 
   
-## Related Projects
+## Related projects
 
 - [Quiver Package](https://github.com/waynewbishop/bishop-algorithms-quiver-package) - A Swift package that provides vector mathematics, numerical computing, and statistical operations
 - [Structures Package](https://github.com/waynewbishop/bishop-algorithms-swift-package) - Production implementations of algorithms and data structures
@@ -39,7 +39,7 @@ The Swift language has become the cornerstone of Apple development, powering sol
 
 This book is actively maintained. Your feedback helps make it better. Found a typo or code error? Submit a small PR for obvious corrections. Something unclear? [Open an issue](https://github.com/waynewbishop/swift-algorithms/issues) to suggest improvements.
 
-## About the Author
+## About the author
 
 Wayne Bishop is a technologist dedicated to making complex technology accessible and impactful. With experience spanning software development, technical writing, and education, he focuses on teaching computational thinking through practical Swift implementations.
 
