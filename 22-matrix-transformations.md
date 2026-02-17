@@ -9,7 +9,7 @@ In [Chapter 21](21-matrices.md), we explored matrices as rectangular arrays that
 
 ## Understanding basis vectors
 
-From [Chapter 20](20-vectors.md), we know vectors represent magnitude and direction. Although a vector can possess any number of dimensions, two special unit vectors define the standard 2D coordinate system—the **basis vectors** usually called i-hat and j-hat:
+From [Chapter 20](20-vectors.md), we know vectors represent magnitude and direction. Although a vector can possess any number of dimensions, two special unit vectors define the standard 2D coordinate system—the **basis vectors** usually called `i-hat` and `j-hat`:
 
 ```swift
 let iHat = [1.0, 0.0]  // Points right (x-axis)
@@ -23,7 +23,7 @@ let jHat = [0.0, 1.0]  // Points up (y-axis)
         └──→ i-hat [1, 0]
 ```
 
-Any vector can be expressed as a combination of these basis vectors. As shown, this can expressed either graphically or mathematically. For example, the vector `[3, 4]` is oriented based on the position of `i-hat` and `j-hat`:
+Any vector can be expressed as a combination of these basis vectors. As shown, this can expressed either graphically or mathematically using a technique known as matrix multiplication. For example, the vector `[3, 4]` is oriented based on the position of `i-hat` and `j-hat`:
 
 ```
 [3, 4] = 3 × [1, 0] + 4 × [0, 1]

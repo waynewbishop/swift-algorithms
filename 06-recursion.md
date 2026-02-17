@@ -5,9 +5,7 @@ description: "Understanding recursive algorithms and techniques"
 ---
 # Recursion
 
-In [Chapter 5](05-advanced-sorting.md), we saw how Quicksort uses recursion to partition and sort arrays. Now it's time to explore recursion more deeply as a fundamental programming technique. Understanding recursion is crucial as we move forward to more complex data structures like trees and graphs, where recursive thinking becomes essential.
-
-Recursion is a coding technique where a function calls itself to solve smaller versions of the same problem. While this might seem circular at first, recursion provides an elegant way to solve problems that have a naturally recursive structure. In this chapter, we'll explore how to think recursively and implement recursive solutions in Swift.
+In [Chapter 5](05-advanced-sorting.md), we saw how Quicksort uses recursion to partition and sort arrays. Now it's time to explore recursion more deeply as a fundamental programming technique. Understanding recursion is crucial—we'll use it extensively when we build linked lists ([Chapter 9](09-linked-lists.md)), trees ([Chapters 11-12](11-binary-search-trees.md)), and graphs ([Chapter 13](13-graphs.md)).
 
 ## The recursive mindset
 
@@ -34,48 +32,6 @@ func factorial(_ n: Int) -> Int {
 //execute factorial
 print("5! = \(factorial(5))")  //outputs: 5! = 120
 ```
-
-## Why recursive data structures matter
-
-Recursive data structures shine when representing relationships where each element connects to similar elements. Consider a linked list, where each node points to another node of the same type. Or a binary tree, where each node has left and right children that are also nodes. These structures naturally express "this thing contains more things like itself," which mirrors how many real-world systems work.
-
-The elegance of recursive structures becomes clear when you pair them with recursive algorithms. When you traverse a binary tree, you process the current node, then recursively traverse the left subtree, then recursively traverse the right subtree. The structure and the algorithm have the same shape—both are recursive. This symmetry makes the code remarkably concise and intuitive.
-
-Let's see this with a simple linked list node:
-
-```swift
-// Node that links to another node of the same type
-class ListNode<T> {
-    var tvalue: T  // 'tvalue' means 'typed value' (matches production LLNode)
-    var next: ListNode<T>?
-
-    init(tvalue: T, next: ListNode<T>? = nil) {
-        self.tvalue = tvalue
-        self.next = next
-    }
-}
-
-// Print all values in the list using recursion
-func printList<T>(_ node: ListNode<T>?) {
-    //base case: empty list
-    guard let currentNode = node else { return }
-
-    //process current node
-    print(currentNode.tvalue)
-
-    //recursive case: process rest of list
-    printList(currentNode.next)
-}
-
-//create a simple linked list: 1 -> 2 -> 3
-let node3 = ListNode(tvalue: 3)
-let node2 = ListNode(tvalue: 2, next: node3)
-let node1 = ListNode(tvalue: 1, next: node2)
-
-printList(node1)  //prints: 1, 2, 3
-```
-
-The key insight is that recursive structures don't just solve a technical problem—they provide a natural way to model hierarchical relationships and enable algorithms that mirror the structure itself. When we see `node.left` and `node.right` in a binary tree, we're not just seeing pointers—we're seeing a recursive definition that says "a tree is a node plus two smaller trees." This recursive thinking transforms complex problems into elegant solutions.
 
 ## The Fibonacci sequence
 
@@ -188,10 +144,6 @@ print("Memoized fibonacci(10) = \(memoResult)")
 print("Cache contains: \(memoCache)")
 ```
 
-## When to use recursion
-
-Recursion is particularly well-suited for problems with naturally recursive structure. Tree traversals and graph searches become elegant when expressed recursively, as do divide and conquer algorithms like the quicksort we explored in [Chapter 5](05-advanced-sorting.md). Mathematical sequences such as Fibonacci numbers, factorials, and combinatorics problems often have simple recursive definitions that mirror their mathematical formulas. Finally, recursion excels at processing nested data, whether parsing JSON, traversing file systems, or navigating nested arrays and dictionaries. The key is recognizing when a problem can be naturally decomposed into smaller instances of itself.
-
 ## Building algorithmic intuition
 
-Recursion provides an elegant way to solve problems by breaking them into smaller instances of the same problem. This pattern—defining solutions in terms of simpler versions—appears throughout computer science, from tree traversals to divide-and-conquer algorithms. Recursive solutions often mirror the natural structure of problems: tree operations are inherently recursive because trees are recursively defined structures, and graph traversal naturally expresses depth-first exploration as recursive function calls.
+Recursion is particularly well-suited for problems with naturally recursive structure. Tree traversals ([Chapter 11](11-binary-search-trees.md)) and graph searches ([Chapter 13](13-graphs.md)) become elegant when expressed recursively, as do divide and conquer algorithms like the quicksort we explored in [Chapter 5](05-advanced-sorting.md). Mathematical sequences such as Fibonacci numbers, factorials, and combinatorics problems often have simple recursive definitions that mirror their mathematical formulas. Finally, recursion excels at processing nested data, whether parsing JSON, traversing file systems, or navigating nested arrays and dictionaries. The key is recognizing when a problem can be naturally decomposed into smaller instances of itself.

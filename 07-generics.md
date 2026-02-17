@@ -62,8 +62,6 @@ let intNode = ListNode(tvalue: 42)
 let stringNode = ListNode(tvalue: "Hello")
 ```
 
-One implementation maintains type safety across all uses. Swift ensures you can't accidentally mix types—trying to set an integer node's `next` to a string node produces a compile-time error. You maintain type safety while eliminating duplication.
-
 The `<T>` syntax defines a type parameter—a placeholder that gets replaced with an actual type when you create an instance. When we write `ListNode<Int>`, Swift replaces every `T` with `Int`. When we write `ListNode<String>`, it replaces every `T` with `String`.
 
 ## We've already used generics
