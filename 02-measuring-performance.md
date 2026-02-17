@@ -7,17 +7,11 @@ description: "Understanding algorithmic efficiency and the language of performan
 
 When we write code we're creating instructions for the computer to follow. But how does our code behave when the amount of data changes? Does it slow down gracefully, or does it grind to a halt? Understanding this relationship between data size and performance is essential to building software users will love—whether we're building the next fitness tracker, managing patient records, or analyzing athletic performance data.
 
-## Why performance matters
-
-Consider **Netflix**. They serve over 200 million users worldwide. When someone searches for science fiction, the system must quickly find relevant titles among hundreds of thousands of options. A poorly designed search algorithm that works fine with 100 movies becomes unusable with 100,000. 
-
 ## The language of performance
 
 To discuss algorithm efficiency, developers use a common vocabulary: [Big O Notation](https://en.wikipedia.org/wiki/Big_O_notation). Rather than saying this algorithm checks every element, we say `O(n)`. Rather than explaining this eliminates half the data with each step, we write `O(log n)`. This notation provides a shorthand for describing how algorithms scale.
 
-Consider **Big O notation** as a way to classify algorithms into performance categories. Just as we might describe a car as fuel-efficient or gas-guzzler without specifying exact miles per gallon, Big O notation categorizes algorithms by their growth patterns without getting lost in implementation details.
-
-The `O` stands for order of magnitude—it tells us the scale of how an algorithm's performance grows as input size increases. The expression in parentheses describes the relationship between input size (usually called `n`) and the number of operations.
+Consider **Big O notation** as a way to classify algorithms into performance categories. Just as we might describe a car as fuel-efficient or gas-guzzler without specifying exact miles per gallon, Big O notation categorizes algorithms by their growth patterns without getting lost in implementation details. The `O` stands for order of magnitude—it tells us the scale of how an algorithm's performance grows as input size increases. The expression in parentheses describes the relationship between input size (usually called `n`) and the number of operations.
 
 ## Constant time
 
