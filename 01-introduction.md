@@ -9,11 +9,11 @@ These days technology is amazing. Generative AI understands your questions. Inst
 
 ## The platform
 
-When Apple's Swift language debuted in 2014, it was the answer to modern iOS development. Ten years later, Swift has evolved into something far more powerful—a full-stack language that spans far beyond the iPhone. **Swift Package Manager** lets you share your algorithm implementations as reusable libraries. **Swift Testing** provides modern, expressive test suites that verify your algorithms work correctly at scale. And solutions like [Vapor](https://github.com/vapor/vapor) take Swift to the server, allowing you to create backend APIs that power websites, online services, and cloud-based applications. You can build your iOS app and its backend API in the same language, sharing the same algorithm implementations.
+When Apple's Swift language debuted in 2014, it was the answer to modern iOS development. Ten years later, Swift has evolved into something far more powerful—a full-stack language that spans far beyond the iPhone. Swift Package Manager lets you share your algorithm implementations as reusable libraries. Swift Testing provides modern, expressive test suites that verify your algorithms work correctly at scale. And solutions like [Vapor](https://github.com/vapor/vapor) take Swift to the server, allowing you to create backend APIs that power websites, online services, and cloud-based applications. You can build your iOS app and its backend API in the same language, sharing the same algorithm implementations.
 
 ## The algorithm lineage
 
-Understanding modern technology means understanding the classical algorithms that power it. **Binary search**, invented in 1946 for dictionary lookups, now powers vector database indexes in modern AI search systems. **Tries**, developed in 1968 for efficient string storage, became the foundation for Google's autocomplete in 2004 and every modern suggestion system. **PageRank**, Larry Page's 1998 breakthrough for ranking web pages, evolved into the attention mechanisms that power today's transformer-based AI models. **Hash tables** from the 1960s, originally used for compiler symbol tables, now enable real-time session management in web applications.
+Understanding modern technology means understanding the classical algorithms that power it. Binary search, invented in 1946 for dictionary lookups, now powers vector database indexes in modern AI search systems. Tries, developed in 1968 for efficient string storage, became the foundation for Google's autocomplete in 2004 and every modern suggestion system. PageRank, Larry Page's 1998 breakthrough for ranking web pages, evolved into the attention mechanisms that power today's transformer-based AI models. Hash tables from the 1960s, originally used for compiler symbol tables, now enable real-time session management in web applications.
 
 ## What we'll learn
 
@@ -26,5 +26,3 @@ The advanced chapters demonstrate how these fundamentals power modern systems. [
 ## Audience
 
 This book is designed for developers comfortable with programming fundamentals, whether from Swift, Python, Java, or similar modern languages. We should understand core concepts: variables, functions, classes, arrays, and dictionaries. The ability to read code and follow program logic is more important than mastery of any specific language.
-
-All examples use Swift, but readers from Python or Java backgrounds will find the concepts directly transferable. Swift's syntax is designed to be readable and shares many conventions with C-family and modern scripting languages. Language-specific Swift features (optionals, protocols, structs) are introduced contextually with clear explanations.
