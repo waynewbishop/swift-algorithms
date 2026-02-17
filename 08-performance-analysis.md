@@ -11,36 +11,26 @@ We've explored searching techniques that locate values in collections, sorting m
 
 In [Chapter 2](02-measuring-performance.md), we learned that `O(n)` means linear time, `O(log n)` means logarithmic time, and `O(n²)` means quadratic time. Now let's apply this knowledge to every algorithm we've implemented.
 
-### Search algorithms from Chapter 3
+### Search algorithms
 
 ```swift
-// Linear search: O(n) - must check every element in worst case
+// Linear search - see Chapter 3 for full implementation
 func linearSearch<T: Equatable>(for target: T, in array: [T]) -> Int? {
     for (index, element) in array.enumerated() {
-        if element == target {
-            return index
-        }
+        // Single loop checking each element → O(n)
+        ...
     }
-    return nil
 }
 
-// Binary search: O(log n) - eliminates half each comparison
+// Binary search - see Chapter 3 for full implementation
 func binarySearch<T: Comparable>(for target: T, in array: [T]) -> Int? {
     var left = 0
     var right = array.count - 1
 
     while left <= right {
-        let mid = (left + right) / 2
-
-        if array[mid] == target {
-            return mid
-        } else if array[mid] < target {
-            left = mid + 1
-        } else {
-            right = mid - 1
-        }
+        let mid = (left + right) / 2  // Halving pattern → O(log n)
+        ...
     }
-    return nil
 }
 ```
 
@@ -57,61 +47,35 @@ Linear search checks each element sequentially with a single loop through the ar
 ### Sorting algorithms
 
 ```swift
-// Bubble sort: O(n²) - nested loops over array
+// Bubble sort - see Chapter 4 for full implementation
 extension Array where Element: Comparable {
     func bubbleSort() -> Array<Element> {
-        guard count > 1 else { return self }
-
-        var output: Array<Element> = self
-
-        for pindex in 0..<output.count {
-            let range = (output.count - 1) - pindex
-
-            for sindex in 0..<range {
-                let key = output[sindex]
-
-                if (key >= output[sindex + 1]) {
-                    output.swapAt(sindex, sindex + 1)
-                }
+        for pindex in 0..<count {                    // Outer loop: n iterations
+            for sindex in 0..<(count - 1 - pindex) { // Inner loop: n iterations
+                // Compare and swap adjacent elements → O(n²)
+                ...
             }
         }
-
-        return output
     }
 }
 
-// Quicksort: O(n log n) average, O(n²) worst case
+// Quicksort - see Chapter 5 for full implementation
 extension Array where Element: Comparable {
     mutating func quickSort() -> Array<Element> {
         func qSort(start startIndex: Int, _ pivot: Int) {
-            if (startIndex < pivot) {
+            if startIndex < pivot {
                 let iPivot = qPartition(start: startIndex, pivot)
-                qSort(start: startIndex, iPivot - 1)
-                qSort(start: iPivot + 1, pivot)
+                qSort(start: startIndex, iPivot - 1)  // Recursive divide-and-conquer
+                qSort(start: iPivot + 1, pivot)       // → O(n log n) average
             }
         }
-
         qSort(start: 0, self.endIndex - 1)
         return self
     }
 
     mutating func qPartition(start startIndex: Int, _ pivot: Int) -> Int {
-        var wallIndex: Int = startIndex
-
-        for currentIndex in wallIndex..<pivot {
-            if self[currentIndex] <= self[pivot] {
-                if wallIndex != currentIndex {
-                    self.swapAt(currentIndex, wallIndex)
-                }
-                wallIndex += 1
-            }
-        }
-
-        if wallIndex != pivot {
-            self.swapAt(wallIndex, pivot)
-        }
-
-        return wallIndex
+        // Partition logic omitted - see Chapter 5
+        ...
     }
 }
 ```
@@ -125,19 +89,19 @@ Quicksort achieves superior performance through divide-and-conquer strategy. Whe
 ### Recursive algorithms
 
 ```swift
-// Naive Fibonacci: O(2^n) - exponentially slow
+// Naive Fibonacci - see Chapter 6 for full implementation
 func fibonacciNaive(_ n: Int) -> Int {
     if n <= 1 { return n }
-    return fibonacciNaive(n - 1) + fibonacciNaive(n - 2)
+    return fibonacciNaive(n - 1) + fibonacciNaive(n - 2)  // Two recursive calls → O(2^n)
 }
 
-// Memoized Fibonacci: O(n) - cache eliminates duplicate work
+// Memoized Fibonacci - see Chapter 6 for full implementation
 func fibonacciMemoized(_ n: Int, cache: inout [Int: Int]) -> Int {
-    if let cached = cache[n] { return cached }
+    if let cached = cache[n] { return cached }  // Check cache first
     if n <= 1 { return n }
     let result = fibonacciMemoized(n - 1, cache: &cache) +
                  fibonacciMemoized(n - 2, cache: &cache)
-    cache[n] = result
+    cache[n] = result  // Store result → each value computed once → O(n)
     return result
 }
 ```
