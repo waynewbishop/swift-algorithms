@@ -9,9 +9,8 @@ In this chapter, we'll explore two fundamental approaches to searching: linear s
 
 ## The search problem
 
-At its core, searching involves answering a simple question: "Is this item in my collection?" However, the method you choose to answer this question can mean the difference between a lightning-fast response and a painfully slow operation.
+At its core, searching involves answering a simple question: "Is this item in my collection?" However, the method you choose to answer this question can mean the difference between a lightning-fast response and a painfully slow operation. Consider the following:
 
-Consider these real-world scenarios:
 - Finding a contact in your phone's address book
 - Locating your personal record time for a specific distance in a running app
 - Searching for a word in a dictionary
@@ -47,56 +46,9 @@ if let index = numbers.linearSearch(for: 22) {
 }
 ```
 
-### When linear search is best
-
-Linear search has several advantages that make it valuable in certain situations:
-
-1. Works with any data - When data is sorted or unsorted
-2. Simple to implement - Minimal chance of bugs
-3. Consistent performance - No best or worst case surprises
-4. Memory efficient - Uses no additional storage
-
-## Linear search performance analysis
-
-As we learned in [Chapter 2](02-measuring-performance.md), linear search operates in `O(n)` time. But let's break down what this means in practice:
-
-```swift
-// Perform linear search while tracking the number of comparisons made
-func analyzedLinearSearch<T: Equatable>(for target: T, in array: [T]) -> (index: Int?, comparisons: Int) {
-    var comparisons = 0
-
-    for (index, element) in array.enumerated() {
-        comparisons += 1
-        if element == target {
-            return (index, comparisons)
-        }
-    }
-
-    return (nil, comparisons)
-}
-
-let testData = [5, 2, 8, 6, 1, 9, 4, 0, 3, 7]
-
-//best case: target is first element
-let (_, bestCase) = analyzedLinearSearch(for: 5, in: testData)
-print("Best case: \(bestCase) comparisons")
-
-//average case: target in middle
-let (_, avgCase) = analyzedLinearSearch(for: 1, in: testData)
-print("Average case: \(avgCase) comparisons")
-
-//worst case: target not found
-let (_, worstCase) = analyzedLinearSearch(for: 15, in: testData)
-print("Worst case: \(worstCase) comparisons")
-```
-
 ## Divide and conquer
 
-When the data is sorted, we can employ a much more efficient strategy. Binary search uses the [divide and conquer](https://en.wikipedia.org/wiki/Divide-and-conquer_algorithm) approach, eliminating half of the remaining possibilities with each comparison.
-
-### The phone book analogy
-
-Imagine we're looking for "Smith" in a physical phone book. We wouldn't start from page 1 and flip through every page. Instead, we'd:
+When the data is sorted, we can employ a much more efficient strategy. Binary search uses the divide and conquer approach, eliminating half of the remaining possibilities with each comparison. Imagine we're looking for "Smith" in a physical phone book. We wouldn't start from page 1 and flip through every page. Instead, we'd:
 
 1. Open to the middle of the book
 2. See if "Smith" comes before or after the names on that page
