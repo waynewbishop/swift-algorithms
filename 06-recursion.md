@@ -5,7 +5,7 @@ description: "Understanding recursive algorithms and techniques"
 ---
 # Recursion
 
-In [Chapter 5](05-advanced-sorting.md), we saw how Quicksort uses recursion to partition and sort arrays. Now it's time to explore recursion more deeply as a fundamental programming technique. Understanding recursion is crucial—we'll use it extensively when we build linked lists ([Chapter 9](09-linked-lists.md)), trees ([Chapters 11-12](11-binary-search-trees.md)), and graphs ([Chapter 13](13-graphs.md)).
+In [Chapter 5](05-advanced-sorting.md), we saw how Quicksort uses recursion to partition and sort arrays. Now it's time to explore recursion more deeply as a fundamental programming technique. Understanding recursion is crucial—we'll use it extensively when we build linked lists, trees, and graphs.
 
 ## The recursive mindset
 
@@ -32,6 +32,38 @@ func factorial(_ n: Int) -> Int {
 //execute factorial
 print("5! = \(factorial(5))")  //outputs: 5! = 120
 ```
+
+## Visualizing recursive execution
+
+Understanding how recursion executes requires seeing the call stack in action. When we call `factorial(5)`, here's what happens:
+
+```
+factorial(5)
+  → calls factorial(4)
+    → calls factorial(3)
+      → calls factorial(2)
+        → calls factorial(1)
+          → returns 1 (base case!)
+        ← returns 2 × 1 = 2
+      ← returns 3 × 2 = 6
+    ← returns 4 × 6 = 24
+  ← returns 5 × 24 = 120
+```
+
+Each function call waits for the next call to complete before it can calculate its own result. This is why the base case is critical—it stops the stack from growing indefinitely and allows the return values to propagate back up.
+
+### infinite recursion
+
+The most common recursion error is forgetting or incorrectly defining the base case:
+
+```swift
+// Infinite recursion - never stops!
+func brokenFactorial(_ n: Int) -> Int {
+    return n * brokenFactorial(n - 1)  // No base case!
+}
+```
+
+This code will eventually crash due to stack overflow error—the function calls itself endlessly until memory runs out. Every recursive function must have a base case that eventually executes.
 
 ## The Fibonacci sequence
 

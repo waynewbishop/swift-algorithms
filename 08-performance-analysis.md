@@ -5,11 +5,7 @@ description: "Understanding algorithmic efficiency, complexity analysis, and rea
 ---
 # Analyzing Algorithms
 
-Your fitness app has 10,000 workouts. Finding your fastest 5K time with linear search: check all 10,000. With binary search on sorted data: check 14. Same result, vastly different performance. Why? Algorithm choice.
-
-We've now explored searching techniques that locate values in collections, sorting methods that organize data, [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)) that breaks problems into smaller pieces, and generics that enable flexible code. Along the way, we've noticed patterns—binary search feels faster than linear search, quicksort handles large datasets better than bubble sort, and some recursive solutions run exponentially slow.
-
-It's time to formalize these observations. In [Chapter 2](02-measuring-performance.md), we learned the vocabulary of performance—[Big O Notation](https://en.wikipedia.org/wiki/Big_O_notation) provides a common language for discussing how [algorithms](https://en.wikipedia.org/wiki/Algorithm) scale. This chapter builds on that foundation, teaching you to analyze the algorithms we've written and make informed decisions about which approaches fit which problems.
+We've explored searching techniques that locate values in collections, sorting methods that organize data, [recursion](06-recursion.md) that breaks problems into smaller pieces, and generics that enable flexible code. Along the way, we've noticed patterns—binary search feels faster than linear search, quicksort handles large datasets better than bubble sort, and some recursive solutions run exponentially slow.
 
 ## Applying Big O to algorithms you know
 
@@ -48,9 +44,7 @@ func binarySearch<T: Comparable>(for target: T, in array: [T]) -> Int? {
 }
 ```
 
-**Linear search:** Single loop through array = `O(n)` time, `O(1)` space
-
-**Binary search:** Halving pattern (log₂ n comparisons) = `O(log n)` time, `O(1)` space
+Linear search checks each element sequentially with a single loop through the array, giving us `O(n)` time complexity. Since we only track the current index, space complexity remains constant at `O(1)`. Binary search demonstrates a halving pattern—each comparison eliminates half the remaining elements. This produces `log₂` n comparisons, resulting in `O(log n)` time complexity while maintaining `O(1)` space since we only store the left, right, and middle indices.
 
 **Impact at scale:**
 
@@ -60,7 +54,7 @@ func binarySearch<T: Comparable>(for target: T, in array: [T]) -> Int? {
 | 10,000 | 10,000 comparisons | 14 comparisons | Decade of data |
 | 1,000,000 | 1,000,000 comparisons | 20 comparisons | Professional athlete's career + team |
 
-### Sorting algorithms from Chapters 4-5
+### Sorting algorithms
 
 ```swift
 // Bubble sort: O(n²) - nested loops over array
@@ -122,13 +116,13 @@ extension Array where Element: Comparable {
 }
 ```
 
-**Bubble sort:** Outer loop (n) × inner loop (n) = `O(n²)` time, `O(1)` space
+Bubble sort demonstrates the classic nested loop pattern—an outer loop iterating n times, each containing an inner loop also iterating n times. This multiplication produces `O(n²)` time complexity. Since bubble sort swaps elements in place without requiring additional arrays, space complexity remains `O(1)`.
 
-**Insertion sort:** `O(n²)` average, but `O(n)` best case when already sorted, `O(1)` space
+Insertion sort exhibits similar `O(n²)` average-case performance, but reveals an important optimization: when the array is already sorted, insertion sort achieves `O(n)` best-case performance by simply confirming each element is already in position. Like bubble sort, insertion sort operates in place with `O(1)` space complexity.
 
-**Quicksort:** Good pivot splits array in half (log n levels × n work per level) = `O(n log n)` average. Poor pivot creates unbalanced splits = `O(n²)` worst case. Space: `O(log n)` for recursion stack.
+Quicksort achieves superior performance through divide-and-conquer strategy. When pivot selection splits the array roughly in half, we create log n recursive levels, with each level performing n comparisons and swaps. This produces `O(n log n)` average-case time complexity. However, poor pivot selection—always choosing the smallest or largest element—creates unbalanced partitions that degrade performance to `O(n²)` worst case. Unlike the previous algorithms, quicksort's recursive nature requires `O(log n)` space for the call stack.
 
-### Recursive algorithms from Chapter 6
+### Recursive algorithms
 
 ```swift
 // Naive Fibonacci: O(2^n) - exponentially slow
@@ -148,11 +142,11 @@ func fibonacciMemoized(_ n: Int, cache: inout [Int: Int]) -> Int {
 }
 ```
 
-**Naive Fibonacci:** Each call spawns two more calls, creating 2^n operations = `O(2^n)` time, `O(n)` space
+The naive Fibonacci implementation reveals exponential complexity—each function call spawns two additional calls, creating a branching tree of 2^n operations. The recursion depth reaches n levels, resulting in `O(2^n)` time complexity and `O(n)` space complexity for the call stack.
 
-**Memoized Fibonacci:** Each value computed once = `O(n)` time, `O(n)` space
+Memoization transforms this exponential behavior into linear performance. By caching previously computed values, we ensure each Fibonacci number is calculated exactly once. This optimization reduces time complexity to `O(n)` while maintaining `O(n)` space complexity for the cache storage.
 
-**Performance for fib(40):** Naive takes billions of operations (2-3 seconds), memoized takes 40 operations (< 1 millisecond). Understanding complexity transforms unusable algorithms into instant ones.
+The practical impact is dramatic: computing fib(40) with the naive approach requires billions of operations, taking 2-3 seconds. The memoized version performs just 40 operations, completing in under 1 millisecond. Understanding algorithmic complexity enables us to transform unusable algorithms into instant ones.
 
 ## Recognizing common patterns
 
@@ -220,97 +214,6 @@ Most algorithms don't perform the same way in every situation.
 
 When we say "linear search is `O(n)`", we typically refer to [worst case](https://en.wikipedia.org/wiki/Best,_worst_and_average_case) unless specified otherwise. Big O provides an upper bound—performance won't get worse than this.
 
-**Quicksort's varying performance:**
-- **Best/Average: `O(n log n)`** - Good pivot selection, balanced partitions, typical with random data
-- **Worst: `O(n²)`** - Poor pivot selection (always smallest/largest), happens with sorted/reverse-sorted data
-
-Production implementations use random pivot selection or median-of-three to avoid worst case while maintaining fast average performance.
-
-## When to optimize
-
-Not every algorithm needs optimization. Optimize when you meet ALL these criteria:
-
-- Code runs frequently (in a loop, per frame, per request)
-- Handles large data (thousands to millions of items)
-- Users notice slowness (lag, stuttering, delays)
-- Profiling confirms it's a bottleneck
-
-**Don't optimize:**
-```swift
-// Runs once at app launch with ~100 users
-func displayWelcomeMessage(for users: [String]) {
-    for user in users { print("Welcome, \(user)!") }
-}
-
-// Displays this week's 7 workouts on summary screen
-func displayWeeklyWorkouts(_ workouts: [Workout]) {
-    for workout in workouts.sorted(by: { $0.date > $1.date }) {
-        print("\(workout.title): \(workout.duration) min")
-    }
-}
-```
-
-**Do optimize:**
-```swift
-// Runs 60 times per second with millions of pixels
-func updateVideoFrame() {
-    for row in 0..<videoHeight {
-        for col in 0..<videoWidth {
-            processPixel(row, col)
-        }
-    }
-}
-
-// Processes real-time GPS data every second during outdoor run
-func updateRunningPace(from locationUpdates: [GPSPoint]) {
-    for point in locationUpdates {
-        calculatePace(from: point)
-        updateMapDisplay()
-        checkPaceAlerts()
-    }
-}
-```
-
-Use Xcode's Time Profiler (Product → Profile → Time Profiler) to find actual bottlenecks. Profile, optimize the slowest part, measure improvement, and stop when performance is acceptable. Don't guess—measure.
-
-## Looking back at the algorithms we've learned
-
-**[Chapter 3](03-basic-searching.md): Searching**
-- Linear search: `O(n)`, binary search: `O(log n)`
-- Key insight: Sorted data enables logarithmic search
-
-**[Chapter 4](04-basic-sorting.md): Basic Sorting**
-- Bubble, insertion, selection sort: `O(n²)`
-- Key insight: Nested loops create quadratic complexity
-
-**[Chapter 5](05-advanced-sorting.md): Advanced Sorting**
-- Quicksort: `O(n log n)` average
-- Key insight: Divide and conquer achieves linearithmic time
-
-**[Chapter 6](06-recursion.md): Recursion**
-- Naive Fibonacci: `O(2^n)`, memoized: `O(n)`
-- Key insight: Caching eliminates exponential duplicate work
-
-**[Chapter 7](07-generics.md): Generics**
-- Generics provide flexibility with zero runtime cost
-
-**Upcoming chapters:**
-
-**Data Structures (Chapters 9-15):**
-- Linked Lists: `O(n)` access, `O(1)` insert/delete at position
-- Stacks & Queues: `O(1)` push/pop
-- Binary Search Trees: `O(log n)` average
-- Graphs: `O(V + E)` for traversal
-- Tries: `O(m)` where m is string length
-- Hash Tables: `O(1)` average
-- Heaps: `O(log n)` insert/delete
-
-**Advanced Topics (Chapters 16-19):**
-- Dynamic Programming: `O(2^n)` → `O(n)` with memoization
-- Vector operations: `O(n)` element-wise
-- PageRank: Iterative convergence
-- Semantic search: `O(n)` vector search
-
 ## Building performance intuition
 
 The goal isn't memorizing formulas—it's developing intuition about what makes code fast or slow.
@@ -334,7 +237,5 @@ Problem: Store user sessions, need fast lookup by session ID
 Answer: Hash table—`O(1)` average for lookups, dynamic add/remove.
 
 ## Building algorithmic intuition
-
-Performance analysis provides systematic frameworks for comparing algorithms. Big O notation, best/average/worst-case analysis, and space-time trade-offs give us vocabulary to discuss efficiency precisely. Recognizing performance patterns becomes intuitive with practice: nested loops suggest quadratic time, binary division suggests logarithmic time, hash table lookups suggest constant time. These patterns appear consistently across different problems, enabling quick assessment of algorithmic approaches before implementation.
 
 Understanding performance analysis connects to practical decision-making. Choosing between `O(n)` linear search and `O(log n)` binary search means understanding when sorting overhead pays off. Selecting data structures based on operation frequency—frequent lookups favor hash tables, ordered iteration favors trees—requires performance-based reasoning. Combined with the introductory concepts from [Chapter 2](02-measuring-performance.md), this comprehensive analysis enables informed algorithmic choices throughout software development.
