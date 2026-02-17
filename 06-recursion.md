@@ -109,7 +109,7 @@ print("Iterative: \(iterativeResult)")
 ### Recursive Fibonacci (simple version)
 
 ```swift
-// Calculate nth Fibonacci number using simple recursion
+// Calculate nth Fibonacci number using simple recursion - O(2^n)
 func fibonacci(_ n: Int) -> Int {
     //base cases
     if n <= 1 {
@@ -138,7 +138,7 @@ print("Recursive: \(recursiveResult)")
 The simple recursive Fibonacci has a serious performance problem. Each call spawns two more calls, creating an exponential number of function calls with `O(2^n)` time complexity:
 
 ```swift
-// Calculate Fibonacci while counting recursive calls to show exponential complexity
+// Calculate Fibonacci while counting recursive calls to show exponential complexity - O(2^n)
 func fibonacciWithCounting(_ n: Int, callCount: inout Int) -> Int {
     callCount += 1
 
@@ -161,7 +161,7 @@ print("fibonacci(10) = \(result) required \(calls) function calls")
 We can dramatically improve recursive performance using memoization - storing previously computed results:
 
 ```swift
-// Calculate Fibonacci using memoization to avoid redundant calculations
+// Calculate Fibonacci using memoization to avoid redundant calculations - O(n)
 func fibonacciMemoized(_ n: Int, memo: inout [Int: Int]) -> Int {
     //check if we've already computed this value
     if let cached = memo[n] {
@@ -186,62 +186,6 @@ var memoCache: [Int: Int] = [:]
 let memoResult = fibonacciMemoized(10, memo: &memoCache)
 print("Memoized fibonacci(10) = \(memoResult)")
 print("Cache contains: \(memoCache)")
-```
-
-## Recursive array processing
-
-Recursion shines when processing arrays and other collections. Here are some common patterns that are particularly useful in fitness and health applications:
-
-```swift
-// Calculate sum of array elements using recursion
-func recursiveSum(_ array: [Int]) -> Int {
-    //base case: empty array
-    guard !array.isEmpty else { return 0 }
-
-    //recursive case: first element + sum of rest
-    let first = array[0]
-    let rest = Array(array.dropFirst())
-    return first + recursiveSum(rest)
-}
-
-let numbers = [1, 2, 3, 4, 5]
-print("Sum: \(recursiveSum(numbers))")
-
-//fitness example: total calories burned across all workouts
-let workoutCalories = [450, 320, 580, 410, 395]
-let totalCalories = recursiveSum(workoutCalories)
-print("Total calories burned: \(totalCalories)")  //2,155 calories
-```
-
-### Recursive maximum
-
-```swift
-// Find maximum value in array using recursion
-func recursiveMax(_ array: [Int]) -> Int? {
-    //base case: empty array
-    guard !array.isEmpty else { return nil }
-
-    //base case: single element
-    guard array.count > 1 else { return array[0] }
-
-    //recursive case: max of first vs max of rest
-    let first = array[0]
-    let rest = Array(array.dropFirst())
-
-    if let maxOfRest = recursiveMax(rest) {
-        return max(first, maxOfRest)
-    }
-
-    return first
-}
-
-print("Maximum: \(recursiveMax(numbers) ?? 0)")
-
-//fitness example: find peak heart rate across all workouts
-let heartRates = [145, 168, 152, 180, 139]
-if let peakHeartRate = recursiveMax(heartRates) {
-    print("Peak heart rate: \(peakHeartRate) bpm")  //180 bpm
-}
 ```
 
 ## When to use recursion
