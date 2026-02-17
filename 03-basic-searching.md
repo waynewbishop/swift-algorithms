@@ -55,8 +55,6 @@ When the data is sorted, we can employ a much more efficient strategy. Binary se
 3. Eliminate half the book and repeat the process
 4. Continue until we find "Smith" or determine it's not there
 
-This intuitive process is exactly how binary search works. Or consider finding a specific workout date in our fitness app's history. If we have 500 workouts sorted chronologically, we wouldn't scroll from the beginning. We'd jump to roughly where we think June 2023 should be, see if we're too early or too late, then narrow down from there. This halving strategy is binary search:
-
 ## Binary search implementation
 
 ```swift
@@ -93,41 +91,6 @@ if let index = sortedNumbers.binarySearch(for: 17) {
 } else {
     print("17 not found")
 }
-```
-
-## Understanding binary search performance
-
-Binary search achieves `O(log n)` [time complexity](https://en.wikipedia.org/wiki/Time_complexity). This logarithmic performance means that doubling the data size only adds one more step to the search process.
-
-```swift
-// Perform binary search while tracking comparisons and printing each step
-func analyzedBinarySearch<T: Comparable>(for target: T, in array: [T]) -> (index: Int?, comparisons: Int) {
-    var comparisons = 0
-    var leftIndex = 0
-    var rightIndex = array.count - 1
-
-    while leftIndex <= rightIndex {
-        comparisons += 1
-        let middleIndex = (leftIndex + rightIndex) / 2
-        let middleValue = array[middleIndex]
-
-        print("Step \(comparisons): Checking index \(middleIndex) (value: \(middleValue))")
-
-        if middleValue == target {
-            return (middleIndex, comparisons)
-        } else if middleValue < target {
-            leftIndex = middleIndex + 1
-        } else {
-            rightIndex = middleIndex - 1
-        }
-    }
-
-    return (nil, comparisons)
-}
-
-let largeSortedArray = Array(1...1000)
-let (foundIndex, steps) = analyzedBinarySearch(for: 750, in: largeSortedArray)
-print("Found 750 at index \(foundIndex ?? -1) in \(steps) steps")
 ```
 
 ### The power of logarithmic time
