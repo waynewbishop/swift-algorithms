@@ -7,11 +7,9 @@ description: "Implement singly and doubly linked lists"
 
 In [Chapter 6](06-recursion.md), you encountered **linked list** nodes as self-referential structures perfect for recursive algorithms. In [Chapter 8](08-performance-analysis.md), we learned that different data structures offer different performance trade-offs. Now it's time to build a complete linked list implementation—a fundamental data structure that trades random access speed for insertion and deletion flexibility.
 
-A linked list provides similar functionality to an [array](https://en.wikipedia.org/wiki/Array_data_structure)—the ability to insert, retrieve, update, and remove elements. However, because elements are managed independently (scattered in memory) rather than contiguously (in a single block), linked lists excel when dealing with frequent modifications to large datasets.
-
 ## Arrays vs linked lists
 
-Before implementing linked lists, understand when to choose them over Swift's built-in Array.
+A linked list provides similar functionality to an [array](https://en.wikipedia.org/wiki/Array_data_structure)—the ability to insert, retrieve, update, and remove elements. However, because elements are managed independently (scattered in memory) rather than contiguously (in a single block), linked lists excel when dealing with frequent modifications to large datasets.
 
 ### Memory organization
 
@@ -38,11 +36,9 @@ Linked lists excel in scenarios requiring frequent insertions or deletions at th
 
 Arrays prove superior when your application requires frequent random access by index or primarily reads data with few modifications. For small datasets under 100 elements, arrays typically outperform linked lists despite their insertion overhead. Arrays also offer better memory efficiency due to lower per-element overhead and integrate seamlessly with Swift's functional methods like `map`, `filter`, and `reduce`.
 
-Real-world examples demonstrate these trade-offs clearly. Linked lists power iOS's [responder chain](https://developer.apple.com/documentation/uikit/using-responders-and-the-responder-chain-to-handle-events), browser navigation history, undo/redo systems, music playlists where songs are frequently added or removed, and workout interval training where exercises can be modified mid-session. Arrays handle SwiftUI List data sources, configuration settings, most app data models, weekly workout summaries, and step count history—all cases where the data is accessed sequentially or by index and modifications are infrequent.
-
 ## The node structure
 
-The production implementation uses `LLNode` to represent individual nodes in a doubly-linked list. This structure supports both singly-linked lists (using only `next`) and doubly-linked lists (using both `next` and `previous`). The generic type `T` allows storing any type, and optional values enable representing empty nodes and list boundaries.
+Our implementation uses `LLNode` to represent individual nodes in a doubly-linked list. This structure supports both singly-linked lists (using only `next`) and doubly-linked lists (using both `next` and `previous`). The generic type `T` allows storing any type, and optional values enable representing empty nodes and list boundaries.
 
 ```swift
 // Generic linked list node - doubly-linked with previous and next pointers
