@@ -7,9 +7,9 @@ description: "Understanding algorithmic efficiency, complexity analysis, and rea
 
 We've explored searching techniques that locate values in collections, sorting methods that organize data, [recursion](06-recursion.md) that breaks problems into smaller pieces, and generics that enable flexible code. Along the way, we've noticed patterns—binary search feels faster than linear search, quicksort handles large datasets better than bubble sort, and some recursive solutions run exponentially slow.
 
-## Applying Big O to algorithms you know
+## Applying Big O to algorithms
 
-In [Chapter 2](02-measuring-performance.md), we learned that `O(n)` means linear time, `O(log n)` means logarithmic time, and `O(n²)` means quadratic time. Now let's apply this knowledge to every algorithm we've implemented.
+In [Chapter 2](02-measuring-performance.md), we learned that `O(n)` means linear time, `O(log n)` means logarithmic time, and `O(n²)` means quadratic time. Now let's apply this knowledge to algorithms we've reviewed.
 
 ### Search algorithms
 

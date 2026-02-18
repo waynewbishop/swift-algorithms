@@ -5,9 +5,7 @@ description: "Implement singly and doubly linked lists"
 ---
 # Linked Lists
 
-Imagine a playlist in Apple Music. Songs aren't stored in one continuous block—they're scattered across your device with each song pointing to the next. Adding a song mid-playlist doesn't require shifting thousands of items. This is a linked list in action.
-
-In [Chapter 6](06-recursion.md), you encountered linked list nodes as self-referential structures perfect for recursive algorithms. In [Chapter 8](08-performance-analysis.md), we learned that different data structures offer different performance trade-offs. Now it's time to build a complete [linked list](https://en.wikipedia.org/wiki/Linked_list) implementation—a fundamental data structure that trades random access speed for insertion and deletion flexibility.
+In [Chapter 6](06-recursion.md), you encountered **linked list** nodes as self-referential structures perfect for recursive algorithms. In [Chapter 8](08-performance-analysis.md), we learned that different data structures offer different performance trade-offs. Now it's time to build a complete linked list implementation—a fundamental data structure that trades random access speed for insertion and deletion flexibility.
 
 A linked list provides similar functionality to an [array](https://en.wikipedia.org/wiki/Array_data_structure)—the ability to insert, retrieve, update, and remove elements. However, because elements are managed independently (scattered in memory) rather than contiguously (in a single block), linked lists excel when dealing with frequent modifications to large datasets.
 
@@ -40,7 +38,7 @@ Before implementing linked lists, understand when to choose them over Swift's bu
 - Frequent insertions/deletions at beginning or middle
 - Unknown or highly dynamic size
 - Sequential-only access patterns
-- Building other data structures ([Stack](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)), [Queue](https://en.wikipedia.org/wiki/Queue_(abstract_data_type)), [Hash Table](https://en.wikipedia.org/wiki/Hash_table) with chaining)
+- Building other data structures
 
 **Use arrays when:**
 - Frequent random access by index
@@ -55,7 +53,7 @@ Before implementing linked lists, understand when to choose them over Swift's bu
 
 ## The node structure
 
-The production implementation uses `LLNode<T>` to represent individual nodes in a doubly-linked list:
+The production implementation uses `LLNode` to represent individual nodes in a doubly-linked list. This structure supports both singly-linked lists (using only `next`) and doubly-linked lists (using both `next` and `previous`). The generic type `T` allows storing any type, and optional values enable representing empty nodes and list boundaries.
 
 ```swift
 // Generic linked list node - doubly-linked with previous and next pointers
@@ -67,8 +65,6 @@ public class LLNode<T> {
     public init() {}
 }
 ```
-
-This structure supports both singly-linked lists (using only `next`) and doubly-linked lists (using both `next` and `previous`). The generic type `T` allows storing any type, and optional values enable representing empty nodes and list boundaries.
 
 ## Building the LinkedList class
 
