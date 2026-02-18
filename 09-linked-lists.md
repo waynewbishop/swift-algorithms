@@ -34,22 +34,11 @@ Before implementing linked lists, understand when to choose them over Swift's bu
 
 ### When to use each
 
-**Use linked lists when:**
-- Frequent insertions/deletions at beginning or middle
-- Unknown or highly dynamic size
-- Sequential-only access patterns
-- Building other data structures
+Linked lists excel in scenarios requiring frequent insertions or deletions at the beginning or middle of the sequence, particularly when the data size is unknown or highly dynamic. They're ideal for sequential-only access patterns and often serve as building blocks for more complex data structures. Use linked lists when you need flexibility in modifying the sequence structure without the cost of shifting elements.
 
-**Use arrays when:**
-- Frequent random access by index
-- Mostly reading data, few modifications
-- Small datasets (< 100 elements)
-- Memory efficiency critical (arrays have lower overhead)
-- Working with Swift's functional methods (map, filter, reduce)
+Arrays prove superior when your application requires frequent random access by index or primarily reads data with few modifications. For small datasets under 100 elements, arrays typically outperform linked lists despite their insertion overhead. Arrays also offer better memory efficiency due to lower per-element overhead and integrate seamlessly with Swift's functional methods like `map`, `filter`, and `reduce`.
 
-**Real-world examples:**
-- Linked lists: iOS [responder chain](https://developer.apple.com/documentation/uikit/using-responders-and-the-responder-chain-to-handle-events), browser navigation history, undo/redo systems, music playlists (add/remove songs), workout interval training (modify exercises mid-workout)
-- Arrays: SwiftUI List data sources, configuration settings, most app data models, weekly workout summaries, step count history
+Real-world examples demonstrate these trade-offs clearly. Linked lists power iOS's [responder chain](https://developer.apple.com/documentation/uikit/using-responders-and-the-responder-chain-to-handle-events), browser navigation history, undo/redo systems, music playlists where songs are frequently added or removed, and workout interval training where exercises can be modified mid-session. Arrays handle SwiftUI List data sources, configuration settings, most app data models, weekly workout summaries, and step count history—all cases where the data is accessed sequentially or by index and modifications are infrequent.
 
 ## The node structure
 

@@ -5,9 +5,7 @@ description: "Essential data structures for managing collections"
 ---
 # Stacks & Queues
 
-Hit "Back" in your fitness app to return to the previous screen. That's a stack—each screen you visit pushes onto the stack, and "Back" pops the top screen. Queue up three workouts for today? They'll execute in order—first-in, first-out. These simple ordering rules power everything from navigation to task scheduling.
-
-In [Chapter 9](09-linked-lists.md), you built linked lists—collections where elements connect through pointers rather than contiguous memory. Stacks and queues extend this concept by adding ordering rules: stacks process elements last-in, first-out (LIFO), while queues process elements first-in, first-out (FIFO). Both structures achieve constant time `O(1)` insertion and removal (from Chapter 8), making them ideal building blocks for algorithms requiring consistent, fast access patterns.
+In [Chapter 9](09-linked-lists.md), we built linked lists—collections where elements connect through pointers rather than contiguous memory. Stacks and queues extend this concept by adding ordering rules: stacks process elements last-in, first-out (LIFO), while queues process elements first-in, first-out (FIFO). Both structures achieve constant time `O(1)` insertion and removal (from Chapter 8), making them ideal building blocks for algorithms requiring consistent, fast access patterns.
 
 ## Real-world applications
 
