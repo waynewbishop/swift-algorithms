@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 5: Advanced Sorting"
-description: "Master the Quicksort algorithm and divide & conquer strategy"
+description: "Learn the Quicksort algorithm and divide & conquer strategy"
 ---
 # Advanced Sorting
 

@@ -9,10 +9,10 @@ The Swift language has become the cornerstone of Apple development, powering sol
 
 ## What you'll learn
 
-- Master Big O notation and algorithmic efficiency
-- Build and compare search strategies and algorithms 
-- Learn and implement lists, stacks, queues, trees, graphs, and hash tables 
-- Master dynamic programming and tries for optimization problems
+- Learn Big O notation and algorithmic efficiency
+- Build and compare search strategies and algorithms
+- Learn and implement lists, stacks, queues, trees, graphs, and hash tables
+- Learn dynamic programming and tries for optimization problems
 - Explore graph algorithms including shortest paths and PageRank
 - Learn linear algebra fundamentals
 - Work with vectors and matrices for numerical computing and data science workflows

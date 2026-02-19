@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 4: Basic Sorting"
-description: "Master bubble sort, insertion sort, and selection sort"
+description: "Learn bubble sort, insertion sort, and selection sort"
 ---
 # Basic Sorting
 

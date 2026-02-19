@@ -7,7 +7,7 @@ Going beyond pseudocode and theory, every concept is implemented in production-r
 ## What you'll learn
 
 **Core Algorithms & Data Structures**
-- Master Big O notation and algorithmic efficiency—understand why some operations feel instant while others lag
+- Learn Big O notation and algorithmic efficiency—understand why some operations feel instant while others lag
 - Compare search strategies (linear vs binary) and sorting algorithms (insertion, bubble, quicksort, merge sort)
 - Build linked lists, stacks, queues, trees, graphs, and hash tables from scratch using Swift's type system
 
@@ -16,7 +16,7 @@ Going beyond pseudocode and theory, every concept is implemented in production-r
 - Apply transformations using linear algebra fundamentals
 - Build semantic search using vector mathematics and similarity operations
 - Explore graph algorithms including shortest paths and PageRank
-- Master dynamic programming and tries for optimization problems
+- Learn dynamic programming and tries for optimization problems
 
 **Swift-Specific Patterns**
 - Write generic, type-safe algorithms that work with any data type

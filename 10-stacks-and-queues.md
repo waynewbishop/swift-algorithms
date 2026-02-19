@@ -5,7 +5,7 @@ description: "Essential data structures for managing collections"
 ---
 # Stacks & Queues
 
-In [Chapter 9](09-linked-lists.md), we built linked lists—collections where elements connect through pointers rather than contiguous memory. Stacks and queues extend this concept by adding ordering rules: stacks process elements last-in, first-out (LIFO), while queues process elements first-in, first-out (FIFO). Both structures achieve constant time `O(1)` insertion and removal (from Chapter 8), making them ideal building blocks for algorithms requiring consistent, fast access patterns.
+In [Chapter 9](09-linked-lists.md), we built linked lists—collections where elements connect through pointers rather than contiguous memory. **Stacks and queues** extend this concept by adding ordering rules: stacks process elements last-in, first-out (LIFO), while queues process elements first-in, first-out (FIFO). Both structures achieve constant time `O(1)` insertion and removal (from Chapter 8), making them ideal building blocks for algorithms requiring consistent, fast access patterns.
 
 ## Real-world applications
 

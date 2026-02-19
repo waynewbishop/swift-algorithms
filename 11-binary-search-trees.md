@@ -5,22 +5,18 @@ description: "Build and traverse binary search trees"
 ---
 # Binary Search Trees
 
-Your fitness app tracks 10,000 personal records across different distances. Finding your 5K PR from a linked list: traverse all 10,000. From a binary search tree: check ~14 nodes. Same data, 700× faster. This is the power of hierarchical organization.
-
-In [Chapter 10](10-stacks-and-queues.md), you built linear structures where elements connect in a single chain. Binary search trees (BST) extend this concept into hierarchical organization—each node can have up to two children, creating a tree structure. Like the recursive data structures from [Chapter 6](06-recursion.md), trees naturally enable recursive algorithms. But unlike linear structures, BSTs maintain sorted order that enables O(log n) search performance (from [Chapter 8](08-performance-analysis.md)), making them dramatically faster than linked lists for searching.
-
-A [binary search tree](https://en.wikipedia.org/wiki/Binary_search_tree) stores information using a simple rule: values smaller than a node go left, values larger go right. This ordering property transforms an unsorted collection into a searchable hierarchy where finding any element requires examining only a small fraction of the data.
+In [Chapter 10](10-stacks-and-queues.md), you built linear structures where elements connect in a single chain. Binary search trees (BST) extend this concept into hierarchical organization—each node can have up to two children, creating a tree structure. Like the recursive data structures from [Chapter 6](06-recursion.md), trees naturally enable recursive algorithms. But unlike linear structures, BSTs maintain sorted order that enables `O(log n)` search performance (from [Chapter 8](08-performance-analysis.md)), making them dramatically faster than linked lists for searching.
 
 ## The BST structure
 
-Here's the binary search tree structure. Using [generics](https://en.wikipedia.org/wiki/Generic_programming) from [Chapter 7](07-generics.md), it works with any comparable type:
+Here's the binary search tree node structure. Using [generics](https://en.wikipedia.org/wiki/Generic_programming) from [Chapter 7](07-generics.md), it works with any comparable type:
 
 ```swift
 // Binary search tree node with left and right children
-public class BST<T: Comparable> {
-    var tvalue: T?  // 'tvalue' means 'typed value' (matches production BSNode)
-    var left: BST<T>?
-    var right: BST<T>?
+public class BSNode<T: Comparable> {
+    var tvalue: T?  // 'tvalue' means 'typed value' (matches production)
+    var left: BSNode<T>?
+    var right: BSNode<T>?
 }
 ```
 
@@ -35,19 +31,18 @@ Let's build a BST from an array. The insertion order doesn't matter—the BST ru
 let numberList: [Int] = [8, 2, 10, 9, 11, 1, 7]
 ```
 
-
 The tree organizes itself: 8 becomes the root, values less than 8 (2, 1, 7) filter left, values greater than 8 (10, 9, 11) filter right. This automatic organization enables fast searching.
 
 ## Inserting elements
 
-The `append` method uses [recursion](https://en.wikipedia.org/wiki/Recursion_(computer_science)) to find the correct insertion point. Recall from [Chapter 6](06-recursion.md) how recursion simplifies tree operations—each child is another BST, so we recursively call `append` on the appropriate subtree:
+The `append` method uses recursion to find the correct insertion point. Recall from [Chapter 6](06-recursion.md) how recursion simplifies tree operations—each child is another BST, so we recursively call `append` on the appropriate subtree:
 
 ```swift
 // Insert element into BST maintaining sort order - O(log n) average
-public class BST<T: Comparable> {
+public class BSNode<T: Comparable> {
     var tvalue: T?  // 'tvalue' means 'typed value'
-    var left: BST<T>?
-    var right: BST<T>?
+    var left: BSNode<T>?
+    var right: BSNode<T>?
 
     func append(element: T) {
         if let tvalue = self.tvalue {
@@ -56,7 +51,7 @@ public class BST<T: Comparable> {
                 if let left = self.left {
                     left.append(element: element)
                 } else {
-                    let newNode = BST<T>()
+                    let newNode = BSNode<T>()
                     newNode.tvalue = element
                     self.left = newNode
                 }
@@ -65,7 +60,7 @@ public class BST<T: Comparable> {
                 if let right = self.right {
                     right.append(element: element)
                 } else {
-                    let newNode = BST<T>()
+                    let newNode = BSNode<T>()
                     newNode.tvalue = element
                     self.right = newNode
                 }
@@ -82,7 +77,7 @@ Building a tree is straightforward—iterate through the array and call `append`
 
 ```swift
 // Build BST from array
-let root = BST<Int>()
+let root = BSNode<Int>()
 
 for number in numberList {
     root.append(element: number)
@@ -93,7 +88,7 @@ The recursion in `append` mirrors the recursive structure of the tree itself. Th
 
 ## Searching the tree
 
-Searching exploits the BST property. If the target is smaller than the current node, search left. If larger, search right. If equal, we found it:
+Searching makes use of the BST property. If the target is smaller than the current node, search left. If larger, search right. If equal, we found it:
 
 ```swift
 // Search for value in BST - O(log n) average
@@ -111,28 +106,22 @@ func search(for value: T) -> Bool {
 }
 ```
 
-For a balanced tree with n elements, search examines only log₂(n) nodes. Searching 1,000 workout records requires about 10 comparisons. Searching 10,000 records requires about 14 comparisons. This matches the binary search from [Chapter 3](03-basic-searching.md), but BSTs maintain this efficiency even as elements are added and removed—perfect for fitness apps where users constantly log new workouts while querying historical data.
-
 ## Tree traversal
-
-Building and searching trees is only half the story. Traversal algorithms visit every node in a specific order, enabling operations like printing sorted values, finding minimum/maximum, or calculating tree statistics.
-
-### In-order traversal
 
 In-order traversal visits nodes in sorted order: left subtree, current node, right subtree. This is the most common traversal for BSTs:
 
 ```swift
 // In-order traversal produces sorted output - O(n)
-func traverseInOrder(visit: (T) -> Void) {
-    left?.traverseInOrder(visit: visit)
-    if let tvalue = tvalue { visit(tvalue) }
-    right?.traverseInOrder(visit: visit)
+func traverseInOrder() {
+    left?.traverseInOrder()
+    if let tvalue = tvalue {
+        print("value: \(tvalue)")
+    }
+    right?.traverseInOrder()
 }
 
 // Print values in sorted order
-root.traverseInOrder { value in
-    print(value)
-}
+root.traverseInOrder()
 // Output: 1, 2, 7, 8, 9, 10, 11
 ```
 
@@ -144,16 +133,16 @@ Pre-order traversal visits the current node first, then children: current node, 
 
 ```swift
 // Pre-order traversal visits root first - O(n)
-func traversePreOrder(visit: (T) -> Void) {
-    if let tvalue = tvalue { visit(tvalue) }
-    left?.traversePreOrder(visit: visit)
-    right?.traversePreOrder(visit: visit)
+func traversePreOrder() {
+    if let tvalue = tvalue {
+        print("value: \(tvalue)")
+    }
+    left?.traversePreOrder()
+    right?.traversePreOrder()
 }
 
 // Print values in pre-order
-root.traversePreOrder { value in
-    print(value)
-}
+root.traversePreOrder()
 // Output: 8, 2, 1, 7, 10, 9, 11
 ```
 
@@ -165,16 +154,16 @@ Post-order traversal visits children first, then the current node: left subtree,
 
 ```swift
 // Post-order traversal visits root last - O(n)
-func traversePostOrder(visit: (T) -> Void) {
-    left?.traversePostOrder(visit: visit)
-    right?.traversePostOrder(visit: visit)
-    if let tvalue = tvalue { visit(tvalue) }
+func traversePostOrder() {
+    left?.traversePostOrder()
+    right?.traversePostOrder()
+    if let tvalue = tvalue {
+        print("value: \(tvalue)")
+    }
 }
 
 // Print values in post-order
-root.traversePostOrder { value in
-    print(value)
-}
+root.traversePostOrder()
 // Output: 1, 7, 2, 9, 11, 10, 8
 ```
 
