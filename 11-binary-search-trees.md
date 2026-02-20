@@ -5,11 +5,11 @@ description: "Build and traverse binary search trees"
 ---
 # Binary Search Trees
 
-In the previous chapter we built linear structures where elements connect in a single chain. **Binary search trees** (BST) extend this concept into hierarchical organization—each node can have up to two children, creating a tree structure. Like the recursive data structures from [Chapter 6](06-recursion.md), trees naturally enable recursive algorithms. But unlike linear structures, BSTs maintain sorted order that enables `O(log n)` search performance (from [Chapter 8](08-performance-analysis.md)), making them dramatically faster than linked lists for searching.
+In the previous chapter we built linear structures where elements connect in a single chain. Binary Search Trees (BST) extend this concept into hierarchical organization—each node can have up to two children, creating a tree structure. Like the recursive data structures from [Chapter 6](06-recursion.md), trees naturally enable recursive algorithms. But unlike linear structures, BSTs maintain sorted order that enables `O(log n)` search performance.
 
 ## The BST structure
 
-Here's the binary search tree node structure. Using [generics](https://en.wikipedia.org/wiki/Generic_programming) from [Chapter 7](07-generics.md), it works with any comparable type:
+Here's the binary search tree node structure. Using generics from [Chapter 7](07-generics.md), it works with any comparable type:
 
 ```swift
 public class BSNode<T: Comparable> {
@@ -19,7 +19,7 @@ public class BSNode<T: Comparable> {
 }
 ```
 
-The `Comparable` constraint ensures elements can be compared using `<` and `>`, which is essential for determining left vs right placement. Each node contains a value (`tvalue`) and optional pointers to left and right subtrees.
+The `Comparable` constraint ensures elements can be compared using `<` and `>`, which is essential for determining `left` vs `right` placement. Each node contains a value (`tvalue`) and optional pointers to left and right subtrees.
 
 ## Building a tree
 
@@ -30,7 +30,7 @@ Let's build a BST from an array. The insertion order doesn't matter—the BST ru
 let numberList: [Int] = [8, 2, 10, 9, 11, 1, 7]
 ```
 
-The tree organizes itself: 8 becomes the root, values less than 8 (2, 1, 7) filter left, values greater than 8 (10, 9, 11) filter right. This automatic organization enables fast searching.
+The tree organizes itself: 8 becomes the `root`, values less than 8 (2, 1, 7) filter `left`, values greater than 8 (10, 9, 11) filter `right`. This automatic organization enables fast searching.
 
 ## Inserting elements
 
@@ -111,9 +111,11 @@ func search(for value: T) -> Bool {
 }
 ```
 
-## Tree traversal
+## Traversal
 
-In-order traversal visits nodes in sorted order: left subtree, current node, right subtree. This is the most common traversal for BSTs:
+Traversal is the process of visiting every node in a tree structure exactly once in a systematic order. Unlike linear data structures like arrays where iteration is straightforward, trees require specific strategies to navigate their hierarchical relationships. The practical value becomes clear when we need sorted data: instead of maintaining a separate sorted array and re-sorting after every insertion (`O(n log n)` each time), a balanced BST provides both `O(log n)` insertion and `O(n)` sorted traversal. This makes BSTs ideal for applications requiring frequent insertions.
+
+In-order traversal visits nodes in sorted order: `left` subtree, `current` node then `right` subtree. This is the most common traversal pattern for BSTs:
 
 ```swift
 // In-order traversal produces sorted output - O(n)
@@ -134,11 +136,11 @@ root.traverseInOrder()
 // Output: 1, 2, 7, 8, 9, 10, 11
 ```
 
-The recursion pattern is elegant: process the left subtree, then the current node, then the right subtree. For our tree, this produces perfectly sorted output.
+The recursion pattern is elegant: process the `left` subtree, then the `current` node, then the `right` subtree. For our tree, this produces perfectly sorted output.
 
 ### Pre-order traversal
 
-Pre-order traversal visits the current node first, then children: current node, left subtree, right subtree. This is useful for copying trees or serializing them:
+Pre-order traversal visits the `current` node first, then children: `current` node, `left` subtree, `right` subtree. This is useful for copying trees or serializing them:
 
 ```swift
 // Pre-order traversal visits root first - O(n)
@@ -163,7 +165,7 @@ Pre-order gives you the root first, which is essential when we need to rebuild t
 
 ### Post-order traversal
 
-Post-order traversal visits children first, then the current node: left subtree, right subtree, current node. This is useful for deleting trees or performing calculations that depend on child results:
+Post-order traversal visits children first, then the current node: `left` subtree, `right` subtree, `current` node. This is useful for deleting trees or performing calculations that depend on child results:
 
 ```swift
 // Post-order traversal visits root last - O(n)
@@ -214,7 +216,9 @@ print("Max:", root.maximum()!)  // Output: 11
 
 These operations traverse only one path from root to leaf, making them `O(log n)` average-case operations.
 
-**Why BST recursion is efficient:** Unlike recursive algorithms that spawn multiple branches (like naive Fibonacci from [Chapter 6](06-recursion.md) which creates exponential `O(2^n)` complexity), BST methods follow a single recursive path. Each call processes either the `left` or `right` subtree, never both. This single-path recursion produces the same halving pattern as iterative binary search from [Chapter 3](03-basic-searching.md), achieving `O(log n)` average performance. Recursion itself isn't inherently slow—the branching pattern determines efficiency.
+### Why BST recursion is efficient
+
+Unlike recursive algorithms that spawn multiple branches (like naive Fibonacci from [Chapter 6](06-recursion.md) which creates exponential `O(2^n)` complexity), BST methods follow a single recursive path. Each call processes either the `left` or `right` subtree, never both. This single-path recursion produces the same halving pattern as iterative binary search from [Chapter 3](03-basic-searching.md), achieving `O(log n)` average performance. Recursion itself isn't inherently slow—the branching pattern determines efficiency.
 
 ## Performance analysis
 
@@ -227,10 +231,6 @@ BST operations demonstrate efficient average-case performance:
 | Traversal | `O(n)` | Visit every node once |
 | Min/Max | `O(log n)` | Single path to leftmost/rightmost |
 
-Tree structure significantly impacts performance. The examples in this chapter use insertion orders that create reasonably distributed trees. However, certain insertion patterns can degrade performance. [Chapter 12](12-tree-balancing.md) explores how tree structure affects performance and techniques to maintain efficiency regardless of insertion order.
-
 ## Building algorithmic intuition
 
 Binary search trees combine the efficiency of binary search with the flexibility of linked structures. The tree property—left children smaller, right children larger—enables `O(log n)` average operations. Recursive tree operations demonstrate natural problem decomposition: most operations reduce to handling the current node plus recursive calls on subtrees, a pattern that appears throughout tree traversal, graph algorithms ([Chapter 13](13-graphs.md)), and divide-and-conquer strategies.
-
-Understanding BSTs provides foundation for more advanced tree structures. The fundamental concepts—tree navigation, recursive operations, ordering properties—apply to balanced tree variants ([Chapter 12](12-tree-balancing.md)), tries ([Chapter 14](14-tries.md)), and other hierarchical data structures.

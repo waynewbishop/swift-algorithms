@@ -11,9 +11,11 @@ description: "Mathematical foundations of vector operations and numerical comput
 
 A vector is a mathematical object that represents both magnitude and direction. Unlike a scalar value, which represents only size (like temperature or weight), a vector captures directional information alongside its size. This dual nature makes vectors ideally suited for representing anything that has both how much and which way properties.
 
-Consider everyday examples. Wind isn't just *20 miles per hour* - it's *20 miles per hour from the northwest.* The combination of attributes creates the vector: magnitude (20 mph) and direction (northwest). When a character moves in a video game, we need both how fast they're moving **and** in which direction. When analyzing customer preferences across multiple product features, each preference profile can be represented as a vector in multidimensional space.
+Consider everyday examples. Wind isn't just "20 miles per hour" - it's "20 miles per hour **from** the northwest". The **combination** of attributes creates the vector: magnitude (20 mph) and direction (northwest). When a character moves in a video game, we need both how fast they're moving and in which direction. When analyzing customer preferences across multiple product features, each preference profile can be represented as a vector in multidimensional space.
 
 Mathematically, vectors are represented as ordered lists of numbers. A two-dimensional vector might be written as `[3, 4]`, representing movement 3 units in one direction and 4 units in another. Three-dimensional vectors add a third component `[x, y, z]`, and we can extend this to any number of dimensions.
+
+## vector representations
 
 Vectors can represent many real-world concepts. In physics simulations and game development, they represent positions in space, forces acting on objects, and velocities of moving entities. In machine learning, feature vectors capture multiple attributes of data points—a song might be represented as `[tempo, energy, danceability, loudness]`. Even RGB color values are vectors, with each component representing intensity on a scale from 0 to 1.
 
@@ -32,6 +34,12 @@ For vector `[3, 4]`, imagine an arrow from the origin to point `(3, 4)`. This fo
 Direction is expressed as a unit vector - a `vector` with `magnitude` 1 that points in the same direction as the original. This process is called **normalization**. To normalize, divide each component by the vector's `magnitude`. Vector `[3, 4]` with magnitude 5 becomes `[3/5, 4/5] = [0.6, 0.8]`. Verify: `√(0.6² + 0.8²) = 1`.
 
 Unit vectors separate how much from which way. A game character moving northeast `[0.7, 0.7]` at 5 units per second: normalize the direction, then multiply by speed to get the exact velocity needed. The zero vector `[0, 0]` cannot be normalized because it has no direction - it represents no movement or no force.
+
+**Why normalize?** Normalization solves the fundamental problem of separating "how much" from "which way." When comparing directions, magnitude becomes noise—a character moving slowly northeast and one sprinting northeast are going the same direction, but their raw velocity vectors look completely different. Normalization eliminates this distraction.
+
+Consider comparing user preferences. User A rates five products `[5, 4, 5, 3, 4]` while User B rates the same products `[10, 8, 10, 6, 8]`. These vectors point in identical directions (proportional preferences), but their magnitudes differ. Normalizing both vectors reveals they're actually identical in preference pattern. This becomes critical for cosine similarity in recommendation systems, where we care about relative preferences, not absolute rating scales.
+
+Normalization also enables precise control. In game development, we often need "move in this direction at this speed." Without normalization, applying speed to a direction vector compounds magnitude: `[3, 4] * 5 = [15, 20]`, which has magnitude 25 (not 5!). Normalizing first separates the direction `[0.6, 0.8]`, then multiplying by speed gives exactly `[3, 4]` with magnitude 5. The technique appears throughout physics engines, graphics rendering, and machine learning wherever directional alignment matters more than absolute magnitude.
 
 ## Vector operations
 
