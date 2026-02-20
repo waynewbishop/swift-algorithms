@@ -5,16 +5,15 @@ description: "Build and traverse binary search trees"
 ---
 # Binary Search Trees
 
-In [Chapter 10](10-stacks-and-queues.md), you built linear structures where elements connect in a single chain. Binary search trees (BST) extend this concept into hierarchical organization—each node can have up to two children, creating a tree structure. Like the recursive data structures from [Chapter 6](06-recursion.md), trees naturally enable recursive algorithms. But unlike linear structures, BSTs maintain sorted order that enables `O(log n)` search performance (from [Chapter 8](08-performance-analysis.md)), making them dramatically faster than linked lists for searching.
+In the previous chapter we built linear structures where elements connect in a single chain. **Binary search trees** (BST) extend this concept into hierarchical organization—each node can have up to two children, creating a tree structure. Like the recursive data structures from [Chapter 6](06-recursion.md), trees naturally enable recursive algorithms. But unlike linear structures, BSTs maintain sorted order that enables `O(log n)` search performance (from [Chapter 8](08-performance-analysis.md)), making them dramatically faster than linked lists for searching.
 
 ## The BST structure
 
 Here's the binary search tree node structure. Using [generics](https://en.wikipedia.org/wiki/Generic_programming) from [Chapter 7](07-generics.md), it works with any comparable type:
 
 ```swift
-// Binary search tree node with left and right children
 public class BSNode<T: Comparable> {
-    var tvalue: T?  // 'tvalue' means 'typed value' (matches production)
+    var tvalue: T?  // typed value
     var left: BSNode<T>?
     var right: BSNode<T>?
 }
@@ -97,9 +96,15 @@ func search(for value: T) -> Bool {
         if value == tvalue {
             return true
         } else if value < tvalue {
-            return left?.search(for: value) ?? false
+            if let left = left {
+                return left.search(for: value)
+            }
+            return false
         } else {
-            return right?.search(for: value) ?? false
+            if let right = right {
+                return right.search(for: value)
+            }
+            return false
         }
     }
     return false
@@ -113,11 +118,15 @@ In-order traversal visits nodes in sorted order: left subtree, current node, rig
 ```swift
 // In-order traversal produces sorted output - O(n)
 func traverseInOrder() {
-    left?.traverseInOrder()
+    if let left = left {
+        left.traverseInOrder()
+    }
     if let tvalue = tvalue {
         print("value: \(tvalue)")
     }
-    right?.traverseInOrder()
+    if let right = right {
+        right.traverseInOrder()
+    }
 }
 
 // Print values in sorted order
@@ -137,8 +146,12 @@ func traversePreOrder() {
     if let tvalue = tvalue {
         print("value: \(tvalue)")
     }
-    left?.traversePreOrder()
-    right?.traversePreOrder()
+    if let left = left {
+        left.traversePreOrder()
+    }
+    if let right = right {
+        right.traversePreOrder()
+    }
 }
 
 // Print values in pre-order
@@ -155,8 +168,12 @@ Post-order traversal visits children first, then the current node: left subtree,
 ```swift
 // Post-order traversal visits root last - O(n)
 func traversePostOrder() {
-    left?.traversePostOrder()
-    right?.traversePostOrder()
+    if let left = left {
+        left.traversePostOrder()
+    }
+    if let right = right {
+        right.traversePostOrder()
+    }
     if let tvalue = tvalue {
         print("value: \(tvalue)")
     }
@@ -176,14 +193,18 @@ The BST property makes finding extreme values trivial—minimum is the leftmost 
 ```swift
 // Find minimum value (leftmost node) - O(log n) average
 func minimum() -> T? {
-    if left == nil { return tvalue }
-    return left?.minimum()
+    if let left = left {
+        return left.minimum()
+    }
+    return tvalue
 }
 
 // Find maximum value (rightmost node) - O(log n) average
 func maximum() -> T? {
-    if right == nil { return tvalue }
-    return right?.maximum()
+    if let right = right {
+        return right.maximum()
+    }
+    return tvalue
 }
 
 // Usage
@@ -191,51 +212,25 @@ print("Min:", root.minimum()!)  // Output: 1
 print("Max:", root.maximum()!)  // Output: 11
 ```
 
-These operations traverse only one path from root to leaf, making them O(log n) for balanced trees.
+These operations traverse only one path from root to leaf, making them `O(log n)` average-case operations.
+
+**Why BST recursion is efficient:** Unlike recursive algorithms that spawn multiple branches (like naive Fibonacci from [Chapter 6](06-recursion.md) which creates exponential `O(2^n)` complexity), BST methods follow a single recursive path. Each call processes either the `left` or `right` subtree, never both. This single-path recursion produces the same halving pattern as iterative binary search from [Chapter 3](03-basic-searching.md), achieving `O(log n)` average performance. Recursion itself isn't inherently slow—the branching pattern determines efficiency.
 
 ## Performance analysis
 
-BST performance depends on tree balance. A balanced tree has roughly equal numbers of nodes in left and right subtrees at each level:
+BST operations demonstrate efficient average-case performance:
 
-| Operation | Balanced BST | Unbalanced BST |
-|-----------|--------------|----------------|
-| Search | O(log n) | O(n) |
-| Insert | O(log n) | O(n) |
-| Delete | O(log n) | O(n) |
-| Traversal | O(n) | O(n) |
-| Min/Max | O(log n) | O(n) |
+| Operation | Average Case | Notes |
+|-----------|--------------|-------|
+| Search | `O(log n)` | Halving pattern like binary search |
+| Insert | `O(log n)` | Traverse then add new node |
+| Traversal | `O(n)` | Visit every node once |
+| Min/Max | `O(log n)` | Single path to leftmost/rightmost |
 
-**Why O(log n) for balanced trees?** Each comparison eliminates half the remaining nodes, just like binary search. A tree with 1,000 nodes has height ~10, requiring at most 10 comparisons.
-
-**Why O(n) for unbalanced trees?** If we insert sorted data [1, 2, 3, 4, 5], the tree degenerates into a linked list—every node has only a right child. Searching becomes linear, no better than traversing a linked list from [Chapter 9](09-linked-lists.md).
-
-This is why tree balancing ([Chapter 12](12-tree-balancing.md)) is critical for production use. Balanced trees guarantee O(log n) performance regardless of insertion order.
-
-## Real-world applications
-
-Binary search trees power systems requiring fast search with dynamic updates:
-
-**Database indexing:** B-trees (a BST variant) index database tables, enabling fast queries while supporting inserts and deletes. Every SQL database uses tree-based indexes.
-
-**File systems:** Directory structures are trees. The file system hierarchy on your computer is essentially a multi-way tree (each directory can have many children).
-
-**Symbol tables:** Compilers use BSTs to store variables and their types during compilation. Fast lookup enables efficient semantic analysis.
-
-**Autocomplete systems:** Tries ([Chapter 14](14-tries.md)) extend the BST concept to efficiently store and search strings, powering autocomplete in search engines.
-
-**When to use BSTs:**
-- Need sorted data with dynamic inserts/deletes
-- Want O(log n) search without array resizing costs
-- Require ordered iteration (in-order traversal)
-- Building more complex structures (tries, B-trees)
-
-**When to avoid BSTs:**
-- Need O(1) lookups (use hash tables from [Chapter 15](15-hash-tables.md))
-- Data rarely changes (use sorted array with binary search)
-- Can't guarantee balanced insertions (need AVL/Red-Black trees from [Chapter 12](12-tree-balancing.md))
+Tree structure significantly impacts performance. The examples in this chapter use insertion orders that create reasonably distributed trees. However, certain insertion patterns can degrade performance. [Chapter 12](12-tree-balancing.md) explores how tree structure affects performance and techniques to maintain efficiency regardless of insertion order.
 
 ## Building algorithmic intuition
 
-Binary search trees combine the efficiency of binary search with the flexibility of linked structures. The tree property—left children smaller, right children larger—enables `O(log n)` operations when balanced. Recursive tree operations demonstrate natural problem decomposition: most operations reduce to handling the current node plus recursive calls on subtrees, a pattern that appears throughout tree traversal, graph algorithms, and divide-and-conquer strategies.
+Binary search trees combine the efficiency of binary search with the flexibility of linked structures. The tree property—left children smaller, right children larger—enables `O(log n)` average operations. Recursive tree operations demonstrate natural problem decomposition: most operations reduce to handling the current node plus recursive calls on subtrees, a pattern that appears throughout tree traversal, graph algorithms ([Chapter 13](13-graphs.md)), and divide-and-conquer strategies.
 
-Understanding BSTs reveals the importance of balance. Unbalanced trees degrade to linked lists, destroying logarithmic guarantees. This motivates balanced tree variants ([Chapter 12](12-tree-balancing.md)) that maintain `O(log n)` operations regardless of insertion order. The fundamental BST concepts learned here—tree navigation, recursive operations, ordering properties—apply to all tree-based structures.
+Understanding BSTs provides foundation for more advanced tree structures. The fundamental concepts—tree navigation, recursive operations, ordering properties—apply to balanced tree variants ([Chapter 12](12-tree-balancing.md)), tries ([Chapter 14](14-tries.md)), and other hierarchical data structures.
