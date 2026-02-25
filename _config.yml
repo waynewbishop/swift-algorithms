@@ -113,8 +113,8 @@ navigation:
         url: "21-matrices"
       - title: "Matrix Transformations"
         url: "22-matrix-transformations"
-      - title: "Semantic Search"
-        url: "23-semantic-search"
+      - title: "Similarity Operations"
+        url: "23-similarity-operations"
 
 # Exclude from processing
 exclude:

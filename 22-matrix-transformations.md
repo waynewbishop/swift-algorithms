@@ -5,7 +5,7 @@ description: "Understanding coordinate system transformations"
 ---
 # Matrix Transformations
 
-In [Chapter 21](21-matrices.md), we explored matrices as rectangular arrays that organize multi-dimensional data efficiently. Matrices serve another critical purpose: they **transform** vector spaces.
+In [Chapter 21](21-matrices.md), we explored matrices as rectangular arrays that organize multi-dimensional data efficiently. In this section we'll learn more about how matrices **transform** vector spaces.
 
 ## Understanding basis vectors
 
@@ -23,7 +23,7 @@ let jHat = [0.0, 1.0]  // Points up (y-axis)
         └──→ i-hat [1, 0]
 ```
 
-Any vector can be expressed as a combination of these basis vectors. As shown, this can expressed either graphically or mathematically using a technique known as matrix multiplication. For example, the vector `[3, 4]` is oriented based on the position of `i-hat` and `j-hat`:
+Any vector can be expressed as a combination of these basis vectors. This can be presented mathematically using a technique known as **matrix multiplication**. For example, the vector `[3, 4]` is oriented based on the position of `i-hat` and `j-hat`. Although the math shows the resulting  vector unchanged, we still should still acknowlege the matrix multiplication process. 
 
 ```
 [3, 4] = 3 × [1, 0] + 4 × [0, 1]
@@ -32,6 +32,21 @@ Any vector can be expressed as a combination of these basis vectors. As shown, t
 ```
 
 The basis vectors form the canvas. As a result, every vector is built from them. When matrices transform vectors, the matrix columns show **where** the basis vectors end up after transformation.
+
+```swift
+import Quiver 
+
+let identity = [
+    [1.0, 0.0],  // Column 1: i-hat
+    [0.0, 1.0]   // Column 2: j-hat
+]
+
+//creates a diagonal matrix - scales vector space
+let scale = [Double].diag([3.0, 2.0])
+
+//original basis vectors now scaled
+let transform = identity.multiplyMatrix(scale)    
+```
 
 ## The identity matrix
 
@@ -48,7 +63,7 @@ This represents the standard coordinate system before any transformation.
 
 ## Matrix multiplication
 
-How do matrices transform vectors? The answer is **matrix multiplication**—a specific calculation that applies transformations by combining the input vector's components in precise ways. When we multiply a matrix by a vector, each row of the matrix defines how to compute one component of the output. The calculation uses dot products:
+How do matrices transform vectors? As previously discussed, **matrix multiplication** is a specific calculation that applies transformations by combining the input vector's components in precise ways. When we multiply a matrix by a vector, each row of the matrix defines how to compute one component of the output. The calculation uses dot products:
 
 ```
 [a  b]   [x]   [a×x + b×y]
@@ -56,6 +71,16 @@ How do matrices transform vectors? The answer is **matrix multiplication**—a s
 ```
 
 Each output component is a **weighted combination** of the input components. The matrix rows contain the weights. This mixing of components is what enables transformations—scaling, rotation, and other geometric operations all work by recombining the input values.
+
+
+```
+///TODO
+///The first example should be scaling up showing how matrix transforms the vector basis (matrixMultiply) and then 
+//that transformed vector basis is applied to the resulting vector (transformedBy)
+
+Then go into detail explaining that matrixMultiply with the indentity is analagious to scalar multiplication using a 1. 
+```
+
 
 Consider rotating `[3, 4]` by 90° counterclockwise. The rotation matrix is:
 
@@ -141,40 +166,6 @@ let scaled = scaleUp.transform(point)  // [8.0, 15.0]
 // 4 × [2, 0] + 5 × [0, 3] = [8, 0] + [0, 15] = [8, 15] ✓
 ```
 
-### Scaling down (squishing)
-
-Diagonal values less than 1 compress space instead of stretching it:
-
-```
-[0.5  0.0]
-[0.0  0.5]
-```
-
-This uniformly scales down by 50%. In code:
-
-```swift
-import Quiver
-
-let scaleDown = [
-    [0.5, 0.0],   // Column 1: i-hat compressed to half length
-    [0.0, 0.5]    // Column 2: j-hat compressed to half length
-]
-
-let point = [8.0, 10.0]
-let squished = scaleDown.transform(point)  // [4.0, 5.0]
-```
-
-The axes shrink to half their length. Every point gets pulled closer to the origin by 50%.
-
-Fractional diagonal values (< 1) squish space. Values > 1 stretch it. Values equal to 1 leave that dimension unchanged (similar to the identity matrix).
-
-
 ## Building algorithmic intuition
 
-Looking at any matrix's columns reveals what the transformation does—the columns **are** the transformed basis vectors.
-
-Transformation matrices appear throughout computer science. In computer graphics, they rotate, scale, and position objects in 3D space. In physics simulations, they model forces and motions. In machine learning, they project high-dimensional data into lower-dimensional spaces where patterns become visible. In data science, they normalize, decorrelate, and transform datasets to reveal hidden structure.
-
 Understanding transformations means recognizing how coordinate systems change systematically. The identity matrix represents our reference frame. Scaling matrices stretch or compress along axes. Rotation matrices spin the coordinate system while preserving distances. More complex transformations combine these basic operations, but the fundamental insight remains: read the columns to see where the basis vectors go.
-
-These geometric operations, combined with the matrix fundamentals from [Chapter 21](21-matrices.md), provide the mathematical foundation for advanced applications across graphics, physics, machine learning, and data analysis. The ability to visualize how matrices reshape coordinate spaces makes complex algorithms more intuitive and debuggable.

@@ -15,7 +15,7 @@ Consider everyday examples. Wind isn't just "20 miles per hour" - it's "20 miles
 
 Mathematically, vectors are represented as ordered lists of numbers. A two-dimensional vector might be written as `[3, 4]`, representing movement 3 units in one direction and 4 units in another. Three-dimensional vectors add a third component `[x, y, z]`, and we can extend this to any number of dimensions.
 
-## vector representations
+## Vector representations
 
 Vectors can represent many real-world concepts. In physics simulations and game development, they represent positions in space, forces acting on objects, and velocities of moving entities. In machine learning, feature vectors capture multiple attributes of data points—a song might be represented as `[tempo, energy, danceability, loudness]`. Even RGB color values are vectors, with each component representing intensity on a scale from 0 to 1.
 
@@ -29,17 +29,31 @@ Magnitude represents a vector's length or size - how much of something we have, 
 
 For vector `[3, 4]`, imagine an arrow from the origin to point `(3, 4)`. This forms a right triangle's hypotenuse with sides 3 and 4. The Pythagorean theorem gives us `√(3² + 4²) = √25 = 5`. This extends to higher dimensions. A vector `[1, 2, 3, 4]` has magnitude `√(1² + 2² + 3² + 4²) = √30 ≈ 5.48`.
 
+### Magnitude vs distance
+
+Both magnitude and Euclidean distance use the Pythagorean theorem, but measure different things. Magnitude provides an answer to "how far am I from home (origin)" while Euclidean distance solves "how far is the coffee shop from the library".
+
+Magnitude measures distance from the origin:
+- Vector `[3, 4]` has magnitude `√(3² + 4²) = 5`
+- Always starts at origin `[0, 0, ...]`
+
+Euclidean distance measures distance between any two points:
+- Distance from `[1, 2]` to `[4, 6]` equals `√[(4-1)² + (6-2)²] = √(9 + 16) = 5`
+- Can start at any point
+
+Magnitude is a special case of Euclidean distance where the starting point is always the origin. The distance from `[0, 0]` to `[3, 4]` equals 5—the same as the magnitude of `[3, 4]`. This distinction matters when computing similarity metrics like cosine similarity, where we need to understand that magnitude normalizes vectors by their distance from the origin.
+
 ### Direction and normalization
 
 Direction is expressed as a unit vector - a `vector` with `magnitude` 1 that points in the same direction as the original. This process is called **normalization**. To normalize, divide each component by the vector's `magnitude`. Vector `[3, 4]` with magnitude 5 becomes `[3/5, 4/5] = [0.6, 0.8]`. Verify: `√(0.6² + 0.8²) = 1`.
 
 Unit vectors separate how much from which way. A game character moving northeast `[0.7, 0.7]` at 5 units per second: normalize the direction, then multiply by speed to get the exact velocity needed. The zero vector `[0, 0]` cannot be normalized because it has no direction - it represents no movement or no force.
 
-**Why normalize?** Normalization solves the fundamental problem of separating "how much" from "which way." When comparing directions, magnitude becomes noise—a character moving slowly northeast and one sprinting northeast are going the same direction, but their raw velocity vectors look completely different. Normalization eliminates this distraction.
+### Why normalize?
 
-Consider comparing user preferences. User A rates five products `[5, 4, 5, 3, 4]` while User B rates the same products `[10, 8, 10, 6, 8]`. These vectors point in identical directions (proportional preferences), but their magnitudes differ. Normalizing both vectors reveals they're actually identical in preference pattern. This becomes critical for cosine similarity in recommendation systems, where we care about relative preferences, not absolute rating scales.
+Normalization solves the problem of separating "how much" from "which way." When comparing directions, `magnitude` becomes noise—a character moving slowly northeast and one sprinting northeast are going the same direction, but their raw velocity vectors look completely different. Normalization eliminates this distraction.
 
-Normalization also enables precise control. In game development, we often need "move in this direction at this speed." Without normalization, applying speed to a direction vector compounds magnitude: `[3, 4] * 5 = [15, 20]`, which has magnitude 25 (not 5!). Normalizing first separates the direction `[0.6, 0.8]`, then multiplying by speed gives exactly `[3, 4]` with magnitude 5. The technique appears throughout physics engines, graphics rendering, and machine learning wherever directional alignment matters more than absolute magnitude.
+Normalization also enables precise control. In game development, we often need "move in this direction at this speed." Without normalization, applying speed to a direction vector compounds magnitude: `[3, 4] * 5 = [15, 20]`, which has `magnitude` 25 (not 5). Normalizing first separates the direction `[0.6, 0.8]`, then multiplying by speed gives exactly `[3, 4]` with magnitude 5. The technique appears throughout physics engines, graphics rendering, and machine learning wherever directional alignment matters more than absolute magnitude.
 
 ## Vector operations
 
@@ -67,7 +81,7 @@ The dot product reveals relationships between vectors. When the dot product equa
 
 Applications span multiple domains. In physics, the dot product calculates work done by computing force · distance. In graphics, it determines if surfaces face light sources, controlling brightness and shadows. In machine learning, measuring similarity between feature vectors through cosine similarity enables recommendation systems to find related items. The dot product transforms geometric intuition into practical computation.
 
-> **Note:** The dot product formula `a · b = |a| × |b| × cos(θ)` reveals why normalized vectors measure similarity: when both have magnitude 1, the dot product *is* the cosine of the angle between them. This geometric insight powers the semantic search in [Chapter 23](23-semantic-search.md).
+> **Note:** The dot product formula `a · b = |a| × |b| × cos(θ)` reveals why normalized vectors measure similarity: when both have magnitude 1, the dot product *is* the cosine of the angle between them. This geometric insight powers the similarity operations in [Chapter 23](23-similarity-operations.md).
 
 ## Introducing Quiver
 
@@ -75,17 +89,7 @@ With mathematical foundations established, we need practical tools for working w
 
 ### Why Quiver?
 
-Quiver provides Swift-native vector mathematics and numerical computing by extending the standard `Array` type rather than creating custom containers. This design eliminates conversion overhead—arrays are vectors without boxing or unboxing. Operations integrate seamlessly with Swift's standard library, maintaining familiar syntax while adding mathematical capabilities. Generic constraints ensure type safety, with operations like division available only for floating-point types. The implementation prioritizes readability, making it easy to translate mathematical formulas directly to code.
-
-### Installing Quiver
-
-Add Quiver to your project via Swift Package Manager:
-
-```
-https://github.com/waynewbishop/bishop-algorithms-quiver-package
-```
-
-In Xcode: **File → Add Package Dependencies** → paste the URL above.
+Quiver provides Swift-native vector mathematics and numerical computing by extending the standard `Array` type rather than creating custom containers. This design eliminates conversion overhead—arrays are vectors without boxing or unboxing. Operations integrate seamlessly with Swift's standard library, maintaining familiar syntax while adding mathematical capabilities. 
 
 ## Working with vectors
 
@@ -167,7 +171,7 @@ let result = a.dot(b)  // `(3×1) + (4×2) = 11`
 
 ### Cosine similarity
 
-The most important operation for semantic search is cosine similarity, which measures how similar two vectors are regardless of their magnitude. Quiver provides `cosineOfAngle(with:)` for this calculation:
+The most important operation for measuring similarity is cosine similarity, which measures how similar two vectors are regardless of their magnitude. Quiver provides `cosineOfAngle(with:)` for this calculation:
 
 ```swift
 // Measure similarity between vectors using cosine of angle
@@ -186,13 +190,13 @@ let song2 = [120.0, 0.8, 0.9, 0.7]
 let songSimilarity = song1.cosineOfAngle(with: song2)  // 0.98
 ```
 
-This cosine similarity technique is fundamental to recommendation systems, search engines, and machine learning. It appears throughout [Chapter 23](23-semantic-search.md), where semantic search uses vector similarity to find related documents.
+This cosine similarity technique is fundamental to recommendation systems, search engines, and machine learning. It appears throughout [Chapter 23](23-similarity-operations.md), where similarity operations measure relationships between vectors in high-dimensional space.
 
 ## Vector averaging
 
-Word embeddings represent individual words as vectors, but semantic search operates on documents: sentences, paragraphs, or full articles. We need to convert multi-word text into a single vector that captures the entire document's meaning. The solution is to average the word vectors element-wise, creating a document embedding.
+Word embeddings represent individual words as vectors, but similarity operations often compare documents: sentences, paragraphs, or full articles. We need to convert multi-word text into a single vector that captures the entire document's meaning. The solution is to average the word vectors element-wise, creating a document embedding.
 
-This averaging preserves semantic properties. If a document contains words like "lightweight," "cushioned," "running," and "athletic," the averaged vector points toward the general region of "athletic footwear" in the embedding space. Individual words contribute their semantic information, and the average represents their combined meaning. Documents with similar words produce similar average vectors, which is exactly the property semantic search exploits.
+This averaging preserves semantic properties. If a document contains words like "lightweight," "cushioned," "running," and "athletic," the averaged vector points toward the general region of "athletic footwear" in the embedding space. Individual words contribute their semantic information, and the average represents their combined meaning. Documents with similar words produce similar average vectors, which is exactly the property similarity operations exploit.
 
 Quiver provides the `.averaged()` method for computing the element-wise average of a collection of vectors:
 
@@ -214,10 +218,8 @@ guard let documentVector = wordVectors.averaged() else {
 // Result: [0.2, 0.7, 0.5] - points toward "athletic footwear" region
 ```
 
-The `.averaged()` method validates that all vectors have the same dimensionality and returns `nil` for empty arrays or inconsistent dimensions. This pattern appears throughout [Chapter 23](23-semantic-search.md), where the `embedText()` function uses vector averaging to convert search queries and documents into comparable vectors for similarity computation.
+The `.averaged()` method validates that all vectors have the same dimensionality and returns `nil` for empty arrays or inconsistent dimensions. This pattern appears in [Chapter 23](23-similarity-operations.md), where vector averaging converts multi-word text into comparable vectors for similarity computation.
 
 ## Building algorithmic intuition
 
-Vectors provide the mathematical language for representing multi-dimensional data and measuring relationships between points in space. The operations covered—magnitude, normalization, dot product, and cosine similarity—form the foundation for semantic search, recommendation systems, and machine learning applications. Understanding vectors means recognizing how position, direction, and similarity translate into numerical operations.
-
-The Quiver framework bridges classical algorithms and modern AI. Vectors can be organized and transformed systematically using matrices ([Chapter 21](21-matrices.md)), enabling efficient batch operations. Together, vectors and matrices power semantic search ([Chapter 23](23-semantic-search.md)), where word embeddings and cosine similarity find related documents. This connection between geometric concepts and algorithmic applications reveals why linear algebra underpins modern data science and machine learning.
+Vectors provide the mathematical language for representing multi-dimensional data and measuring relationships between points in space. The operations covered—magnitude, normalization, dot product, and cosine similarity—form the foundation for similarity operations, recommendation systems, and machine learning applications. Understanding vectors means recognizing how position, direction, and similarity translate into numerical operations.

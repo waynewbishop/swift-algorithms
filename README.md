@@ -14,7 +14,7 @@ Going beyond pseudocode and theory, every concept is implemented in production-r
 **Advanced Topics**
 - Work with vectors and matrices for numerical computing and data science workflows
 - Apply transformations using linear algebra fundamentals
-- Build semantic search using vector mathematics and similarity operations
+- Learn similarity operations for measuring relationships between vectors
 - Explore graph algorithms including shortest paths and PageRank
 - Learn dynamic programming and tries for optimization problems
 

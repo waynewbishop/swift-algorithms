@@ -16,7 +16,7 @@ The Swift language has become the cornerstone of Apple development, powering sol
 - Explore graph algorithms including shortest paths and PageRank
 - Learn linear algebra fundamentals
 - Work with vectors and matrices for numerical computing and data science workflows
-- Build semantic search using vector mathematics and similarity operations
+- Learn similarity operations for measuring relationships between vectors
 
 ## Audience
 

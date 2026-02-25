@@ -115,6 +115,8 @@ func search(for value: T) -> Bool {
 
 Traversal is the process of visiting every node in a tree structure exactly once in a systematic order. Unlike linear data structures like arrays where iteration is straightforward, trees require specific strategies to navigate their hierarchical relationships. The practical value becomes clear when we need sorted data: instead of maintaining a separate sorted array and re-sorting after every insertion (`O(n log n)` each time), a balanced BST provides both `O(log n)` insertion and `O(n)` sorted traversal. This makes BSTs ideal for applications requiring frequent insertions.
 
+### In-order traversal
+
 In-order traversal visits nodes in sorted order: `left` subtree, `current` node then `right` subtree. This is the most common traversal pattern for BSTs:
 
 ```swift
