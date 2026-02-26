@@ -5,8 +5,6 @@ description: "Measuring relationships between vectors using distance and similar
 ---
 # Similarity Operations
 
-Recommendation engines suggest content that matches personal preferences. Search systems return relevant results even when queries use different words than the documents they match. Clustering algorithms group related data without human supervision. Behind all of these systems lies a single algorithmic question: how similar are two pieces of data?
-
 In [Chapter 20](20-vectors.md), we introduced the dot product and cosine similarity as operations on vectors. In [Chapter 22](22-matrix-transformations.md), we explored how matrices transform entire coordinate systems. This chapter builds on both foundations to examine the algorithms that measure relationships between vectors in high-dimensional space—the core computation powering recommendation engines, clustering, duplicate detection, and modern AI systems like large language models.
 
 ## The similarity problem
@@ -84,7 +82,34 @@ Cosine similarity divides the dot product by both vectors' magnitudes, canceling
 cosine(v, w) = (v · w) / (‖v‖ × ‖w‖)
 ```
 
-The result ranges from -1 (opposite directions) through 0 (perpendicular) to 1 (identical direction):
+The formula combines three operations we built in [Chapter 20](20-vectors.md). Consider two vectors `v = [3, 4]` and `w = [5, 12]`:
+
+Step 1 — Dot product:
+
+```
+v · w = (3 × 5) + (4 × 12)
+      = 15 + 48
+      = 63
+```
+
+Step 2 — Magnitudes:
+
+```
+‖v‖ = √(3² + 4²) = √(9 + 16) = √25 = 5
+‖w‖ = √(5² + 12²) = √(25 + 144) = √169 = 13
+```
+
+Step 3 — Normalize:
+
+```
+cosine(v, w) = 63 / (5 × 13)
+             = 63 / 65
+             = 0.969
+```
+
+The result 0.969 (close to 1.0) tells us these vectors point in nearly the same direction. Each step runs in `O(d)` time where `d` is the vector dimensionality—one pass computes the dot product, one pass computes each magnitude, and the final division is `O(1)`. For 50-dimensional GloVe embeddings, each comparison requires just 50 multiply-add operations.
+
+The result ranges from -1 (opposite directions) through 0 (perpendicular) to 1 (identical direction). Quiver's `.cosineOfAngle(with:)` method encapsulates this same calculation:
 
 ```swift
 import Quiver
@@ -106,7 +131,7 @@ Where the raw dot product gave us 50 and 5,000 for the same directional relation
 
 When we pre-normalize vectors to unit length using Quiver's `.normalized` property, the dot product and cosine similarity become identical. Both magnitudes equal 1, so the denominator disappears. Many production systems normalize vectors once at indexing time, then use the simpler dot product for all subsequent comparisons.
 
-## Batch similarity and top-K selection
+## Batch similarity and top results
 
 Comparing a single query against an entire collection is the fundamental operation behind search and recommendation systems. Quiver provides batch operations that compute cosine similarity across an entire collection:
 
@@ -133,6 +158,7 @@ import Quiver
 
 let scores = [0.42, 0.99, 0.15, 0.98, 0.67]
 
+// Return the indices of the top 3 highest scores
 let top3 = scores.topIndices(k: 3)
 // [(index: 1, score: 0.99),
 //  (index: 3, score: 0.98),
@@ -154,6 +180,7 @@ import Quiver
 let scores = [0.92, 0.45, 0.87, 0.33]
 let items = ["running shoes", "desk lamp", "trail sneakers", "keyboard"]
 
+// Return the top 2 scores with their associated item labels
 let results = scores.topIndices(k: 2, labels: items)
 // [(label: "running shoes", score: 0.92),
 //  (label: "trail sneakers", score: 0.87)]
@@ -169,6 +196,7 @@ import Quiver
 let techDocs = [[0.8, 0.3, 0.9], [0.7, 0.4, 0.8], [0.9, 0.2, 0.9]]
 let sportsDocs = [[0.2, 0.9, 0.1], [0.3, 0.8, 0.2], [0.1, 0.7, 0.3]]
 
+// Compute average pairwise cosine similarity within each cluster
 techDocs.clusterCohesion()    // ~0.98 (tight cluster)
 sportsDocs.clusterCohesion()  // ~0.95 (tight cluster)
 ```
@@ -184,9 +212,60 @@ let documents = [
     [0.1, 0.2, 0.1]
 ]
 
+// Find all vector pairs with cosine similarity above the threshold
 let duplicates = documents.findDuplicates(threshold: 0.95)
 // Documents 0 and 1 flagged as near-duplicates
 ```
+
+## Performance analysis
+
+Similarity operations compose multiple sub-operations, each with distinct complexity characteristics. Understanding the cost of each component reveals where optimization effort has the greatest impact.
+
+### Pairwise similarity
+
+Computing cosine similarity between two vectors requires one pass through both vectors to accumulate the dot product and both squared magnitudes, followed by two square root operations and one division. The dominant cost is the element-wise loop:
+
+| Operation | Time | Space |
+|-----------|------|-------|
+| Dot product | `O(d)` | `O(1)` |
+| Magnitude (each vector) | `O(d)` | `O(1)` |
+| Cosine similarity | `O(d)` | `O(1)` |
+
+The single-pass implementation computes all three in one `O(d)` traversal. For 50-dimensional GloVe embeddings, each comparison requires 50 multiply-add operations—trivial for modern hardware.
+
+### Batch similarity
+
+Comparing one query against `n` vectors multiplies the pairwise cost by the collection size:
+
+| Operation | Time | Space |
+|-----------|------|-------|
+| Batch cosine similarity | `O(n × d)` | `O(n)` |
+| Sort all scores | `O(n log n)` | `O(n)` |
+| Full pipeline (similarity + sort) | `O(n × d + n log n)` | `O(n)` |
+
+For collections with high-dimensional vectors (d = 300), the similarity computation dominates. For lower dimensions (d = 50), sorting becomes the bottleneck at large collection sizes.
+
+### Selecting top results
+
+The sort-then-slice approach processes all `n` scores even when we need only `k` results. A heap-based approach maintains a min-heap of size `k`, processing each score with an `O(log k)` heap operation instead of an `O(n log n)` sort:
+
+| Approach | Time | Space |
+|----------|------|-------|
+| Sort all + slice | `O(n log n)` | `O(n)` |
+| Min-heap of size k | `O(n log k)` | `O(k)` |
+
+The heap approach also improves space complexity from `O(n)` to `O(k)`, since we only store the current top results rather than all sorted scores. For a collection of 1,000,000 vectors with k = 10, the heap reduces both time (from ~20M to ~3.3M operations) and memory (from storing 1M scores to storing 10).
+
+### Cluster cohesion
+
+Computing cluster cohesion requires comparing every pair of vectors within a group. For a cluster of `m` vectors, this involves `m × (m - 1) / 2` pairwise comparisons, each costing `O(d)`:
+
+| Operation | Time | Space |
+|-----------|------|-------|
+| Cluster cohesion | `O(m² × d)` | `O(1)` |
+| Duplicate detection (full collection) | `O(n² × d)` | `O(n²)` |
+
+The quadratic growth means cohesion is practical for small to medium clusters (hundreds of vectors) but expensive for large collections. Duplicate detection across an entire dataset faces the same quadratic cost, which is why production systems use approximate methods for collections exceeding tens of thousands of vectors.
 
 ## Word embeddings and vector arithmetic
 
@@ -202,6 +281,7 @@ let running  = [0.8, 0.7, 0.9, 0.2]
 let jogging  = [0.8, 0.7, 0.8, 0.2]
 let computer = [0.1, 0.3, 0.2, 0.9]
 
+// Measure directional similarity between word embeddings
 running.cosineOfAngle(with: jogging)   // ~0.99 (near-synonyms)
 running.cosineOfAngle(with: computer)  // ~0.45 (unrelated)
 ```
@@ -221,6 +301,7 @@ let queen  = [0.3, 0.9, 0.8, 0.7]   // Female royalty
 let result = (king - man) + woman
 // result = [0.3, 0.9, 0.8, 0.7]
 
+// Confirm the result vector aligns with the expected word embedding
 result.cosineOfAngle(with: queen)  // ~1.0
 result.cosineOfAngle(with: king)   // ~0.68
 ```
@@ -232,3 +313,5 @@ This is not a curiosity—it is the mathematical foundation of how modern AI sys
 ## Building algorithmic intuition
 
 Similarity operations transform the abstract mathematics of vectors and matrices into practical tools for measuring relationships between data. The progression from dot product through normalization to cosine similarity reflects a fundamental design pattern: raw computation, then refinement to isolate the signal we care about. Understanding this progression equips us to evaluate the algorithms behind recommendation systems, search engines, and AI models—not as black boxes, but as applications of the linear algebra foundations from [Chapter 20](20-vectors.md), [Chapter 21](21-matrices.md), and [Chapter 22](22-matrix-transformations.md).
+
+The techniques in this chapter connect directly to production systems. Batch similarity and top results selection power the retrieval stage of search engines, while cluster cohesion and duplicate detection support data quality pipelines. As embedding dimensions grow from 50 to thousands in modern large language models, the same cosine similarity computation scales linearly—making these foundational operations as relevant to cutting-edge AI as they are to the introductory examples we explored here.

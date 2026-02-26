@@ -9,7 +9,7 @@ description: "Mathematical foundations of vector operations and numerical comput
 
 ## What are vectors?
 
-A vector is a mathematical object that represents both magnitude and direction. Unlike a scalar value, which represents only size (like temperature or weight), a vector captures directional information alongside its size. This dual nature makes vectors ideally suited for representing anything that has both how much and which way properties.
+A vector is a mathematical object that represents both `magnitude` and `direction`. Unlike a scalar value, which represents only size (like temperature or weight), a vector captures directional information alongside its size. This dual nature makes vectors ideally suited for representing anything that has both how much and which way properties.
 
 Consider everyday examples. Wind isn't just "20 miles per hour" - it's "20 miles per hour **from** the northwest". The **combination** of attributes creates the vector: magnitude (20 mph) and direction (northwest). When a character moves in a video game, we need both how fast they're moving and in which direction. When analyzing customer preferences across multiple product features, each preference profile can be represented as a vector in multidimensional space.
 
@@ -33,15 +33,9 @@ For vector `[3, 4]`, imagine an arrow from the origin to point `(3, 4)`. This fo
 
 Both magnitude and Euclidean distance use the Pythagorean theorem, but measure different things. Magnitude provides an answer to "how far am I from home (origin)" while Euclidean distance solves "how far is the coffee shop from the library".
 
-Magnitude measures distance from the origin:
-- Vector `[3, 4]` has magnitude `√(3² + 4²) = 5`
-- Always starts at origin `[0, 0, ...]`
+Magnitude measures distance from the origin, so vector `[3, 4]` has magnitude `√(3² + 4²) = 5` and always starts at origin `[0, 0, ...]`. Euclidean distance measures the gap between any two points, so the distance from `[1, 2]` to `[4, 6]` equals `√[(4-1)² + (6-2)²] = √(9 + 16) = 5` and can start at any point.
 
-Euclidean distance measures distance between any two points:
-- Distance from `[1, 2]` to `[4, 6]` equals `√[(4-1)² + (6-2)²] = √(9 + 16) = 5`
-- Can start at any point
-
-Magnitude is a special case of Euclidean distance where the starting point is always the origin. The distance from `[0, 0]` to `[3, 4]` equals 5—the same as the magnitude of `[3, 4]`. This distinction matters when computing similarity metrics like cosine similarity, where we need to understand that magnitude normalizes vectors by their distance from the origin.
+Magnitude is a special case of Euclidean distance where the starting point is always the origin. The distance from `[0, 0]` to `[3, 4]` equals 5—the same as the magnitude of `[3, 4]`. This distinction matters when computing similarity metrics like cosine similarity in [Chapter 23](23-similarity-operations.md), where we need to understand that magnitude normalizes vectors by their distance from the origin.
 
 ### Direction and normalization
 
@@ -107,7 +101,7 @@ print(position.magnitude)  // 5.0
 
 // 3D velocity vector
 let velocity = [1.0, 2.0, 3.0]
-print(velocity.magnitude)  // `√14 ≈ 3.74`
+print(velocity.magnitude)  // √14 ≈ 3.74
 
 // Feature vector (any dimension)
 let features = [0.5, 0.3, 0.8, 0.2]
@@ -132,7 +126,7 @@ let speed = 5.0
 let velocity = direction * speed  // [3.0, 4.0] - exactly 5 units/sec
 ```
 
-Normalization separates direction from magnitude, enabling precise control over movement speeds, force magnitudes, and other directional quantities. Always handle zero vectors properly:
+Normalization separates direction from magnitude, enabling precise control over movement speeds, force magnitudes, and other directional quantities. We should always handle zero vectors properly:
 
 ```swift
 // Handle zero vectors to avoid normalization errors

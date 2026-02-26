@@ -23,7 +23,7 @@ let jHat = [0.0, 1.0]  // Points up (y-axis)
         └──→ i-hat [1, 0]
 ```
 
-Any vector can be expressed as a combination of these basis vectors. This can be presented mathematically using a technique known as **matrix multiplication**. For example, the vector `[3, 4]` is oriented based on the position of `i-hat` and `j-hat`. Although the math shows the resulting  vector unchanged, we still should still acknowlege the matrix multiplication process. 
+Any vector can be expressed as a combination of these basis vectors. This can be presented mathematically using a technique known as **matrix multiplication**. For example, the vector `[3, 4]` is oriented based on the position of `i-hat` and `j-hat`. Although the math shows the resulting vector unchanged, we can still see the application of the matrix to the vector.
 
 ```
 [3, 4] = 3 × [1, 0] + 4 × [0, 1]
@@ -41,11 +41,11 @@ let identity = [
     [0.0, 1.0]   // Column 2: j-hat
 ]
 
-//creates a diagonal matrix - scales vector space
-let scale = [Double].diag([3.0, 2.0])
+// Creates a diagonal matrix - scales vector space
+let scaleUp = [Double].diag([2.0, 3.0])
 
-//original basis vectors now scaled
-let transform = identity.multiplyMatrix(scale)    
+// Original basis vectors now scaled
+let transform = identity.multiplyMatrix(scaleUp)  //identity scaled by [2.0, 3.0]
 ```
 
 ## The identity matrix
@@ -72,63 +72,11 @@ How do matrices transform vectors? As previously discussed, **matrix multiplicat
 
 Each output component is a **weighted combination** of the input components. The matrix rows contain the weights. This mixing of components is what enables transformations—scaling, rotation, and other geometric operations all work by recombining the input values.
 
-
-```
-///TODO
-///The first example should be scaling up showing how matrix transforms the vector basis (matrixMultiply) and then 
-//that transformed vector basis is applied to the resulting vector (transformedBy)
-
-Then go into detail explaining that matrixMultiply with the indentity is analagious to scalar multiplication using a 1. 
-```
-
-
-Consider rotating `[3, 4]` by 90° counterclockwise. The rotation matrix is:
-
-```
-[0  -1]
-[1   0]
-```
-
-Applying the multiplication:
-
-```
-[0  -1]   [3]   [0×3 + (-1)×4]   [-4]
-[1   0] × [4] = [1×3 +   0×4 ] = [ 3]
-```
-
-Quiver's `.transform()` method performs this matrix-vector multiplication:
-
-```swift
-import Quiver
-
-let rotation90 = [[0.0, -1.0], [1.0, 0.0]]
-let point = [3.0, 4.0]
-let result = rotation90.transform(point)  // [-4.0, 3.0]
-```
-
-### Multiplying matrices
-
-Matrix multiplication extends to transforming multiple vectors simultaneously. When multiplying matrix A (`m×n`) by matrix B (`n×p`), each element results from the dot product of a row from A with a column from B:
-
-```swift
-import Quiver
-
-let m1 = [[1.0, 2.0], [3.0, 4.0]]
-let m2 = [[5.0, 6.0], [7.0, 8.0]]
-
-let result = m1.multiplyMatrix(m2)
-// Result: [[19.0, 22.0], [43.0, 50.0]]
-```
-
-Calculation for element `[0][0]`: `1×5 + 2×7 = 19`
-
-Multiplying rotation by scaling creates a single matrix that rotates then scales—one multiplication instead of two sequential transformations. In addition, order matters. For example, `A × B ≠ B × A`. Rotating then scaling produces different results than scaling then rotating.
-
 ## Scaling transformations
 
 Scaling transformations stretch or compress space along the coordinate axes. The basis vectors stay pointing in their original directions—they just get longer or shorter. This creates the characteristic diagonal pattern of scaling matrices.
 
-Consider a matrix that scales x by 2× and y by 3×:
+Consider the previous matrix that scales x by 2× and y by 3×:
 
 ```
 [2  0]
@@ -159,13 +107,81 @@ Before:          After:
 The coordinate system's axes keep pointing in the same directions—right and up—but the measuring sticks got longer. Applying this transformation to a point scales each component by its corresponding diagonal value:
 
 ```swift
-let point = [4.0, 5.0]
-let scaled = scaleUp.transform(point)  // [8.0, 15.0]
+import Quiver
+
+let vector = [4.0, 5.0]
+let scaled = scaleUp.transform(vector)  // [8.0, 15.0]
 
 // Verify the transform:
 // 4 × [2, 0] + 5 × [0, 3] = [8, 0] + [0, 15] = [8, 15] ✓
 ```
 
+## Rotation transformations
+
+Consider rotating `[3, 4]` by 90° counterclockwise. The rotation matrix is:
+
+```
+[0  -1]
+[1   0]
+```
+
+Applying the multiplication:
+
+```
+[0  -1]   [3]   [0×3 + (-1)×4]   [-4]
+[1   0] × [4] = [1×3 +   0×4 ] = [ 3]
+```
+
+Quiver's `.transform()` method performs this matrix-vector multiplication:
+
+```swift
+import Quiver
+
+let rotation90 = [[0.0, -1.0], [1.0, 0.0]]
+let vector = [3.0, 4.0]
+let result = rotation90.transform(vector)  // [-4.0, 3.0]
+```
+
+Note the `vector` now points in the **second quadrant** (x is negative, y positive) from the origin.
+
+## Multiplying matrices
+
+Matrix multiplication extends to transforming multiple vectors simultaneously. When multiplying matrix A (`m×n`) by matrix B (`n×p`), each element results from the dot product of a row from A with a column from B.
+
+Multiplying rotation by scaling creates a single matrix that performs both transformations—one multiplication instead of two sequential operations. Using the rotation and scaling matrices from earlier in this chapter:
+
+```swift
+import Quiver
+
+// 90° counterclockwise rotation
+let rotation = [[0.0, -1.0], [1.0, 0.0]]
+
+// Scale x by 2, y by 3
+let scaling = [[2.0, 0.0], [0.0, 3.0]]
+
+// Combine: scale first, then rotate
+let combined = rotation.multiplyMatrix(scaling)
+// Result: [[0.0, -3.0], [2.0, 0.0]]
+```
+
+Calculation for element `[0][1]`: `0×0 + (-1)×3 = -3`
+
+We can verify by applying the combined matrix to a vector and comparing with the sequential approach:
+
+```swift
+import Quiver
+
+// Apply combined transformation
+let vector = [1.0, 1.0]
+let result = combined.transform(vector)  // [-3.0, 2.0]
+
+// Equivalent to: scale [1, 1] → [2, 3], then rotate [2, 3] → [-3, 2]
+```
+
+Order matters—`A × B ≠ B × A`. Scaling then rotating produces different results than rotating then scaling. Since the identity is also a matrix, `multiplyMatrix` applies to it as well. However, multiplying any matrix by the identity returns the original matrix unchanged—analogous to multiplying a number by 1.
+
 ## Building algorithmic intuition
 
-Understanding transformations means recognizing how coordinate systems change systematically. The identity matrix represents our reference frame. Scaling matrices stretch or compress along axes. Rotation matrices spin the coordinate system while preserving distances. More complex transformations combine these basic operations, but the fundamental insight remains: read the columns to see where the basis vectors go.
+Understanding transformations means recognizing how coordinate systems change systematically. The identity matrix represents our reference frame. Scaling matrices stretch or compress along axes. Rotation matrices spin the coordinate system while preserving distances. More complex transformations combine these basic operations through matrix multiplication, but the fundamental insight remains: read the columns to see where the basis vectors go.
+
+These geometric operations, combined with the matrix fundamentals from [Chapter 21](21-matrices.md), provide the mathematical foundation for advanced applications across graphics, physics, and machine learning. In [Chapter 23](23-similarity-operations.md), we apply these vector and matrix concepts to measure similarity between high-dimensional data—the core computation behind recommendation engines, clustering, and modern AI systems.
