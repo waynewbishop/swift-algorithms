@@ -7,7 +7,7 @@ description: "Maintaining balanced binary search trees through height tracking a
 
 In [Chapter 11](11-binary-search-trees.md), we built binary search trees that organize data for `O(log n)` searching. That performance, however, depends on the shape of the tree. A well-distributed insertion sequence produces a balanced structure where each comparison eliminates half the remaining nodes. But not every sequence is well-distributed. In this chapter we examine what happens when insertion order works against us, and introduce `height` tracking and rotations to restore balance automatically.
 
-## When trees go wrong
+## Unbalanced trees
 
 To start, let's revisit the original example from the previous chapter. Array values from `numberList` were used to build a tree where all elements had either one or two children. This is a balanced binary search tree:
 
