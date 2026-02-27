@@ -308,10 +308,6 @@ result.cosineOfAngle(with: king)   // ~0.68
 
 The subtraction `king - man` isolates the "royalty" component by removing the "male" direction. Adding `woman` reintroduces a gender direction, landing at "female royalty"—queen. This works because embeddings encode semantic properties as geometric directions. The "male-to-female" direction (`woman - man`) is consistent across the vocabulary, so adding it to any male concept shifts toward the female equivalent.
 
-This is not a curiosity—it is the mathematical foundation of how modern AI systems reason about language. Large language models use higher-dimensional embeddings with the same underlying principle: meaning is geometry, and similarity is the angle between vectors.
-
 ## Building algorithmic intuition
 
 Similarity operations transform the abstract mathematics of vectors and matrices into practical tools for measuring relationships between data. The progression from dot product through normalization to cosine similarity reflects a fundamental design pattern: raw computation, then refinement to isolate the signal we care about. Understanding this progression equips us to evaluate the algorithms behind recommendation systems, search engines, and AI models—not as black boxes, but as applications of the linear algebra foundations from [Chapter 20](20-vectors.md), [Chapter 21](21-matrices.md), and [Chapter 22](22-matrix-transformations.md).
-
-The techniques in this chapter connect directly to production systems. Batch similarity and top results selection power the retrieval stage of search engines, while cluster cohesion and duplicate detection support data quality pipelines. As embedding dimensions grow from 50 to thousands in modern large language models, the same cosine similarity computation scales linearly—making these foundational operations as relevant to cutting-edge AI as they are to the introductory examples we explored here.

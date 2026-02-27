@@ -5,234 +5,192 @@ description: "Maintaining balanced binary search trees through height tracking a
 ---
 # Tree Balancing
 
-In [Chapter 11](11-binary-search-trees.md), we explored binary search trees and how they enable `O(log n)` search performance through efficient data organization. However, BST performance depends entirely on tree structure. When trees become unbalanced, search performance degrades to `O(n)`, no better than a linear scan. This chapter introduces tree balancing techniques that maintain `O(log n)` performance regardless of insertion order by tracking subtree heights and performing rotations when imbalances occur.
+In [Chapter 11](11-binary-search-trees.md), we built binary search trees that organize data for `O(log n)` searching. That performance, however, depends on the shape of the tree. A well-distributed insertion sequence produces a balanced structure where each comparison eliminates half the remaining nodes. But not every sequence is well-distributed. In this chapter we examine what happens when insertion order works against us, and introduce `height` tracking and rotations to restore balance automatically.
 
-## The degenerate case
+## When trees go wrong
 
-Consider inserting sorted data into a BST. Building a tree from `[1, 2, 3, 4, 5]` creates a degenerate case—every node has only a right child, forming a linked list. Searching for 5 requires examining all 5 nodes `(O(n))`, not the 3 comparisons `(O(log 5) ≈ 2.3)` a balanced tree would need.
+To start, let's revisit the original example from the previous chapter. Array values from `numberList` were used to build a tree where all elements had either one or two children. This is a balanced binary search tree:
 
-This scenario isn't rare. Any monotonically increasing sequence (timestamps, auto-increment IDs, sorted imports) triggers worst-case behavior. Without balancing, BSTs become unreliable in real systems.
+![A balanced BST with 7 elements — O(log n)](balanced-bst.png)
 
-## The BSModel architecture
+The tree achieved balance not only through the BST append algorithm, but also through the way values were inserted. In practice, there are many ways to populate a tree. Without considering insertion order, this can produce unexpected results:
 
-The production BST implementation uses a two-class design that separates node storage from tree management:
+![An unbalanced left-heavy BST with 3 elements — O(n)](left-heavy-bst.png)
 
-**BSNode** - Individual tree nodes with height tracking:
-```swift
-public class BSNode<T> {
-    var tvalue: T?
-    var left: BSNode?
-    var right: BSNode?
-    var height: Int
+![An unbalanced right-heavy BST with 3 elements — O(n)](right-heavy-bst.png)
 
-    public init() {
-        self.height = 0
-    }
-}
-```
+![A 6-node BST with left and right imbalances — O(n)](mixed-imbalance-bst.png)
 
-**BSModel** - Self-balancing tree container:
-```swift
-public class BSModel<T: Comparable> {
-    var root = BSNode<T>()
-    private var stack = Stack<BSNode<T>>()
+Consider building a tree from sorted data — timestamps arriving in order, auto-incrementing database IDs, or alphabetized names. Inserting `[1, 2, 3, 4, 5]` into a BST creates a worst case where every node has only a `right` child, forming a linked list. Searching for 5 requires examining all 5 nodes — `O(n)` — not the 3 comparisons `O(log 5) ≈ 2.3` a balanced tree would need. This scenario is not rare. Without balancing, BSTs become unreliable in real systems.
 
-    public init() {}
+## Tracking height
 
-    public func append(_ item: T) {
-        // Insert and automatically rebalance
-    }
-
-    public func contains(_ item: T) -> Bool {
-        // Search for element
-    }
-
-    public func isTreeBalanced(for element: BSNode<T>) -> Bool {
-        // Check if subtree is balanced
-    }
-
-    private func rebalance() {
-        // Recalculate heights and perform rotations
-    }
-
-    private func rotateLeft(for element: BSNode<T>) { }
-    private func rotateRight(for element: BSNode<T>) { }
-}
-```
-
-This separation of concerns provides clear responsibilities: `BSNode` stores data and tracks height, while `BSModel` manages insertion, balancing, and rotation operations.
-
-## Height tracking
-
-To detect imbalances, we add a `height` property to each node. Height represents the node's distance from leaf nodes. The height calculation traverses from leaf elements to the root, with non-existent leaves set to -1.
-
-We calculate a node's height by comparing the height of each child, finding the largest value, then increasing that value by +1:
+To compensate for these imbalances, we need to expand the scope of the algorithm. In addition to `left` and `right` logic, we add a new property called `height`. Coupled with specific rules, we can use `height` to detect tree imbalances. To see how this works, let's create a new BST from a sample array:
 
 ```swift
-// Height calculation methods in BSModel
-extension BSModel {
-    private func getHeight(of node: BSNode<T>?) -> Int {
-        // Check empty leaves
-        guard let bsNode = node else {
-            return -1
-        }
-        return bsNode.height
-    }
-
-    private func setHeight(for node: BSNode<T>) {
-        var nodeHeight: Int = 0
-
-        // Compare to calculate height
-        nodeHeight = max(getHeight(of: node.left), getHeight(of: node.right)) + 1
-        node.height = nodeHeight
-    }
-}
-```
-
-Let's demonstrate with a simple example:
-
-```swift
-// Example array for demonstrating tree balancing
+// A simple array of unsorted integers
 let balanceList: [Int] = [29, 26, 23]
 ```
 
-When we add the root element (29), both left and right children are `nil`, so their heights are -1. The root's height becomes `max(-1, -1) + 1 = 0`.
+We'll start by adding the `root` element (29). As the first item, `left` and `right` children don't yet exist, so they are initialized to `nil`. For the `height` calculation, non-existent children are assigned a `height` of -1. We calculate a node's `height` by comparing the `height` of each child, finding the larger value, then increasing it by 1. For the `root` element, this equates to `max(-1, -1) + 1 = 0`.
 
-After adding 26 as the left child, we recalculate: the left child (26) has height 0, right child is `nil` (-1), so root becomes `max(0, -1) + 1 = 1`.
-
-## Measuring balance
-
-A tree is balanced if the height difference between left and right subtrees is less than 2. The `isTreeBalanced` method checks this:
+In Swift, these rules translate to two helper methods on `BSModel`:
 
 ```swift
-// Check if node maintains balance property
-public func isTreeBalanced(for element: BSNode<T>) -> Bool {
-    // Use absolute value to measure imbalance
-    if (abs(getHeight(of: element.left) - getHeight(of: element.right)) <= 1) {
-        return true
+import Structures
+
+// Return the height of a node, or -1 for nil
+private func getHeight(of node: BSNode<T>?) -> Int {
+    guard let bsNode = node else {
+        return -1
     }
-    else {
-        return false
-    }
+    return bsNode.height
+}
+
+// Recalculate and store a node's height from its children
+private func setHeight(for node: BSNode<T>) {
+    node.height = max(getHeight(of: node.left), getHeight(of: node.right)) + 1
 }
 ```
 
-With nodes 29 and 26 added:
+## Measuring balance
+
+With the `root` element established, we proceed to add the next value. Standard BST logic positions `26` as the `left` child. As a new node, its `height` is also 0. Since the tree is a hierarchy, we traverse upward to recalculate the parent's `height`. The `root` now has a `left` child with `height` 0 and no `right` child (-1), so its `height` becomes `max(0, -1) + 1 = 1`:
+
+![Step two — 26 is added as the left child of 29](balance-step-two.png)
+
+With multiple elements present, we run an additional check to see if the tree is balanced. A tree is considered balanced if the `height` difference between its `left` and `right` subtrees is less than 2. Even though no right-side elements exist yet, the model is still valid:
+
 ```swift
-let rootVal = abs((0) - (-1)) // equals 1 (balanced)
-let leafVal = abs((-1) - (-1)) // equals 0 (balanced)
+// Balance check for each node after inserting 26
+let leafVal = abs((-1) - (-1))  // equals 0 — balanced
+let rootVal = abs((0) - (-1))   // equals 1 — balanced
+```
+
+In Swift, this check is encapsulated in the `isTreeBalanced` method:
+
+```swift
+import Structures
+
+// Check whether a node satisfies the balance property
+public func isTreeBalanced(for element: BSNode<T>) -> Bool {
+    return abs(getHeight(of: element.left) - getHeight(of: element.right)) <= 1
+}
 ```
 
 ## Detecting imbalance
 
-When we insert the final value (23), the math reveals node 29 violates the balance property:
+With 29 and 26 added, we proceed to insert the final value (23). Like before, BST logic places it on the `left` side. However, upon insertion the math reveals that node 29 violates the balance property — its subtree is no longer balanced:
+
+![Step three — 23 is added, creating a left-heavy imbalance](balance-step-three.png)
 
 ```swift
-let rootVal = abs((1) - (-1)) // equals 2 (unbalanced!)
+// Balance check for the root after inserting 23
+let rootVal = abs((1) - (-1))  // equals 2 — unbalanced
 ```
 
-The tree has become left-heavy—more nodes on the left than the right. To maintain `O(log n)` performance, we need to rebalance through rotation.
+The tree has become `left`-heavy. To restore `O(log n)` performance, we need to restructure the tree through a process called rotation.
 
 ## Right rotation
 
-Since the tree has too many nodes on the left, we balance it by performing a right rotation:
+Since the tree has too many nodes on the `left`, we balance it by performing a `right` rotation. The idea is to promote the `left` child to `root` and demote the current `root` to the `right`. Rather than rewiring parent pointers, the implementation copies values between nodes — the `root` node object stays in place, but its contents change:
 
 ```swift
-// Right rotation to fix left-heavy imbalance - O(1) time
+import Structures
+
+// Right rotation to fix left-heavy imbalance — O(1) time
 private func rotateRight(for element: BSNode<T>) {
-    // New element
+
+    // Preserve the current root's value in a new right child
     let rightChild = BSNode<T>()
     rightChild.tvalue = element.tvalue
 
     if let leftChild = element.left {
-        // Reset the root node
+        // Promote the left child's value to root
         element.tvalue = leftChild.tvalue
         element.height = self.getHeight(of: leftChild)
 
-        // Adjust left
+        // The left child's left subtree becomes the new left
         element.left = leftChild.left
     }
 
-    // Assign new right node
+    // The original root value is now the right child
     element.right = rightChild
-
-    print("tree rotated right..")
 }
 ```
 
-After rotation, node 29 (originally the root) moves to the right child position. Node 26 becomes the new root. The tree is now balanced, and in-order traversal still produces sorted output: `23, 26, 29`.
+After rotation, 29 (originally the `root`) moves to the `right` child position. Node 26 becomes the new `root`. The tree is balanced, and an in-order traversal still produces sorted output — `23, 26, 29`:
+
+![Step four — right rotation restores balance](balance-step-four.png)
+
+Even though we undergo a series of steps, the process occurs in `O(1)` time. Its performance is unaffected by the number of nodes, descendants, or tree `height`.
 
 ## Left rotation
 
-Similarly, right-heavy trees require left rotation:
+`Right`-heavy trees require the mirror operation. A `left` rotation promotes the `right` child to `root` and demotes the current `root` to the `left`:
 
 ```swift
-// Left rotation to fix right-heavy imbalance - O(1) time
+import Structures
+
+// Left rotation to fix right-heavy imbalance — O(1) time
 private func rotateLeft(for element: BSNode<T>) {
-    // New element
+
+    // Preserve the current root's value in a new left child
     let leftChild = BSNode<T>()
     leftChild.tvalue = element.tvalue
 
     if let rightChild = element.right {
-        // Reset the root node
+        // Promote the right child's value to root
         element.tvalue = rightChild.tvalue
         element.height = self.getHeight(of: rightChild)
 
-        // Adjust right
+        // The right child's right subtree becomes the new right
         element.right = rightChild.right
     }
 
-    // Assign new left node
+    // The original root value is now the left child
     element.left = leftChild
-
-    print("tree rotated left..")
 }
 ```
 
-Even though we undergo a series of steps, the process occurs in `O(1)` time—its performance is unaffected by the number of nodes or tree height.
+If we had inserted `[23, 26, 29]` instead — a `right`-heavy sequence — a `left` rotation would produce the same balanced result. The two rotations are symmetric operations that handle opposite imbalances.
 
-## Stack-based memoization
+## Navigating back up the tree
 
-The BSModel uses a stack-based approach for automatic rebalancing. This technique stores node references during insertion traversal, similar to how dynamic programming ([Chapter 16](16-dynamic-programming.md)) stores computed results to avoid redundant calculations.
+To successfully apply the balancing algorithm, we need a way to traverse upward through the node hierarchy. When a child element is added, all of its ancestors must have their `height` values recalculated. If the BST used a recursive design, we could rely on the in-memory call stack to automatically return to parent nodes. To achieve the same result in the iterative `BSModel` design, we store node references using a [Stack](06-recursion.md) data structure.
 
-As we traverse down the tree during insertion, we push each visited node onto a stack. This memoization allows us to efficiently walk back up the tree after insertion, recalculating heights and performing rotations only where needed. Without the stack, we'd need to traverse from the root to find affected nodes after each insertion—an expensive `O(n)` operation. The stack reduces rebalancing to `O(log n)` by giving us direct access to the insertion path.
-
-## Automatic rebalancing
-
-After insertion, we pop nodes from the stack and check balance, performing rotations as needed:
+As we traverse down the tree during insertion, we push each visited node onto the stack. After the new element is placed, we pop nodes one by one — walking back up the insertion path — recalculating `height` values and performing rotations where needed. Without the stack, we would need to traverse from the `root` to find affected nodes after each insertion, an expensive `O(n)` operation. The stack reduces rebalancing to `O(log n)` by giving us direct access to every ancestor along the insertion path:
 
 ```swift
-// Memoization process for tracking nodes during insertion
+import Structures
+
+// Store node references during downward traversal
 private func push(element: inout BSNode<T>) {
     stack.push(element)
 }
 
-// Rebalance tree after insertion
+// Walk back up the insertion path, rebalancing as needed
 private func rebalance() {
     while stack.count > 0 {
-        // Obtain reference
         let current = stack.peek()
 
         guard let bsNode: BSNode<T> = current else {
             return
         }
 
-        // Recalculate height
+        // Recalculate height for this node
         setHeight(for: bsNode)
 
-        if self.isTreeBalanced(for: bsNode) == true {
-            print("tree balanced..")
-        }
-        else {
-            // Determine side imbalance
-            let right = getHeight(of: bsNode.left) - getHeight(of: bsNode.right)
-            let left = getHeight(of: bsNode.right) - getHeight(of: bsNode.left)
+        // Check balance and rotate if necessary
+        if !self.isTreeBalanced(for: bsNode) {
+        
+            let rightHeavy = getHeight(of: bsNode.right) - getHeight(of: bsNode.left)
+            let leftHeavy = getHeight(of: bsNode.left) - getHeight(of: bsNode.right)
 
-            if right > 1 {
+            if leftHeavy > 1 {
                 self.rotateRight(for: bsNode)
             }
-
-            if left > 1 {
+            if rightHeavy > 1 {
                 self.rotateLeft(for: bsNode)
             }
         }
@@ -242,89 +200,28 @@ private func rebalance() {
 }
 ```
 
-## Complete insertion workflow
+## Preserving sort order
 
-The append method combines insertion with automatic balancing:
-
-```swift
-public func append(_ item: T) {
-    // Initial check
-    guard root.tvalue != nil else {
-        root.tvalue = item
-        return
-    }
-
-    var current: BSNode<T> = root
-
-    // Set child to be added
-    let childToUse = BSNode<T>()
-    childToUse.tvalue = item
-
-    while current.tvalue != nil {
-        // Push reference to stack for later rebalancing
-        self.push(element: &current)
-
-        if let tvalue = current.tvalue {
-            if tvalue == item {
-                return
-            }
-
-            // Check left side
-            if item < tvalue {
-                if let lnode = current.left {
-                    current = lnode
-                }
-                else {
-                    current.left = childToUse
-                    break
-                }
-            }
-
-            // Check right side
-            if item > tvalue {
-                if let rnode = current.right {
-                    current = rnode
-                }
-                else {
-                    current.right = childToUse
-                    break
-                }
-            }
-        }
-    }
-
-    // Recompute tree structure
-    self.rebalance()
-}
-```
-
-## Using BSModel
-
-Building a self-balancing tree is straightforward:
+It is important to note that rotations improve performance but do not change tree output. Even though a `right` rotation changes the connections between nodes, the overall BST sort order is preserved. We can verify this by traversing a balanced and unbalanced version of the same tree — both produce identical results. A simple depth-first search confirms the sorted sequence:
 
 ```swift
+import Structures
+
 let bsTree = BSModel<Int>()
 
-// Insert elements in any order - tree automatically balances
+// Insert elements — tree automatically balances
 for number in [29, 26, 23] {
     bsTree.append(number)
 }
 
-// Check if tree is balanced
-if bsTree.isTreeBalanced(for: bsTree.root) {
-    print("Tree is balanced")
-}
-
-// Traverse to verify sorted order
+// In-order traversal still produces sorted output
 bsTree.root.DFSTraverse()
 // Output: 23, 26, 29
 ```
 
-The BSModel handles all balancing automatically. Whether you insert sorted data, reverse-sorted data, or random data, the tree maintains `O(log n)` performance.
-
 ## Performance guarantees
 
-With automatic balancing, BSModel provides guaranteed performance:
+With automatic balancing, BSModel provides guaranteed performance regardless of insertion order:
 
 | Operation | Unbalanced BST | BSModel (Balanced) |
 |-----------|----------------|--------------------|
@@ -332,8 +229,8 @@ With automatic balancing, BSModel provides guaranteed performance:
 | Insert | `O(n)` worst case | `O(log n)` guaranteed |
 | Delete | `O(n)` worst case | `O(log n)` guaranteed |
 
-The overhead of height tracking and rotation is minimal—rotations are `O(1)` operations, and we only perform them when necessary.
+The overhead of `height` tracking and rotation is minimal — rotations are `O(1)` operations, and we only perform them when an imbalance is detected. The stack-based traversal adds `O(log n)` work per insertion, which is absorbed into the insertion cost itself.
 
 ## Building algorithmic intuition
 
-Tree balancing addresses a fundamental challenge in data structures: maintaining guaranteed performance regardless of input order. Self-balancing trees use rotation operations to prevent degradation from `O(log n)` to `O(n)`, demonstrating how local restructuring preserves global properties. The BSModel architecture shows proper separation of concerns—nodes store data and track state (height), while the container manages operations and ensures invariants (balance). Understanding balancing reveals trade-offs between simplicity and guarantees—basic BSTs ([Chapter 11](11-binary-search-trees.md)) offer simpler implementation but no worst-case guarantees, while balanced variants add complexity but ensure `O(log n)` performance. Recognizing when guaranteed performance justifies implementation complexity guides practical data structure choices.
+Tree balancing addresses a fundamental challenge in data structures: maintaining guaranteed performance regardless of input order. The core idea is simple — after every insertion, walk back up the path we just traversed, check each ancestor for imbalance, and rotate if needed. This local restructuring preserves a global property, a pattern that appears throughout algorithm design. The BSModel architecture demonstrates how an iterative design can achieve the same bottom-up processing that recursion provides naturally, using a stack to remember the traversal path. Understanding when guaranteed performance justifies this additional complexity is a practical skill that extends to choosing between data structures in [Chapter 13](13-graphs.md) and evaluating algorithm trade-offs in [Chapter 16](16-dynamic-programming.md).
