@@ -96,10 +96,10 @@ navigation:
         url: "14-tries"
       - title: "Hash Tables"
         url: "15-hash-tables"
-      - title: "Heaps"
-        url: "16-heaps"
       - title: "Shortest Paths"
-        url: "17-shortest-paths"
+        url: "16-shortest-paths"
+      - title: "Heaps"
+        url: "17-heaps"
 
   - section: "Advanced Topics"
     chapters:

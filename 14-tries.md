@@ -5,17 +5,15 @@ description: "Implement prefix trees for efficient string operations"
 ---
 # Tries
 
-Tries and **tree-based** data structures that organize information in a hierarchy. Often pronounced "try", the term comes from the English language verb to retrieve. While most [algorithms](https://en.wikipedia.org/wiki/Algorithm) are designed to manipulate generic data, tries are commonly used with Strings.
+Tries are data structures that organize information in a hierarchy. Often pronounced "try", the term comes from the English language verb to retrieve. While most algorithms are designed to manipulate generic data, tries are commonly used with `Strings`.
 
-Tries specialize the tree structures from [Chapters 11-12](11-binary-search-trees.md) for string operations. While binary search trees store values in nodes and have two children (left/right), tries store characters in nodes and can have many children (one per character in the alphabet). This makes tries exceptionally efficient for prefix-based operations like autocomplete—a task that would require `O(n)` time with other data structures but takes only `O(p)` time with tries, where p is the prefix length.
+While binary search trees store values in nodes and have two children (`left` and `right`), tries store characters in `nodes` and can have many children (one per character in the alphabet). This makes tries exceptionally efficient for prefix-based operations like autocomplete—a task that would require `O(n)` time with other data structures but takes only `O(p)` time with tries, where p is the prefix length.
 
-Like graphs from [Chapter 13](13-graphs.md), tries demonstrate how combining algorithmic techniques creates specialized solutions. Our implementation uses breadth-first search ([Chapter 13](13-graphs.md)) with Queue structures ([Chapter 10](10-stacks-and-queues.md)) to efficiently traverse the trie hierarchy and collect all words matching a prefix.
-
-In this chapter, we'll review trie structures and implement autocomplete functionality in Swift using the production Structures package.
+Similar to graphs from [Chapter 13](13-graphs.md), tries demonstrate how combining algorithmic techniques creates specialized solutions. Our implementation uses breadth-first search ([Chapter 13](13-graphs.md)) with `Queue` structures ([Chapter 10](10-stacks-and-queues.md)) to efficiently traverse the trie hierarchy and collect all words matching a prefix.
 
 ## How it works
 
-As discussed, tries organize data in a hierarchy. To see how they work, let's build a Dictionary that contains the following words:
+As discussed, tries organize data in a hierarchy. To see how they work, let's build a `Dictionary` that contains the following words:
 
 - Ball
 - Balls
@@ -31,16 +29,18 @@ Tries involve building hierarchies, storing phrases along the way until a word i
 
 ## The data structure
 
-Here's the trie data structure from the production Structures package. Unlike our earlier data structures, TrieNode uses array-based children storage. This approach prioritizes simplicity and memory efficiency over individual lookup speed:
+Here's our Trie data structure. Note our TrieNode uses array for storing related child records. This approach prioritizes simplicity and memory efficiency over individual lookup speed:
 
 ```swift
 // Trie node with array-based children storage
 public class TrieNode {
+
     var tvalue: String?          // The accumulated string value at this node
     var children: Array<TrieNode>  // Array of child nodes
     var isFinal: Bool             // True if this node represents a complete word
     var level: Int                // Depth in the tree (0 for root)
 
+    // Initializes an empty trie node at level 0
     public init() {
         self.children = Array<TrieNode>()
         self.isFinal = false
@@ -52,6 +52,7 @@ public class TrieNode {
 public class Trie {
     private var root = TrieNode()
 
+    // Creates a new empty trie
     public init() {}
 }
 ```
@@ -63,22 +64,22 @@ The array-based children approach trades `O(1)` dictionary lookup for `O(k)` arr
 Using the TrieNode data structure, we can add words to our trie using the `append(word:)` method. This implementation builds the tree character by character, creating nodes as needed:
 
 ```swift
-// Builds a tree hierarchy of dictionary content - O(m) where m is word length
+// Inserts a word into the trie character by character
 func append(word keyword: String) {
     // Trivial case
-    guard keyword.count > 0 else {
+    guard keyword.length > 0 else {
         return
     }
 
     var current: TrieNode = root
 
-    while keyword.count != current.level {
+    while keyword.length != current.level {
         var childToUse = TrieNode()
-        let searchKey = keyword.prefix(current.level + 1)
+        let searchKey = keyword.substring(to: current.level + 1)
 
         // Iterate through child nodes to find matching prefix
         for child in current.children {
-            if child.tvalue == String(searchKey) {
+            if child.tvalue == searchKey {
                 childToUse = child
                 break
             }
@@ -86,7 +87,7 @@ func append(word keyword: String) {
 
         // Create new node if prefix doesn't exist
         if childToUse.tvalue == nil {
-            childToUse.tvalue = String(searchKey)
+            childToUse.tvalue = searchKey
             childToUse.level = current.level + 1
             current.children.append(childToUse)
         }
@@ -95,7 +96,7 @@ func append(word keyword: String) {
     }
 
     // Final end of word check
-    if keyword.count == current.level {
+    if keyword.length == current.level {
         current.isFinal = true
         print("end of word reached!")
         return
@@ -117,44 +118,25 @@ Insertion is `O(m)` where m is the word length. The algorithm navigates through 
 
 The primary advantage of tries is efficient prefix-based searching. Our production implementation uses breadth-first search (BFS) from [Chapter 13](13-graphs.md) to traverse the trie hierarchy and collect matching words. This demonstrates how graph traversal algorithms apply to tree structures—the same BFS pattern that worked for graph exploration works equally well for tree operations.
 
-### The BFS pattern for tries
+### The breadth-first pattern
 
-All trie search operations follow a consistent BFS pattern with two phases:
+All trie search operations follow a consistent BFS pattern with two phases. In the first phase, we navigate to a starting node by finding the specific node where the search begins (such as a prefix node or the root), validating that the starting point exists, and returning early if the search is impossible.
 
-**Phase 1: Navigate to starting node**
-- Find the specific node where search begins (prefix node, root, etc.)
-- Validate the starting point exists
-- Return early if search is impossible
+In the second phase, we perform a level-order traversal. We initialize a Queue and enqueue the starting node, then process all nodes at level N before moving to level `N+1`. At each node we check a condition—collecting a word, matching a pattern, or performing some other operation—and enqueue the node's children for the next level. The Queue from [Chapter 10](10-stacks-and-queues.md) acts as a "to-visit" list, ensuring systematic exploration. This guarantees we find all matching words without missing any branches.
 
-**Phase 2: Level-order traversal**
-- Initialize Queue and enqueue starting node
-- Process all nodes at level N before moving to level N+1
-- Check condition at each node (collect word, match pattern, etc.)
-- Enqueue children for next level
+### Why breadth-first search
 
-The Queue from [Chapter 10](10-stacks-and-queues.md) acts as a "to-visit" list, ensuring systematic exploration. This guarantees we find all matching words without missing any branches.
+BFS is exploratory — it visits every reachable node without needing to know or program all possible search permutations in advance. Once we navigate to a prefix node, BFS fans out and discovers every descendant, which is exactly what autocomplete requires. We cannot predict how many words share a prefix or how deep they extend, but BFS handles this naturally by continuing until it runs out of nodes to explore. 
 
-### Why BFS over alternatives?
-
-The BFS approach offers several advantages for trie traversal:
-
-1. **Level-order results**: BFS naturally returns words in order of length. Users expect shorter suggestions first: "app" before "application". Depth-first search might return "application" before "app", which feels less intuitive for autocomplete.
-
-2. **Memory efficiency**: Queue-based iteration uses less stack space than recursive approaches. For tries with deep branches (long words), this matters.
-
-3. **Familiar pattern**: Reuses the Queue structure from [Chapter 10](10-stacks-and-queues.md) and BFS algorithm from [Chapter 13](13-graphs.md). No new concepts to learn.
-
-4. **Iterative control**: Easy to add limits on number of results, maximum word length, or timeout conditions. Just check before processing each node.
-
-### Application 1: Autocomplete with traverse
+### Autocomplete with traverse
 
 The `traverse(using:)` method demonstrates the BFS pattern for autocomplete suggestions:
 
 ```swift
-// Employs Breadth-First Search to find values based on a keyword prefix
+// Finds all complete words matching a keyword prefix using BFS
 func traverse(using keyword: String) -> Array<String>? {
     // Trivial case
-    guard keyword.count > 0 else {
+    guard keyword.length > 0 else {
         return nil
     }
 
@@ -162,13 +144,13 @@ func traverse(using keyword: String) -> Array<String>? {
     var wordList = Array<String>()
 
     // Phase 1: Navigate to the prefix node
-    while keyword.count != current.level {
-        let searchKey = keyword.prefix(current.level + 1)
+    while keyword.length != current.level {
+        let searchKey = keyword.substring(to: current.level + 1)
         var isFound: Bool = false
 
         // Iterate through any child nodes
         for child in current.children {
-            if child.tvalue == String(searchKey) {
+            if child.tvalue == searchKey {
                 current = child
                 isFound = true
                 break
@@ -192,11 +174,11 @@ func traverse(using keyword: String) -> Array<String>? {
             break
         }
 
-        // Add all child nodes to the queue
-        for child in leaf.children {
-            let leafValue = child.tvalue ?? "nil"
+        // Add unvisited trie nodes to the queue
+        for e in leaf.children {
+            let leafValue = e.tvalue ?? "nil"
             print("adding leaf: \(leafValue) to queue..")
-            trieQueue.enQueue(child)
+            trieQueue.enQueue(e)
         }
 
         // If this node represents a complete word, add it to results
@@ -226,17 +208,17 @@ if let suggestions = trie.traverse(using: "ba") {
 
 The method combines both phases: navigate to prefix (`O(p)` where p is prefix length), then BFS to collect all descendant words (`O(n)` where n is the number of matching words). Total complexity is `O(p + n)`.
 
-### Application 2: Pattern matching with filter
+### Pattern matching with filter
 
 The same BFS pattern applies to more complex queries. The [Structures package](https://github.com/waynewbishop/bishop-algorithms-swift-package) includes a `filter` method that finds words matching both start AND end characters:
 
 ```swift
-// Determines if the trie contains at least one word with specified start and end characters
+// Checks if the trie contains a word with specified start and end characters
 func filter(_ start: String, _ end: String) -> Bool {
     let current: TrieNode = root
     var isFirst: Bool = false
 
-    // Phase 1: Check if any word starts with the specified character
+    // Check if any word starts with the specified character
     for child in current.children {
         if let tvalue = child.tvalue {
             if tvalue == start {
@@ -250,23 +232,24 @@ func filter(_ start: String, _ end: String) -> Bool {
         return false
     }
 
-    // Phase 2: BFS to find word ending with specified character
+    // BFS to find word ending with specified character
     let trieQueue: Queue<TrieNode> = Queue<TrieNode>()
     trieQueue.enQueue(current)
 
     while !trieQueue.isEmpty() {
+        // Traverse the next queued node
         guard let leaf = trieQueue.deQueue() else {
             break
         }
 
         // Add unvisited trie nodes to the queue
-        for child in leaf.children {
-            let leafValue = child.tvalue ?? "nil"
+        for e in leaf.children {
+            let leafValue = e.tvalue ?? "nil"
             print("adding leaf: \(leafValue) to queue..")
-            trieQueue.enQueue(child)
+            trieQueue.enQueue(e)
         }
 
-        // Check for qualifying value (different condition than traverse)
+        // Check for qualifying value
         if leaf.isFinal == true {
             if let tvalue = leaf.tvalue {
                 if tvalue.last == Character(end) {
@@ -275,8 +258,12 @@ func filter(_ start: String, _ end: String) -> Bool {
             }
         }
 
-        let leafValue = leaf.tvalue ?? "nil"
-        print("traversed leaf: \(leafValue)..")
+        if let tvalue = leaf.tvalue {
+            print("traversed leaf: \(tvalue)..")
+        }
+        else {
+            print("traversed root..")
+        }
     }
 
     print("traversal complete..")
@@ -290,18 +277,14 @@ if trie.filter("b", "t") {
 }
 ```
 
-**Key insight**: Both methods use identical BFS structure—the while loop, Queue operations, and child iteration are the same. Only the processing logic differs:
-- `traverse`: Collects all `isFinal` nodes → returns `Array<String>?`
-- `filter`: Checks if `isFinal` node matches end character → returns `Bool`
-
-This demonstrates how BFS provides a flexible, reusable pattern for various trie operations. Once you understand the BFS template, you can apply it to any trie traversal problem by changing just the node processing logic.
+Both methods use identical BFS structure—the while loop, Queue operations, and child iteration are the same. Only the processing logic differs. The `traverse` method collects all `isFinal` nodes and returns `Array<String>?`, while `filter` checks if any `isFinal` node matches an end character and returns `Bool`. This demonstrates how BFS provides a flexible, reusable pattern for trie operations. Once we understand the BFS template, we can apply it to any trie traversal problem by changing just the node processing logic.
 
 ## Using the subscript shortcut
 
 The production Trie includes a convenient subscript operator that calls `traverse` internally:
 
 ```swift
-// Subscript shortcut for traverse method
+// Provides array-like syntax for prefix searches
 subscript(word: String) -> Array<String>? {
     get {
         return traverse(using: word)
@@ -319,86 +302,17 @@ if trie["cat"] != nil {
 }
 ```
 
-This subscript syntax provides a cleaner interface while maintaining the same functionality as the explicit `traverse(using:)` method.
-
-## Real-world applications
-
-Tries excel in several practical scenarios where prefix operations dominate:
-
-### 1. Search autocomplete systems
-
-```swift
-// Simplified search suggestion system using tries
-class SearchEngine {
-    private let trie = Trie()
-
-    func indexSearchTerms(_ terms: [String]) {
-        for term in terms {
-            trie.append(word: term)
-        }
-    }
-
-    func getSuggestions(for query: String) -> [String] {
-        return trie.traverse(using: query) ?? []
-    }
-}
-
-let searchEngine = SearchEngine()
-searchEngine.indexSearchTerms(["swift", "swiftui", "swift programming", "swift algorithms"])
-if let suggestions = searchEngine.getSuggestions(for: "swift") {
-    print("Suggestions: \(suggestions)")
-}
-```
-
-### 2. Dictionary and spell checking
-
-```swift
-// Spell checker using trie for word validation
-class SpellChecker {
-    private let dictionary = Trie()
-
-    init(words: [String]) {
-        for word in words {
-            dictionary.append(word: word.lowercased())
-        }
-    }
-
-    func isValidWord(_ word: String) -> Bool {
-        // Word is valid if traverse returns array containing exact match
-        guard let matches = dictionary.traverse(using: word.lowercased()) else {
-            return false
-        }
-        return matches.contains(word.lowercased())
-    }
-
-    func suggestCorrections(for word: String) -> [String] {
-        // Suggest words with similar prefixes
-        let prefix = String(word.dropLast())  // Remove last character
-        return dictionary.traverse(using: prefix) ?? []
-    }
-}
-```
-
-### 3. Network routing tables
-
-IP routing tables use tries (called "radix trees") to match network prefixes efficiently. When a router receives a packet, it needs to find the most specific matching route, which is naturally expressed as a prefix search.
-
 ## Performance analysis
 
 Tries offer excellent performance characteristics for string operations, with complexity independent of dictionary size (from [Chapter 8](08-performance-analysis.md) analysis):
 
 ### Time complexity
 
-- **Insert** (append): `O(m)` where m is the length of the word
-- **Search** (traverse prefix phase): `O(p)` where p is prefix length
-- **Autocomplete** (full traverse): `O(p + n)` where p is prefix length, n is number of matching results
-- **BFS traversal**: `O(k)` where k is the number of nodes in the subtree
+Inserting a word with `append` runs in `O(m)` where m is the word length, since we visit one node per character. Searching for a prefix with `traverse` has two phases: navigating to the prefix node takes `O(p)` where p is the prefix length, and the BFS traversal to collect results takes `O(k)` where k is the number of nodes in the subtree. The total autocomplete complexity is `O(p + k)`.
 
 ### Space complexity
 
-- **Overall**: `O(N × M)` on average, where N is number of words and M is average word length
-- **Worst case**: `O(ALPHABET_SIZE × N × M)` if no prefixes are shared
-- **Best case**: `O(M)` if all words share a single long prefix
+On average, a trie uses `O(N × M)` space where N is the number of words and M is the average word length. In the worst case where no prefixes are shared, space grows to `O(ALPHABET_SIZE × N × M)`. In the best case where all words share a single long prefix, space reduces to `O(M)`.
 
 ### Compared to other data structures
 
@@ -413,26 +327,6 @@ Where m = word length, p = prefix length, k = number of results, n = total words
 
 **Key insight**: Tries are the only structure with `O(p)` prefix search. Hash tables and BSTs must examine all n entries to find prefix matches, making tries dramatically faster for autocomplete operations.
 
-### Array vs Dictionary children trade-off
-
-Our production implementation uses arrays for children storage rather than dictionaries. This choice has specific performance implications:
-
-**Array-based approach** (production code):
-- Child lookup: `O(k)` where k is number of children per node
-- Memory per node: `O(k)` only for actual children
-- Cache-friendly: Array elements stored contiguously
-- Best when: Branching factor is small (typical in many tries)
-
-**Dictionary-based approach** (alternative):
-- Child lookup: `O(1)` average case
-- Memory per node: Hash table overhead even for few children
-- Less cache-friendly: Hash table uses scattered memory
-- Best when: Large branching factor or sparse children
-
-For typical autocomplete with lowercase letters, each node averages 2-3 children, making array iteration fast enough while saving memory.
-
 ## Building algorithmic intuition
 
 Tries provide two essential capabilities: prefix-based searching in `O(p)` time and shared storage of common prefixes. The hierarchical structure naturally represents string relationships—autocomplete suggestions, spell checking, and network routing all benefit from navigating character-by-character rather than comparing entire strings. The BFS pattern demonstrated here generalizes beyond tries: the same breadth-first search from [Chapter 13](13-graphs.md) works identically on trees and graphs, and the Queue structure from [Chapter 10](10-stacks-and-queues.md) provides level-order traversal whether exploring social networks or collecting word suggestions.
-
-Understanding when to choose tries versus alternatives completes the picture. Use tries when prefix operations dominate—autocomplete systems and spell checkers are ideal candidates. Avoid tries for simple word lookup where hash tables ([Chapter 15](15-hash-tables.md)) provide `O(1)` performance, or for very large alphabets like Unicode where the space complexity becomes impractical.

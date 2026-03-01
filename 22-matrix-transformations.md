@@ -180,6 +180,30 @@ let result = combined.transform(vector)  // [-3.0, 2.0]
 
 Order matters—`A × B ≠ B × A`. Scaling then rotating produces different results than rotating then scaling. Since the identity is also a matrix, `multiplyMatrix` applies to it as well. However, multiplying any matrix by the identity returns the original matrix unchanged—analogous to multiplying a number by 1.
 
+## Determinants and area
+
+Every square matrix has a single number associated with it called the determinant. This value answers a geometric question: when the matrix transforms space, how much does the area (or volume) change? The determinant tells us whether a transformation is reversible and how it scales the space it acts on.
+
+Consider the scaling matrix from earlier in this chapter. It stretches x by 2 and y by 3, so a unit square becomes a 2×3 rectangle with area 6. The determinant confirms this:
+
+```swift
+import Quiver
+
+// Scaling matrix: x by 2, y by 3
+let scaleUp = [[2.0, 0.0], [0.0, 3.0]]
+scaleUp.determinant  // 6.0 — area scales by 6×
+```
+
+Rotation matrices preserve distances and angles, so they preserve area as well. The determinant of any rotation matrix equals 1:
+
+```swift
+// 90° counterclockwise rotation
+let rotation90 = [[0.0, -1.0], [1.0, 0.0]]
+rotation90.determinant  // 1.0 — area preserved
+```
+
+A determinant of zero means the transformation collapses space into a lower dimension—flattening a 2D plane into a line or a point. These **singular** matrices cannot be inverted because the collapse loses information. There is no way to reconstruct the original space from a line. Quiver computes the determinant for square matrices of any size using the `.determinant` property.
+
 ## Building algorithmic intuition
 
 Understanding transformations means recognizing how coordinate systems change systematically. The identity matrix represents our reference frame. Scaling matrices stretch or compress along axes. Rotation matrices spin the coordinate system while preserving distances. More complex transformations combine these basic operations through matrix multiplication, but the fundamental insight remains: read the columns to see where the basis vectors go.

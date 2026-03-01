@@ -66,7 +66,7 @@ This is a `3×2` matrix. The numbers represent measured values. We could extract
 
 ### Transforming objects
 
-In many cases a matrix describes a transformation. This could be how to move, rotate, or scale objects in space. Each number specifies how much one dimension affects another during the transformation. The matrix `[[0, -1], [1, 0]]` doesn't represent data about objects—it represents an operation that rotates any vector by 90 degrees. This will explored in more detail in Chapter 23.
+In many cases a matrix describes a transformation. This could be how to move, rotate, or scale objects in space. Each number specifies how much one dimension affects another during the transformation. The matrix `[[0, -1], [1, 0]]` doesn't represent data about objects—it represents an operation that rotates any vector by 90 degrees. This will be explored in more detail in [Chapter 22](22-matrix-transformations.md).
 
 ## Matrix representation in Quiver
 
@@ -100,18 +100,18 @@ Quiver provides convenient functions for creating matrices with common initial v
 import Quiver
 
 // Create matrices filled with zeros
-let zeros = [Double].zeros2D(3, 4)     // 3×4 matrix of zeros
+let zeros = [Double].zeros(3, 4)     // 3×4 matrix of zeros
 // [[0.0, 0.0, 0.0, 0.0],
 //  [0.0, 0.0, 0.0, 0.0],
 //  [0.0, 0.0, 0.0, 0.0]]
 
 // Create matrices filled with ones
-let ones = [Double].ones2D(2, 3)       // 2×3 matrix of ones
+let ones = [Double].ones(2, 3)       // 2×3 matrix of ones
 // [[1.0, 1.0, 1.0],
 //  [1.0, 1.0, 1.0]]
 
 // Create matrices with custom initial values
-let fives = [Double].full2D(2, 2, value: 5.0)
+let fives = [Double].full(2, 2, value: 5.0)
 // [[5.0, 5.0],
 //  [5.0, 5.0]]
 
@@ -128,7 +128,7 @@ let diagonal = [Double].diag([3.0, 2.0, 1.0])
 //  [0.0, 0.0, 1.0]]
 ```
 
-These initialization functions are essential when setting up matrices for data processing or machine learning. The `zeros2D` and `ones2D` functions are ideal for allocating storage before filling matrices with computed values. Identity and diagonal matrices play special roles in linear transformations, which we'll explore in [Chapter 22](22-matrix-transformations.md).
+These initialization functions are essential when setting up matrices for data processing or machine learning. The `zeros` and `ones` functions are ideal for allocating storage before filling matrices with computed values. Identity and diagonal matrices play special roles in linear transformations, which we'll explore in [Chapter 22](22-matrix-transformations.md).
 
 ### Accessing columns
 
@@ -203,7 +203,7 @@ let offset = matrix + 10.0
 // Result: [[110.0, 210.0], [310.0, 410.0]]
 ```
 
-Quiver broadcasts scalars across matrices automatically, matching NumPy's behavior. This makes data transformations concise and readable. 
+Quiver broadcasts scalars across matrices automatically, making data transformations concise and readable. 
 
 ## Building algorithmic intuition
 

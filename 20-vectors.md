@@ -75,15 +75,15 @@ The dot product reveals relationships between vectors. When the dot product equa
 
 Applications span multiple domains. In physics, the dot product calculates work done by computing force · distance. In graphics, it determines if surfaces face light sources, controlling brightness and shadows. In machine learning, measuring similarity between feature vectors through cosine similarity enables recommendation systems to find related items. The dot product transforms geometric intuition into practical computation.
 
-> **Note:** The dot product formula `a · b = |a| × |b| × cos(θ)` reveals why normalized vectors measure similarity: when both have magnitude 1, the dot product *is* the cosine of the angle between them. This geometric insight powers the similarity operations in [Chapter 23](23-similarity-operations.md).
-
 ## Introducing Quiver
 
 With mathematical foundations established, we need practical tools for working with vectors in Swift. Quiver is a lightweight Swift package that provides vector mathematics, numerical computing, and statistical operations.
 
-### Why Quiver?
+### Why Quiver
 
-Quiver provides Swift-native vector mathematics and numerical computing by extending the standard `Array` type rather than creating custom containers. This design eliminates conversion overhead—arrays are vectors without boxing or unboxing. Operations integrate seamlessly with Swift's standard library, maintaining familiar syntax while adding mathematical capabilities. 
+Quiver provides Swift-native vector mathematics and numerical computing by extending the standard `Array` type rather than creating custom containers. This design eliminates conversion overhead — arrays are vectors without boxing or unboxing. Operations integrate seamlessly with Swift's standard library, maintaining familiar syntax while adding mathematical capabilities.
+
+As a pure Swift library with zero external dependencies, Quiver runs on every Apple platform — iOS, macOS, watchOS, tvOS, and visionOS — as well as server-side Swift with frameworks like Vapor, Linux environments, and containerized deployments.
 
 ## Working with vectors
 
@@ -105,7 +105,7 @@ print(velocity.magnitude)  // √14 ≈ 3.74
 
 // Feature vector (any dimension)
 let features = [0.5, 0.3, 0.8, 0.2]
-print(features.magnitude)  // 1.02
+print(features.magnitude)  // 1.01
 ```
 
 ### Normalization
@@ -181,7 +181,7 @@ let similarity = word1.cosineOfAngle(with: word2)  // ~0.98 (very similar)
 // Feature vectors for songs
 let song1 = [140.0, 0.9, 0.7, 0.8]  // [tempo, energy, danceability, loudness]
 let song2 = [120.0, 0.8, 0.9, 0.7]
-let songSimilarity = song1.cosineOfAngle(with: song2)  // 0.98
+let songSimilarity = song1.cosineOfAngle(with: song2)  // ~1.0
 ```
 
 This cosine similarity technique is fundamental to recommendation systems, search engines, and machine learning. It appears throughout [Chapter 23](23-similarity-operations.md), where similarity operations measure relationships between vectors in high-dimensional space.

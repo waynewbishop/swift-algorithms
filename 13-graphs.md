@@ -31,8 +31,6 @@ Regardless of graph type, it's common to represent the level of connectedness be
 With our understanding of graphs in place, let's build a graph using [generics](https://en.wikipedia.org/wiki/Generic_programming) from [Chapter 7](07-generics.md). This allows the graph to work with any data type. Here's the data structure for a vertex:
 
 ```swift
-import Structures
-
 // Generic vertex with neighbors array and traversal tracking
 public class Vertex<T>: Equatable {
 
@@ -63,8 +61,6 @@ The `Vertex` class stores a generic value in `tvalue`, maintains an array of `Ed
 The `neighbors` property is an array that represents connections a vertex may have with other vertices. As discussed, a vertex can be associated with one or more items. This list of neighboring items is sometimes called an adjacency list and can be used to solve a variety of problems. Here's a basic data structure that represents an edge:
 
 ```swift
-import Structures
-
 // Edge connecting vertex to neighbor with weighted cost
 public class Edge<T> {
 
@@ -85,8 +81,6 @@ Each edge contains a reference to a neighboring vertex through `neighbor` and a 
 With our vertex and edge objects built, we can use these structures to construct a graph:
 
 ```swift
-import Structures
-
 // Graph structure with canvas holding all vertices
 public class Graph<T> {
     var canvas: Array<Vertex<T>>
@@ -125,8 +119,6 @@ Graph traversal is the process of visiting every vertex in a graph exactly once.
 Breadth-First Search explores all vertices at the current depth before moving to vertices at the next depth level. It uses a **queue** data structure from [Chapter 10](10-stacks-and-queues.md). Recall that queues maintain first-in, first-out (FIFO) ordering, which ensures we process vertices level by level:
 
 ```swift
-import Structures
-
 // BFS traversal using queue for level-by-level exploration - O(V + E)
 extension Graph {
     public func traverse(_ startingv: Vertex<T>) {
@@ -164,8 +156,6 @@ extension Graph {
 A more flexible version allows us to execute custom logic on each vertex using a closure with an `inout` parameter:
 
 ```swift
-import Structures
-
 // BFS traversal with custom closure logic on each vertex - O(V + E)
 extension Graph {
     public func traverse(_ startingv: Vertex<T>, formula: (_ node: inout Vertex<T>) -> ()) {
@@ -206,8 +196,6 @@ extension Graph {
 Example usage showing custom traversal logic:
 
 ```swift
-import Structures
-
 // Build sample graph and traverse with custom logic
 let graph = Graph<String>()
 let vertexA = Vertex(with: "A")
@@ -239,8 +227,6 @@ Topological sorting orders vertices in a directed graph so dependencies come **b
 Recall from [Chapter 11](11-binary-search-trees.md) that post-order traversal processes children before parents. Topological sort uses this exact same pattern — process all `neighbors` (dependencies) before processing the current vertex. The algorithm also detects cycles, since topological ordering is only possible on directed acyclic graphs (DAGs). If a cycle exists — say Course A requires Course B, which requires Course C, which requires Course A — no valid ordering exists and the method returns `nil`:
 
 ```swift
-import Structures
-
 // Topological sort with cycle detection - O(V + E)
 extension Graph {
     public func topologicalSort() -> [Vertex<T>]? {
@@ -304,4 +290,4 @@ The `visiting` set tracks vertices currently in the recursion stack. If we encou
 
 Graphs model relationships between entities, making them fundamental to countless applications — social networks, maps, web pages, and recommendation systems all express relationships through graph structures. Traversal algorithms reveal different exploration strategies: depth-first search explores deeply before backtracking (useful for path finding and cycle detection), while breadth-first search explores by distance (ideal for shortest paths and level-order processing).
 
-Graph representations demonstrate trade-offs between space and operation efficiency. Adjacency lists optimize for sparse graphs, adjacency matrices for dense graphs. Understanding these trade-offs connects to advanced graph algorithms like shortest paths ([Chapter 17](17-shortest-paths.md)) and PageRank ([Chapter 19](19-pagerank-algorithm.md)). Mastering basic graph operations provides the foundation for complex network algorithms.
+Graph representations demonstrate trade-offs between space and operation efficiency. Adjacency lists optimize for sparse graphs, adjacency matrices for dense graphs. Understanding these trade-offs connects to advanced graph algorithms like shortest paths ([Chapter 16](16-shortest-paths.md)) and PageRank ([Chapter 19](19-pagerank-algorithm.md)). Mastering basic graph operations provides the foundation for complex network algorithms.

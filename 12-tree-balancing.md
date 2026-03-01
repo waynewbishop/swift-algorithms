@@ -37,8 +37,6 @@ We'll start by adding the `root` element (29). As the first item, `left` and `ri
 In Swift, these rules translate to two helper methods on `BSModel`:
 
 ```swift
-import Structures
-
 // Return the height of a node, or -1 for nil
 private func getHeight(of node: BSNode<T>?) -> Int {
     guard let bsNode = node else {
@@ -70,8 +68,6 @@ let rootVal = abs((0) - (-1))   // equals 1 — balanced
 In Swift, this check is encapsulated in the `isTreeBalanced` method:
 
 ```swift
-import Structures
-
 // Check whether a node satisfies the balance property
 public func isTreeBalanced(for element: BSNode<T>) -> Bool {
     return abs(getHeight(of: element.left) - getHeight(of: element.right)) <= 1
@@ -96,8 +92,6 @@ The tree has become `left`-heavy. To restore `O(log n)` performance, we need to 
 Since the tree has too many nodes on the `left`, we balance it by performing a `right` rotation. The idea is to promote the `left` child to `root` and demote the current `root` to the `right`. Rather than rewiring parent pointers, the implementation copies values between nodes — the `root` node object stays in place, but its contents change:
 
 ```swift
-import Structures
-
 // Right rotation to fix left-heavy imbalance — O(1) time
 private func rotateRight(for element: BSNode<T>) {
 
@@ -130,8 +124,6 @@ Even though we undergo a series of steps, the process occurs in `O(1)` time. Its
 `Right`-heavy trees require the mirror operation. A `left` rotation promotes the `right` child to `root` and demotes the current `root` to the `left`:
 
 ```swift
-import Structures
-
 // Left rotation to fix right-heavy imbalance — O(1) time
 private func rotateLeft(for element: BSNode<T>) {
 
@@ -162,8 +154,6 @@ To successfully apply the balancing algorithm, we need a way to traverse upward 
 As we traverse down the tree during insertion, we push each visited node onto the stack. After the new element is placed, we pop nodes one by one — walking back up the insertion path — recalculating `height` values and performing rotations where needed. Without the stack, we would need to traverse from the `root` to find affected nodes after each insertion, an expensive `O(n)` operation. The stack reduces rebalancing to `O(log n)` by giving us direct access to every ancestor along the insertion path:
 
 ```swift
-import Structures
-
 // Store node references during downward traversal
 private func push(element: inout BSNode<T>) {
     stack.push(element)
@@ -205,8 +195,6 @@ private func rebalance() {
 It is important to note that rotations improve performance but do not change tree output. Even though a `right` rotation changes the connections between nodes, the overall BST sort order is preserved. We can verify this by traversing a balanced and unbalanced version of the same tree — both produce identical results. A simple depth-first search confirms the sorted sequence:
 
 ```swift
-import Structures
-
 let bsTree = BSModel<Int>()
 
 // Insert elements — tree automatically balances
@@ -233,4 +221,4 @@ The overhead of `height` tracking and rotation is minimal — rotations are `O(1
 
 ## Building algorithmic intuition
 
-Tree balancing addresses a fundamental challenge in data structures: maintaining guaranteed performance regardless of input order. The core idea is simple — after every insertion, walk back up the path we just traversed, check each ancestor for imbalance, and rotate if needed. This local restructuring preserves a global property, a pattern that appears throughout algorithm design. The BSModel architecture demonstrates how an iterative design can achieve the same bottom-up processing that recursion provides naturally, using a stack to remember the traversal path. Understanding when guaranteed performance justifies this additional complexity is a practical skill that extends to choosing between data structures in [Chapter 13](13-graphs.md) and evaluating algorithm trade-offs in [Chapter 16](16-dynamic-programming.md).
+Tree balancing addresses a fundamental challenge in data structures: maintaining guaranteed performance regardless of input order. The core idea is simple — after every insertion, walk back up the path we just traversed, check each ancestor for imbalance, and rotate if needed. This local restructuring preserves a global property, a pattern that appears throughout algorithm design. The BSModel architecture demonstrates how an iterative design can achieve the same bottom-up processing that recursion provides naturally, using a stack to remember the traversal path. Understanding when guaranteed performance justifies this additional complexity is a practical skill that extends to choosing between data structures in [Chapter 13](13-graphs.md) and evaluating algorithm trade-offs in [Chapter 18](18-dynamic-programming.md).

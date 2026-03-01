@@ -151,7 +151,7 @@ let scores = catalog.cosineSimilarities(to: query)
 // [0.99, 0.42, 0.98] — Items A and C are strong matches
 ```
 
-Most applications need only the best matches, not all scores. Finding the top `k` results from `n` scores is the **selection problem**—a classic challenge connecting to sorting ([Chapter 4](04-basic-sorting.md)) and heaps ([Chapter 16](16-heaps.md)). Quiver's `.topIndices(k:)` method returns the highest-scoring elements with their original positions:
+Most applications need only the best matches, not all scores. Finding the top `k` results from `n` scores is the **selection problem**—a classic challenge connecting to sorting ([Chapter 4](04-basic-sorting.md)) and heaps ([Chapter 17](17-heaps.md)). Quiver's `.topIndices(k:)` method returns the highest-scoring elements with their original positions:
 
 ```swift
 import Quiver
@@ -165,7 +165,7 @@ let top3 = scores.topIndices(k: 3)
 //  (index: 4, score: 0.67)]
 ```
 
-The current implementation sorts all scores in `O(n log n)` time. For large collections where `k` is much smaller than `n`, a heap-based approach achieves `O(n log k)` by maintaining a min-heap of size `k` and replacing the minimum only when a better score appears. This optimization, using the heap structure from [Chapter 16](16-heaps.md), becomes significant at scale:
+The current implementation sorts all scores in `O(n log n)` time. For large collections where `k` is much smaller than `n`, a heap-based approach achieves `O(n log k)` by maintaining a min-heap of size `k` and replacing the minimum only when a better score appears. This optimization, using the heap structure from [Chapter 17](17-heaps.md), becomes significant at scale:
 
 | Collection size | k | Sort all | Heap top-K | Speedup |
 |-----------------|---|----------|------------|---------|
