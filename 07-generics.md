@@ -5,11 +5,11 @@ description: "Build type-safe, reusable code with Swift generics"
 ---
 # Generics
 
-In the previous chapters, you implemented search algorithms that work with any comparable type and sorting algorithms that handle integers, strings, and custom objects equally well. These implementations use **generics** to create type-safe code that works with any type. Now let's review how they work and how you'll use them to build data structures.
+In the previous chapters, we implemented search algorithms that work with any comparable type and sorting algorithms that handle integers, strings, and custom objects equally well. These implementations use **generics** to create type-safe code that works with any type. Now let's review how they work and how we'll use them to build data structures.
 
 ## The code duplication problem
 
-Consider a linked list node structure. Without generics, you'd need separate implementations for each type:
+Consider a linked list node structure. Without generics, we'd need separate implementations for each type:
 
 ```swift
 // Linked list node for integers only
@@ -43,7 +43,7 @@ The code is nearly identical—only the type differs. This duplication creates m
 
 ## Generic types solve duplication
 
-Generics eliminate duplication by using type parameters—placeholders for actual types specified when you create an instance. Consider the following:
+Generics eliminate duplication by using type parameters—placeholders for actual types specified when we create an instance. Consider the following:
 
 ```swift
 // Single generic implementation works with any type
@@ -62,7 +62,7 @@ let intNode = ListNode(tvalue: 42)
 let stringNode = ListNode(tvalue: "Hello")
 ```
 
-The `<T>` syntax defines a type parameter—a placeholder that gets replaced with an actual type when you create an instance. When we write `ListNode<Int>`, Swift replaces every `T` with `Int`. When we write `ListNode<String>`, it replaces every `T` with `String`.
+The `<T>` syntax defines a type parameter—a placeholder that gets replaced with an actual type when we create an instance. When we write `ListNode<Int>`, Swift replaces every `T` with `Int`. When we write `ListNode<String>`, it replaces every `T` with `String`.
 
 ## We've already used generics
 
@@ -231,7 +231,7 @@ extension Array where Element: Comparable {
 
 ## Where clauses for conditional functionality
 
-Where clauses allow adding functionality to generic types only when their elements meet specific requirements. This is how you extend Array to work differently based on element type:
+Where clauses allow adding functionality to generic types only when their elements meet specific requirements. This is how we extend Array to work differently based on element type:
 
 ```swift
 // Extension only available when Element is Comparable
@@ -253,7 +253,7 @@ extension Array where Element: Comparable {
 [1, 3, 2, 4].isSorted()  // false
 ```
 
-You can specify multiple constraints using the `&` operator:
+We can specify multiple constraints using the `&` operator:
 
 ```swift
 // Extension requiring both Comparable and Hashable
