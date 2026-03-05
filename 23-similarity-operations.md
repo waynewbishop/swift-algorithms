@@ -27,11 +27,11 @@ let v2 = [5.0, 12.0]
 let dot = v1.dot(v2)  // 63.0 = (3×5) + (4×12)
 ```
 
-Mathematically, the dot product equals `‖v‖ × ‖w‖ × cos(θ)`, where `θ` is the angle between vectors. When vectors point in the same direction, the dot product is large and positive. When perpendicular, it equals zero. When opposite, it is negative. This makes the dot product a natural starting point for similarity—but it has a critical flaw.
+Mathematically, the dot product equals `‖v‖ × ‖w‖ × cos(θ)`, where `θ` is the angle between vectors. When vectors point in the same direction, the dot product is large and positive. When perpendicular, it equals zero. When opposite, it is negative. 
 
-### The magnitude problem
+### The magnitude challenge
 
-The dot product mixes alignment with magnitude. Two vectors pointing in identical directions but with different lengths produce vastly different dot products:
+While the dot product does provide us with a general signal of similarity, its formula also includes `magnitude`. Two vectors pointing in identical directions but with different lengths produce vastly different dot products:
 
 ```swift
 import Quiver

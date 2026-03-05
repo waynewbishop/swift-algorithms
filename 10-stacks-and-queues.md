@@ -5,7 +5,7 @@ description: "Essential data structures for managing collections"
 ---
 # Stacks & Queues
 
-In [Chapter 9](09-linked-lists.md), we built linked lists—collections where elements connect through pointers rather than contiguous memory. **Stacks and queues** extend this concept by adding ordering rules: stacks process elements last-in, first-out (LIFO), while queues process elements first-in, first-out (FIFO). Both structures achieve constant time `O(1)` insertion and removal (from Chapter 8), making them ideal building blocks for algorithms requiring consistent, fast access patterns.
+In [Chapter 9](09-linked-lists.md), we built linked lists—collections where elements connect through pointers rather than contiguous memory. **Stacks and queues** extend this concept by adding ordering rules: stacks process elements last-in, first-out (LIFO), while queues process elements first-in, first-out (FIFO). Stacks achieve constant time `O(1)` insertion and removal, while queues achieve `O(1)` removal and `O(n)` insertion since new elements are added at the back of the list.
 
 ## Real-world applications
 
@@ -105,7 +105,7 @@ public class Queue<T> {
 }
 ```
 
-Enqueuing is linear time `O(n)` because we must traverse to the end. A production implementation might maintain a `tail` pointer to make enqueuing `O(1)`. Dequeuing is `O(1)`—just update the `top` pointer.
+Enqueuing is linear time `O(n)` because we must traverse to the end. Dequeuing is `O(1)` — just update the `top` pointer.
 
 ## Building a stack
 
@@ -182,21 +182,19 @@ Both structures excel at their core operations:
 
 | Operation | Stack | Queue | Notes |
 |-----------|-------|-------|-------|
-| Push/Enqueue | `O(1)` | `O(1)`* | Add element |
+| Push/Enqueue | `O(1)` | `O(n)` | Add element |
 | Pop/Dequeue | `O(1)` | `O(1)` | Remove element |
 | Peek | `O(1)` | `O(1)` | View top/front |
 | isEmpty check | `O(1)` | `O(1)` | Check if empty |
 | Search | `O(n)` | `O(n)` | Not their purpose |
 
-\* This implementation's enqueue is `O(n)`. With a tail pointer, it becomes `O(1)`.
-
-The `O(1)` performance means these operations take constant time regardless of size. Adding the millionth element takes the same time as adding the first:
+The `O(1)` stack performance means push and pop take constant time regardless of size. Queue operations differ: dequeuing from the front is `O(1)`, but enqueuing traverses the list to reach the back, making it `O(n)`:
 
 ```swift
 // Process 1 million items with consistent performance
 for i in 0..<1_000_000 {
     stack.push(i)           // Each push: O(1)
-    queue.enQueue(i)        // Each enQueue: O(1)*
+    queue.enQueue(i)        // Each enQueue: O(n)
 }
 
 for _ in 0..<1_000_000 {
@@ -205,7 +203,7 @@ for _ in 0..<1_000_000 {
 }
 ```
 
-This predictable performance makes stacks and queues ideal for systems requiring consistent response times.
+This predictable stack performance makes it ideal for systems requiring consistent response times.
 
 ## Building algorithmic intuition
 

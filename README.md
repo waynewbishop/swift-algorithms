@@ -1,10 +1,10 @@
 # Swift Algorithms & Data Structures - 5th Edition
 
-iOS and macOS developers work with data constantly—user metrics, sensor readings, analytics, and performance measurements. [This book](index.md) teaches you how to aggregate, analyze, and present that data efficiently using algorithms, data structures, and statistical operations built specifically for Swift.
+iOS and macOS developers work with data constantly—user metrics, sensor readings, analytics, and performance measurements. [This book](index.md) teaches how to aggregate, analyze, and present that data efficiently using algorithms, data structures, and statistical operations built specifically for Swift.
 
-Going beyond pseudocode and theory, every concept is implemented in production-ready Swift code. From fundamental algorithms to advanced mathematical operations, you'll learn the computational thinking that powers modern iOS development.
+Going beyond pseudocode and theory, every concept is implemented in production-ready Swift code. From fundamental algorithms to advanced mathematical operations, we learn the computational thinking that powers modern iOS development.
 
-## What you'll learn
+## What we cover
 
 **Core Algorithms & Data Structures**
 - Learn Big O notation and algorithmic efficiency—understand why some operations feel instant while others lag
@@ -31,25 +31,22 @@ Going beyond pseudocode and theory, every concept is implemented in production-r
 - Anyone building data-driven features (analytics, recommendations, search, visualizations)
 - Educators teaching computer science or data analysis with Swift
 
-**You should have:**
+**Prerequisites:**
 - Basic Swift proficiency (variables, functions, loops, optionals)
 - Some familiarity with Xcode or Swift Playgrounds
 - No prior algorithms or mathematics background required
 
-## Quiver
+## Companion Packages
 
-[Quiver](https://github.com/waynewbishop/bishop-algorithms-quiver-package) extends Swift's standard `Array` type with mathematical and statistical functions:
-- Calculate statistical measures (mean, median, variance, standard deviation)
-- Detect outliers and validate data quality
-- Aggregate time-series data and compute growth rates
-- Normalize and scale data for visualization
-- Perform vector operations for similarity and distance calculations
+**[Quiver](https://github.com/waynewbishop/bishop-algorithms-quiver-package)** — A Swift-native numerical computing framework that extends `Array` with mathematical and statistical operations:
+- Vector operations (dot product, magnitude, normalization)
+- Matrix operations (multiplication, transpose, inverse, determinants)
+- Linear transformations (rotation, scaling, shearing, composition)
+- Similarity and distance (cosine similarity, Euclidean distance, Top-K selection)
+- Statistical functions (mean, median, variance, standard deviation, outlier detection)
+- Array generation (zeros, ones, linspace, identity matrices)
 
-See the [full documentation](https://github.com/waynewbishop/bishop-algorithms-quiver-package) for code examples and API reference.
-
-## Related Projects
-
-- [Structures Package](https://github.com/waynewbishop/bishop-algorithms-swift-package) - Production implementations of algorithms and data structures
+**[Structures](https://github.com/waynewbishop/bishop-algorithms-swift-package)** — Production implementations of the algorithms and data structures covered in this book.
 
 ## Usage
 
@@ -68,4 +65,4 @@ Have questions or feedback? Feel free to [contact me on LinkedIn](https://www.li
 
 ---
 
-© Wayne Bishop | [waynewbishop.com](https://www.linkedin.com/in/waynebishop/)
+© Wayne Bishop | [LinkedIn](https://www.linkedin.com/in/waynebishop/)
