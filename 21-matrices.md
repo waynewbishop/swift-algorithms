@@ -47,7 +47,25 @@ let columnVector = [[3.0], [4.0]]      // As 2×1 matrix (column)
 let rowVector = [[3.0, 4.0]]           // As 1×2 matrix (row)
 ```
 
-This dual perspective bridges the gap between the vectors and matrices. A vector is simply a **special case** of a matrix where one dimension equals `1`.
+This dual perspective bridges the gap between vectors and matrices. A vector is simply a **special case** of a matrix where one dimension equals `1`. Quiver's `reshaped` method makes this relationship concrete — we can convert between shapes without losing any data:
+
+```swift
+import Quiver
+
+// Start with a flat vector of 6 elements
+let vector = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]
+
+// Reshape into a 2×3 matrix
+let matrix = vector.reshaped(rows: 2, columns: 3)
+// [[1.0, 2.0, 3.0],
+//  [4.0, 5.0, 6.0]]
+
+// Flatten back to the original vector
+let restored = matrix.flattened()
+// [1.0, 2.0, 3.0, 4.0, 5.0, 6.0]
+```
+
+The same six values flow between a `1×6` vector and a `2×3` matrix — nothing is added or removed. Reshaping simply reorganizes how the data is arranged in rows and columns, filling the new shape row by row.
 
 ### What matrices represent
 
@@ -203,7 +221,7 @@ let offset = matrix + 10.0
 // Result: [[110.0, 210.0], [310.0, 410.0]]
 ```
 
-Quiver broadcasts scalars across matrices automatically, making data transformations concise and readable. 
+Quiver broadcasts scalars across matrices automatically, making data transformations concise and readable.
 
 ## Building algorithmic intuition
 
