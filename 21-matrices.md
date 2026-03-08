@@ -110,6 +110,26 @@ let value = matrix[0][1]  // 2.0 (row 0, column 1)
 let firstRow = matrix[0]  // [1.0, 2.0, 3.0]
 ```
 
+### Inspecting matrix dimensions
+
+Once we have a matrix, we often need to know its shape — how many rows and columns it contains. Quiver provides two computed properties for this. The `.shape` property returns a named tuple, while `.size` returns the total element count across all dimensions:
+
+```swift
+import Quiver
+
+let matrix = [
+    [1.0, 2.0, 3.0],
+    [4.0, 5.0, 6.0]
+]
+
+let (rows, columns) = matrix.shape
+// rows == 2, columns == 3
+
+matrix.size  // 6 (total elements)
+```
+
+These properties become essential when validating reshape operations, since the total element count must remain the same before and after reshaping.
+
 ### Matrix initialization
 
 Quiver provides convenient functions for creating matrices with common initial values:
