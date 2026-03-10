@@ -1,6 +1,7 @@
 ---
 layout: home
-title: Swift Algorithms & Data Structures
+title: "Swift Algorithms & Data Structures — 5th Edition"
+description: "Free online book covering Big O notation, sorting, searching, linked lists, trees, graphs, hash tables, dynamic programming, and numerical computing in Swift. With production code examples."
 ---
 
 # Swift Algorithms & Data Structures - 5th Edition
@@ -32,7 +33,7 @@ The Swift language has become the cornerstone of Apple development, powering sol
   
 ## Related projects
 
-- [Quiver Package](https://github.com/waynewbishop/quiver) - A Swift package that provides vector mathematics, numerical computing, and statistical operations
+- [Quiver Documentation](https://waynewbishop.github.io/quiver/documentation/quiver/) - Vector mathematics, numerical computing, and statistical operations ([GitHub](https://github.com/waynewbishop/quiver))
 - [Structures Package](https://github.com/waynewbishop/bishop-algorithms-swift-package) - Production implementations of algorithms and data structures
 
 ## Contributing

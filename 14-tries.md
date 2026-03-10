@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 14: Tries"
-description: "Implement prefix trees for efficient string operations"
+description: "Build a trie data structure in Swift for autocomplete, prefix search, and dictionary lookups"
 ---
 # Tries
 

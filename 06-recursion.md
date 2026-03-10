@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 6: Recursion"
-description: "Understanding recursive algorithms and techniques"
+description: "Understand recursion in Swift through factorial, Fibonacci, and recursive data structure traversal examples"
 ---
 # Recursion
 

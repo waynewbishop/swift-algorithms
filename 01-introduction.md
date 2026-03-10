@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 1: Introduction"
-description: "Understanding algorithms and their importance in Swift development"
+description: "What algorithms are, why they matter, and how Swift's type system shapes the way we implement them"
 ---
 # Introduction
 

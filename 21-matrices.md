@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 21: Matrices"
-description: "Matrix fundamentals, operations, and data organization"
+description: "Multiply, transpose, and invert matrices in Swift using Quiver for numerical computing and data science"
 ---
 # Matrices
 

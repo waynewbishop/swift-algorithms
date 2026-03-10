@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 12: Tree Balancing"
-description: "Maintaining balanced binary search trees through height tracking and rotations"
+description: "Implement AVL tree rotations and self-balancing binary search trees in Swift"
 ---
 # Tree Balancing
 

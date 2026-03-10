@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 11: Binary Search Trees"
-description: "Build and traverse binary search trees"
+description: "Build a binary search tree in Swift with insert, search, and in-order traversal"
 ---
 # Binary Search Trees
 

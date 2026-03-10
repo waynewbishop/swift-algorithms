@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 8: Analyzing Algorithms"
-description: "Understanding algorithmic efficiency, complexity analysis, and real-world performance"
+description: "Analyze algorithm performance with best-case, average-case, and amortized complexity in Swift"
 ---
 # Analyzing Algorithms
 

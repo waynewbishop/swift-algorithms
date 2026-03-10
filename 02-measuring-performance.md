@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 2: Measuring Performance"
-description: "Understanding algorithmic efficiency and the language of performance"
+description: "Master Big O notation in Swift with examples of constant, linear, logarithmic, and quadratic time complexity"
 ---
 # Measuring Performance
 

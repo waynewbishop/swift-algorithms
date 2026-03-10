@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 15: Hash Tables"
-description: "Build hash tables with collision handling"
+description: "Implement hash tables in Swift with chaining, load factors, and collision resolution strategies"
 ---
 # Hash Tables
 

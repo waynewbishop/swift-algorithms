@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 3: Basic Searching"
-description: "Learn linear and binary search algorithms in Swift"
+description: "Implement linear search and binary search in Swift, compare their Big O performance, and learn when to use each"
 ---
 # Basic Searching
 

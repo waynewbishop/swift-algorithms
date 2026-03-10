@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 5: Advanced Sorting"
-description: "Learn the Quicksort algorithm and divide & conquer strategy"
+description: "Implement merge sort and quicksort in Swift using divide and conquer, with partitioning strategies and recursion"
 ---
 # Advanced Sorting
 

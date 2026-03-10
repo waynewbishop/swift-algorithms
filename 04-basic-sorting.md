@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 4: Basic Sorting"
-description: "Learn bubble sort, insertion sort, and selection sort"
+description: "Build bubble sort, insertion sort, and selection sort in Swift with step-by-step implementations and performance comparisons"
 ---
 # Basic Sorting
 

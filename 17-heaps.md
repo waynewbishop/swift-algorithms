@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 17: Heaps"
-description: "Enhance Dijkstra's algorithm with binary heaps and priority queues"
+description: "Build a binary heap and priority queue in Swift for efficient minimum and maximum extraction"
 ---
 # Heaps
 

@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 20: Vectors"
-description: "Mathematical foundations of vector operations and numerical computing"
+description: "Perform vector arithmetic, dot products, magnitude, and normalization in Swift with the Quiver package"
 ---
 # Vectors
 

@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 7: Generics"
-description: "Build type-safe, reusable code with Swift generics"
+description: "Use Swift generics, protocols, and type constraints to build reusable algorithm implementations"
 ---
 # Generics
 

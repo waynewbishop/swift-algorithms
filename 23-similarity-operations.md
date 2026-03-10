@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 23: Similarity Operations"
-description: "Measuring relationships between vectors using distance and similarity metrics"
+description: "Compute cosine similarity, Euclidean distance, and semantic search rankings in Swift with Quiver"
 ---
 # Similarity Operations
 

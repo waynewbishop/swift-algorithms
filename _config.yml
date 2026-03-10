@@ -1,8 +1,10 @@
 # Jekyll Configuration for Swift Algorithms & Data Structures
 
 title: Swift Algorithms & Data Structures
-description: A comprehensive guide to algorithms and data structures in Swift
+tagline: "Learn algorithms, data structures, and numerical computing in Swift"
+description: "Free online book covering Big O notation, sorting, searching, linked lists, trees, graphs, hash tables, dynamic programming, and numerical computing in Swift. With production code examples."
 author: Wayne Bishop
+lang: en
 url: https://waynewbishop.github.io
 baseurl: /swift-algorithms
 
@@ -44,7 +46,7 @@ titles_from_headings:
 # SEO settings
 twitter:
   username: waynewbishop
-  card: summary
+  card: summary_large_image
 
 social:
   name: Wayne Bishop

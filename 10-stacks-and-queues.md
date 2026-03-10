@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 10: Stacks and Queues"
-description: "Essential data structures for managing collections"
+description: "Implement stacks and queues in Swift with push, pop, enqueue, and dequeue operations"
 ---
 # Stacks & Queues
 

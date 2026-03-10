@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 19: PageRank Algorithm"
-description: "Implement Google's PageRank in Swift"
+description: "Implement Google's PageRank algorithm in Swift using adjacency matrices and iterative convergence"
 ---
 # PageRank
 

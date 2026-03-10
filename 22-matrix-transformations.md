@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 22: Matrix Transformations"
-description: "Understanding coordinate system transformations"
+description: "Apply rotation, scaling, reflection, and shear transformations to vectors and matrices in Swift"
 ---
 # Matrix Transformations
 

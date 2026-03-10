@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 13: Graphs"
-description: "Explore graph data structures and algorithms"
+description: "Model graphs in Swift with adjacency lists, breadth-first search, and depth-first search"
 ---
 # Graphs
 

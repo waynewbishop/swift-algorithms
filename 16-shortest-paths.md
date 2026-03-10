@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 16: Shortest Paths"
-description: "Find optimal routes with Dijkstra's algorithm and priority queue optimization"
+description: "Implement Dijkstra's shortest path algorithm in Swift with weighted graphs and priority queues"
 ---
 # Shortest Paths
 

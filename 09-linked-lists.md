@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 9: Linked Lists"
-description: "Implement singly and doubly linked lists"
+description: "Build a linked list from scratch in Swift with insert, delete, and traversal operations"
 ---
 # Linked Lists
 
