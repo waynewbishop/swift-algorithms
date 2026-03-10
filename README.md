@@ -38,7 +38,7 @@ Going beyond pseudocode and theory, every concept is implemented in production-r
 
 ## Companion Packages
 
-**[Quiver](https://github.com/waynewbishop/bishop-algorithms-quiver-package)** — A Swift-native numerical computing framework that extends `Array` with mathematical and statistical operations:
+**[Quiver](https://github.com/waynewbishop/quiver)** — A Swift-native numerical computing framework that extends `Array` with mathematical and statistical operations:
 - Vector operations (dot product, magnitude, normalization)
 - Matrix operations (multiplication, transpose, inverse, determinants)
 - Linear transformations (rotation, scaling, shearing, composition)

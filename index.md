@@ -32,7 +32,7 @@ The Swift language has become the cornerstone of Apple development, powering sol
   
 ## Related projects
 
-- [Quiver Package](https://github.com/waynewbishop/bishop-algorithms-quiver-package) - A Swift package that provides vector mathematics, numerical computing, and statistical operations
+- [Quiver Package](https://github.com/waynewbishop/quiver) - A Swift package that provides vector mathematics, numerical computing, and statistical operations
 - [Structures Package](https://github.com/waynewbishop/bishop-algorithms-swift-package) - Production implementations of algorithms and data structures
 
 ## Contributing
