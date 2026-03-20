@@ -118,6 +118,11 @@ navigation:
       - title: "Similarity Operations"
         url: "23-similarity-operations"
 
+  - section: "Appendix"
+    chapters:
+      - title: "Afterword"
+        url: "24-afterword"
+
 # Exclude from processing
 exclude:
   - Claude.md

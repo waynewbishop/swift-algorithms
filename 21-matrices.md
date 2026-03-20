@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 21: Matrices"
-description: "Multiply, transpose, and invert matrices in Swift using Quiver for numerical computing and data science"
+description: "Create, reshape, and operate on matrices in Swift using Quiver for numerical computing and data science"
 ---
 # Matrices
 
@@ -128,7 +128,7 @@ let (rows, columns) = matrix.shape
 matrix.size  // 6 (total elements)
 ```
 
-These properties become essential when validating reshape operations, since the total element count must remain the same before and after reshaping.
+These properties become essential when validating [reshape](https://waynewbishop.github.io/quiver/documentation/quiver/reshape-and-flatten) operations, since the total element count must remain the same before and after reshaping.
 
 ### Matrix initialization
 
@@ -166,7 +166,7 @@ let diagonal = [Double].diag([3.0, 2.0, 1.0])
 //  [0.0, 0.0, 1.0]]
 ```
 
-These initialization functions are essential when setting up matrices for data processing or machine learning. The `zeros` and `ones` functions are ideal for allocating storage before filling matrices with computed values. Identity and diagonal matrices play special roles in linear transformations, which we'll explore in [Chapter 22](22-matrix-transformations.md).
+These [initialization functions](https://waynewbishop.github.io/quiver/documentation/quiver/array-generation) are essential when setting up matrices for data processing or machine learning. The `zeros` and `ones` functions are ideal for allocating storage before filling matrices with computed values. Identity and diagonal matrices play special roles in [linear transformations](https://waynewbishop.github.io/quiver/documentation/quiver/transformation-basics), which we'll explore in [Chapter 22](22-matrix-transformations.md).
 
 ### Accessing columns
 
@@ -213,11 +213,11 @@ let readings2 = [
 ]
 
 // Combine sensor readings using element-wise addition
-let combined = readings1 + readings2
+let combined = readings1.add(readings2)
 // Result: [[1.5, 2.3], [3.7, 4.2]]
 ```
 
-Quiver extends Swift's arithmetic operators to work naturally with matrices, making matrix operations as simple as scalar arithmetic.
+Quiver provides named methods for element-wise matrix arithmetic, making operations explicit and readable.
 
 ### Scalar broadcasting
 
@@ -241,8 +241,43 @@ let offset = matrix + 10.0
 // Result: [[110.0, 210.0], [310.0, 410.0]]
 ```
 
-Quiver broadcasts scalars across matrices automatically, making data transformations concise and readable.
+Quiver [broadcasts](https://waynewbishop.github.io/quiver/documentation/quiver/broadcasting-operations) scalars across matrices automatically, making data transformations concise and readable.
+
+### Transpose
+
+Transposing a matrix flips it along its diagonal — rows become columns and columns become rows. A `2×3` matrix becomes a `3×2` matrix, with every element at position `(i, j)` moving to position `(j, i)`:
+
+```
+Original (2×3)      Transposed (3×2)
+[1  2  3]           [1  4]
+[4  5  6]           [2  5]
+                    [3  6]
+```
+
+This operation is fundamental when data is organized by rows but we need to work with columns, or when matrix dimensions need to align for multiplication. In machine learning, transposing allows us to switch between representing each sample as a row and representing each feature as a row, depending on what an algorithm requires:
+
+```swift
+import Quiver
+
+// Athlete data: rows are athletes, columns are metrics
+let athletes = [
+    [8.5, 2.1],   // Athlete A: speed, jump height
+    [7.2, 2.4],   // Athlete B
+    [9.1, 1.9]    // Athlete C
+]
+
+// Transpose to get columns as rows
+let byMetric = athletes.transposed()
+// [[8.5, 7.2, 9.1],   -- all speeds
+//  [2.1, 2.4, 1.9]]   -- all jump heights
+
+// Now we can compute per-metric statistics directly
+byMetric[0].mean()  // 8.27 average speed
+byMetric[1].std()   // 0.21 jump height variability
+```
 
 ## Building algorithmic intuition
 
-Matrices provide a powerful framework for organizing multi-dimensional data into structured rectangular arrays. The row-column format naturally represents relationships—whether sensor readings over time, feature values across samples, or word counts across documents. This organization enables systematic operations on entire datasets rather than processing individual values one at a time.
+Matrices provide a powerful framework for organizing multi-dimensional data into structured rectangular arrays. The row-column format naturally represents relationships — whether sensor readings over time, feature values across samples, or word counts across documents. This organization enables systematic operations on entire datasets rather than processing individual values one at a time.
+
+The operations we've covered here — creation, reshaping, element-wise arithmetic, broadcasting, and transposing — form the structural foundation for matrices. In [Chapter 22](22-matrix-transformations.md), we'll see how matrix multiplication transforms vectors through space, enabling scaling, rotation, and composition of transformations. [Chapter 23](23-similarity-operations.md) then applies these tools to measure how similar or different data points are, connecting matrix operations directly to recommendation systems and semantic search.

@@ -127,7 +127,7 @@ let v4 = [60.0, 80.0]
 v3.cosineOfAngle(with: v4)  // 1.0 (still identical)
 ```
 
-Where the raw dot product gave us 50 and 5,000 for the same directional relationship, cosine similarity returns 1.0 in both cases. This consistency is why cosine similarity dominates text analysis, recommendation systems, and embedding comparisons—it measures meaning rather than magnitude.
+Where the raw dot product gave us 50 and 5,000 for the same directional relationship, [cosine similarity](https://waynewbishop.github.io/quiver/documentation/quiver/similarity-operations) returns 1.0 in both cases. This consistency is why cosine similarity dominates text analysis, recommendation systems, and embedding comparisons—it measures meaning rather than magnitude.
 
 When we pre-normalize vectors to unit length using Quiver's `.normalized` property, the dot product and cosine similarity become identical. Both magnitudes equal 1, so the denominator disappears. Many production systems normalize vectors once at indexing time, then use the simpler dot product for all subsequent comparisons.
 
@@ -271,7 +271,7 @@ The quadratic growth means cohesion is practical for small to medium clusters (h
 
 The operations in this chapter become particularly powerful when vectors carry semantic meaning. **Word embeddings** are vectors trained on large text collections where words appearing in similar contexts develop similar representations. "Running" and "jogging" end up as nearby vectors because they co-occur with words like "exercise," "fitness," and "cardio."
 
-Pre-trained embeddings like GloVe (Global Vectors for Word Representation) encode each word as a 50 to 300-dimensional vector. Once loaded, our similarity operations apply directly:
+Pre-trained embeddings like GloVe (Global Vectors for Word Representation) encode each word as a 50 to 300-dimensional vector. Once loaded, our [similarity operations](https://waynewbishop.github.io/quiver/documentation/quiver/semantic-search) apply directly:
 
 ```swift
 import Quiver
@@ -298,7 +298,7 @@ let woman  = [0.2, 0.8, 0.2, 0.6]   // Female concept
 let queen  = [0.3, 0.9, 0.8, 0.7]   // Female royalty
 
 // Vector arithmetic: king - man + woman ≈ queen
-let result = (king - man) + woman
+let result = king.subtract(man).add(woman)
 // result = [0.3, 0.9, 0.8, 0.7]
 
 // Confirm the result vector aligns with the expected word embedding
@@ -306,7 +306,7 @@ result.cosineOfAngle(with: queen)  // ~1.0
 result.cosineOfAngle(with: king)   // ~0.68
 ```
 
-The subtraction `king - man` isolates the "royalty" component by removing the "male" direction. Adding `woman` reintroduces a gender direction, landing at "female royalty"—queen. This works because embeddings encode semantic properties as geometric directions. The "male-to-female" direction (`woman - man`) is consistent across the vocabulary, so adding it to any male concept shifts toward the female equivalent.
+The subtraction `king.subtract(man)` isolates the "royalty" component by removing the "male" direction. Adding `woman` reintroduces a gender direction, landing at "female royalty"—queen. This works because embeddings encode semantic properties as geometric directions. The "male-to-female" direction is consistent across the vocabulary, so adding it to any male concept shifts toward the female equivalent.
 
 ## Building algorithmic intuition
 

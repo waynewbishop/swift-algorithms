@@ -83,7 +83,7 @@ With mathematical foundations established, we need practical tools for working w
 
 Quiver provides Swift-native vector mathematics and numerical computing by extending the standard `Array` type rather than creating custom containers. This design eliminates conversion overhead — arrays are vectors without boxing or unboxing. Operations integrate seamlessly with Swift's standard library, maintaining familiar syntax while adding mathematical capabilities.
 
-As a pure Swift library with zero external dependencies, Quiver runs on every Apple platform — iOS, macOS, watchOS, tvOS, and visionOS — as well as server-side Swift with frameworks like Vapor, Linux environments, and containerized deployments.
+As a pure Swift library with zero external dependencies, [Quiver](https://waynewbishop.github.io/quiver/documentation/quiver/) runs on every Apple platform — iOS, macOS, watchOS, tvOS, and visionOS — as well as server-side Swift with frameworks like Vapor, Linux environments, and containerized deployments.
 
 ## Working with vectors
 
@@ -184,7 +184,7 @@ let song2 = [120.0, 0.8, 0.9, 0.7]
 let songSimilarity = song1.cosineOfAngle(with: song2)  // ~1.0
 ```
 
-This cosine similarity technique is fundamental to recommendation systems, search engines, and machine learning. It appears throughout [Chapter 23](23-similarity-operations.md), where similarity operations measure relationships between vectors in high-dimensional space.
+This [cosine similarity](https://waynewbishop.github.io/quiver/documentation/quiver/similarity-operations) technique is fundamental to recommendation systems, search engines, and machine learning. It appears throughout [Chapter 23](23-similarity-operations.md), where [similarity operations](https://waynewbishop.github.io/quiver/documentation/quiver/similarity-operations) measure relationships between vectors in high-dimensional space.
 
 ## Vector averaging
 
@@ -212,7 +212,7 @@ guard let documentVector = wordVectors.averaged() else {
 // Result: [0.2, 0.7, 0.5] - points toward "athletic footwear" region
 ```
 
-The `.averaged()` method validates that all vectors have the same dimensionality and returns `nil` for empty arrays or inconsistent dimensions. This pattern appears in [Chapter 23](23-similarity-operations.md), where vector averaging converts multi-word text into comparable vectors for similarity computation.
+The `.averaged()` method validates that all vectors have the same dimensionality and returns `nil` for empty arrays or inconsistent dimensions. This pattern appears in [Chapter 23](23-similarity-operations.md), where [vector averaging](https://waynewbishop.github.io/quiver/documentation/quiver/semantic-search) converts multi-word text into comparable vectors for similarity computation.
 
 ## Building algorithmic intuition
 

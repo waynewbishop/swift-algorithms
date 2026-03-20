@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 18: Dynamic Programming"
-description: "Solve the knapsack problem and other optimization challenges with dynamic programming in Swift"
+description: "Use memoization to eliminate redundant computation in recursive algorithms with dynamic programming in Swift"
 ---
 # Dynamic Programming
 

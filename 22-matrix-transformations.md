@@ -5,7 +5,7 @@ description: "Apply rotation, scaling, reflection, and shear transformations to 
 ---
 # Matrix Transformations
 
-In [Chapter 21](21-matrices.md), we explored matrices as rectangular arrays that organize multi-dimensional data efficiently. In this section we'll learn more about how matrices **transform** vector spaces.
+In [Chapter 21](21-matrices.md), we explored matrices as rectangular arrays that organize multi-dimensional data efficiently. In this section we'll learn more about how matrices **transform** [vector spaces](https://waynewbishop.github.io/quiver/documentation/quiver/linear-algebra-primer).
 
 ## Understanding basis vectors
 
@@ -202,10 +202,10 @@ let rotation90 = [[0.0, -1.0], [1.0, 0.0]]
 rotation90.determinant  // 1.0 — area preserved
 ```
 
-A determinant of zero means the transformation collapses space into a lower dimension—flattening a 2D plane into a line or a point. These **singular** matrices cannot be inverted because the collapse loses information. There is no way to reconstruct the original space from a line. Quiver computes the determinant for square matrices of any size using the `.determinant` property.
+A [determinant](https://waynewbishop.github.io/quiver/documentation/quiver/determinants-primer) of zero means the transformation collapses space into a lower dimension—flattening a 2D plane into a line or a point. These **singular** matrices cannot be inverted because the collapse loses information. There is no way to reconstruct the original space from a line. Quiver computes the determinant for square matrices of any size using the `.determinant` property.
 
 ## Building algorithmic intuition
 
-Understanding transformations means recognizing how coordinate systems change systematically. The identity matrix represents our reference frame. Scaling matrices stretch or compress along axes. Rotation matrices spin the coordinate system while preserving distances. More complex transformations combine these basic operations through matrix multiplication, but the fundamental insight remains: read the columns to see where the basis vectors go.
+Understanding transformations means recognizing how coordinate systems change systematically. The identity matrix represents our reference frame. Scaling matrices stretch or compress along axes. Rotation matrices spin the coordinate system while preserving distances. More complex transformations [combine](https://waynewbishop.github.io/quiver/documentation/quiver/composing-transformations) these basic operations through matrix multiplication, but the fundamental insight remains: read the columns to see where the basis vectors go.
 
 These geometric operations, combined with the matrix fundamentals from [Chapter 21](21-matrices.md), provide the mathematical foundation for advanced applications across graphics, physics, and machine learning. In [Chapter 23](23-similarity-operations.md), we apply these vector and matrix concepts to measure similarity between high-dimensional data—the core computation behind recommendation engines, clustering, and modern AI systems.
