@@ -9,17 +9,9 @@ In [Chapter 11](11-binary-search-trees.md), we built binary search trees that or
 
 ## Unbalanced trees
 
-To start, let's revisit the original example from the previous chapter. Array values from `numberList` were used to build a tree where all elements had either one or two children. This is a balanced binary search tree:
+To start, let's revisit the original example from the previous chapter. Array values from `numberList` were used to build a tree where all elements had either one or two children. This is a balanced binary search tree — one where each comparison eliminates roughly half the remaining nodes, giving us `O(log n)` performance.
 
-![A balanced BST with 7 elements — O(log n)](balanced-bst.png)
-
-The tree achieved balance not only through the BST append algorithm, but also through the way values were inserted. In practice, there are many ways to populate a tree. Without considering insertion order, this can produce unexpected results:
-
-![An unbalanced left-heavy BST with 3 elements — O(n)](left-heavy-bst.png)
-
-![An unbalanced right-heavy BST with 3 elements — O(n)](right-heavy-bst.png)
-
-![A 6-node BST with left and right imbalances — O(n)](mixed-imbalance-bst.png)
+The tree achieved balance not only through the BST append algorithm, but also through the way values were inserted. In practice, there are many ways to populate a tree. Without considering insertion order, this can produce unexpected results. A tree where all nodes chain left, all nodes chain right, or a mix of both imbalances degrades search performance from `O(log n)` toward `O(n)`.
 
 Consider building a tree from sorted data — timestamps arriving in order, auto-incrementing database IDs, or alphabetized names. Inserting `[1, 2, 3, 4, 5]` into a BST creates a worst case where every node has only a `right` child, forming a linked list. Searching for 5 requires examining all 5 nodes — `O(n)` — not the 3 comparisons `O(log 5) ≈ 2.3` a balanced tree would need. This scenario is not rare. Without balancing, BSTs become unreliable in real systems.
 
@@ -53,9 +45,7 @@ private func setHeight(for node: BSNode<T>) {
 
 ## Measuring balance
 
-With the `root` element established, we proceed to add the next value. Standard BST logic positions `26` as the `left` child. As a new node, its `height` is also 0. Since the tree is a hierarchy, we traverse upward to recalculate the parent's `height`. The `root` now has a `left` child with `height` 0 and no `right` child (-1), so its `height` becomes `max(0, -1) + 1 = 1`:
-
-![Step two — 26 is added as the left child of 29](balance-step-two.png)
+With the `root` element established, we proceed to add the next value. Standard BST logic positions `26` as the `left` child. As a new node, its `height` is also 0. Since the tree is a hierarchy, we traverse upward to recalculate the parent's `height`. The `root` now has a `left` child with `height` 0 and no `right` child (-1), so its `height` becomes `max(0, -1) + 1 = 1`.
 
 With multiple elements present, we run an additional check to see if the tree is balanced. A tree is considered balanced if the `height` difference between its `left` and `right` subtrees is less than 2. Even though no right-side elements exist yet, the model is still valid:
 
@@ -76,9 +66,7 @@ public func isTreeBalanced(for element: BSNode<T>) -> Bool {
 
 ## Detecting imbalance
 
-With 29 and 26 added, we proceed to insert the final value (23). Like before, BST logic places it on the `left` side. However, upon insertion the math reveals that node 29 violates the balance property — its subtree is no longer balanced:
-
-![Step three — 23 is added, creating a left-heavy imbalance](balance-step-three.png)
+With 29 and 26 added, we proceed to insert the final value (23). Like before, BST logic places it on the `left` side. However, upon insertion the math reveals that node 29 violates the balance property — its subtree is no longer balanced.
 
 ```swift
 // Balance check for the root after inserting 23
@@ -113,9 +101,7 @@ private func rotateRight(for element: BSNode<T>) {
 }
 ```
 
-After rotation, 29 (originally the `root`) moves to the `right` child position. Node 26 becomes the new `root`. The tree is balanced, and an in-order traversal still produces sorted output — `23, 26, 29`:
-
-![Step four — right rotation restores balance](balance-step-four.png)
+After rotation, 29 (originally the `root`) moves to the `right` child position. Node 26 becomes the new `root`. The tree is balanced, and an in-order traversal still produces sorted output — `23, 26, 29`.
 
 Even though we undergo a series of steps, the process occurs in `O(1)` time. Its performance is unaffected by the number of nodes, descendants, or tree `height`.
 

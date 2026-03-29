@@ -138,17 +138,17 @@ Comparing a single query against an entire collection is the fundamental operati
 ```swift
 import Quiver
 
-let query = [0.8, 0.7, 0.9]
+let query = [0.9, 0.8, 0.7]
 
 let catalog = [
-    [0.8, 0.6, 0.9],  // Item A
-    [0.2, 0.3, 0.1],  // Item B
-    [0.7, 0.7, 0.8]   // Item C
+    [0.8, 0.9, 0.6],  // Item A
+    [0.1, 0.2, 0.9],  // Item B
+    [0.9, 0.7, 0.8]   // Item C
 ]
 
 // Compute similarity against all items at once
 let scores = catalog.cosineSimilarities(to: query)
-// [0.99, 0.42, 0.98] — Items A and C are strong matches
+// [0.99, 0.68, 0.99] — Items A and C are strong matches
 ```
 
 Most applications need only the best matches, not all scores. Finding the top `k` results from `n` scores is the **selection problem**—a classic challenge connecting to sorting ([Chapter 4](04-basic-sorting.md)) and heaps ([Chapter 17](17-heaps.md)). Quiver's `.topIndices(k:)` method returns the highest-scoring elements with their original positions:
@@ -198,7 +198,7 @@ let sportsDocs = [[0.2, 0.9, 0.1], [0.3, 0.8, 0.2], [0.1, 0.7, 0.3]]
 
 // Compute average pairwise cosine similarity within each cluster
 techDocs.clusterCohesion()    // ~0.98 (tight cluster)
-sportsDocs.clusterCohesion()  // ~0.95 (tight cluster)
+sportsDocs.clusterCohesion()  // ~0.97 (tight cluster)
 ```
 
 Duplicate detection extends this idea to find near-identical vectors. Quiver's `.findDuplicates(threshold:)` method computes pairwise similarities and returns pairs exceeding the threshold:
@@ -283,7 +283,7 @@ let computer = [0.1, 0.3, 0.2, 0.9]
 
 // Measure directional similarity between word embeddings
 running.cosineOfAngle(with: jogging)   // ~0.99 (near-synonyms)
-running.cosineOfAngle(with: computer)  // ~0.45 (unrelated)
+running.cosineOfAngle(with: computer)  // ~0.47 (unrelated)
 ```
 
 What makes embeddings remarkable is that vector arithmetic captures semantic relationships. The most famous example demonstrates that gender relationships are encoded as consistent vector directions. If we take the vector for "king," subtract "man," and add "woman," the resulting vector lands nearest to "queen":
@@ -303,7 +303,7 @@ let result = king.subtract(man).add(woman)
 
 // Confirm the result vector aligns with the expected word embedding
 result.cosineOfAngle(with: queen)  // ~1.0
-result.cosineOfAngle(with: king)   // ~0.68
+result.cosineOfAngle(with: king)   // ~0.79
 ```
 
 The subtraction `king.subtract(man)` isolates the "royalty" component by removing the "male" direction. Adding `woman` reintroduces a gender direction, landing at "female royalty"—queen. This works because embeddings encode semantic properties as geometric directions. The "male-to-female" direction is consistent across the vocabulary, so adding it to any male concept shifts toward the female equivalent.
