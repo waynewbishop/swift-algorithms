@@ -135,7 +135,7 @@ If we had inserted `[23, 26, 29]` instead — a `right`-heavy sequence — a `le
 
 ## Navigating back up the tree
 
-To successfully apply the balancing algorithm, we need a way to traverse upward through the node hierarchy. When a child element is added, all of its ancestors must have their `height` values recalculated. If the BST used a recursive design, we could rely on the in-memory call stack to automatically return to parent nodes. To achieve the same result in the iterative `BSModel` design, we store node references using a [Stack](06-recursion.md) data structure.
+To successfully apply the balancing algorithm, we need a way to traverse upward through the node hierarchy. When a child element is added, all of its ancestors must have their `height` values recalculated. If the BST used a recursive design, we could rely on the in-memory call stack to automatically return to parent nodes. To achieve the same result in the iterative `BSModel` design, we store node references using a [Stack](10-stacks-and-queues.md) data structure.
 
 As we traverse down the tree during insertion, we push each visited node onto the stack. After the new element is placed, we pop nodes one by one — walking back up the insertion path — recalculating `height` values and performing rotations where needed. Without the stack, we would need to traverse from the `root` to find affected nodes after each insertion, an expensive `O(n)` operation. The stack reduces rebalancing to `O(log n)` by giving us direct access to every ancestor along the insertion path:
 
