@@ -46,4 +46,3 @@ Wayne Bishop is a technologist dedicated to making complex technology accessible
 
 - LinkedIn: [waynebishop](https://www.linkedin.com/in/waynebishop)
 - GitHub: [waynewbishop](https://github.com/waynewbishop)
-- Substack: [waynewbishop](https://waynewbishop.substack.com)
