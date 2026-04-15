@@ -28,3 +28,5 @@ Modern tools amplify this foundation. After tracing through a `quicksort` implem
 ## Durable knowledge
 
 The tools will evolve. However, binary search will still halve the search space. Matrix multiplication will still transform coordinate systems. Understanding algorithms is the foundation that makes every tool more powerful in our hands. The mystery of modern technology dissolves the moment we recognize the classical mathematics inside it. This book was written to reveal that knowledge.
+
+To continue building that intuition — one concept at a time, with code you can run — subscribe to [The Feature Vector](https://featurevector.substack.com).

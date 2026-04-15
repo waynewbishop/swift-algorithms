@@ -34,7 +34,9 @@ The Swift language has become the cornerstone of Apple development, powering sol
 ## Related projects
 
 - [Quiver Documentation](https://waynewbishop.github.io/quiver/documentation/quiver/) - Vector mathematics, numerical computing, and statistical operations ([GitHub](https://github.com/waynewbishop/quiver))
+- [Quiver Cookbook](https://github.com/waynewbishop/quiver-cookbook) - Interactive recipes for learning vector math, statistics, and ML models in Swift
 - [Structures Package](https://github.com/waynewbishop/bishop-algorithms-swift-package) - Production implementations of algorithms and data structures
+- [The Feature Vector](https://featurevector.substack.com) - A newsletter about ML intuition for engineers, built in Swift
 
 ## Contributing
 
