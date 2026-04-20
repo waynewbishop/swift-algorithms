@@ -43,6 +43,11 @@ This minimalist structure is sufficient because stacks only access the top eleme
 
 Queues follow "first-in, first-out" ordering. Elements enter at the back and exit from the front, like a line at a store. The `Queue<T>` class maintains a `top` pointer to the front element:
 
+<figure>
+  <img src="Images/10-queue-diagram.png" alt="Queue with enqueue and dequeue operations">
+  <figcaption>Figure 10.1: A queue enqueues at the back and dequeues from the front — first in, first out.</figcaption>
+</figure>
+
 ```swift
 // Generic queue implementation with FIFO ordering
 public class Queue<T> {
@@ -110,6 +115,11 @@ Enqueuing is linear time `O(n)` because we must traverse to the end. Dequeuing i
 ## Building a stack
 
 Stacks follow "last-in, first-out" ordering. Elements are added and removed from the same end (the `top`), like a stack of plates. This enables `O(1)` insertion and removal:
+
+<figure>
+  <img src="Images/10-stack-diagram.png" alt="Stack with push and pop operations">
+  <figcaption>Figure 10.2: A stack pushes items on top and pops them off the same end — last in, first out.</figcaption>
+</figure>
 
 ```swift
 // Generic stack implementation with LIFO ordering

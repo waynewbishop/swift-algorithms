@@ -37,6 +37,16 @@ print("5! = \(factorial(5))")  //outputs: 5! = 120
 
 Understanding how recursion executes requires seeing the call stack in action. When we call `factorial(5)`, here's what happens:
 
+<figure>
+  <img src="Images/06-recursion-stack.png" alt="Recursive function calling itself">
+  <figcaption>Figure 6.1: A recursive function calls itself, stacking frames until the base case returns.</figcaption>
+</figure>
+
+<figure>
+  <img src="Images/06-recursion-call-stack.png" alt="Recursive call stack unwinding">
+  <figcaption>Figure 6.2: Each recursive call pushes a new frame; each return unwinds one back off the stack.</figcaption>
+</figure>
+
 ```
 factorial(5)
   → calls factorial(4)

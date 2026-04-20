@@ -20,11 +20,31 @@ let numberList: Array<Int> = [8, 2, 10, 9, 11, 7]
 
 As shown, `numberList` can be easily represented as a heap. Starting at index 0, items fill a corresponding spot as a parent or child node. Each parent also has two children with the exception of index 2.
 
+<figure>
+  <img src="Images/17-heap-indexed.png" alt="Binary heap stored as an indexed array">
+  <figcaption>Figure 17.1: A binary heap stored as an array — each tree position maps to a fixed array index.</figcaption>
+</figure>
+
 Since the arrangement of values is sequential, a simple pattern emerges. For any element at index `i`, we can accurately predict its position using these formulas:
 
 - **Parent**: `(i - 1) / 2`
 - **Left child**: `2 * i + 1`
 - **Right child**: `2 * i + 2`
+
+<figure>
+  <img src="Images/17-heap-equation-parent.png" alt="Parent index formula">
+  <figcaption>Figure 17.2: The parent of index i sits at floor((i - 1) / 2).</figcaption>
+</figure>
+
+<figure>
+  <img src="Images/17-heap-equation-left.png" alt="Left child index formula">
+  <figcaption>Figure 17.3: The left child of index i sits at 2i + 1.</figcaption>
+</figure>
+
+<figure>
+  <img src="Images/17-heap-equation-right.png" alt="Right child index formula">
+  <figcaption>Figure 17.4: The right child of index i sits at 2i + 2.</figcaption>
+</figure>
 
 ## Sorting heaps
 
@@ -84,6 +104,11 @@ The `PathHeap` class includes two properties. To support good design, `heap` has
 
 Searching the `frontier` more efficiently than `O(n)` will require a new way of thinking. We can improve our performance to `O(1)` with a heap. Using heapsort formulas, our new approach will involve arranging index values so the smallest item is positioned at the root:
 
+<figure>
+  <img src="Images/17-min-heap-step-1.png" alt="Initial min-heap with smallest value at root">
+  <figcaption>Figure 17.5: The initial min-heap — smallest value already at the root.</figcaption>
+</figure>
+
 ```swift
 // Sort shortest paths into a min-heap via bottom-up heapification - O(log n)
 public func enQueue(_ key: Path<T>) {
@@ -127,7 +152,17 @@ public func enQueue(_ key: Path<T>) {
 
 The `enQueue` method accepts a single `Path` as a parameter. Unlike other sorting algorithms, our primary goal isn't to sort each item, but to find the smallest value. This means we can increase our efficiency by comparing a subset of values.
 
+<figure>
+  <img src="Images/17-min-heap-step-2.png" alt="Bubble-up comparison between child and parent">
+  <figcaption>Figure 17.6: Inserting a smaller value at the end triggers a bubble-up comparison with its parent.</figcaption>
+</figure>
+
 The process continues until the smallest value is positioned at the root. Since the `enQueue` method maintains the min-heap property, we eliminate the task of finding the shortest path. In other words, we increase the algorithm's efficiency to `O(1)`. Here, we implement a basic `peek` method to retrieve the root-level item:
+
+<figure>
+  <img src="Images/17-min-heap-step-3.png" alt="Heap restored after swap">
+  <figcaption>Figure 17.7: After the swap, the new minimum sits at the root and heap order is restored.</figcaption>
+</figure>
 
 ```swift
 // Returns the shortest path without removing it - O(1)

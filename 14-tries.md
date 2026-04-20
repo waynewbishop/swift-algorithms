@@ -63,6 +63,11 @@ The array-based children approach trades `O(1)` dictionary lookup for `O(k)` arr
 
 Using the TrieNode data structure, we can add words to our trie using the `append(word:)` method. This implementation builds the tree character by character, creating nodes as needed:
 
+<figure>
+  <img src="Images/14-trie-ball-path.png" alt="Trie inserting the word ball">
+  <figcaption>Figure 14.1: Inserting "ball" creates one node per character, with the terminal node marking a valid word.</figcaption>
+</figure>
+
 ```swift
 // Inserts a word into the trie character by character
 func append(word keyword: String) {
@@ -121,6 +126,11 @@ The primary advantage of tries is efficient prefix-based searching. Our producti
 ### The breadth-first pattern
 
 All trie search operations follow a consistent BFS pattern with two phases. In the first phase, we navigate to a starting node by finding the specific node where the search begins (such as a prefix node or the root), validating that the starting point exists, and returning early if the search is impossible.
+
+<figure>
+  <img src="Images/14-trie-ball-bat-branch.png" alt="Trie branching at shared prefix ba">
+  <figcaption>Figure 14.2: Adding "bat" branches off the existing "ba" prefix rather than duplicating it.</figcaption>
+</figure>
 
 In the second phase, we perform a level-order traversal. We initialize a Queue and enqueue the starting node, then process all nodes at level N before moving to level `N+1`. At each node we check a condition—collecting a word, matching a pattern, or performing some other operation—and enqueue the node's children for the next level. The Queue from [Chapter 10](10-stacks-and-queues.md) acts as a "to-visit" list, ensuring systematic exploration. This guarantees we find all matching words without missing any branches.
 

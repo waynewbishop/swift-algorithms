@@ -15,17 +15,42 @@ Quicksort applies a series of rules to swap pairs of values. Swap events are per
 
 At the start of the sorting process, the algorithm begins by comparing each index value to a comparison value called the pivot. The wall represents the position of values that have been swapped or evaluated. Since we've just started the sorting process, the current and wall indices are shown as the same value.
 
+<figure>
+  <img src="Images/05-quicksort-step-1.png" alt="Quicksort initial state with wall and pivot">
+  <figcaption>Figure 5.1: The initial state — the leftmost value becomes the wall and the rightmost becomes the pivot.</figcaption>
+</figure>
+
 ### Making comparisons
 
 The next step compares the current and pivot values. Since the current value (such as 7) is greater than the pivot (such as 4), no swap occurs. However, the current index advances to the next position.
 
+<figure>
+  <img src="Images/05-quicksort-step-2.png" alt="Current value greater than pivot, no swap">
+  <figcaption>Figure 5.2: The current value exceeds the pivot, so no swap occurs and the index advances.</figcaption>
+</figure>
+
 In this step, the current value (such as 2) is again compared with the pivot. Since 2 is less than 4, the wall is swapped with the current index value. Once complete, the wall advances to the next index position.
+
+<figure>
+  <img src="Images/05-quicksort-step-3.png" alt="Swap triggered when current value is less than pivot">
+  <figcaption>Figure 5.3: A value smaller than the pivot triggers a swap and advances the wall.</figcaption>
+</figure>
 
 ### Conquering the divide
 
 The process of comparing and swapping occurs until the current index meets the pivot. Once complete, the pivot is swapped with the wall index value. Interestingly, once the pivot is swapped, it's considered sorted. Even though most values remain unsorted at this phase, all values less than 4 are now positioned to the left. Conversely, all values greater than 4 are positioned to the right.
 
+<figure>
+  <img src="Images/05-quicksort-step-4.png" alt="Pivot swapped into final sorted position">
+  <figcaption>Figure 5.4: The pivot is swapped into its final sorted position, partitioning the array.</figcaption>
+</figure>
+
 The initial pivot value of 4 has been used to show how Quicksort can divide a collection into relatively equal segments. This process is called partitioning. To sort the remaining values, each value left or right of the initial pivot is also treated as a pivot and the process is repeated.
+
+<figure>
+  <img src="Images/05-quicksort-step-5.png" alt="Recursive partitioning of sub-arrays">
+  <figcaption>Figure 5.5: Each sub-partition is sorted recursively using the same pivot-and-wall process.</figcaption>
+</figure>
 
 ## Implementing Quicksort in Swift
 
