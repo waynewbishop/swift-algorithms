@@ -14,11 +14,6 @@ Sequences can be easily implemented with integers (workout durations in minutes,
 let numberList : Array<Int> = [8, 2, 10, 9, 7, 5]
 ```
 
-<figure>
-  <img src="Images/04-sorting-unsorted-set.png" alt="Unsorted collection of items">
-  <figcaption>Figure 4.1: An unsorted collection of items, the starting point for every sorting algorithm in this chapter.</figcaption>
-</figure>
-
 ## Insertion sort
 
 Insertion sort is one of the more basic sorting algorithms in computer science. The solution ranks elements by iterating through a collection and positions elements based on their value. The set is divided into sorted and unsorted halves and repeats until all elements are sorted.

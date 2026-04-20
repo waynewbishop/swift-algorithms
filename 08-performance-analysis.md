@@ -108,29 +108,9 @@ func fibonacciMemoized(_ n: Int, cache: inout [Int: Int]) -> Int {
 
 The naive Fibonacci implementation reveals exponential complexity—each function call spawns two additional calls, creating a branching tree of 2^n operations. The recursion depth reaches n levels, resulting in `O(2^n)` time complexity and `O(n)` space complexity for the call stack.
 
-<figure>
-  <img src="Images/08-non-memoized-flow.png" alt="Non-memoized recursion recomputes every branch">
-  <figcaption>Figure 8.1: Without memoization, every call recomputes work from scratch.</figcaption>
-</figure>
-
-<figure>
-  <img src="Images/08-fib-calls-table.png" alt="Exponential growth in Fibonacci call counts">
-  <figcaption>Figure 8.2: Call counts explode exponentially for naive Fibonacci.</figcaption>
-</figure>
-
 Memoization transforms this exponential behavior into linear performance. By caching previously computed values, we ensure each Fibonacci number is calculated exactly once. This optimization reduces time complexity to `O(n)` while maintaining `O(n)` space complexity for the cache storage.
 
-<figure>
-  <img src="Images/08-memoization-flow.png" alt="Memoized flow with cache lookup">
-  <figcaption>Figure 8.3: Memoization stores results in a cache, letting repeat inputs skip the work entirely.</figcaption>
-</figure>
-
 The practical impact is dramatic: computing fib(40) with the naive approach requires billions of operations, taking 2-3 seconds. The memoized version performs just 40 operations, completing in under 1 millisecond. Understanding algorithmic complexity enables us to transform unusable algorithms into instant ones.
-
-<figure>
-  <img src="Images/08-fib-memoized-comparison.png" alt="Memoized vs naive Fibonacci call comparison">
-  <figcaption>Figure 8.4: Memoized Fibonacci reduces thousands of calls to a handful.</figcaption>
-</figure>
 
 ## Recognizing common patterns
 

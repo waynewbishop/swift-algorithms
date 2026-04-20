@@ -15,31 +15,12 @@ As discussed, a graph is a model that shows how objects relate to one another. G
 
 Graph objects relate to one another through connections called [edges](https://en.wikipedia.org/wiki/Glossary_of_graph_theory#edge). Depending on the requirements, a vertex could be linked to one or more objects through a series of edges. It's also possible to create a vertex without edges. Here are some basic graph configurations:
 
-<figure>
-  <img src="Images/13-graph-undirected-three.png" alt="Undirected three-vertex graph">
-  <figcaption>Figure 13.1: An undirected graph — every edge is traversable in both directions.</figcaption>
-</figure>
-
-<figure>
-  <img src="Images/13-graph-four-vertex-tree.png" alt="Four-vertex directed tree">
-  <figcaption>Figure 13.2: A four-vertex directed tree branching from a root vertex.</figcaption>
-</figure>
 
 ## Directed vs undirected
 
 As shown above, there are many ways to configure a graph. An additional option is to set the model to be either directed or undirected. The examples above represent undirected graphs. In other words, the connection between vertices A and B is equivalent to the connection between vertices B and A. Social networks are a great example of undirected graphs. Once a request is accepted, both parties (e.g. the sender and recipient) share a mutual connection.
 
-<figure>
-  <img src="Images/13-graph-two-vertices.png" alt="Directed graph with a single edge">
-  <figcaption>Figure 13.3: A directed graph with a single edge — the simplest possible directed relationship.</figcaption>
-</figure>
-
 A service like Google Maps is a great example of a directed graph. Unlike an undirected graph, directed graphs only support a one-way connection between source vertices and their destinations. So, for example, vertex A could be connected to B, but A wouldn't necessarily be reachable through B. To show the varying relationship between vertices, directed graphs are drawn with lines and arrows.
-
-<figure>
-  <img src="Images/13-graph-directed-three.png" alt="Directed three-vertex graph with arrows">
-  <figcaption>Figure 13.4: A directed graph where edges carry one-way connections, like a one-way street.</figcaption>
-</figure>
 
 ## Edges and weights
 
@@ -78,11 +59,6 @@ The `Vertex` class stores a generic value in `tvalue`, maintains an array of `Ed
 ## Adjacency lists
 
 The `neighbors` property is an array that represents connections a vertex may have with other vertices. As discussed, a vertex can be associated with one or more items. This list of neighboring items is sometimes called an adjacency list and can be used to solve a variety of problems. Here's a basic data structure that represents an edge:
-
-<figure>
-  <img src="Images/13-graph-adjacency-list.png" alt="Vertex storing its list of neighbors">
-  <figcaption>Figure 13.5: Each vertex stores its own list of neighbors — the adjacency-list representation.</figcaption>
-</figure>
 
 ```swift
 // Edge connecting vertex to neighbor with weighted cost

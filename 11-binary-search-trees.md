@@ -25,16 +25,6 @@ The `Comparable` constraint ensures elements can be compared using `<` and `>`, 
 
 Let's build a BST from an array. The insertion order doesn't matter—the BST rules place each value correctly:
 
-<figure>
-  <img src="Images/11-bst-balanced.png" alt="A balanced binary search tree">
-  <figcaption>Figure 11.1: A balanced BST where every insertion splits the remaining search space in half.</figcaption>
-</figure>
-
-<figure>
-  <img src="Images/11-bst-left-skewed.png" alt="A left-skewed BST">
-  <figcaption>Figure 11.2: A left-skewed tree — valid as a BST but degraded to linear-time search.</figcaption>
-</figure>
-
 ```swift
 // Example array to build BST
 let numberList: [Int] = [8, 2, 10, 9, 11, 1, 7]
@@ -125,24 +115,9 @@ func search(for value: T) -> Bool {
 
 Traversal is the process of visiting every node in a tree structure exactly once in a systematic order. Unlike linear data structures like arrays where iteration is straightforward, trees require specific strategies to navigate their hierarchical relationships. The practical value becomes clear when we need sorted data: instead of maintaining a separate sorted array and re-sorting after every insertion (`O(n log n)` each time), a balanced BST provides both `O(log n)` insertion and `O(n)` sorted traversal. This makes BSTs ideal for applications requiring frequent insertions.
 
-<figure>
-  <img src="Images/11-bst-bfs-traversal.png" alt="Breadth-first traversal visiting nodes level by level">
-  <figcaption>Figure 11.4: Breadth-first traversal visits nodes level by level from the root down.</figcaption>
-</figure>
-
-<figure>
-  <img src="Images/11-bst-bfs-traversal-extended.png" alt="Breadth-first traversal on a deeper tree">
-  <figcaption>Figure 11.5: Breadth-first traversal on a deeper tree, reaching leaves only after every interior level is visited.</figcaption>
-</figure>
-
 ### In-order traversal
 
 In-order traversal visits nodes in sorted order: `left` subtree, `current` node then `right` subtree. This is the most common traversal pattern for BSTs:
-
-<figure>
-  <img src="Images/11-bst-inorder-traversal.png" alt="In-order traversal path through a BST">
-  <figcaption>Figure 11.3: In-order traversal visits left subtree, node, then right subtree — producing sorted output.</figcaption>
-</figure>
 
 ```swift
 // In-order traversal produces sorted output - O(n)

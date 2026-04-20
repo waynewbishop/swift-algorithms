@@ -45,17 +45,7 @@ Some algorithms' performance degrades exponentially. The naive recursive Fibonac
 
 ## Visualizing the difference
 
-<figure>
-  <img src="Images/02-bigo-complexity-graph.png" alt="Big O complexity curves">
-  <figcaption>Figure 2.1: Common Big O complexities plotted against input size, showing how quickly quadratic time outpaces logarithmic.</figcaption>
-</figure>
-
 Let's see how these complexities compare with actual numbers. This table reveals why algorithmic efficiency matters. An `O(n²)` algorithm that works fine with 100 elements becomes noticeably slow with 10,000 elements. But an `O(log n)` algorithm barely notices the difference:
-
-<figure>
-  <img src="Images/02-bigo-search-comparison-table.png" alt="Linear vs binary search operation counts">
-  <figcaption>Figure 2.2: Comparing linear and binary search operation counts as input size grows.</figcaption>
-</figure>
 
 | Input Size | O(1) | O(log n) | O(n) | O(n log n) | O(n²) |
 |------------|------|----------|------|------------|-------|

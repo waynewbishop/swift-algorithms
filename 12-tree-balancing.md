@@ -15,11 +15,6 @@ The tree achieved balance not only through the BST append algorithm, but also th
 
 Consider building a tree from sorted data — timestamps arriving in order, auto-incrementing database IDs, or alphabetized names. Inserting `[1, 2, 3, 4, 5]` into a BST creates a worst case where every node has only a `right` child, forming a linked list. Searching for 5 requires examining all 5 nodes — `O(n)` — not the 3 comparisons `O(log 5) ≈ 2.3` a balanced tree would need. This scenario is not rare. Without balancing, BSTs become unreliable in real systems.
 
-<figure>
-  <img src="Images/12-avl-unbalanced-right.png" alt="Right-skewed tree from ascending inserts">
-  <figcaption>Figure 12.1: Three ascending inserts produce a right-skewed tree — unbalanced and linear to search.</figcaption>
-</figure>
-
 ## Tracking height
 
 To compensate for these imbalances, we need to expand the scope of the algorithm. In addition to `left` and `right` logic, we add a new property called `height`. Coupled with specific rules, we can use `height` to detect tree imbalances. To see how this works, let's create a new BST from a sample array:
@@ -29,17 +24,7 @@ To compensate for these imbalances, we need to expand the scope of the algorithm
 let balanceList: [Int] = [29, 26, 23]
 ```
 
-<figure>
-  <img src="Images/12-avl-unbalanced-left.png" alt="Left-skewed tree from descending inserts">
-  <figcaption>Figure 12.2: Three descending inserts produce the mirror problem — a left-skewed chain.</figcaption>
-</figure>
-
 We'll start by adding the `root` element (29). As the first item, `left` and `right` children don't yet exist, so they are initialized to `nil`. For the `height` calculation, non-existent children are assigned a `height` of -1. We calculate a node's `height` by comparing the `height` of each child, finding the larger value, then increasing it by 1. For the `root` element, this equates to `max(-1, -1) + 1 = 0`.
-
-<figure>
-  <img src="Images/12-avl-height-root.png" alt="Root node height calculation with nil children">
-  <figcaption>Figure 12.3: A leaf node has height 0; its nil children report height -1.</figcaption>
-</figure>
 
 In Swift, these rules translate to two helper methods on `BSModel`:
 
@@ -61,11 +46,6 @@ private func setHeight(for node: BSNode<T>) {
 ## Measuring balance
 
 With the `root` element established, we proceed to add the next value. Standard BST logic positions `26` as the `left` child. As a new node, its `height` is also 0. Since the tree is a hierarchy, we traverse upward to recalculate the parent's `height`. The `root` now has a `left` child with `height` 0 and no `right` child (-1), so its `height` becomes `max(0, -1) + 1 = 1`.
-
-<figure>
-  <img src="Images/12-avl-height-subtree.png" alt="Subtree heights propagating upward">
-  <figcaption>Figure 12.4: Subtree heights propagate upward, letting each node detect imbalance locally.</figcaption>
-</figure>
 
 With multiple elements present, we run an additional check to see if the tree is balanced. A tree is considered balanced if the `height` difference between its `left` and `right` subtrees is less than 2. Even though no right-side elements exist yet, the model is still valid:
 
@@ -95,11 +75,6 @@ let rootVal = abs((1) - (-1))  // equals 2 — unbalanced
 
 The tree has become `left`-heavy. To restore `O(log n)` performance, we need to restructure the tree through a process called rotation.
 
-<figure>
-  <img src="Images/12-avl-height-annotated.png" alt="Tree with height values annotated at each node">
-  <figcaption>Figure 12.5: Node heights determine balance — the difference between child heights must not exceed one.</figcaption>
-</figure>
-
 ## Right rotation
 
 Since the tree has too many nodes on the `left`, we balance it by performing a `right` rotation. The idea is to promote the `left` child to `root` and demote the current `root` to the `right`. Rather than rewiring parent pointers, the implementation copies values between nodes — the `root` node object stays in place, but its contents change:
@@ -127,16 +102,6 @@ private func rotateRight(for element: BSNode<T>) {
 ```
 
 After rotation, 29 (originally the `root`) moves to the `right` child position. Node 26 becomes the new `root`. The tree is balanced, and an in-order traversal still produces sorted output — `23, 26, 29`.
-
-<figure>
-  <img src="Images/12-avl-rotation-result.png" alt="Tree after right rotation with 26 as root">
-  <figcaption>Figure 12.6: A right rotation restores balance while preserving in-order sort order.</figcaption>
-</figure>
-
-<figure>
-  <img src="Images/12-avl-balanced-tree.png" alt="Balanced AVL tree after rotation">
-  <figcaption>Figure 12.7: After AVL balancing, the same values form a balanced tree with O(log n) operations.</figcaption>
-</figure>
 
 Even though we undergo a series of steps, the process occurs in `O(1)` time. Its performance is unaffected by the number of nodes, descendants, or tree `height`.
 

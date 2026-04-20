@@ -11,28 +11,13 @@ In [Chapter 13](13-graphs.md), we saw how graphs show the relationship between t
 
 The challenge with graphs is knowing how a `vertex` relates to other objects. Consider the social networking website, LinkedIn. With LinkedIn, each profile can be thought of as a single `vertex` that may be connected with other `vertices`.
 
-<figure>
-  <img src="Images/16-dijkstra-graph-weighted.png" alt="Weighted directed graph modeling a network">
-  <figcaption>Figure 16.1: A weighted directed graph models real-world networks like LinkedIn connections.</figcaption>
-</figure>
-
 One feature of LinkedIn is the ability to introduce ourselves to new people. Under this scenario, LinkedIn will suggest routing a message through a shared connection. In graph theory, the most efficient way to deliver a message is called the shortest path.
 
 ## Finding our way
 
 Shortest paths can also be seen with map-based services like Google Maps. We frequently use Google Maps to ascertain driving directions between two points. As we know, there are often multiple ways to get to any destination. The shortest route will often depend on various factors such as traffic, road conditions, accidents and time of day. In graph theory, these external factors represent edge `weights`.
 
-<figure>
-  <img src="Images/16-dijkstra-linear-path.png" alt="Linear three-vertex path with cumulative cost">
-  <figcaption>Figure 16.2: A simple three-vertex linear path showing cumulative cost across two edges.</figcaption>
-</figure>
-
 This illustrates some key points we'll see in Dijkstra's algorithm. In addition to there being multiple ways to arrive at `vertex` C from A, the shortest path is assumed to be through `vertex` B. It's only when we arrive at `vertex` C from B that we adjust our interpretation of the shortest path and change direction (e.g. `4 < (1 + 5)`). This change in direction is known as the **greedy approach** and is used in similar problems like the traveling salesman.
-
-<figure>
-  <img src="Images/16-path-linear-abc.png" alt="Direct versus indirect A-to-C route">
-  <figcaption>Figure 16.3: The direct A-to-C route costs more than the indirect path through B.</figcaption>
-</figure>
 
 ## Introducing Dijkstra
 
@@ -40,17 +25,7 @@ Edsger Dijkstra's algorithm was published in 1959 and is designed to find the sh
 
 Even though our model is labeled with key values and edge `weights`, our algorithm can only see a subset of this information. Starting at the source `vertex`, our goal will be to traverse the graph.
 
-<figure>
-  <img src="Images/16-dijkstra-five-node-graph.png" alt="Five-vertex graph used for Dijkstra walkthrough">
-  <figcaption>Figure 16.4: The five-vertex graph Dijkstra's algorithm will explore across the rest of this chapter.</figcaption>
-</figure>
-
 ## Using paths
-
-<figure>
-  <img src="Images/16-dijkstra-weighted-three.png" alt="Three-vertex weighted graph">
-  <figcaption>Figure 16.5: A weighted graph where edge values represent the cost of traversing a connection.</figcaption>
-</figure>
 
 Throughout our journey, we'll track each node visit in a custom data structure called `Path`. The `total` will manage the cumulative edge `weight` to reach a particular destination. The `previous` property will represent the `Path` taken to reach that `vertex`:
 
@@ -89,11 +64,6 @@ public func processDijkstra(_ source: Vertex<T>, destination: Vertex<T>) -> Path
 ## Building the frontier
 
 As discussed, the key to understanding Dijkstra's algorithm is knowing how to traverse the graph. To help, we'll introduce a few rules and a new concept called the `frontier`:
-
-<figure>
-  <img src="Images/16-dijkstra-unexplored-graph.png" alt="Unexplored graph with unknown costs">
-  <figcaption>Figure 16.6: Before exploration, every non-source vertex sits in the frontier with unknown cost.</figcaption>
-</figure>
 
 ```swift
 var frontier: Array<Path<T>> = Array<Path<T>>()
@@ -162,26 +132,11 @@ An important section to note is the while loop condition. As we traverse the gra
 
 As shown, we've used the `bestPath` to build a new series of paths. We've also preserved our visit history with each new object.
 
-<figure>
-  <img src="Images/16-dijkstra-path-table-1.png" alt="Path table after first iteration">
-  <figcaption>Figure 16.7: After one round, two paths are known — the rest remain unreachable.</figcaption>
-</figure>
-
 At this point, we've learned a little more about our graph. There are now two possible paths to `vertex` D. The shortest path has also changed to arrive at `vertex` C. Finally, the `Path` through route A-B has been removed and has been added to a new structure named `finalPaths`.
-
-<figure>
-  <img src="Images/16-dijkstra-path-table-2.png" alt="Path table after second iteration showing two paths to D">
-  <figcaption>Figure 16.8: Round two introduces two candidate paths to D; the cheaper one wins.</figcaption>
-</figure>
 
 ## A single source
 
 Dijkstra's algorithm can be described as "single source" because it calculates the path to every `vertex`. In our example, we've preserved this information in the `finalPaths` array:
-
-<figure>
-  <img src="Images/16-dijkstra-path-table-final.png" alt="Final path table with shortest routes to every vertex">
-  <figcaption>Figure 16.9: The final path table holds the shortest route from A to every reachable vertex.</figcaption>
-</figure>
 
 ```swift
 // Establish the shortest path as an optional

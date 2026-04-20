@@ -19,11 +19,6 @@ A hash table consists of two essential components: the **hash function**, which 
 
 Values are stored in non-contiguous slots called **buckets** within an array. The hash function determines which bucket to use, enabling direct access without searching through the entire structure. Unlike a dictionary, the computed index is not stored alongside the data — it can be recalculated at any time from the key itself.
 
-<figure>
-  <img src="Images/15-hash-model.png" alt="Hash function mapping keys to buckets">
-  <figcaption>Figure 15.1: A hash function maps each key to a bucket index, turning lookup into constant-time math.</figcaption>
-</figure>
-
 ## The Indexable protocol
 
 An interesting question arises when building a generic hash table. Since elements are arranged based on their hash index, how can our algorithm learn to interpret different data types? To manage these requirements, the `Structures` package defines a protocol called `Indexable`:
