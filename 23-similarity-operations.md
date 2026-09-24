@@ -151,7 +151,7 @@ let scores = catalog.cosineSimilarities(to: query)
 // [0.99, 0.68, 0.99] — Items A and C are strong matches
 ```
 
-Most applications need only the best matches, not all scores. Finding the top `k` results from `n` scores is the **selection problem**—a classic challenge connecting to sorting ([Chapter 4](04-basic-sorting.md)) and heaps ([Chapter 17](17-heaps.md)). Quiver's `.topIndices(k:)` method returns the highest-scoring elements with their original positions:
+Most applications need only the best matches, not all scores. Finding the top `k` results from `n` scores is the **selection problem**—a classic challenge connecting to sorting ([Chapter 4](04-basic-sorting.md)) and heaps ([Chapter 17](17-heaps.md)). Quiver's `.topIndices(k:)` method returns the highest-scoring elements with their rank and original positions:
 
 ```swift
 import Quiver
@@ -160,9 +160,9 @@ let scores = [0.42, 0.99, 0.15, 0.98, 0.67]
 
 // Return the indices of the top 3 highest scores
 let top3 = scores.topIndices(k: 3)
-// [(index: 1, score: 0.99),
-//  (index: 3, score: 0.98),
-//  (index: 4, score: 0.67)]
+// [(rank: 1, index: 1, score: 0.99),
+//  (rank: 2, index: 3, score: 0.98),
+//  (rank: 3, index: 4, score: 0.67)]
 ```
 
 The current implementation sorts all scores in `O(n log n)` time. For large collections where `k` is much smaller than `n`, a heap-based approach achieves `O(n log k)` by maintaining a min-heap of size `k` and replacing the minimum only when a better score appears. This optimization, using the heap structure from [Chapter 17](17-heaps.md), becomes significant at scale:
@@ -182,8 +182,8 @@ let items = ["running shoes", "desk lamp", "trail sneakers", "keyboard"]
 
 // Return the top 2 scores with their associated item labels
 let results = scores.topIndices(k: 2, labels: items)
-// [(label: "running shoes", score: 0.92),
-//  (label: "trail sneakers", score: 0.87)]
+// [(rank: 1, label: "running shoes", score: 0.92),
+//  (rank: 2, label: "trail sneakers", score: 0.87)]
 ```
 
 ## Cluster analysis

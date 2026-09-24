@@ -126,18 +126,18 @@ let speed = 5.0
 let velocity = direction * speed  // [3.0, 4.0] - exactly 5 units/sec
 ```
 
-Normalization separates direction from magnitude, enabling precise control over movement speeds, force magnitudes, and other directional quantities. We should always handle zero vectors properly:
+Normalization separates direction from magnitude, enabling precise control over movement speeds, force magnitudes, and other directional quantities. A zero vector has no direction to preserve, so Quiver's `.normalized` returns a zero vector rather than failing. Checking the magnitude first lets us decide what that case should mean for our app:
 
 ```swift
-// Handle zero vectors to avoid normalization errors
+// Check for a zero vector before normalizing, since it has no direction
 import Quiver
 
 let zeroVector = [0.0, 0.0]
 
 if zeroVector.magnitude > 0 {
-    let normalized = zeroVector.normalized
+    print(zeroVector.normalized)
 } else {
-    print("Cannot normalize zero vector")
+    print("Zero vector has no direction")  // .normalized would return [0.0, 0.0]
 }
 ```
 

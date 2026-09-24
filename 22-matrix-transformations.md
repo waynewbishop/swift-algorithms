@@ -1,29 +1,30 @@
 ---
 layout: chapter
 title: "Chapter 22: Matrix Transformations"
-description: "Apply rotation, scaling, reflection, and shear transformations to vectors and matrices in Swift"
+description: "Apply scaling, rotation, and shear transformations to vectors and matrices in Swift"
 ---
 # Matrix Transformations
 
-In [Chapter 21](21-matrices.md), we explored matrices as rectangular arrays that organize multi-dimensional data efficiently. In this section we'll learn more about how matrices **transform** [vector spaces](https://waynewbishop.github.io/quiver/documentation/quiver/linear-algebra-primer).
+In [Chapter 21](21-matrices.md), we treated a matrix as a way to organize data, with athletes in rows and measurements in columns. We ended with a different kind of matrix, `[[0, -1], [1, 0]]`, and noted that it does not describe data at all. It describes an operation that rotates any vector by ninety degrees. This chapter takes up that second role. A matrix can *move* space, and the key to reading one is to stop thinking of a vector as a fixed point and start thinking of it as an instruction, a recipe for how far to travel along each axis. When the matrix moves the axes, the instruction rides along, and the vector lands somewhere new.
 
-## Understanding basis vectors
+That is the single idea this chapter returns to again and again: **a matrix moves the basis vectors, and every vector rides along.** Read the columns of a matrix to see where the basis vectors land, and we know everything the matrix does.
 
-From [Chapter 20](20-vectors.md), we know vectors represent magnitude and direction. Although a vector can possess any number of dimensions, two special unit vectors define the standard 2D coordinate system—the **basis vectors** usually called `i-hat` and `j-hat`:
+## Vectors as instructions
+
+From [Chapter 20](20-vectors.md), we know a vector like `[3, 4]` is really an instruction: three steps along one basis vector, four along the other. Those two basis vectors, usually called `i-hat` and `j-hat`, point one step along each axis:
 
 ```swift
-let iHat = [1.0, 0.0]  // Points right (x-axis)
-let jHat = [0.0, 1.0]  // Points up (y-axis)
+let iHat = [1.0, 0.0]  // points one step along the x-axis
+let jHat = [0.0, 1.0]  // points one step up the y-axis
 ```
 
 ```
         ↑ j-hat [0, 1]
         |
-        |
         └──→ i-hat [1, 0]
 ```
 
-Any vector can be expressed as a combination of these basis vectors. This can be presented mathematically using a technique known as **matrix multiplication**. For example, the vector `[3, 4]` is oriented based on the position of `i-hat` and `j-hat`. Although the math shows the resulting vector unchanged, we can still see the application of the matrix to the vector.
+The coordinates of a vector are the amounts of each basis vector. So `[3, 4]` reads as three of `i-hat` plus four of `j-hat`:
 
 ```
 [3, 4] = 3 × [1, 0] + 4 × [0, 1]
@@ -31,181 +32,144 @@ Any vector can be expressed as a combination of these basis vectors. This can be
        = [3, 4]
 ```
 
-The basis vectors form the canvas. As a result, every vector is built from them. When matrices transform vectors, the matrix columns show **where** the basis vectors end up after transformation.
+Written as a matrix, those two basis vectors in their resting position form the **identity matrix**. It is the do-nothing transformation, the default position of the axes before anything moves them:
 
 ```swift
-import Quiver 
-
-let identity = [
-    [1.0, 0.0],  // Column 1: i-hat
-    [0.0, 1.0]   // Column 2: j-hat
-]
-
-// Creates a diagonal matrix - scales vector space
-let scaleUp = [Double].diag([2.0, 3.0])
-
-// Original basis vectors now scaled
-let transform = identity.multiplyMatrix(scaleUp)  //identity scaled by [2.0, 3.0]
+let identity = [Double].identity(2)  // [[1, 0], [0, 1]]
 ```
 
-## The identity matrix
+The columns of the identity are `i-hat` and `j-hat` exactly where they started. Every other matrix in this chapter is a departure from it.
 
-The **identity matrix** is simply the basis vectors expressed in matrix notation. As a result, `i-hat` and `j-hat` arranged as columns:
+## How a matrix moves the basis vectors
 
-```swift
-let identity = [
-    [1.0, 0.0],  // Column 1: i-hat
-    [0.0, 1.0]   // Column 2: j-hat
-]
-```
+A matrix transforms the basis vectors to new positions. Because a vector is just an instruction written in terms of those basis vectors, the instruction never changes. The vector simply rides along to wherever the basis vectors now point.
 
-This represents the standard coordinate system before any transformation.
+The columns of a matrix are where the basis vectors land. This is the geometry: read column one to see where `i-hat` goes, column two to see where `j-hat` goes.
 
-## Matrix multiplication
-
-How do matrices transform vectors? As previously discussed, **matrix multiplication** is a specific calculation that applies transformations by combining the input vector's components in precise ways. When we multiply a matrix by a vector, each row of the matrix defines how to compute one component of the output. The calculation uses dot products:
+The actual computation reads the matrix a different way, across the rows. Each coordinate of the output is a dot product of a row with the input, the same calculation from [Chapter 20](20-vectors.md):
 
 ```
 [a  b]   [x]   [a×x + b×y]
 [c  d] × [y] = [c×x + d×y]
 ```
 
-Each output component is a **weighted combination** of the input components. The matrix rows contain the weights. This mixing of components is what enables transformations—scaling, rotation, and other geometric operations all work by recombining the input values.
+These are two readings of the same matrix. The columns tell us *where the basis vectors land*, the geometry. The rows tell us *how to compute each output coordinate*, the arithmetic. They look identical for the identity and for the diagonal matrices in the next section only because those matrices are symmetric. They diverge the moment a transformation mixes the axes, as shear will show.
 
 ## Scaling transformations
 
-Scaling transformations stretch or compress space along the coordinate axes. The basis vectors stay pointing in their original directions—they just get longer or shorter. This creates the characteristic diagonal pattern of scaling matrices.
-
-Consider the previous matrix that scales x by 2× and y by 3×:
-
-```
-[2  0]
-[0  3]
-```
-
-The diagonal values (2 and 3) are the scale factors. Zero values in the off-diagonal positions mean no mixing between dimensions—x stays as x, y stays as y. 
+The simplest transformation stretches space along the axes. The basis vectors keep pointing the same way, right and up, but grow longer or shorter. A diagonal matrix does this, with the diagonal entries as the scale factors:
 
 ```swift
 import Quiver
 
-let scaleUp = [
-    [2.0, 0.0],   // Column 1: i-hat stretched to [2, 0] (2× longer, still points right)
-    [0.0, 3.0]    // Column 2: j-hat stretched to [0, 3] (3× longer, still points up)
-]
+// i-hat stretches to [2, 0], j-hat stretches to [0, 3]
+let scaleUp = [[2.0, 0.0], [0.0, 3.0]]
 ```
 
-Visual transformation:
-
-```
-Before:          After:
-    ↑ j              ↑ j (3× longer)
-    |                |
-    |                |
-    └──→ i           └────→ i (2× longer)
-```
-
-The coordinate system's axes keep pointing in the same directions—right and up—but the measuring sticks got longer. Applying this transformation to a point scales each component by its corresponding diagonal value:
+The zeros off the diagonal mean no mixing: x stays as x, y stays as y. Reading the columns, `i-hat` lands at `[2, 0]` and `j-hat` at `[0, 3]`. Applying the transformation to a vector scales each coordinate by its axis's factor:
 
 ```swift
-import Quiver
-
 let vector = [4.0, 5.0]
 let scaled = scaleUp.transform(vector)  // [8.0, 15.0]
 
-// Verify the transform:
-// 4 × [2, 0] + 5 × [0, 3] = [8, 0] + [0, 15] = [8, 15] ✓
+// the instruction rides along: 4 × [2, 0] + 5 × [0, 3] = [8, 15]
 ```
 
 ## Rotation transformations
 
-Consider rotating `[3, 4]` by 90° counterclockwise. The rotation matrix is:
-
-```
-[0  -1]
-[1   0]
-```
-
-Applying the multiplication:
-
-```
-[0  -1]   [3]   [0×3 + (-1)×4]   [-4]
-[1   0] × [4] = [1×3 +   0×4 ] = [ 3]
-```
-
-Quiver's `.transform()` method performs this matrix-vector multiplication:
+A rotation spins the basis vectors to new positions while preserving their length. Consider a ninety-degree counterclockwise rotation:
 
 ```swift
-import Quiver
-
 let rotation90 = [[0.0, -1.0], [1.0, 0.0]]
+```
+
+Read the columns first, before any arithmetic. Column one is `[0, 1]`, so `i-hat` swings from pointing right to pointing up. Column two is `[-1, 0]`, so `j-hat` swings from pointing up to pointing left. Now predict where `[3, 4]` lands: three of the new `i-hat` plus four of the new `j-hat`. The computation confirms it:
+
+```swift
 let vector = [3.0, 4.0]
 let result = rotation90.transform(vector)  // [-4.0, 3.0]
 ```
 
-Note the `vector` now points in the **second quadrant** (x is negative, y positive) from the origin.
+The vector started in the first quadrant and now points into the second quadrant, x negative and y positive, rotated a quarter turn.
 
-## Multiplying matrices
+## Shear transformations
 
-Matrix multiplication extends to transforming multiple vectors simultaneously. When multiplying matrix A (`m×n`) by matrix B (`n×p`), each element results from the dot product of a row from A with a column from B.
-
-Multiplying rotation by scaling creates a single matrix that performs both transformations—one multiplication instead of two sequential operations. Using the rotation and scaling matrices from earlier in this chapter:
+Scaling and rotation both keep the basis vectors independent. A **shear** mixes them: it slides one axis in proportion to the other, so squares lean into parallelograms. A horizontal shear leaves `i-hat` alone and tilts `j-hat` sideways:
 
 ```swift
-import Quiver
+let shear = [[1.0, 0.5], [0.0, 1.0]]
 
-// 90° counterclockwise rotation
-let rotation = [[0.0, -1.0], [1.0, 0.0]]
-
-// Scale x by 2, y by 3
-let scaling = [[2.0, 0.0], [0.0, 3.0]]
-
-// Combine: scale first, then rotate
-let combined = rotation.multiplyMatrix(scaling)
-// Result: [[0.0, -3.0], [2.0, 0.0]]
+let vector = [2.0, 4.0]
+let sheared = shear.transform(vector)  // [4.0, 4.0]
 ```
 
-Calculation for element `[0][1]`: `0×0 + (-1)×3 = -3`
+Shear is where the two readings of a matrix visibly split apart. Column two, `[0.5, 1]`, is where `j-hat` lands: right and up, tilted. But row two, `[0, 1]`, is the recipe for the output's y coordinate. These are different vectors. For the identity and the diagonal scaling matrix, columns and rows matched only because those matrices are symmetric. A shear breaks that coincidence: the columns are where the basis vectors go, the rows are how the output is computed.
 
-We can verify by applying the combined matrix to a vector and comparing with the sequential approach:
+## Composing transformations
+
+Multiplying two matrices produces a single matrix that performs both transformations in one step. Reading the product's columns tells us where the basis vectors end up after *both*:
 
 ```swift
 import Quiver
 
-// Apply combined transformation
+let rotation = [[0.0, -1.0], [1.0, 0.0]]  // 90° counterclockwise
+let scaling = [[2.0, 0.0], [0.0, 3.0]]    // scale x by 2, y by 3
+
+// scale first, then rotate
+let combined = rotation.multiplyMatrix(scaling)  // [[0.0, -3.0], [2.0, 0.0]]
+```
+
+Transforming a vector and composing two transformations are the same kind of multiplication, applied to different shapes. We can verify the composed matrix against applying the two steps in sequence:
+
+```swift
 let vector = [1.0, 1.0]
 let result = combined.transform(vector)  // [-3.0, 2.0]
 
-// Equivalent to: scale [1, 1] → [2, 3], then rotate [2, 3] → [-3, 2]
+// same as: scale [1, 1] → [2, 3], then rotate [2, 3] → [-3, 2]
 ```
 
-Order matters—`A × B ≠ B × A`. Scaling then rotating produces different results than rotating then scaling. Since the identity is also a matrix, `multiplyMatrix` applies to it as well. However, multiplying any matrix by the identity returns the original matrix unchanged—analogous to multiplying a number by 1.
+Order matters. Rotating then scaling is a different matrix from scaling then rotating:
 
-## Determinants and area
+```swift
+let reversed = scaling.multiplyMatrix(rotation)  // [[0.0, -2.0], [3.0, 0.0]]
+```
 
-Every square matrix has a single number associated with it called the determinant. This value answers a geometric question: when the matrix transforms space, how much does the area (or volume) change? The determinant tells us whether a transformation is reversible and how it scales the space it acts on.
+The identity is the exception. Composing any matrix with the identity returns that matrix unchanged, the same way multiplying a number by one leaves it alone.
 
-Consider the scaling matrix from earlier in this chapter. It stretches x by 2 and y by 3, so a unit square becomes a 2×3 rectangle with area 6. The determinant confirms this:
+## Determinants and invertibility
+
+Every square matrix carries a single number called the **determinant**, and it answers a geometric question: when the matrix transforms space, how does the area change? Read the columns as the two sides of a box, and the determinant is that box's area.
+
+More precisely, the size of the determinant is the factor by which area is scaled, and its sign records whether orientation is preserved or flipped. The scaling matrix turns the unit square into a two-by-three rectangle:
 
 ```swift
 import Quiver
 
-// Scaling matrix: x by 2, y by 3
 let scaleUp = [[2.0, 0.0], [0.0, 3.0]]
-scaleUp.determinant  // 6.0 — area scales by 6×
+let area = scaleUp.determinant  // 6.0 — area scales by 6×
 ```
 
-Rotation matrices preserve distances and angles, so they preserve area as well. The determinant of any rotation matrix equals 1:
+A rotation moves the box without resizing it, so its determinant is one:
 
 ```swift
-// 90° counterclockwise rotation
 let rotation90 = [[0.0, -1.0], [1.0, 0.0]]
-rotation90.determinant  // 1.0 — area preserved
+let rotationArea = rotation90.determinant  // 1.0 — area preserved
 ```
 
-A [determinant](https://waynewbishop.github.io/quiver/documentation/quiver/determinants-primer) of zero means the transformation collapses space into a lower dimension—flattening a 2D plane into a line or a point. These **singular** matrices cannot be inverted because the collapse loses information. There is no way to reconstruct the original space from a line. Quiver computes the determinant for square matrices of any size using the `.determinant` property.
+A shear is more surprising. It distorts the square into a slanted parallelogram, yet the parallelogram has the same base and height as the square, so its area is unchanged and its determinant is one. The determinant measures area, not shape.
+
+When the determinant is zero, the transformation squashes space into a lower dimension, a plane onto a line or a line onto a point. Area collapses to zero and information is lost: different inputs map to the same output, so the transformation cannot be undone. Such a matrix is called **singular** and has no inverse. This happens whenever one basis vector is a multiple of another:
+
+```swift
+// second column is twice the first — both land on the same line
+let collapsed = [[1.0, 2.0], [2.0, 4.0]]
+let collapsedArea = collapsed.determinant  // 0.0 — space collapsed
+```
+
+This is not an abstraction reserved for graphics. When a model is fit to data, as linear regression is, the computation succeeds only if a particular matrix built from the data can be inverted. If two features carry the same information, where one is a copy or a rescaling of another, that matrix becomes singular, its determinant is zero, and the fit has no unique solution. The determinant is the early warning: a value at or near zero says the problem is collapsed, and no amount of computation will recover a stable answer. We return to this when we fit models to real data.
 
 ## Building algorithmic intuition
 
-Understanding transformations means recognizing how coordinate systems change systematically. The identity matrix represents our reference frame. Scaling matrices stretch or compress along axes. Rotation matrices spin the coordinate system while preserving distances. More complex transformations [combine](https://waynewbishop.github.io/quiver/documentation/quiver/composing-transformations) these basic operations through matrix multiplication, but the fundamental insight remains: read the columns to see where the basis vectors go.
+Every transformation in this chapter is the same move seen from a different angle. Scaling stretches the basis vectors, rotation spins them, shear tilts them, and composition chains them together, but in each case the columns of the matrix tell us where the basis vectors land, and the vector's instruction rides along to meet them. The determinant then measures what that move did to area, and warns us when a transformation has collapsed space so far that it can never be undone.
 
-These geometric operations, combined with the matrix fundamentals from [Chapter 21](21-matrices.md), provide the mathematical foundation for advanced applications across graphics, physics, and machine learning. In [Chapter 23](23-similarity-operations.md), we apply these vector and matrix concepts to measure similarity between high-dimensional data—the core computation behind recommendation engines, clustering, and modern AI systems.
+That last idea is the bridge to the rest of this book. The same singularity that makes a transformation irreversible is what makes some systems of data unsolvable, and recognizing it early saves us from trusting an answer that was never there. In [Chapter 23](23-similarity-operations.md), we turn from moving vectors to comparing them, applying these matrix concepts to measure similarity between high-dimensional data, the computation behind recommendation engines, clustering, and modern AI systems.

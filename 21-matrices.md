@@ -128,7 +128,7 @@ let (rows, columns) = matrix.shape
 matrix.size  // 6 (total elements)
 ```
 
-These properties become essential when validating [reshape](https://waynewbishop.github.io/quiver/documentation/quiver/reshape-and-flatten) operations, since the total element count must remain the same before and after reshaping.
+These properties become essential when validating [reshape](https://waynewbishop.github.io/quiver/documentation/quiver/shape-and-size) operations, since the total element count must remain the same before and after reshaping.
 
 ### Matrix initialization
 
@@ -166,7 +166,7 @@ let diagonal = [Double].diag([3.0, 2.0, 1.0])
 //  [0.0, 0.0, 1.0]]
 ```
 
-These [initialization functions](https://waynewbishop.github.io/quiver/documentation/quiver/array-generation) are essential when setting up matrices for data processing or machine learning. The `zeros` and `ones` functions are ideal for allocating storage before filling matrices with computed values. Identity and diagonal matrices play special roles in [linear transformations](https://waynewbishop.github.io/quiver/documentation/quiver/transformation-basics), which we'll explore in [Chapter 22](22-matrix-transformations.md).
+These [initialization functions](https://waynewbishop.github.io/quiver/documentation/quiver/array-generation) are essential when setting up matrices for data processing or machine learning. The `zeros` and `ones` functions are ideal for allocating storage before filling matrices with computed values. Identity and diagonal matrices play special roles in [linear transformations](https://waynewbishop.github.io/quiver/documentation/quiver/matrix-transformations), which we'll explore in [Chapter 22](22-matrix-transformations.md).
 
 ### Accessing columns
 
@@ -228,7 +228,7 @@ import Quiver
 
 let matrix = [[100.0, 200.0], [300.0, 400.0]]
 
-// Standardize data: subtract mean, divide by standard deviation (z-score)
+// Center on the mean (250), then scale by a fixed factor (150)
 let standardized = (matrix - 250.0) / 150.0
 // Result: [[-1.0, -0.33], [0.33, 1.0]]
 
@@ -272,9 +272,14 @@ let byMetric = athletes.transposed()
 //  [2.1, 2.4, 1.9]]   -- all jump heights
 
 // Now we can compute per-metric statistics directly
-byMetric[0].mean()  // 8.27 average speed
-byMetric[1].std()   // 0.21 jump height variability
+if let averageSpeed = byMetric[0].mean(),
+   let jumpVariability = byMetric[1].standardDeviation() {
+    print(averageSpeed)     // ≈ 8.27 average speed
+    print(jumpVariability)  // ≈ 0.25 jump height variability
+}
 ```
+
+Both statistics return optionals because an empty array has no mean, and `standardDeviation()` uses the sample formula by default.
 
 ## Building algorithmic intuition
 

@@ -18,7 +18,7 @@ In its basic form, a heap is just an array. However, unlike an array, we visuali
 let numberList: Array<Int> = [8, 2, 10, 9, 11, 7]
 ```
 
-As shown, `numberList` can be easily represented as a heap. Starting at index 0, items fill a corresponding spot as a parent or child node. Each parent also has two children with the exception of index 2.
+As shown, `numberList` can be easily represented as a heap. Starting at index 0, items fill a corresponding spot as a parent or child node. Each parent also has two children, with the exception of index 2.
 
 Since the arrangement of values is sequential, a simple pattern emerges. For any element at index `i`, we can accurately predict its position using these formulas:
 

@@ -7,6 +7,18 @@
 claude.md
 Claude.md
 
+# Ignore Gemini content
+.gemini/
+gemini.md
+Gemini.md
+GEMINI.md
+
+# Ignore Antigravity / agents content
+.agents/
+agents.md
+Agents.md
+AGENTS.md
+
 # Ignore local Planning directory
 /Planning/
 
