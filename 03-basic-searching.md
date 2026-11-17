@@ -9,9 +9,9 @@ In this chapter, we'll explore two fundamental approaches to searching: linear s
 
 ## The search problem
 
-At its core, searching involves answering a simple question: "Is this item in my collection?" However, the method you choose to answer this question can mean the difference between a lightning-fast response and a painfully slow operation. Consider the following:
+At its core, searching involves answering a simple question: "Is this item in my collection?" However, the method we choose to answer this question can mean the difference between a lightning-fast response and a painfully slow operation. Consider the following:
 
-- Finding a contact in your phone's address book
+- Finding a contact in a phone's address book
 - Locating your personal record time for a specific distance in a running app
 - Searching for a word in a dictionary
 - Looking up which workout had the highest calorie burn in the Health app
@@ -104,7 +104,7 @@ The efficiency of binary search becomes notable with large datasets. Consider a 
 | 10,000 | 10,000 comparisons | 14 comparisons | Decade of fitness data |
 | 1,000,000 | 1,000,000 comparisons | 20 comparisons | Professional athlete's career |
 
-This table demonstrates why binary search is preferred for large, sorted datasets. The logarithmic growth means that even massive collections—like Apple Health's database of every step you've taken for years—can be searched in a reasonable number of steps. A million entries require just 20 comparisons with binary search versus potentially a million with linear search.
+This table demonstrates why binary search is preferred for large, sorted datasets. The logarithmic growth means that even massive collections—like Apple Health's database of every step we've taken for years—can be searched in a reasonable number of steps. A million entries require just 20 comparisons with binary search versus potentially a million with linear search.
 
 ## Sorted data
 

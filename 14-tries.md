@@ -7,7 +7,7 @@ description: "Build a trie data structure in Swift for autocomplete, prefix sear
 
 Tries are data structures that organize information in a hierarchy. Often pronounced "try", the term comes from the English language verb to retrieve. While most algorithms are designed to manipulate generic data, tries are commonly used with `Strings`.
 
-While binary search trees store values in nodes and have two children (`left` and `right`), tries store characters in `nodes` and can have many children (one per character in the alphabet). This makes tries exceptionally efficient for prefix-based operations like autocomplete—a task that would require `O(n)` time with other data structures but takes only `O(p)` time with tries, where p is the prefix length.
+While binary search trees store values in nodes and have two children (`left` and `right`), tries organize strings by their characters, and each node can have many children (up to one per character in the alphabet). This makes tries exceptionally efficient for prefix-based operations like autocomplete. Finding where a prefix begins takes a number of steps tied to the prefix's length, not to the number of words stored—a sharp contrast with scanning a list of n words, or with a hash table, which can confirm an exact word but has no notion of words that merely begin alike.
 
 Similar to graphs from [Chapter 13](13-graphs.md), tries demonstrate how combining algorithmic techniques creates specialized solutions. Our implementation uses breadth-first search ([Chapter 13](13-graphs.md)) with `Queue` structures ([Chapter 10](10-stacks-and-queues.md)) to efficiently traverse the trie hierarchy and collect all words matching a prefix.
 
@@ -29,7 +29,7 @@ Tries involve building hierarchies, storing phrases along the way until a word i
 
 ## The data structure
 
-Here's our Trie data structure. Note our TrieNode uses array for storing related child records. This approach prioritizes simplicity and memory efficiency over individual lookup speed:
+Here's our Trie data structure. Each node stores the complete prefix it represents (for example "b", "ba", and "bal"), which makes the structure easy to inspect while we learn. Note our TrieNode uses an array for storing related child records. This approach prioritizes simplicity over individual lookup speed:
 
 ```swift
 // Trie node with array-based children storage
@@ -57,50 +57,56 @@ public class Trie {
 }
 ```
 
-The array-based children approach trades `O(1)` dictionary lookup for `O(k)` array iteration (where k is the number of children), but gains simplicity and reduces memory overhead. For typical use cases with small branching factors, this trade-off is reasonable.
+The array-based children approach trades `O(1)` dictionary lookup for `O(b)` array iteration (where b is the number of children at a node), but gains simplicity. For typical use cases with small branching factors, this trade-off is reasonable.
+
+Finding the right child is simpler than it might first appear. Every child shares its parent's prefix and adds exactly one character, so the children of the "ba" node ("bal", "bar", and "bat") differ only in their final character. Comparing that last character is enough to tell siblings apart, which spares us from comparing whole prefix strings at every level:
+
+```swift
+// Find the child whose prefix ends with the specified character - O(b)
+private func child(of node: TrieNode, endingWith character: Character) -> TrieNode? {
+    for child in node.children {
+        if child.tvalue?.last == character {
+            return child
+        }
+    }
+    return nil
+}
+```
 
 ## Adding words
 
-Using the TrieNode data structure, we can add words to our trie using the `append(word:)` method. This implementation builds the tree character by character, creating nodes as needed:
+Using the TrieNode data structure, we can add words to our trie using the `append(word:)` method. This implementation builds the tree character by character, extending a running prefix and creating nodes as needed:
 
 ```swift
 // Inserts a word into the trie character by character
 func append(word keyword: String) {
     // Trivial case
-    guard keyword.length > 0 else {
+    guard keyword.isEmpty == false else {
         return
     }
 
     var current: TrieNode = root
+    var prefix = ""
 
-    while keyword.length != current.level {
-        var childToUse = TrieNode()
-        let searchKey = keyword.substring(to: current.level + 1)
+    // Walk one character per level
+    for character in keyword {
+        prefix.append(character)
 
-        // Iterate through child nodes to find matching prefix
-        for child in current.children {
-            if child.tvalue == searchKey {
-                childToUse = child
-                break
-            }
-        }
-
-        // Create new node if prefix doesn't exist
-        if childToUse.tvalue == nil {
-            childToUse.tvalue = searchKey
+        if let match = child(of: current, endingWith: character) {
+            // Shared prefix - follow the existing node
+            current = match
+        } else {
+            // Create new node if prefix doesn't exist
+            let childToUse = TrieNode()
+            childToUse.tvalue = prefix
             childToUse.level = current.level + 1
             current.children.append(childToUse)
+            current = childToUse
         }
-
-        current = childToUse
     }
 
     // Final end of word check
-    if keyword.length == current.level {
-        current.isFinal = true
-        print("end of word reached!")
-        return
-    }
+    current.isFinal = true
 }
 
 // Example: Build trie from word list
@@ -112,7 +118,7 @@ for word in words {
 }
 ```
 
-Insertion is `O(m)` where m is the word length. The algorithm navigates through existing nodes for shared prefixes, only creating new nodes when necessary. This prefix-sharing is what makes tries memory-efficient despite storing many words.
+Walking a word of length m takes m steps, and each step scans at most b children, so finding the insertion path costs `O(b × m)`. The algorithm navigates through existing nodes for shared prefixes, only creating new nodes when necessary. Prefix-sharing is what keeps a trie compact when many words begin alike: "ball", "balls", and "ballard" share the nodes for "b" through "ball". Because each node in our version stores its complete prefix, though, a new node costs storage proportional to its depth, a detail we'll return to in the performance analysis.
 
 ## Breadth-first search for trie operations
 
@@ -133,40 +139,37 @@ BFS is exploratory — it visits every reachable node without needing to know or
 The `traverse(using:)` method demonstrates the BFS pattern for autocomplete suggestions:
 
 ```swift
+// Finds the node representing a prefix, or nil if no word begins with it
+private func node(matching prefix: String) -> TrieNode? {
+    var current: TrieNode = root
+
+    for character in prefix {
+        guard let match = child(of: current, endingWith: character) else {
+            return nil
+        }
+        current = match
+    }
+
+    return current
+}
+
 // Finds all complete words matching a keyword prefix using BFS
 func traverse(using keyword: String) -> Array<String>? {
     // Trivial case
-    guard keyword.length > 0 else {
+    guard keyword.isEmpty == false else {
         return nil
     }
 
-    var current: TrieNode = root
-    var wordList = Array<String>()
-
     // Phase 1: Navigate to the prefix node
-    while keyword.length != current.level {
-        let searchKey = keyword.substring(to: current.level + 1)
-        var isFound: Bool = false
-
-        // Iterate through any child nodes
-        for child in current.children {
-            if child.tvalue == searchKey {
-                current = child
-                isFound = true
-                break
-            }
-        }
-
-        if isFound == false {
-            return nil  // Prefix not found
-        }
+    guard let prefixNode = node(matching: keyword) else {
+        return nil  // Prefix not found
     }
+
+    var wordList = Array<String>()
 
     // Phase 2: BFS process from the prefix node
     let trieQueue: Queue<TrieNode> = Queue<TrieNode>()
-
-    // Queue the starting node (represents the prefix)
-    trieQueue.enQueue(current)
+    trieQueue.enQueue(prefixNode)
 
     while !trieQueue.isEmpty() {
         // Traverse the next queued node
@@ -174,10 +177,8 @@ func traverse(using keyword: String) -> Array<String>? {
             break
         }
 
-        // Add unvisited trie nodes to the queue
+        // Queue the node's children for the next level
         for e in leaf.children {
-            let leafValue = e.tvalue ?? "nil"
-            print("adding leaf: \(leafValue) to queue..")
             trieQueue.enQueue(e)
         }
 
@@ -187,12 +188,7 @@ func traverse(using keyword: String) -> Array<String>? {
                 wordList.append(tvalue)
             }
         }
-
-        let leafValue = leaf.tvalue ?? "nil"
-        print("traversed substring: \(leafValue)..")
     }
-
-    print("trie traversal complete..")
 
     return wordList
 }
@@ -200,41 +196,36 @@ func traverse(using keyword: String) -> Array<String>? {
 // Example: Get autocomplete suggestions
 if let suggestions = trie.traverse(using: "ba") {
     print("Autocomplete for 'ba': \(suggestions)")
-    // Outputs: ["ball", "balls", "ballard", "bar", "bat"]
+    // Outputs: ["bat", "bar", "ball", "balls", "ballard"]
 } else {
     print("No matches found")
 }
 ```
 
-The method combines both phases: navigate to prefix (`O(p)` where p is prefix length), then BFS to collect all descendant words (`O(n)` where n is the number of matching words). Total complexity is `O(p + n)`.
+Notice the order of the results. Breadth-first search reports words level by level, so the three-letter words "bat" and "bar" arrive before "ball", even though "ball" was inserted first. Within a level, nodes appear in the order they were created: the "bal" node came first (from "ball"), then "bat", then "bar".
+
+The method combines both phases. Navigating to the prefix node takes p steps for a prefix of length p, each scanning at most b children, for `O(b × p)`. The BFS then visits every node below the prefix node, s nodes in all, for `O(s)`. Collecting a matching word costs nothing extra, because each final node already stores its complete word. Total complexity is `O(b × p + s)`. Note that s counts nodes, not results: the subtree below "ba" holds eight nodes but only five words.
 
 ### Pattern matching with filter
 
-The same BFS pattern applies to more complex queries. The [Structures package](https://github.com/waynewbishop/bishop-algorithms-swift-package) includes a `filter` method that finds words matching both start AND end characters:
+The same BFS pattern applies to more complex queries. The [Structures package](https://github.com/waynewbishop/bishop-algorithms-swift-package) includes a `filter` method that checks whether a single word both begins with one string AND ends with another:
 
 ```swift
-// Checks if the trie contains a word with specified start and end characters
+// Checks if the trie contains a word with the specified beginning and ending
 func filter(_ start: String, _ end: String) -> Bool {
-    let current: TrieNode = root
-    var isFirst: Bool = false
-
-    // Check if any word starts with the specified character
-    for child in current.children {
-        if let tvalue = child.tvalue {
-            if tvalue == start {
-                isFirst = true
-                break
-            }
-        }
-    }
-
-    guard isFirst == true else {
+    // An empty ending matches nothing meaningful
+    guard end.isEmpty == false else {
         return false
     }
 
-    // BFS to find word ending with specified character
+    // Phase 1: Navigate to the node for the starting prefix
+    guard let prefixNode = node(matching: start) else {
+        return false
+    }
+
+    // Phase 2: BFS to find a word ending with the specified suffix
     let trieQueue: Queue<TrieNode> = Queue<TrieNode>()
-    trieQueue.enQueue(current)
+    trieQueue.enQueue(prefixNode)
 
     while !trieQueue.isEmpty() {
         // Traverse the next queued node
@@ -242,31 +233,19 @@ func filter(_ start: String, _ end: String) -> Bool {
             break
         }
 
-        // Add unvisited trie nodes to the queue
+        // Queue the node's children for the next level
         for e in leaf.children {
-            let leafValue = e.tvalue ?? "nil"
-            print("adding leaf: \(leafValue) to queue..")
             trieQueue.enQueue(e)
         }
 
         // Check for qualifying value
         if leaf.isFinal == true {
-            if let tvalue = leaf.tvalue {
-                if tvalue.last == Character(end) {
-                    return true
-                }
+            if let tvalue = leaf.tvalue, tvalue.hasSuffix(end) {
+                return true
             }
-        }
-
-        if let tvalue = leaf.tvalue {
-            print("traversed leaf: \(tvalue)..")
-        }
-        else {
-            print("traversed root..")
         }
     }
 
-    print("traversal complete..")
     return false
 }
 
@@ -277,7 +256,9 @@ if trie.filter("b", "t") {
 }
 ```
 
-Both methods use identical BFS structure—the while loop, Queue operations, and child iteration are the same. Only the processing logic differs. The `traverse` method collects all `isFinal` nodes and returns `Array<String>?`, while `filter` checks if any `isFinal` node matches an end character and returns `Bool`. This demonstrates how BFS provides a flexible, reusable pattern for trie operations. Once we understand the BFS template, we can apply it to any trie traversal problem by changing just the node processing logic.
+Starting the search at the prefix node is what ties both conditions to the same word. Every word below that node begins with `start`, so the only remaining question is how it ends. Had we confirmed the prefix and then searched from the `root` instead, a trie holding only "ball" and "cat" would wrongly report a match for `filter("b", "t")`: "ball" supplies the starting "b" and "cat" supplies the ending "t". Using `hasSuffix` also lets `end` be any length, so `filter("ba", "ard")` finds "ballard".
+
+Both methods use identical BFS structure—the while loop, Queue operations, and child iteration are the same. Only the processing logic differs. The `traverse` method collects all `isFinal` nodes and returns `Array<String>?`, while `filter` checks if any `isFinal` node has the requested ending and returns `Bool`. This demonstrates how BFS provides a flexible, reusable pattern for trie operations. Once we understand the BFS template, we can apply it to any trie traversal problem by changing just the node processing logic.
 
 ## Using the subscript shortcut
 
@@ -304,29 +285,28 @@ if trie["cat"] != nil {
 
 ## Performance analysis
 
-Tries offer excellent performance characteristics for string operations, with complexity independent of dictionary size (from [Chapter 8](08-performance-analysis.md) analysis):
+Tries offer strong performance characteristics for string operations, and the costs below depend on word and prefix lengths rather than on the number of words stored (using the analysis from [Chapter 8](08-performance-analysis.md)). We'll use four symbols: m for a word's length, p for a prefix's length, b for the largest number of children at any node, and s for the number of nodes below a prefix node.
 
 ### Time complexity
 
-Inserting a word with `append` runs in `O(m)` where m is the word length, since we visit one node per character. Searching for a prefix with `traverse` has two phases: navigating to the prefix node takes `O(p)` where p is the prefix length, and the BFS traversal to collect results takes `O(k)` where k is the number of nodes in the subtree. The total autocomplete complexity is `O(p + k)`.
+Finding where a word belongs with `append` takes `O(b × m)`: one step per character, each scanning at most b children. Searching with `traverse` has two phases. Navigating to the prefix node takes `O(b × p)`, and the BFS that collects results visits s nodes, so autocomplete costs `O(b × p + s)` in total. For a fixed alphabet, b is bounded by the alphabet size, which is why textbooks often simplify these to `O(m)` and `O(p + s)`.
 
 ### Space complexity
 
-On average, a trie uses `O(N × M)` space where N is the number of words and M is the average word length. In the worst case where no prefixes are shared, space grows to `O(ALPHABET_SIZE × N × M)`. In the best case where all words share a single long prefix, space reduces to `O(M)`.
+Our representation stores each node's complete prefix, so a node at depth d holds d characters. Inserting a word of length m that shares no prefix with existing words creates m new nodes holding 1 + 2 + … + m characters, which grows as `O(m²)`. Shared prefixes are stored once, so words that begin alike add only the nodes for their differing endings. A production trie usually stores a single character per node, often with a dictionary of children keyed by character. That version stores `O(1)` characters per node, so its total storage is proportional to the number of nodes, which is at most the total length of all words and much less when prefixes are shared, and each child lookup drops from `O(b)` to `O(1)` on average.
 
 ### Compared to other data structures
 
-| Operation | Hash Table (Ch 15) | Binary Search Tree (Ch 11) | Trie |
+| Operation | Hash Table (Ch 15) | Sorted array or balanced BST | Trie |
 |-----------|------------|-------------------|------|
-| Search exact word | `O(1)` average | `O(log n)` | `O(m)` |
-| Insert | `O(1)` average | `O(log n)` | `O(m)` |
-| Prefix search | `O(n)` | `O(n)` | `O(p)` |
-| Autocomplete | `O(n)` | `O(n)` | `O(p + k)` |
+| Search exact word | `O(m)` average | `O(m × log n)` | `O(b × m)` |
+| Insert | `O(m)` average | `O(m × log n)` for a balanced BST | `O(b × m)` |
+| Find a prefix's matches | `O(n × p)` (scan every word) | `O(p × log n + r)` | `O(b × p + s)` |
 
-Where m = word length, p = prefix length, k = number of results, n = total words
+Where m = word length, p = prefix length, n = total words, r = number of matching words, b = children per node, and s = nodes below the prefix node. The m and p factors account for the cost of hashing or comparing strings, which the Chapter 15 hash functions compute character by character.
 
-**Key insight**: Tries are the only structure with `O(p)` prefix search. Hash tables and BSTs must examine all n entries to find prefix matches, making tries dramatically faster for autocomplete operations.
+Tries aren't the only structure that answers prefix queries efficiently. Because all words sharing a prefix sit next to one another in sorted order, a sorted array or balanced BST can locate the first match with a binary search and then read the matching range. What sets the trie apart is that its navigation cost doesn't grow with n at all, and that its shape mirrors the prefixes themselves, which makes operations like "list every word below this node" a natural traversal. A hash table, by contrast, scatters similar words across unrelated buckets, so finding prefix matches requires examining every entry.
 
 ## Building algorithmic intuition
 
-Tries provide two essential capabilities: prefix-based searching in `O(p)` time and shared storage of common prefixes. The hierarchical structure naturally represents string relationships—autocomplete suggestions, spell checking, and network routing all benefit from navigating character-by-character rather than comparing entire strings. The BFS pattern demonstrated here generalizes beyond tries: the same breadth-first search from [Chapter 13](13-graphs.md) works identically on trees and graphs, and the Queue structure from [Chapter 10](10-stacks-and-queues.md) provides level-order traversal whether exploring social networks or collecting word suggestions.
+Tries provide two essential capabilities: prefix-based searching whose cost depends on the prefix rather than the dictionary size, and shared storage of common prefixes. The hierarchical structure naturally represents string relationships—autocomplete suggestions, spell checking, and network routing all benefit from navigating character-by-character rather than comparing entire strings. The BFS pattern demonstrated here generalizes beyond tries: the same breadth-first search from [Chapter 13](13-graphs.md) works identically on trees and graphs, and the Queue structure from [Chapter 10](10-stacks-and-queues.md) provides level-order traversal whether exploring social networks or collecting word suggestions.

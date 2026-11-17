@@ -2,7 +2,7 @@
 
 iOS and macOS developers work with data constantly—user metrics, sensor readings, analytics, and performance measurements. [This book](index.md) teaches how to aggregate, analyze, and present that data efficiently using algorithms, data structures, and statistical operations built specifically for Swift.
 
-Going beyond pseudocode and theory, every concept is implemented in production-ready Swift code. From fundamental algorithms to advanced mathematical operations, we learn the computational thinking that powers modern iOS development.
+Going beyond pseudocode and theory, every concept is implemented in working Swift code, with the data structure listings drawn from and tested in the companion [Structures](https://github.com/waynewbishop/bishop-algorithms-swift-package) package. From fundamental algorithms to advanced mathematical operations, we learn the computational thinking that powers modern iOS development.
 
 ## What we cover
 

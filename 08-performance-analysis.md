@@ -80,11 +80,11 @@ extension Array where Element: Comparable {
 }
 ```
 
-Bubble sort demonstrates the classic nested loop pattern—an outer loop iterating n times, each containing an inner loop also iterating n times. This multiplication produces `O(n²)` time complexity. Since bubble sort swaps elements in place without requiring additional arrays, space complexity remains `O(1)`.
+Bubble sort demonstrates the classic nested loop pattern—an outer loop iterating up to n times, each containing an inner loop of up to n iterations. This multiplication produces `O(n²)` time complexity in the average and worst cases. The early exit in Chapter 4's version lets an already-sorted array finish after a single pass, an `O(n)` best case; without that check, every pass would run and even sorted input would cost `O(n²)`. The sorting itself swaps elements within the working array, needing only `O(1)` extra workspace, though our Swift version returns a new array, which adds `O(n)` storage for the result.
 
-Insertion sort exhibits similar `O(n²)` average-case performance, but reveals an important optimization: when the array is already sorted, insertion sort achieves `O(n)` best-case performance by simply confirming each element is already in position. Like bubble sort, insertion sort operates in place with `O(1)` space complexity.
+Insertion sort exhibits similar `O(n²)` average-case performance, but reveals an important optimization: when the array is already sorted, insertion sort achieves `O(n)` best-case performance by simply confirming each element is already in position. Like bubble sort, insertion sort needs only `O(1)` workspace beyond the array it returns.
 
-Quicksort achieves superior performance through divide-and-conquer strategy. When pivot selection splits the array roughly in half, we create log n recursive levels, with each level performing n comparisons and swaps. This produces `O(n log n)` average-case time complexity. However, poor pivot selection—always choosing the smallest or largest element—creates unbalanced partitions that degrade performance to `O(n²)` worst case. Unlike the previous algorithms, quicksort's recursive nature requires `O(log n)` space for the call stack.
+Quicksort achieves superior performance through divide-and-conquer strategy. When pivot selection splits the array roughly in half, we create log n recursive levels, with each level performing n comparisons and swaps. This produces `O(n log n)` average-case time complexity. However, poor pivot selection—always choosing the smallest or largest element—creates unbalanced partitions that degrade performance to `O(n²)` worst case. Unlike the previous algorithms, quicksort's recursive nature also requires space for the call stack: `O(log n)` when partitions are balanced, but `O(n)` in that same worst case, when the recursion goes n calls deep.
 
 ### Recursive algorithms
 
@@ -106,15 +106,15 @@ func fibonacciMemoized(_ n: Int, cache: inout [Int: Int]) -> Int {
 }
 ```
 
-The naive Fibonacci implementation reveals exponential complexity—each function call spawns two additional calls, creating a branching tree of 2^n operations. The recursion depth reaches n levels, resulting in `O(2^n)` time complexity and `O(n)` space complexity for the call stack.
+The naive Fibonacci implementation reveals exponential complexity—each function call spawns two additional calls, creating a branching tree whose size is bounded above by 2^n calls. The recursion depth reaches n levels, resulting in `O(2^n)` time complexity and `O(n)` space complexity for the call stack.
 
 Memoization transforms this exponential behavior into linear performance. By caching previously computed values, we ensure each Fibonacci number is calculated exactly once. This optimization reduces time complexity to `O(n)` while maintaining `O(n)` space complexity for the cache storage.
 
-The practical impact is dramatic: computing fib(40) with the naive approach requires billions of operations, taking 2-3 seconds. The memoized version performs just 40 operations, completing in under 1 millisecond. Understanding algorithmic complexity enables us to transform unusable algorithms into instant ones.
+The practical impact is dramatic: computing fib(40) with the naive approach makes 331,160,281 function calls, enough to take a noticeable amount of time even on fast hardware. The memoized version computes each of the 41 values from fib(0) through fib(40) once, making 79 calls in all, and finishes almost instantly. Exact timings depend on the device, the compiler, and its optimization settings, but the ratio of the work involved, millions of times less, holds everywhere. Understanding algorithmic complexity enables us to transform unusable algorithms into instant ones.
 
 ## Recognizing common patterns
 
-You can often determine complexity by recognizing code patterns.
+We can often determine complexity by recognizing code patterns.
 
 **Single loop: `O(n)`**
 ```swift
@@ -158,14 +158,14 @@ func countHalvings(_ n: Int) -> Int {
 
 ## Space complexity matters
 
-[Time complexity](https://en.wikipedia.org/wiki/Time_complexity) measures operations. [Space complexity](https://en.wikipedia.org/wiki/Space_complexity) measures memory usage. Sometimes you must trade one for the other.
+[Time complexity](https://en.wikipedia.org/wiki/Time_complexity) measures operations. [Space complexity](https://en.wikipedia.org/wiki/Space_complexity) measures memory usage. Sometimes we must trade one for the other.
 
 | Algorithm | Time | Space | When to use |
 |-----------|------|-------|-------------|
-| Insertion Sort | `O(n²)` | `O(1)` | Small datasets, limited memory |
-| Quicksort | `O(n log n)` avg | `O(log n)` | General purpose, in-place sorting |
+| Insertion Sort | `O(n²)` | `O(1)` workspace | Small datasets, limited memory |
+| Quicksort | `O(n log n)` avg, `O(n²)` worst | `O(log n)` avg, `O(n)` worst (call stack) | General purpose, in-place sorting |
 
-Understanding space complexity helps you choose algorithms based on memory constraints. Mobile devices with limited RAM might prefer in-place algorithms even if they're slightly slower.
+Understanding space complexity helps us choose algorithms based on memory constraints. Mobile devices with limited RAM might prefer in-place algorithms even if they're slightly slower.
 
 ## Best case, average case, and worst case
 
@@ -196,7 +196,9 @@ Problem: Store user sessions, need fast lookup by session ID
 |----------------|--------|--------|----------|
 | Array (unsorted) | `O(n)` | `O(1)` | Small datasets |
 | Hash Table | `O(1)` avg | `O(1)` avg | Fast lookup, dynamic data |
-| Binary Search Tree | `O(log n)` | `O(log n)` | Need sorted iteration |
+| Balanced Binary Search Tree | `O(log n)` | `O(log n)` | Need sorted iteration |
+
+The hash table figures assume a well-spread hash function and a bounded load factor, as [Chapter 15](15-hash-tables.md) explains. The tree figures assume the tree stays balanced; a plain binary search tree built from sorted data degrades to `O(n)`, which is the problem [Chapter 12](12-tree-balancing.md) solves.
 
 Answer: Hash table—`O(1)` average for lookups, dynamic add/remove.
 

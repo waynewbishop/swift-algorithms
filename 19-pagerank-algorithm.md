@@ -7,7 +7,7 @@ description: "Implement Google's PageRank algorithm in Swift using adjacency mat
 
 The **PageRank** algorithm stands as one of the most influential algorithms in modern computing, powering the original Google search engine and fundamentally changing how we navigate information. Conceived at Stanford University in 1996 by Larry Page and Sergey Brin, PageRank introduced a revolutionary approach to determining web page importance through mathematical modeling of human browsing behavior.
 
-PageRank synthesizes concepts from throughout this book. It builds on graph structures from [Chapter 13](13-graphs.md), using vertices and edges to model web pages and links. The iterative computation mirrors the tabulation approach from dynamic programming ([Chapter 18](18-dynamic-programming.md)), repeatedly refining estimates until convergence. Generic types from [Chapter 7](07-generics.md) allow PageRank to work with any vertex data, while performance analysis from [Chapter 8](08-performance-analysis.md) reveals `O(V + E)` complexity per iteration. Hash table lookups from [Chapter 15](15-hash-tables.md) enable efficient vertex finding in the canvas array. Even recursion patterns from [Chapter 6](06-recursion.md) appear in the authority distribution calculations that flow through the graph.
+PageRank synthesizes concepts from throughout this book. It builds on graph structures from [Chapter 13](13-graphs.md), using vertices and edges to model web pages and links. Its computation is iterative: each round produces a new estimate of every page's importance from the previous round's estimates, and the rounds repeat until the values stop changing. Mathematicians call this a fixed-point iteration. It resembles the bottom-up tables of dynamic programming ([Chapter 18](18-dynamic-programming.md)) in that each round builds on stored results, but unlike Fibonacci, no answer is ever final after a single computation; every value keeps being refined. Generic types from [Chapter 7](07-generics.md) allow PageRank to work with any vertex data, while performance analysis from [Chapter 8](08-performance-analysis.md) reveals `O(V + E)` complexity per iteration. The definition itself is self-referential, too, echoing the recursive thinking of [Chapter 6](06-recursion.md): a page is important when important pages link to it.
 
 In this chapter, we'll explore how PageRank works, implement an educational version in Swift, and understand its broader applications beyond search engines.
 
@@ -91,7 +91,7 @@ This creates a flow of authority through the web's link structure, with importan
 
 ### The iterative process
 
-PageRank calculation requires multiple iterations because page importance is interdependent. The first round calculates initial authority distribution based on equal starting ranks. The second round redistributes authority using the results from round one, allowing highly-linked pages to accumulate more influence. The third round performs final redistribution, incorporating all previous calculations to produce stable rankings that reflect the true authority structure of the network.
+PageRank calculation requires multiple iterations because page importance is interdependent. Every page begins with an equal starting rank. The first update distributes that starting rank along the links. The second update redistributes authority using the results of the first, allowing pages that receive links from highly ranked pages to accumulate more influence. Each further update refines the values again, moving them closer to rankings that reflect the authority structure of the network.
 
 ```swift
 // Iterative dependency example:
@@ -101,7 +101,7 @@ PageRank calculation requires multiple iterations because page importance is int
 // - How many other pages those linking pages also support
 ```
 
-**Production Note:** Real PageRank implementations continue iterating until **convergence**—when PageRank values stop changing significantly between iterations. Our educational model uses 3 fixed rounds for simplicity.
+**Production Note:** Real PageRank implementations continue iterating until **convergence**—when PageRank values stop changing significantly between iterations. Our educational model stores the starting ranks plus two fixed updates, three columns of values in all, for simplicity.
 
 ### Understanding convergence
 
@@ -111,16 +111,16 @@ Think of it like water flowing through a network of pipes—initially there migh
 
 ### Handling sink nodes
 
-**Sink nodes** are pages with no outgoing links—they would theoretically trap the random surfer forever. PageRank handles this by redistributing sink node authority to all other pages in the network:
+**Sink nodes** (also called dangling nodes) are pages with no outgoing links—they would theoretically trap the random surfer forever. The standard remedy assumes that a surfer who reaches a sink jumps to a page chosen uniformly at random, which may include the sink itself. In rank terms, every sink's authority is pooled each round and shared equally by every page in the network:
 
 ```swift
 // Sink node logic:
 // 1. Identify pages with zero outgoing links
-// 2. Distribute their accumulated PageRank to all other pages
-// 3. This ensures the random surfer can continue browsing
+// 2. Add their rank to a single pool for this round
+// 3. Share the pool equally among all pages, sinks included
 ```
 
-This mechanism maintains the mathematical validity of the probability model while providing residual benefit to pages that might otherwise receive no incoming authority.
+This mechanism keeps the total rank constant, which maintains the mathematical validity of the probability model, and it provides residual benefit to pages that might otherwise receive no incoming authority. Pooling the sink rank first also matters for performance. Distributing each sink's rank to every page individually would cost `O(V)` per sink, potentially `O(V²)` per round; adding up the pool once and then sharing it costs `O(V)` in total.
 
 ### The damping factor: Modeling realistic browsing
 
@@ -136,14 +136,15 @@ let dampingFactor: Float = 0.85
 // Where:
 // - (1 - d) * (1/N) = probability of random jump to this page
 // - d * (sum of contributions) = probability of arriving via links
+// - N = total number of pages, and ranks across all pages sum to 1
 ```
 
-The damping factor proves crucial for several reasons. Without it, pages could accumulate infinite authority in closed loops, creating rank sinks that distort the entire system. It models real browsing behavior—people don't click links forever but eventually start fresh at random pages. The damping factor guarantees the iterative algorithm will reach a stable solution through convergence, and it balances authority distribution by preventing any single page from capturing all PageRank.
+The damping factor proves crucial for several reasons. Without it, a closed loop of pages that link only to one another would capture all of the surfer's probability over time, creating rank sinks that distort the entire system. It models real browsing behavior—people don't click links forever but eventually start fresh at random pages. The damping factor guarantees the iterative algorithm will reach a stable solution through convergence, and it balances authority distribution by preventing any single page from capturing all PageRank.
 
 **Mathematical impact:**
 ```swift
 // Without damping factor (unstable):
-// PageRank could oscillate or grow without bound in certain graph structures
+// PageRank could oscillate, or concentrate in closed loops, in certain graph structures
 
 // With damping factor (stable):
 // Every page gets baseline authority: (1 - d) / N
@@ -161,17 +162,19 @@ Let's implement an educational PageRank algorithm that demonstrates core concept
 Our implementation builds on the graph structures from [Chapter 13](13-graphs.md), extending vertices to support PageRank calculations:
 
 ```swift
+import Foundation
+
 // Generic vertex with PageRank history array - stores rank across iterations
-// Enhanced Vertex class for PageRank
 public class Vertex<T>: Equatable {
     var tvalue: T?
     var neighbors = Array<Edge<T>>()
-    var rank: Array<Float> = [0, 0, 0]  // Stores PageRank for each iteration
-    var visited: Bool = false
+    var rank: Array<Float> = [0, 0, 0]  // Starting rank, then two updates
     let uuid = UUID()
 
+    // Creates a vertex with no value
     public init() {}
 
+    // Creates a vertex holding the specified value
     public init(with name: T) {
         self.tvalue = name
     }
@@ -190,22 +193,32 @@ The design choices reflect educational priorities. Array storage preserves PageR
 Here's our educational PageRank implementation with sink node handling:
 
 ```swift
-// Educational PageRank with sink node handling - 3 fixed iterations O(V + E)
+// Educational PageRank with sink node handling - two updates, O(V + E) each
 extension Graph {
     public func processPageRankWithSink() {
+
+        // An empty graph has no ranks to compute
+        guard canvas.count > 0 else {
+            return
+        }
+
         // Starting rank: equal probability for all pages
         // Note: Using 100 instead of 1.0 for educational clarity
-        let startingRank: Float = Float(100 / self.canvas.count)
-        var round: Int = 0
+        let pageCount = Float(canvas.count)
+        let startingRank: Float = 100.0 / pageCount
 
-        while round < 2 {  // Educational: 3 total rounds (0, 1, 2)
+        // Reset rank history so repeated calls start fresh
+        for vertex in canvas {
+            vertex.rank = [startingRank, 0, 0]
+        }
 
-            for vertex in self.canvas {
+        // Compute rank[1] from rank[0], then rank[2] from rank[1]
+        for round in 0..<2 {
 
-                // Round 0: Initialize with equal starting rank
-                if round == 0 {
-                    vertex.rank[round] = startingRank
-                }
+            // Rank held by sink vertices this round
+            var sinkRank: Float = 0
+
+            for vertex in canvas {
 
                 let currentRank = vertex.rank[round]
 
@@ -214,96 +227,107 @@ extension Graph {
 
                     let assignedRank = currentRank / Float(vertex.neighbors.count)
 
-                    // Distribute authority to each neighbor
                     for edge in vertex.neighbors {
                         edge.neighbor.rank[round + 1] += assignedRank
                     }
                 }
 
-                // Sink node case: Distribute rank to all other vertices
+                // Sink node case: Pool the rank for every vertex to share
                 else {
-                    if self.canvas.count > 1 {
-
-                        let sinkRank = currentRank / Float(self.canvas.count - 1)
-
-                        for otherVertex in self.canvas {
-                            if vertex != otherVertex {
-                                otherVertex.rank[round + 1] += sinkRank
-                            }
-                        }
-                    }
+                    sinkRank += currentRank
                 }
             }
 
-            // Advance to next iteration
-            round += 1
+            // Share the pooled sink rank once with every vertex - O(V)
+            let sharedRank = sinkRank / pageCount
+
+            for vertex in canvas {
+                vertex.rank[round + 1] += sharedRank
+            }
         }
     }
 }
 ```
 
+A few details keep the totals honest. The starting rank divides `100.0` by a `Float`, not `100` by an `Int`. Integer division would discard the remainder, so three pages would start with 33 each, a total of 99, and a graph with more than 100 pages would start every page at 0. Resetting `rank` at the top means calling the method twice produces the same values instead of adding a second run on top of the first. And the empty-graph guard prevents dividing by zero. Each update touches every vertex and every edge once, plus one pass to share the sink pool, so the method runs in `O(V + E)` per update.
+
 ### Adding damping factor (optional enhancement)
 
-The core algorithm above demonstrates the fundamental PageRank concept. Production implementations like Google's add a damping factor for improved stability. Here's how you could optionally modify the authority distribution:
+The core algorithm above demonstrates the fundamental PageRank concept. Production implementations like Google's add a damping factor for improved stability. The baseline from the recurrence, `(1 - d) / N`, belongs to each *page*, once per round, not to each link. A page with no incoming links still receives it, and a page with many incoming links receives it only once. Here's how we could modify each update, scaling the baseline by 100 to match our educational scale:
 
 ```swift
 // Optional: Add damping factor to the core algorithm
 let dampingFactor: Float = 0.85
 
-// Instead of: assignedRank = currentRank / Float(vertex.neighbors.count)
-// Use: assignedRank with baseline probability
-let baselineProbability = (1.0 - dampingFactor) / Float(canvas.count)
-let linkContribution = (dampingFactor * currentRank) / Float(vertex.neighbors.count)
-let assignedRank = baselineProbability + linkContribution
+// Every page begins the round with its random-jump baseline
+let baseline = (1.0 - dampingFactor) * 100.0 / pageCount
+
+for vertex in canvas {
+    vertex.rank[round + 1] = baseline
+}
+
+// Links and sinks then pass along only the damped share of each rank
+let assignedRank = dampingFactor * currentRank / Float(vertex.neighbors.count)
+let sharedRank = dampingFactor * sinkRank / pageCount
 ```
 
-This modification gives each page a small baseline probability `(1-d)/N` of being visited randomly, plus the link-based authority transfer `d × (rank/neighbors)`. The damping factor prevents rank accumulation in closed loops and models realistic browsing where users occasionally jump to random pages rather than following links indefinitely.
+With this change, each page receives the baseline `(1-d)/N` share of the total, plus the damped authority `d × (rank/neighbors)` from each page that links to it, plus its damped share of the sink pool. The three parts still add up to 100 every round. The damping factor prevents rank from collecting in closed loops and models realistic browsing where users occasionally jump to random pages rather than following links indefinitely. The [Structures package](https://github.com/waynewbishop/bishop-algorithms-swift-package) includes `processPageRankWithDamping`, which applies this update on the probability scale and repeats it until the ranks converge. Stanford's [CS 315B notes](https://web.stanford.edu/class/cs315b/assignment3.html) present the same recurrence.
 
 ## Practical example
 
-Let's demonstrate PageRank with a graph that shows how a central vertex accumulates authority from multiple sources.
+Let's demonstrate PageRank with a graph that shows how a central vertex accumulates authority from multiple sources, and how a sink's authority is shared. The graph uses the `Vertex`, `addVertex(element:)`, and `addEdge(source:neighbor:weight:)` API from [Chapter 13](13-graphs.md):
 
 ```swift
 // Web graph demonstrating authority accumulation and sink node handling
 let graph = Graph<String>()
 
 // Create vertices
-let vertexA = graph.addVertex(with: "A")  // Central hub
-let vertexB = graph.addVertex(with: "B")
-let vertexC = graph.addVertex(with: "C")  // Sink node
-let vertexD = graph.addVertex(with: "D")
+let vertexA = Vertex(with: "A")  // Central hub
+let vertexB = Vertex(with: "B")
+let vertexC = Vertex(with: "C")  // Sink node
+let vertexD = Vertex(with: "D")
 
-// Create link structure - multiple vertices link to A
-graph.addEdge(from: vertexB, to: vertexA, weight: 1)
-graph.addEdge(from: vertexC, to: vertexA, weight: 1)
-graph.addEdge(from: vertexD, to: vertexA, weight: 1)
+for vertex in [vertexA, vertexB, vertexC, vertexD] {
+    graph.addVertex(element: vertex)
+}
 
-// A links back to B and D
-graph.addEdge(from: vertexA, to: vertexB, weight: 1)
-graph.addEdge(from: vertexA, to: vertexD, weight: 1)
+// A links out to every other page
+graph.addEdge(source: vertexA, neighbor: vertexB, weight: 1)
+graph.addEdge(source: vertexA, neighbor: vertexC, weight: 1)
+graph.addEdge(source: vertexA, neighbor: vertexD, weight: 1)
+
+// B and D link back to A
+graph.addEdge(source: vertexB, neighbor: vertexA, weight: 1)
+graph.addEdge(source: vertexD, neighbor: vertexA, weight: 1)
 
 // C is a sink node (no outgoing links)
-// Its rank gets redistributed to all other vertices
+// Its rank is pooled and shared by every vertex
 
 // Calculate PageRank
 graph.processPageRankWithSink()
 
 // Display results
 for vertex in graph.canvas {
-    print("\(vertex.tvalue!): \(vertex.rank[2])")
+    if let name = vertex.tvalue {
+        print("\(name): \(vertex.rank[2])")
+    }
 }
 ```
 
-The algorithm iterates through three rounds, redistributing authority based on link structure:
+The algorithm stores the starting ranks and two updates, redistributing authority based on link structure. Every column totals 100:
 
-| Vertex | Round 0 | Round 1 | Round 2 (Final) |
-|--------|---------|---------|-----------------|
-| A | 25.00 | 75.00 | 87.50 |
-| B | 25.00 | 12.50 | 18.75 |
-| C | 25.00 | 0.00 | 12.50 |
-| D | 25.00 | 12.50 | 6.25 |
+| Vertex | Starting rank | First update | Second update |
+|--------|---------------|--------------|---------------|
+| A | 25.00 | 56.25 | 32.81 |
+| B | 25.00 | 14.58 | 22.40 |
+| C | 25.00 | 14.58 | 22.40 |
+| D | 25.00 | 14.58 | 22.40 |
 
-Vertex A achieves the highest rank (87.50) because three other vertices link to it, concentrating authority. In Round 1, A receives authority from B (25.00), C (25.00), and D (25.00), totaling 75.00. Vertex C drops to 0.00 in Round 1 because it's a sink node—after distributing its initial rank to A, it receives no incoming links from other vertices. The sink node algorithm redistributes C's accumulated rank evenly to all other vertices, preventing the random surfer from getting trapped. This demonstrates how PageRank measures authority: vertices that receive many quality backlinks accumulate high rank, while isolated vertices rely on the sink redistribution mechanism to maintain minimal presence in the network.
+Let's trace the first update. A splits its 25.00 three ways, sending 8.33 to each of B, C, and D. B and D each send their full 25.00 to A, their only link. C is a sink, so its 25.00 goes into the shared pool, and each of the four pages receives a quarter of it, 6.25. A therefore collects `25.00 + 25.00 + 6.25 = 56.25`, while B, C, and D each collect `8.33 + 6.25 = 14.58`.
+
+The second update repeats the process with these new values. A now has 56.25 to split, sending 18.75 to each neighbor. B and D return their 14.58 each to A, and C's 14.58 is pooled again, giving every page 3.65. A ends at `14.58 + 14.58 + 3.65 = 32.81`, and the other three pages end at `18.75 + 3.65 = 22.40`.
+
+Vertex A holds the highest rank after both updates because two pages link to it exclusively, concentrating authority. Notice, though, that A's value swings from 56.25 down to 32.81. A sends much of its authority back out to the pages that link to it, so the values seesaw between rounds before settling. Two rounds aren't enough to reach a stable answer, which is exactly why production implementations iterate until convergence. Vertex C shows the sink mechanism at work: it receives authority from A like the others, and the rank it can't pass along through links is returned to the whole network rather than lost. This demonstrates how PageRank measures authority: vertices that receive links from highly ranked pages accumulate high rank, while every page keeps a share through the redistribution of sink authority.
 
 ## Real-world applications
 
@@ -311,6 +335,6 @@ PageRank's influence extends far beyond web search. In academic research, the al
 
 ## Building algorithmic intuition
 
-PageRank demonstrates how complex algorithms emerge from combining simpler concepts. Graph traversal from [Chapter 13](13-graphs.md) provides the structure for modeling web links. Iterative refinement mirrors dynamic programming patterns from [Chapter 18](18-dynamic-programming.md), where repeated calculations converge toward optimal solutions. The random surfer model translates human behavior into mathematical probability, showing how algorithms can capture real-world phenomena through abstraction.
+PageRank demonstrates how complex algorithms emerge from combining simpler concepts. Graph traversal from [Chapter 13](13-graphs.md) provides the structure for modeling web links. Iterative refinement contrasts with the dynamic programming of [Chapter 18](18-dynamic-programming.md): rather than solving each subproblem once, PageRank revisits every value each round until the whole system converges. The random surfer model translates human behavior into mathematical probability, showing how algorithms can capture real-world phenomena through abstraction.
 
 Understanding PageRank reveals broader patterns in algorithm design. The sink node problem demonstrates edge case handling—algorithms must account for boundary conditions that violate normal assumptions. Convergence detection shows the trade-off between accuracy and computational cost. Modern variations of PageRank appear throughout machine learning and network analysis, from recommendation systems to influence modeling in social networks. The mathematical foundation extends into linear algebra, where PageRank connects to eigenvector computation using matrices ([Chapter 21](21-matrices.md)) and vector operations ([Chapter 20](20-vectors.md)). Mastering PageRank means understanding not just how Google ranks pages, but how iterative algorithms model authority, influence, and importance across any networked system.

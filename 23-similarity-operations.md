@@ -107,9 +107,9 @@ cosine(v, w) = 63 / (5 × 13)
              = 0.969
 ```
 
-The result 0.969 (close to 1.0) tells us these vectors point in nearly the same direction. Each step runs in `O(d)` time where `d` is the vector dimensionality—one pass computes the dot product, one pass computes each magnitude, and the final division is `O(1)`. For 50-dimensional GloVe embeddings, each comparison requires just 50 multiply-add operations.
+The result 0.969 (close to 1.0) tells us these vectors point in nearly the same direction. Each step runs in `O(d)` time where `d` is the vector dimensionality—one pass computes the dot product, one pass computes each magnitude, and the final division is `O(1)`. For 50-dimensional GloVe embeddings, the dot product needs 50 multiply-add operations and each magnitude another 50, about 150 in all, plus two square roots and a division.
 
-The result ranges from -1 (opposite directions) through 0 (perpendicular) to 1 (identical direction). Quiver's `.cosineOfAngle(with:)` method encapsulates this same calculation:
+The result ranges from -1 (opposite directions) through 0 (perpendicular) to 1 (identical direction). Both vectors must have the same number of elements, and since a zero vector has no direction, the cosine is undefined when either magnitude is zero; Quiver returns 0 in that case. Quiver's `.cosineOfAngle(with:)` method encapsulates this same calculation:
 
 ```swift
 import Quiver
@@ -127,7 +127,7 @@ let v4 = [60.0, 80.0]
 v3.cosineOfAngle(with: v4)  // 1.0 (still identical)
 ```
 
-Where the raw dot product gave us 50 and 5,000 for the same directional relationship, [cosine similarity](https://waynewbishop.github.io/quiver/documentation/quiver/similarity-operations) returns 1.0 in both cases. This consistency is why cosine similarity dominates text analysis, recommendation systems, and embedding comparisons—it measures meaning rather than magnitude.
+Where the raw dot product gave us 50 and 5,000 for the same directional relationship, [cosine similarity](https://waynewbishop.github.io/quiver/documentation/quiver/similarity-operations) returns 1.0 in both cases. This consistency is why cosine similarity dominates text analysis, recommendation systems, and embedding comparisons—it measures direction rather than magnitude, and in a well-trained embedding, direction is where meaning tends to live.
 
 When we pre-normalize vectors to unit length using Quiver's `.normalized` property, the dot product and cosine similarity become identical. Both magnitudes equal 1, so the denominator disappears. Many production systems normalize vectors once at indexing time, then use the simpler dot product for all subsequent comparisons.
 
@@ -165,12 +165,14 @@ let top3 = scores.topIndices(k: 3)
 //  (rank: 3, index: 4, score: 0.67)]
 ```
 
-The current implementation sorts all scores in `O(n log n)` time. For large collections where `k` is much smaller than `n`, a heap-based approach achieves `O(n log k)` by maintaining a min-heap of size `k` and replacing the minimum only when a better score appears. This optimization, using the heap structure from [Chapter 17](17-heaps.md), becomes significant at scale:
+The current implementation sorts all scores in `O(n log n)` time. For large collections where `k` is much smaller than `n`, a heap-based approach achieves `O(n log k)` by maintaining a min-heap of size `k` and replacing the minimum only when a better score appears. This optimization, using the heap structure from [Chapter 17](17-heaps.md), becomes significant at scale. The table compares the growth terms, n log₂ n against n log₂ k, which estimate how the number of comparisons scales:
 
-| Collection size | k | Sort all | Heap top-K | Speedup |
+| Collection size | k | Sort all (n log₂ n) | Heap top-K (n log₂ k) | Ratio of estimates |
 |-----------------|---|----------|------------|---------|
-| 10,000 | 10 | `O(n log n)` ≈ 133K | `O(n log k)` ≈ 33K | 4× |
-| 1,000,000 | 10 | `O(n log n)` ≈ 20M | `O(n log k)` ≈ 3.3M | 6× |
+| 10,000 | 10 | ≈ 133K | ≈ 33K | about 4 |
+| 1,000,000 | 10 | ≈ 20M | ≈ 3.3M | about 6 |
+
+These ratios aren't measured speedups. Actual timings also depend on constant factors, memory access patterns, and how well each approach suits the hardware, so the only reliable way to know the wall-clock gain is to measure it on real data.
 
 When results need associated labels, the `.topIndices(k:labels:)` variant maps scores to their identifiers directly:
 
@@ -197,11 +199,11 @@ let techDocs = [[0.8, 0.3, 0.9], [0.7, 0.4, 0.8], [0.9, 0.2, 0.9]]
 let sportsDocs = [[0.2, 0.9, 0.1], [0.3, 0.8, 0.2], [0.1, 0.7, 0.3]]
 
 // Compute average pairwise cosine similarity within each cluster
-techDocs.clusterCohesion()    // ~0.98 (tight cluster)
+techDocs.clusterCohesion()    // ~0.99 (tight cluster)
 sportsDocs.clusterCohesion()  // ~0.97 (tight cluster)
 ```
 
-Duplicate detection extends this idea to find near-identical vectors. Quiver's `.findDuplicates(threshold:)` method computes pairwise similarities and returns pairs exceeding the threshold:
+Duplicate detection extends this idea to find near-identical vectors. Quiver's `.findDuplicates(threshold:)` method computes pairwise similarities and returns the pairs that meet or exceed the threshold, sorted from most to least similar:
 
 ```swift
 import Quiver
@@ -223,7 +225,7 @@ Similarity operations compose multiple sub-operations, each with distinct comple
 
 ### Pairwise similarity
 
-Computing cosine similarity between two vectors requires one pass through both vectors to accumulate the dot product and both squared magnitudes, followed by two square root operations and one division. The dominant cost is the element-wise loop:
+Computing cosine similarity between two vectors requires accumulating the dot product and both squared magnitudes, followed by two square root operations and one division. The dominant cost is the element-wise work:
 
 | Operation | Time | Space |
 |-----------|------|-------|
@@ -231,7 +233,7 @@ Computing cosine similarity between two vectors requires one pass through both v
 | Magnitude (each vector) | `O(d)` | `O(1)` |
 | Cosine similarity | `O(d)` | `O(1)` |
 
-The single-pass implementation computes all three in one `O(d)` traversal. For 50-dimensional GloVe embeddings, each comparison requires 50 multiply-add operations—trivial for modern hardware.
+Quiver's `cosineOfAngle(with:)` computes the dot product and the two magnitudes as separate passes, three `O(d)` traversals that together remain `O(d)`. A hand-fused loop could gather all three sums in a single traversal, but it would still perform three multiply-add operations per dimension, so fusing changes memory traffic rather than the amount of arithmetic. For 50-dimensional GloVe embeddings, each comparison requires about 150 multiply-add operations—trivial for modern hardware.
 
 ### Batch similarity
 
@@ -243,7 +245,7 @@ Comparing one query against `n` vectors multiplies the pairwise cost by the coll
 | Sort all scores | `O(n log n)` | `O(n)` |
 | Full pipeline (similarity + sort) | `O(n × d + n log n)` | `O(n)` |
 
-For collections with high-dimensional vectors (d = 300), the similarity computation dominates. For lower dimensions (d = 50), sorting becomes the bottleneck at large collection sizes.
+Comparing the two growth terms shows when each part matters. The similarity work grows as n × d, while sorting grows as n × log n, so the similarity term is larger whenever d exceeds log₂ n. For a million vectors, log₂ n is about 20, which means that even 50-dimensional vectors make the similarity computation the larger term on paper. Which part actually dominates the running time can't be read from these terms alone, though. Constant factors, memory behavior, and vectorized hardware all play a role, so profiling on real data is the dependable guide.
 
 ### Selecting top results
 
@@ -254,18 +256,18 @@ The sort-then-slice approach processes all `n` scores even when we need only `k`
 | Sort all + slice | `O(n log n)` | `O(n)` |
 | Min-heap of size k | `O(n log k)` | `O(k)` |
 
-The heap approach also improves space complexity from `O(n)` to `O(k)`, since we only store the current top results rather than all sorted scores. For a collection of 1,000,000 vectors with k = 10, the heap reduces both time (from ~20M to ~3.3M operations) and memory (from storing 1M scores to storing 10).
+The heap approach can also reduce space from `O(n)` to `O(k)`, but only if scores are streamed into the heap as they're computed. If we first call `catalog.cosineSimilarities(to:)`, that array already holds all n scores, so the heap saves sorting time but not memory. For a collection of 1,000,000 vectors with k = 10, a streaming heap reduces the comparison estimate from about 20M to about 3.3M, and the stored scores from 1M to 10.
 
 ### Cluster cohesion
 
-Computing cluster cohesion requires comparing every pair of vectors within a group. For a cluster of `m` vectors, this involves `m × (m - 1) / 2` pairwise comparisons, each costing `O(d)`:
+Computing cluster cohesion requires comparing every pair of vectors within a group. For a cluster of `m` vectors, this involves `m × (m - 1) / 2` pairwise comparisons, each costing `O(d)`. Quiver first computes each vector's magnitude once and stores the m results, so the pair loop needs only dot products. Duplicate detection works the same way across the full collection of n vectors, then sorts the r pairs it reports:
 
-| Operation | Time | Space |
+| Operation | Time | Auxiliary space |
 |-----------|------|-------|
-| Cluster cohesion | `O(m² × d)` | `O(1)` |
-| Duplicate detection (full collection) | `O(n² × d)` | `O(n²)` |
+| Cluster cohesion | `O(m² × d)` | `O(m)` for stored magnitudes |
+| Duplicate detection (full collection) | `O(n² × d + r log r)` | `O(n)` magnitudes plus `O(r)` results |
 
-The quadratic growth means cohesion is practical for small to medium clusters (hundreds of vectors) but expensive for large collections. Duplicate detection across an entire dataset faces the same quadratic cost, which is why production systems use approximate methods for collections exceeding tens of thousands of vectors.
+The number of reported pairs r depends on the threshold. A strict threshold yields few pairs, but if most vectors are near-duplicates, r can approach n²/2, and sorting them adds an `O(n² log n)` term. The quadratic growth means cohesion is practical for small to medium clusters (hundreds of vectors) but expensive for large collections. Duplicate detection across an entire dataset faces the same quadratic cost, which is why production systems use approximate methods for collections exceeding tens of thousands of vectors.
 
 ## Word embeddings and vector arithmetic
 
@@ -282,16 +284,16 @@ let jogging  = [0.8, 0.7, 0.8, 0.2]
 let computer = [0.1, 0.3, 0.2, 0.9]
 
 // Measure directional similarity between word embeddings
-running.cosineOfAngle(with: jogging)   // ~0.99 (near-synonyms)
+running.cosineOfAngle(with: jogging)   // ~0.998 (near-synonyms)
 running.cosineOfAngle(with: computer)  // ~0.47 (unrelated)
 ```
 
-What makes embeddings remarkable is that vector arithmetic captures semantic relationships. The most famous example demonstrates that gender relationships are encoded as consistent vector directions. If we take the vector for "king," subtract "man," and add "woman," the resulting vector lands nearest to "queen":
+What makes embeddings remarkable is that vector arithmetic can capture semantic relationships. The most famous example, reported for trained word embeddings, suggests that gender relationships are encoded as roughly consistent vector directions. If we take the vector for "king," subtract "man," and add "woman," the resulting vector lands near "queen." The vectors below are synthetic, hand-picked so the arithmetic is easy to follow; real embeddings have hundreds of dimensions and only approximate this behavior:
 
 ```swift
 import Quiver
 
-// Simplified 4D embeddings illustrating semantic relationships
+// Synthetic 4D embeddings chosen to illustrate the arithmetic
 let king   = [0.9, 0.2, 0.8, 0.7]   // Male royalty
 let man    = [0.8, 0.1, 0.2, 0.6]   // Male concept
 let woman  = [0.2, 0.8, 0.2, 0.6]   // Female concept
@@ -306,7 +308,7 @@ result.cosineOfAngle(with: queen)  // ~1.0
 result.cosineOfAngle(with: king)   // ~0.79
 ```
 
-The subtraction `king.subtract(man)` isolates the "royalty" component by removing the "male" direction. Adding `woman` reintroduces a gender direction, landing at "female royalty"—queen. This works because embeddings encode semantic properties as geometric directions. The "male-to-female" direction is consistent across the vocabulary, so adding it to any male concept shifts toward the female equivalent.
+The subtraction `king.subtract(man)` isolates the "royalty" component by removing the "male" direction. Adding `woman` reintroduces a gender direction, landing at "female royalty"—queen. In our synthetic vectors the result matches queen exactly, because we chose the numbers that way. In trained embeddings, the same arithmetic usually lands *near* the expected word rather than on it, and the analogy holds for some word pairs far better than others. Embeddings tend to encode properties like gender as directions, but those directions are learned from text, so they're approximate, they vary across the vocabulary, and they can reflect the biases of the data they were trained on. The arithmetic is a revealing window into how embeddings organize meaning, not a guarantee that shifting any word produces its intended counterpart.
 
 ## Building algorithmic intuition
 

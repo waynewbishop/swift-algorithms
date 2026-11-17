@@ -16,7 +16,7 @@ let numberList : Array<Int> = [8, 2, 10, 9, 7, 5]
 
 ## Insertion sort
 
-Insertion sort is one of the more basic sorting algorithms in computer science. The solution ranks elements by iterating through a collection and positions elements based on their value. The set is divided into sorted and unsorted halves and repeats until all elements are sorted.
+Insertion sort is one of the more basic sorting algorithms in computer science. The solution ranks elements by iterating through a collection and positions elements based on their value. The set is divided into sorted and unsorted portions. Each new element is compared against the sorted portion, and larger values shift one position to the right to open a gap where it belongs. Rather than swapping pairs, insertion sort moves values over and writes the new element once.
 
 ```swift
 extension Array where Element: Comparable {
@@ -57,7 +57,7 @@ let results: Array<Int> = numberList.insertionSort()
 
 ## Bubble sort
 
-Bubble sort maintains a simple invariant: after each pass through the array, the largest unsorted element moves to its final position. The algorithm works by comparing adjacent pairs of values and swapping them if they're out of order. This process causes larger values to "bubble up" toward the end of the array. After n passes, all elements are sorted.
+Bubble sort maintains a simple invariant: after each pass through the array, the largest unsorted element moves to its final position. The algorithm works by comparing adjacent pairs of values and swapping them if they're out of order. This process causes larger values to "bubble up" toward the end of the array. After at most n passes, all elements are sorted, and if a pass completes without a single swap, the array is already in order and we can stop early.
 
 ```swift
 extension Array where Element: Comparable {
@@ -75,16 +75,21 @@ extension Array where Element: Comparable {
         for pindex in 0..<output.count {
 
             let range = (output.count - 1) - pindex
+            var swapped = false
 
             //"half-open" range operator
             for sindex in 0..<range {
 
-                let key = output[sindex]
-
-                //compare / swap positions
-                if (key >= output[sindex + 1]) {
+                //swap only when strictly out of order, so equal values keep their order
+                if output[sindex] > output[sindex + 1] {
                     output.swapAt(sindex, sindex + 1)
+                    swapped = true
                 }
+            }
+
+            //a pass without swaps means the array is sorted
+            if swapped == false {
+                break
             }
         }
 
@@ -98,7 +103,7 @@ let results: Array<Int> = numberList.bubbleSort()
 
 ## Selection sort
 
-Similar to bubble sort, the selection sort algorithm ranks elements by iterating through a collection and swaps elements based on their value. The set is divided into sorted and unsorted halves and repeats until all elements are sorted.
+Similar to bubble sort, the selection sort algorithm ranks elements by iterating through a collection and swaps elements based on their value. The set is divided into sorted and unsorted portions. Each pass finds the smallest remaining value and swaps it into place, repeating until all elements are sorted.
 
 ```swift
 extension Array where Element: Comparable {
@@ -145,15 +150,19 @@ let results: Array<Int> = numberList.selectionSort()
 
 ## Using basic sorting algorithms
 
-These algorithms decline when dealing with large datasets or when performance is critical. If your fitness app needs to sort a year's worth of daily step counts (365 entries) or a professional athlete's complete workout history (thousands of sessions), basic sorting algorithms will lag noticeably. In such cases, advanced algorithms like quicksort (covered in [Chapter 5](05-advanced-sorting.md)), or Swift's built-in `sorted()` method, provide dramatically better performance through their `O(n log n)` time complexity.
+These algorithms decline when dealing with large datasets or when performance is critical. If a fitness app needs to sort a year's worth of daily step counts (365 entries) or a professional athlete's complete workout history (thousands of sessions), basic sorting algorithms will lag noticeably. In such cases, advanced algorithms like quicksort (covered in [Chapter 5](05-advanced-sorting.md)), or Swift's built-in `sorted()` method, provide dramatically better performance through their `O(n log n)` time complexity.
 
 ### Comparison table
 
-| Algorithm | Best Case | Average Case | Worst Case | Swaps | Stable? | Space |
+| Algorithm | Best Case | Average Case | Worst Case | Moves | Stable? | Extra space |
 |-----------|-----------|--------------|------------|-------|---------|-------|
-| Insertion | `O(n)` | `O(n²)` | `O(n²)` | `O(n²)` | Yes | `O(1)` |
-| Bubble | `O(n)` | `O(n²)` | `O(n²)` | `O(n²)` | Yes | `O(1)` |
-| Selection | `O(n²)` | `O(n²)` | `O(n²)` | `O(n)` | No | `O(1)` |
+| Insertion | `O(n)` | `O(n²)` | `O(n²)` | `O(n²)` shifts | Yes | `O(1)` |
+| Bubble | `O(n)` | `O(n²)` | `O(n²)` | `O(n²)` swaps | Yes | `O(1)` |
+| Selection | `O(n²)` | `O(n²)` | `O(n²)` | `O(n)` swaps | No | `O(1)` |
+
+The best cases depend on details in the code. Insertion sort's inner loop stops immediately on sorted input, and bubble sort's `swapped` flag ends the work after one pass; without that flag, bubble sort would make every pass regardless and its best case would be `O(n²)`. Stability, meaning that equal values keep their original order, also comes from a single character. Bubble sort swaps only when one value is strictly greater (`>`); swapping on `>=` would reverse equal neighbors and make it unstable.
+
+The space column describes the extra workspace each algorithm needs while sorting, a few index variables. Our Swift versions also return a new array rather than rearranging the original, so each call allocates `O(n)` storage for its result. An in-place version, written as a `mutating` method, would need only the `O(1)` workspace.
 
 ## Building algorithmic intuition
 

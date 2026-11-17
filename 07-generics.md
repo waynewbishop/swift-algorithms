@@ -91,7 +91,7 @@ Notice the `<T: Equatable>` syntax—this constrains `T` to types that support e
 ### Generic sorting from Chapter 4
 
 ```swift
-// Bubble sort works with any Comparable type
+// Bubble sort works with any Comparable type (simplified, without Chapter 4's early exit)
 extension Array where Element: Comparable {
     func bubbleSort() -> [Element] {
         guard count > 1 else { return self }
@@ -121,11 +121,25 @@ The `where Element: Comparable` clause constrains the generic type to types that
 Generic types use angle brackets to define type parameters. While `T` is common, the name is just a convention:
 
 ```swift
-// All equivalent - T is not a keyword
-class ListNode<T> { var value: T }
-class ListNode<Element> { var value: Element }
-class ListNode<Value> { var value: Value }
+// Three equivalent designs - T is not a keyword
+// Each class needs its own name, since a type can only be declared once
+class TNode<T> {
+    var value: T
+    init(value: T) { self.value = value }
+}
+
+class ElementNode<Element> {
+    var value: Element
+    init(value: Element) { self.value = value }
+}
+
+class ValueNode<Value> {
+    var value: Value
+    init(value: Value) { self.value = value }
+}
 ```
+
+Only the placeholder's name differs. In a real project we'd pick one spelling and declare a single `ListNode` type.
 
 Swift's standard library uses descriptive names:
 - `Array<Element>` - collections use Element
@@ -136,9 +150,9 @@ Swift's standard library uses descriptive names:
 
 | Convention | Usage | Example |
 |------------|-------|---------|
-| T | Single generic parameter | class ListNode<T> |
-| Element | Collection types | Array<Element> |
-| Key, Value | Dictionary-like types | Dictionary<Key, Value> |
+| T | Single generic parameter | `class ListNode<T>` |
+| Element | Collection types | `Array<Element>` |
+| Key, Value | Dictionary-like types | `Dictionary<Key, Value>` |
 
 For the data structures we'll build in upcoming chapters, use `Element` for collections and `T` for simple generic types.
 
@@ -203,7 +217,7 @@ Most Swift built-in types (Int, Double, String, Bool) conform to Equatable autom
 
 ### Comparable protocol
 
-[Comparable](https://developer.apple.com/documentation/Swift/Comparable) enables ordering operations using `<`, `>`, `<=`, and `>=`. All sorting algorithms require Comparable:
+[Comparable](https://developer.apple.com/documentation/Swift/Comparable) enables ordering operations using `<`, `>`, `<=`, and `>=`. Every sorting and searching algorithm in this book relies on it. (Sorting doesn't always require `Comparable`: Swift's `sorted(by:)` accepts a custom comparison closure instead, and algorithms like counting sort order values without comparing them at all.)
 
 ```swift
 // Binary search requires Comparable for < and > comparisons

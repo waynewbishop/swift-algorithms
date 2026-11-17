@@ -5,7 +5,7 @@ description: "Build a linked list from scratch in Swift with insert, delete, and
 ---
 # Linked Lists
 
-In [Chapter 6](06-recursion.md), you encountered **linked list** nodes as self-referential structures perfect for recursive algorithms. In [Chapter 8](08-performance-analysis.md), we learned that different data structures offer different performance trade-offs. Now it's time to build a complete linked list implementation—a fundamental data structure that trades random access speed for insertion and deletion flexibility.
+In [Chapter 7](07-generics.md), we encountered **linked list** nodes as self-referential structures that generics make reusable across types. In [Chapter 8](08-performance-analysis.md), we learned that different data structures offer different performance trade-offs. Now it's time to build a complete linked list implementation—a fundamental data structure that trades random access speed for insertion and deletion flexibility.
 
 ## Arrays vs linked lists
 
@@ -15,7 +15,7 @@ A linked list provides similar functionality to an [array](https://en.wikipedia.
 
 - Arrays store elements in contiguous memory—a single continuous block. This enables fast random access (base address + index × size = element location) but requires copying the entire array to a larger block when capacity is exceeded.
 
-- Linked lists store elements anywhere in memory, with each element pointing to the next (and optionally previous). No resizing needed—just allocate new nodes as needed. The cost is slower access by index since you must traverse from the beginning.
+- Linked lists store elements anywhere in memory, with each element pointing to the next (and optionally previous). No resizing needed—just allocate new nodes as needed. The cost is slower access by index since we must traverse from the beginning.
 
 ### Performance comparison
 
@@ -32,9 +32,9 @@ A linked list provides similar functionality to an [array](https://en.wikipedia.
 
 ### When to use each
 
-Linked lists excel in scenarios requiring frequent insertions or deletions at the beginning or middle of the sequence, particularly when the data size is unknown or highly dynamic. They're ideal for sequential-only access patterns and often serve as building blocks for more complex data structures. Use linked lists when you need flexibility in modifying the sequence structure without the cost of shifting elements.
+Linked lists excel in scenarios requiring frequent insertions or deletions at the beginning or middle of the sequence, particularly when the data size is unknown or highly dynamic. They're ideal for sequential-only access patterns and often serve as building blocks for more complex data structures. Linked lists are the right choice when we need flexibility in modifying the sequence structure without the cost of shifting elements.
 
-Arrays prove superior when your application requires frequent random access by index or primarily reads data with few modifications. For small datasets under 100 elements, arrays typically outperform linked lists despite their insertion overhead. Arrays also offer better memory efficiency due to lower per-element overhead and integrate seamlessly with Swift's functional methods like `map`, `filter`, and `reduce`.
+Arrays prove superior when an application requires frequent random access by index or primarily reads data with few modifications. For small datasets under 100 elements, arrays typically outperform linked lists despite their insertion overhead. Arrays also offer better memory efficiency due to lower per-element overhead and integrate seamlessly with Swift's functional methods like `map`, `filter`, and `reduce`.
 
 ## The node structure
 
@@ -45,11 +45,14 @@ Our implementation uses `LLNode` to represent individual nodes in a doubly-linke
 public class LLNode<T> {
     var tvalue: T?
     var next: LLNode?
-    var previous: LLNode?
+    weak var previous: LLNode?
 
+    // Creates an empty node with no value or links
     public init() {}
 }
 ```
+
+Notice that `previous` is declared `weak`. Swift manages class instances with [Automatic Reference Counting](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/automaticreferencecounting/) (ARC), which frees an object once nothing holds a strong reference to it. If both `next` and `previous` were strong, each pair of neighbors would keep the other alive, and the nodes would never be freed even after the list itself was released. With a weak backward link, each node is owned only by the node before it (or by the list's `head`), so releasing the list releases every node.
 
 ## Building the LinkedList class
 
@@ -147,108 +150,87 @@ Unlike arrays where `array[5]` is instant, linked lists must walk through nodes 
 
 ## Inserting elements
 
-Insertion at a specific position involves adjusting pointer references:
+Insertion at a specific position involves adjusting pointer references. Valid positions run from `0` (the head) through `count` (just past the last element), so inserting at `count` is the same as appending:
 
 ```swift
 // Insert element at specific index - O(n)
 public func insert(_ tvalue: T, at index: Int) {
-    // Validate and handle empty list
-    guard index >= 0 && index <= count - 1 else {
+    // Validate the position before changing anything
+    guard index >= 0 && index <= count else {
         print("Index out of bounds")
         return
     }
 
-    guard head.tvalue != nil else {
-        head.tvalue = tvalue
-        counter += 1
+    // An empty list or a position at the end is an append
+    if head.tvalue == nil || index == count {
+        append(tvalue)
         return
     }
 
-    var current: LLNode<T>? = head
-    var trailer: LLNode<T>?
-    var listIndex: Int = 0
+    // The node currently at this index will follow the new node
+    guard let current = find(at: index) else {
+        return
+    }
 
-    // Find insertion point
-    while current != nil {
-        if index == listIndex {
-            let childToUse = LLNode<T>()
-            childToUse.tvalue = tvalue
+    let childToUse = LLNode<T>()
+    childToUse.tvalue = tvalue
 
-            // Link new node into chain
-            childToUse.next = current
-            childToUse.previous = trailer
+    // Link the new node in both directions
+    childToUse.next = current
+    childToUse.previous = current.previous
+    current.previous?.next = childToUse
+    current.previous = childToUse
 
-            if let linktrailer = trailer {
-                linktrailer.next = childToUse
-            }
-
-            if let linkCurrent = current {
-                linkCurrent.previous = childToUse
-            }
-
-            // Update head if inserting at beginning
-            if index == 0 {
-                head = childToUse
-            }
-
-            break
-        }
-
-        trailer = current
-        current = current?.next
-        listIndex += 1
+    // Update head if inserting at beginning
+    if index == 0 {
+        head = childToUse
     }
 
     counter += 1
 }
 ```
 
-Once at the correct position, insertion is `O(1)`—just adjust a few pointers. The `O(n)` cost comes from finding the position.
+Once at the correct position, insertion is `O(1)`—just adjust four pointers. The `O(n)` cost comes from `find(at:)` walking to the position. Because the bounds check runs first, an invalid index leaves both the list and its `counter` untouched.
 
 ## Removing elements
 
-Removal requires relinking nodes to skip the deleted element:
+Removal requires relinking nodes in both directions to skip the deleted element:
 
 ```swift
 // Remove element at specific index - O(n)
 public func remove(at index: Int) {
-    guard head.tvalue != nil else { return }
+    // Validate the position before changing anything
+    guard index >= 0 && index < count && head.tvalue != nil else {
+        return
+    }
 
     // Handle removing first element
     if index == 0 {
         if let item = head.next {
+            item.previous = nil
             head = item
-            counter -= 1
         } else {
             head.tvalue = nil
-            counter = 0
         }
+        counter -= 1
         return
     }
 
-    var current: LLNode<T>? = head
-    var trailer: LLNode<T>?
-    var nodeindex: Int = 0
-
-    // Find node to remove
-    while let item = current {
-        if nodeindex == index {
-            // Bypass removed node in chain
-            if let tnode = trailer, let cnode = current {
-                tnode.next = cnode.next
-            }
-            current = nil
-            break
-        }
-
-        trailer = current
-        current = item.next
-        nodeindex += 1
+    guard let node = find(at: index) else {
+        return
     }
+
+    // Link the neighbors around the removed node in both directions
+    node.previous?.next = node.next
+    node.next?.previous = node.previous
+    node.next = nil
+    node.previous = nil
 
     counter -= 1
 }
 ```
+
+Every pointer that referenced the removed node is redirected. The predecessor's `next` now skips ahead, and the successor's `previous` now points back past the gap. When the head is removed, the new head's `previous` is cleared so it no longer refers to a node outside the list. The `counter` changes only after a node is actually removed, so a request like `remove(at: -1)` leaves the count accurate.
 
 Removing from the beginning is `O(1)`, but removing from elsewhere requires `O(n)` traversal to find the node.
 

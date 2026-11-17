@@ -5,7 +5,7 @@ description: "How classical algorithms connect to modern technology, and why und
 ---
 # Afterword
 
-In the opening chapter we noted that modern technology isn't magic — it's mathematics. Binary search from 1946 now powers vector database indexes. Tries from 1968 became autocomplete. PageRank evolved into transformer attention mechanisms. The algorithms were developed decades ago, yet they remain the structures that power modern technology today. 
+In the opening chapter we noted that modern technology isn't magic — it's mathematics. Binary search still rules out half the possibilities with every comparison, and the indexes behind AI search pursue the same goal at enormous scale. Tries still organize words by their prefixes, the idea behind autocomplete. PageRank still measures importance by letting it flow through links, an idea that invites comparison with how attention blends information in transformer models. The algorithms were developed decades ago, yet their ideas remain inside the systems that power modern technology today.
 
 With the powerful tools and abstractions available to modern developers, it's reasonable to wonder whether understanding these fundamentals still matters. Why look underneath?
 
@@ -29,4 +29,4 @@ Modern tools amplify this foundation. After tracing through a `quicksort` implem
 
 The tools will evolve. However, binary search will still halve the search space. Matrix multiplication will still transform coordinate systems. Understanding algorithms is the foundation that makes every tool more powerful in our hands. The mystery of modern technology dissolves the moment we recognize the classical mathematics inside it. This book was written to reveal that knowledge.
 
-To continue building that intuition — one concept at a time, with code you can run — subscribe to [The Feature Vector](https://featurevector.substack.com).
+To continue building that intuition — one concept at a time, with code we can run — subscribe to [The Feature Vector](https://featurevector.substack.com).

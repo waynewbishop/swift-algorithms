@@ -175,7 +175,7 @@ import Quiver
 let word1 = [0.2, 0.8, 0.5]  // "running"
 let word2 = [0.3, 0.7, 0.6]  // "jogging"
 
-// Cosine similarity ranges from -1 (opposite) to 1 (identical)
+// Cosine similarity ranges from -1 (opposite direction) to 1 (same direction)
 let similarity = word1.cosineOfAngle(with: word2)  // ~0.98 (very similar)
 
 // Feature vectors for songs
@@ -184,13 +184,15 @@ let song2 = [120.0, 0.8, 0.9, 0.7]
 let songSimilarity = song1.cosineOfAngle(with: song2)  // ~1.0
 ```
 
+A score of 1 means the vectors point in exactly the same direction, not that they're identical: `[1, 2]` and `[2, 4]` have different lengths but a cosine similarity of 1. Two conventions are worth knowing as well. Both vectors must have the same number of elements. And the cosine is mathematically undefined when either vector has zero magnitude, since a zero vector has no direction; Quiver chooses to return 0 in that case rather than failing, so a zero score can mean either "perpendicular" or "no direction to compare."
+
 This [cosine similarity](https://waynewbishop.github.io/quiver/documentation/quiver/similarity-operations) technique is fundamental to recommendation systems, search engines, and machine learning. It appears throughout [Chapter 23](23-similarity-operations.md), where [similarity operations](https://waynewbishop.github.io/quiver/documentation/quiver/similarity-operations) measure relationships between vectors in high-dimensional space.
 
 ## Vector averaging
 
-Word embeddings represent individual words as vectors, but similarity operations often compare documents: sentences, paragraphs, or full articles. We need to convert multi-word text into a single vector that captures the entire document's meaning. The solution is to average the word vectors element-wise, creating a document embedding.
+Word embeddings represent individual words as vectors, but similarity operations often compare documents: sentences, paragraphs, or full articles. We need to convert multi-word text into a single vector that summarizes the document. A simple and widely used baseline is to average the word vectors element-wise, creating a document embedding.
 
-This averaging preserves semantic properties. If a document contains words like "lightweight," "cushioned," "running," and "athletic," the averaged vector points toward the general region of "athletic footwear" in the embedding space. Individual words contribute their semantic information, and the average represents their combined meaning. Documents with similar words produce similar average vectors, which is exactly the property similarity operations exploit.
+Averaging tends to preserve the document's overall topic. If a document contains words like "lightweight," "cushioned," "running," and "athletic," the averaged vector tends to land near the general region of "athletic footwear" in the embedding space. Documents with similar words produce similar average vectors, which is exactly the property similarity operations exploit. The average is a summary, though, not a complete record of meaning. It ignores word order, so "dog bites man" and "man bites dog" produce the same vector, and it handles negation poorly, so "comfortable" and "not comfortable" can land close together. Production systems often use models that read the whole sentence at once for this reason, but averaging remains a fast, useful starting point.
 
 Quiver provides the `.averaged()` method for computing the element-wise average of a collection of vectors:
 
@@ -205,14 +207,14 @@ let wordVectors = [
 ]
 
 // Compute element-wise average
-guard let documentVector = wordVectors.averaged() else {
-    fatalError("Cannot average empty or mismatched vectors")
+if let documentVector = wordVectors.averaged() {
+    print(documentVector)  // [0.2, 0.7, 0.5]
+} else {
+    print("Cannot average empty or mismatched vectors")
 }
-
-// Result: [0.2, 0.7, 0.5] - points toward "athletic footwear" region
 ```
 
-The `.averaged()` method validates that all vectors have the same dimensionality and returns `nil` for empty arrays or inconsistent dimensions. This pattern appears in [Chapter 23](23-similarity-operations.md), where [vector averaging](https://waynewbishop.github.io/quiver/documentation/quiver/semantic-search) converts multi-word text into comparable vectors for similarity computation.
+The `.averaged()` method validates that all vectors have the same dimensionality and returns `nil` for empty arrays or inconsistent dimensions. The document vectors compared in [Chapter 23](23-similarity-operations.md) can be thought of as the output of a step like this one, and the Quiver guide to [semantic search](https://waynewbishop.github.io/quiver/documentation/quiver/semantic-search) walks through the full text-to-vector pipeline.
 
 ## Building algorithmic intuition
 

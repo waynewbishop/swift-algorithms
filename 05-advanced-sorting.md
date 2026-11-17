@@ -11,7 +11,7 @@ The Quicksort algorithm, however, has broad practical application and usage. Thi
 
 ## How Quicksort works
 
-Quicksort applies a series of rules to swap pairs of values. Swap events are performed in place so no additional structures are needed to process data. In our implementation, special variables named wall and pivot will help manage the swapping process.
+Quicksort applies a series of rules to swap pairs of values. Swap events are performed in place, so no second array is needed to hold the data; the only extra memory is the call stack used by recursion, which we'll measure shortly. In our implementation, special variables named wall and pivot will help manage the swapping process.
 
 At the start of the sorting process, the algorithm begins by comparing each index value to a comparison value called the pivot. The wall represents the position of values that have been swapped or evaluated. Since we've just started the sorting process, the current and wall indices are shown as the same value.
 
@@ -58,33 +58,36 @@ var sequence: Array<Int> = [7, 2, 1, 6, 8, 5, 3, 4]
 let results = sequence.quickSort()
 ```
 
-Finally, the `qPartition` process sorts a selected pivot value to its correct index position:
+Finally, the `qPartition` process sorts a selected pivot value to its correct index position. Because it reads and swaps elements of the array, it belongs in the same `Array` extension as `quickSort`, alongside it as a second method:
 
 ```swift
-// Partition array segment around pivot, returning final pivot position
-mutating func qPartition(start startIndex: Int, _ pivot: Int) -> Int {
+extension Array where Element: Comparable {
 
-    var wallIndex: Int = startIndex
+    // Partition array segment around pivot, returning final pivot position
+    mutating func qPartition(start startIndex: Int, _ pivot: Int) -> Int {
 
-    //compare range with pivot
-    for currentIndex in wallIndex..<pivot {
+        var wallIndex: Int = startIndex
 
-        if self[currentIndex] <= self[pivot] {
-            if wallIndex != currentIndex {
-                self.swapAt(currentIndex, wallIndex)
+        //compare range with pivot
+        for currentIndex in wallIndex..<pivot {
+
+            if self[currentIndex] <= self[pivot] {
+                if wallIndex != currentIndex {
+                    self.swapAt(currentIndex, wallIndex)
+                }
+
+                //advance wall
+                wallIndex += 1
             }
-
-            //advance wall
-            wallIndex += 1
         }
-    }
 
-    //move pivot to final position
-    if wallIndex != pivot {
-        self.swapAt(wallIndex, pivot)
-    }
+        //move pivot to final position
+        if wallIndex != pivot {
+            self.swapAt(wallIndex, pivot)
+        }
 
-    return wallIndex
+        return wallIndex
+    }
 }
 ```
 
@@ -92,13 +95,13 @@ mutating func qPartition(start startIndex: Int, _ pivot: Int) -> Int {
 
 Quicksort achieves `O(n log n)` time complexity in its average case through the power of partitioning. Each partitioning operation divides the array into two segments, ideally of roughly equal size. This creates a recursion tree with log n levels, where each level halves the problem size. At each level, the algorithm examines every element once during partitioning, resulting in n operations per level. The total complexity is therefore log n levels multiplied by n operations per level, yielding `O(n log n)`.
 
-However, Quicksort can degrade to `O(n²)` in its worst case when the pivot selection consistently creates unbalanced partitions. This occurs when the array is already sorted or contains all identical values, causing each partition to contain only one element. Modern implementations use techniques like random pivot selection or median-of-three to mitigate this risk.
+However, Quicksort can degrade to `O(n²)` in its worst case when the pivot selection consistently creates unbalanced partitions. With our implementation, which always chooses the last element as the pivot, this occurs when the array is already sorted or contains all identical values. Every partition then places all remaining elements on one side of the pivot and none on the other, so each level of recursion removes only a single element. Modern implementations use techniques like random pivot selection or median-of-three to mitigate this risk.
 
 ## Practical applications
 
-Quicksort excels in situations where memory is limited, since it uses minimal additional space through its in-place partitioning strategy. On iOS devices where memory management matters, this in-place sorting is particularly valuable. When a fitness app sorts thousands of workouts by duration, Quicksort modifies the array directly rather than creating copies, conserving precious memory.
+Quicksort excels in situations where memory is limited, since its in-place partitioning strategy needs no second array. When a fitness app sorts thousands of workouts by duration, Quicksort modifies the array directly rather than creating copies. In-place doesn't mean zero extra memory, though. Each recursive call occupies a frame on the call stack, and the deepest chain of calls determines the stack space. With balanced partitions, the recursion is about log n calls deep, so the stack uses `O(log n)` space on average. With the worst-case partitions described above, the recursion is n calls deep and the stack grows to `O(n)`. Production implementations avoid this by always recursing into the smaller partition first and looping over the larger one, which caps the stack at `O(log n)` even in the worst case.
 
-Many programming languages use Quicksort or hybrid algorithms based on it. Swift's standard library uses Introsort, which begins with Quicksort and switches to heapsort if recursion depth exceeds a threshold. This approach guarantees `O(n log n)` worst-case performance while maintaining Quicksort's excellent average-case speed. When you call `.sorted()` on an array in Swift, you're likely using a Quicksort-based algorithm. The algorithm's widespread adoption in production systems—from the Health app to Strava to AllTrails—demonstrates its practical value despite the theoretical possibility of worst-case behavior.
+Many programming languages use Quicksort or hybrid algorithms based on it; C++ standard libraries, for example, commonly use Introsort, which begins with Quicksort and switches to heapsort if recursion grows too deep. Swift takes a different approach. Its standard library's [sort implementation](https://github.com/swiftlang/swift/blob/main/stdlib/public/core/Sort.swift) is a modified Timsort, a stable, adaptive merge sort that takes advantage of runs of values already in order. Being stable means elements that compare as equal keep their original order, a guarantee Quicksort doesn't provide, and its worst case is `O(n log n)`. When we call `.sorted()` on an array in Swift, that's the algorithm doing the work. Quicksort remains worth studying because its partitioning idea, its in-place efficiency, and its sensitivity to pivot choice illustrate trade-offs that appear throughout algorithm design.
 
 ## Building algorithmic intuition
 

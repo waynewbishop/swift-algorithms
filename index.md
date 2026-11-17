@@ -6,7 +6,7 @@ description: "Free online book covering Big O notation, sorting, searching, link
 
 # Swift Algorithms & Data Structures - 5th Edition
 
-The Swift language has become the cornerstone of Apple development, powering solutions for iPhone, MacOS, server-based solutions and beyond. This book provides complete implementations of essential algorithms, data structures and mathematics in modern Swift, going beyond pseudocode to show you how these concepts work in production code.
+The Swift language has become the cornerstone of Apple development, powering solutions for iPhone, macOS, server-based solutions and beyond. This book provides working implementations of essential algorithms, data structures and mathematics in modern Swift, going beyond pseudocode to show how these concepts work in real code. Each chapter's listings are drawn from, and tested in, the companion Structures and Quiver packages.
 
 ## What you'll learn
 
@@ -29,7 +29,7 @@ The Swift language has become the cornerstone of Apple development, powering sol
 
 ## How to use this book
 
-  This book supports multiple learning paths: read chapters sequentially from Big O notation through advanced topics to build a complete foundation, or jump directly to specific algorithms and data structures as reference material since each chapter is self-contained. Interview candidates should focus on **Chapters 3-14** covering fundamental algorithms and data structures, practicing implementations independently before reviewing solutions. Developers interested in data science can start with **Chapters 20-21** on vectors and matrices, then explore statistical operations in the Quiver documentation. 
+  This book supports multiple learning paths: read chapters sequentially from Big O notation through advanced topics to build a complete foundation, or jump directly to specific algorithms and data structures as reference material, since each chapter notes the earlier chapters it builds on. Interview candidates should focus on **Chapters 3-17** covering fundamental algorithms and data structures, practicing implementations independently before reviewing solutions. Developers interested in data science can start with **Chapters 20-21** on vectors and matrices, then explore statistical operations in the Quiver documentation. 
   
 ## Related projects
 

@@ -15,7 +15,7 @@ Consider Big O notation as a way to classify algorithms into performance categor
 
 ## Constant time
 
-Some operations take the same amount of time regardless of input size - this is known as **constant time**. Accessing a specific array index is `O(1)`— whether your array has 10 items or 10 million items, getting `array[5]` is instant. The computer knows exactly where to find that position in memory.
+Some operations take the same amount of time regardless of input size - this is known as **constant time**. Accessing a specific array index is `O(1)`— whether an array has 10 items or 10 million items, getting `array[5]` is instant. The computer knows exactly where to find that position in memory.
 
 ## Logarithmic time
 
@@ -31,17 +31,17 @@ Linear time operations are sometimes called **brute force** because they make no
 
 ## Linearithmic time
 
-This pattern combines linear and logarithmic behavior. Quicksort ([Chapter 5](05-advanced-sorting.md)) demonstrates `O(n log n)` performance. It divides data recursively (the log n part) and processes each piece (the n part). This is often the best we can achieve for comparison-based sorting.
+This pattern combines linear and logarithmic behavior. Quicksort ([Chapter 5](05-advanced-sorting.md)) demonstrates `O(n log n)` performance on average. It divides data recursively (the log n part) and processes each piece (the n part). This is often the best we can achieve for comparison-based sorting.
 
 ## Quadratic time
 
 Nested loops often produce quadratic time complexity. Bubble sort, insertion sort, and selection sort ([Chapter 4](04-basic-sorting.md)) all exhibit `O(n²)` behavior. The performance degrades dramatically: doubling the data size roughly quadruples the time. For 100 items, we might do 10,000 operations. For 1,000 items, about 1,000,000 operations.
 
-Quadratic algorithms work fine for small datasets but become impractical as data grows. Understanding why they're `O(n²)` helps you recognize when to choose a different approach.
+Quadratic algorithms work fine for small datasets but become impractical as data grows. Understanding why they're `O(n²)` helps us recognize when to choose a different approach.
 
 ## Exponential time
 
-Some algorithms' performance degrades exponentially. The naive recursive Fibonacci calculation ([Chapter 18](18-dynamic-programming.md)) demonstrates this—calculating `fib(40)` requires over a billion operations. 
+Some algorithms' performance degrades exponentially. The naive recursive Fibonacci calculation ([Chapter 18](18-dynamic-programming.md)) demonstrates this—calculating `fib(40)` requires more than 200 million recursive calls, because the same smaller values are recomputed again and again.
 
 ## Visualizing the difference
 

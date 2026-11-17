@@ -13,7 +13,7 @@ Recursion is best understood when compared to the iterative approaches we've see
 
 ## Understanding recursive structure
 
-Every recursive solution has two essential components. The base case provides the condition that stops the recursion—without it, your function would call itself indefinitely. The recursive case is where the function calls itself with a modified version of the original problem, gradually moving toward the base case.
+Every recursive solution has two essential components. The base case provides the condition that stops the recursion—without it, the function would call itself indefinitely. The recursive case is where the function calls itself with a modified version of the original problem, gradually moving toward the base case.
 
 Let's see this in action with a simple example - calculating factorial:
 
