@@ -217,7 +217,7 @@ Most Swift built-in types (Int, Double, String, Bool) conform to Equatable autom
 
 ### Comparable protocol
 
-[Comparable](https://developer.apple.com/documentation/Swift/Comparable) enables ordering operations using `<`, `>`, `<=`, and `>=`. Every sorting and searching algorithm in this book relies on it. (Sorting doesn't always require `Comparable`: Swift's `sorted(by:)` accepts a custom comparison closure instead, and algorithms like counting sort order values without comparing them at all.)
+[Comparable](https://developer.apple.com/documentation/Swift/Comparable) enables ordering operations using `<`, `>`, `<=`, and `>=`. The comparison-based sorts and binary search shown here use `Comparable`. Linear search needs only `Equatable`. Swift's `sorted(by:)` accepts a comparison closure, and counting sort orders values without comparing them.
 
 ```swift
 // Binary search requires Comparable for < and > comparisons

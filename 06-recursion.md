@@ -1,11 +1,11 @@
 ---
 layout: chapter
 title: "Chapter 6: Recursion"
-description: "Understand recursion in Swift through factorial, Fibonacci, and recursive data structure traversal examples"
+description: "Understand recursion in Swift through factorial, Fibonacci, call-stack tracing, and memoization."
 ---
 # Recursion
 
-In [Chapter 5](05-advanced-sorting.md), we saw how Quicksort uses recursion to partition and sort arrays. Now it's time to explore recursion more deeply as a fundamental programming technique. Understanding recursion is crucial—we'll use it extensively when we build linked lists, trees, and graphs.
+In [Chapter 5](05-advanced-sorting.md), we saw how Quicksort uses recursion to partition and sort arrays. Now it's time to explore recursion more deeply as a fundamental programming technique. The same recursive pattern will help us search trees and traverse graphs in later chapters.
 
 ## The recursive mindset
 

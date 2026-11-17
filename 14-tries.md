@@ -118,7 +118,7 @@ for word in words {
 }
 ```
 
-Walking a word of length m takes m steps, and each step scans at most b children, so finding the insertion path costs `O(b × m)`. The algorithm navigates through existing nodes for shared prefixes, only creating new nodes when necessary. Prefix-sharing is what keeps a trie compact when many words begin alike: "ball", "balls", and "ballard" share the nodes for "b" through "ball". Because each node in our version stores its complete prefix, though, a new node costs storage proportional to its depth, a detail we'll return to in the performance analysis.
+Finding the insertion path for a word of length m costs `O(b × m)`, since each step scans at most b children. Words with shared prefixes reuse existing nodes: "ball", "balls", and "ballard" share the nodes for "b" through "ball". Creating a new path also requires storing each complete prefix. Those string copies add work proportional to the combined prefix lengths, which we account for in the performance analysis.
 
 ## Breadth-first search for trie operations
 
@@ -289,7 +289,9 @@ Tries offer strong performance characteristics for string operations, and the co
 
 ### Time complexity
 
-Finding where a word belongs with `append` takes `O(b × m)`: one step per character, each scanning at most b children. Searching with `traverse` has two phases. Navigating to the prefix node takes `O(b × p)`, and the BFS that collects results visits s nodes, so autocomplete costs `O(b × p + s)` in total. For a fixed alphabet, b is bounded by the alphabet size, which is why textbooks often simplify these to `O(m)` and `O(p + s)`.
+Navigating the insertion path takes `O(b × m)`: one step per character, each scanning at most b children. Insertion also stores the running `prefix` in every new node. Swift strings use copy-on-write storage, so extending a prefix retained by an earlier node requires a copy. A new path of length m stores prefixes of lengths 1 through m, adding `O(m²)` character-copy work. Total insertion time is therefore `O(b × m + m²)` in the worst case for this representation.
+
+Searching with `traverse` has two phases. Navigating to the prefix node takes `O(b × p)`, and the BFS that collects results visits s nodes, so autocomplete costs `O(b × p + s)`. For a fixed alphabet, b is bounded, giving `O(p)` prefix navigation and `O(p + s)` autocomplete. These bounds treat each character comparison as constant work; Unicode characters with long combining sequences can require more work per comparison.
 
 ### Space complexity
 
@@ -300,7 +302,7 @@ Our representation stores each node's complete prefix, so a node at depth d hold
 | Operation | Hash Table (Ch 15) | Sorted array or balanced BST | Trie |
 |-----------|------------|-------------------|------|
 | Search exact word | `O(m)` average | `O(m × log n)` | `O(b × m)` |
-| Insert | `O(m)` average | `O(m × log n)` for a balanced BST | `O(b × m)` |
+| Insert | `O(m)` average | `O(m × log n)` for a balanced BST | `O(b × m + m²)` worst case |
 | Find a prefix's matches | `O(n × p)` (scan every word) | `O(p × log n + r)` | `O(b × p + s)` |
 
 Where m = word length, p = prefix length, n = total words, r = number of matching words, b = children per node, and s = nodes below the prefix node. The m and p factors account for the cost of hashing or comparing strings, which the Chapter 15 hash functions compute character by character.

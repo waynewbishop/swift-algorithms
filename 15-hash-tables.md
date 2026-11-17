@@ -30,22 +30,36 @@ public protocol Indexable: Hashable {
 }
 ```
 
-The `Indexable` protocol extends `Hashable` and requires a single computed property — `asciiRepresentation` — that converts the type's content into an integer suitable for hash table indexing. Here's how `String` conforms to this requirement:
+The `Indexable` protocol extends `Hashable` and requires a single computed property, `asciiRepresentation`, that converts the type's content into an integer for hash table indexing. Equal elements must produce the same integer. Our tables use this property to choose a bucket, so conforming to `Hashable` alone cannot enforce that requirement. Here's how `String` can meet the contract:
 
 ```swift
-// Computes a hash value by summing unicode scalar values
+import Foundation
+
+// Computes a hash value by summing canonically normalized Unicode scalar values
 extension String: Indexable {
     public var asciiRepresentation: Int {
-        var divisor: Int = 0
-        for item in self.unicodeScalars {
-            divisor += Int(item.value)
+        var scalarSum: Int = 0
+        for scalar in self.precomposedStringWithCanonicalMapping.unicodeScalars {
+            scalarSum += Int(scalar.value)
         }
-        return divisor
+        return scalarSum
     }
 }
 ```
 
-This approach converts each character to its unicode scalar value and sums them together. The string "Swift" produces a sum of its character values (83 + 119 + 105 + 102 + 116 = 525). This numeric representation becomes the input to our hash function.
+Foundation's `precomposedStringWithCanonicalMapping` gives canonically equivalent strings the same normalized representation before we sum their Unicode scalars. Swift considers a precomposed “é” equal to “e” followed by a combining acute accent. Summing the original scalars would give 233 and 870, sending equal strings to different buckets. Normalizing first gives both strings a sum of 233.
+
+We can check that equality and the hash representation agree:
+
+```swift
+let composed = "\u{00E9}"
+let decomposed = "e\u{0301}"
+composed == decomposed  // true
+composed.asciiRepresentation  // 233
+decomposed.asciiRepresentation  // 233
+```
+
+The string "Swift" is unchanged by normalization. Its scalar values sum to `83 + 119 + 105 + 102 + 116 = 525`. This numeric representation becomes the input to our hash function.
 
 ### Educational example
 
@@ -317,7 +331,7 @@ As more elements arrive, chains grow longer and lookups slow down. The fix is to
 Growing therefore means building a new, larger bucket array and placing every existing element again using the new count, a process called **rehashing**:
 
 ```swift
-// Doubles the bucket count and rehashes every stored element - O(n)
+// Doubles the bucket count and rehashes every stored element - expected O(n) for well-spread, fixed-length keys
 private func resize() {
 
     let oldBuckets = buckets
@@ -334,7 +348,11 @@ private func resize() {
 }
 ```
 
-Rehashing touches every element, so a single resize costs `O(n)`. Because the bucket count doubles each time, though, resizes become rarer as the table grows, and the total cost spread across many insertions averages out to `O(1)` per insertion. This is also why `HashSet` keeps a fixed bucket count. Without collision handling, rehashing into a new table could itself produce collisions, and those elements would have nowhere to go.
+For fixed-length keys spread evenly across the buckets, a resize costs `O(n)` on average. That cost includes allocating the new bucket array and rebuilding the chains. Doubling the bucket count spreads this expected cost across many insertions, giving an expected amortized insertion cost of `O(1)`. For variable-length keys, we must also count the work of hashing every key again.
+
+The worst case depends on how we rebuild each chain. Our `store` helper calls `Chain.append`, which walks to the end before adding an element. If all n keys collide, rebuilding their chain takes `0 + 1 + … + (n − 1)` link traversals, or `O(n²)` work. A tail pointer or insertion at the head would make each placement constant time during rehashing.
+
+`HashSet` keeps a fixed bucket count because rehashing without collision handling could leave some elements with no available position.
 
 ### Collision-aware lookup
 

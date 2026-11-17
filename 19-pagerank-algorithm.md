@@ -1,7 +1,7 @@
 ---
 layout: chapter
 title: "Chapter 19: PageRank Algorithm"
-description: "Implement Google's PageRank algorithm in Swift using adjacency matrices and iterative convergence"
+description: "Compute PageRank in Swift using adjacency lists, sink node handling, and iterative rank updates."
 ---
 # PageRank
 
@@ -139,7 +139,7 @@ let dampingFactor: Float = 0.85
 // - N = total number of pages, and ranks across all pages sum to 1
 ```
 
-The damping factor proves crucial for several reasons. Without it, a closed loop of pages that link only to one another would capture all of the surfer's probability over time, creating rank sinks that distort the entire system. It models real browsing behavior—people don't click links forever but eventually start fresh at random pages. The damping factor guarantees the iterative algorithm will reach a stable solution through convergence, and it balances authority distribution by preventing any single page from capturing all PageRank.
+Damping lets the surfer leave closed components through random jumps. Without damping, probability can remain trapped in separate components, and periodic link patterns can prevent the rank values from converging. With `0 < d < 1`, uniform random jumps and the sink handling described above give a unique stationary distribution. Iteration converges to that distribution regardless of the starting ranks, provided those ranks have the same total probability.
 
 **Mathematical impact:**
 ```swift
