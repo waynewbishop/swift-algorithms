@@ -139,7 +139,14 @@
       mark.classList.add('is-here');
       var dot = mark.querySelector('circle');
       if (dot) dot.setAttribute('r', '8');
-      pin.setAttribute('transform', 'translate(' + mark.getAttribute('data-x') + ' ' + mark.getAttribute('data-y') + ')');
+      var pinX = parseFloat(mark.getAttribute('data-x'));
+      pin.setAttribute('transform', 'translate(' + pinX + ' ' + mark.getAttribute('data-y') + ')');
+      // Slide the label sideways near either end so it stays inside the drawing; the stem stays on the marker.
+      var shift = Math.max(6 - (pinX - 50), Math.min(0, 1154 - (pinX + 50)));
+      var label = pin.querySelector('rect');
+      var labelText = pin.querySelector('text');
+      if (label) label.setAttribute('x', String(-50 + shift));
+      if (labelText) labelText.setAttribute('x', String(shift));
       pin.classList.add('is-shown');
     }
   }

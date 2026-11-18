@@ -1,4 +1,4 @@
-<svg class="fn-route-svg" aria-hidden="true" focusable="false" viewBox="0 40 1160 250" width="1160" height="250">
+<svg class="fn-route-svg" aria-hidden="true" focusable="false" viewBox="0 -6 1160 296" width="1160" height="296">
 <polygon class="fn-route-ground" points="40,210 40.0,195.9 87.0,189.7 133.9,179.4 180.9,171.1 227.8,162.9 274.8,154.6 321.7,152.5 368.7,152.5 415.7,144.3 462.6,136.0 509.6,127.8 556.5,119.5 603.5,111.3 650.4,104.0 697.4,96.8 744.3,89.6 791.3,82.4 838.3,78.3 885.2,74.1 932.2,77.2 979.1,72.1 1026.1,70.0 1073.0,74.1 1120.0,113.3 1120,210"/>
 <path class="fn-route-base" d="M40 210 H1120"/>
 <path class="stage-fundamentals fn-route-line" d="M40.0 195.9 L87.0 189.7"/>
