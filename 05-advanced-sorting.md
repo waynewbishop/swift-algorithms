@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 5: Advanced Sorting"
 description: "Implement quicksort in Swift using recursive partitioning, and compare its trade-offs with Swift's stable sort."
 ---

@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 12: Tree Balancing"
 description: "Implement AVL tree rotations and self-balancing binary search trees in Swift"
 ---

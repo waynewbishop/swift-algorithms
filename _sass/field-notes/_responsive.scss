@@ -1,0 +1,54 @@
+// Tablet and phone layouts, plus print.
+
+// Below 1240px the right rail folds into an "On this page" panel above the article.
+@media (max-width: 1240px) {
+  .fn-shell { grid-template-columns: 260px minmax(0, 760px); gap: 48px; }
+  .fn-rail { display: none; }
+  .fn-toc-mobile { display: block; }
+}
+
+// Below 960px the sidebar becomes a drawer opened from the header.
+@media (max-width: 960px) {
+  .fn-header { padding: 0 16px; gap: 12px; }
+  .fn-menu-button { display: inline-flex; }
+  .fn-site-nav { display: none; }
+  .fn-brand { flex: 1 1 auto; min-width: 0; }
+
+  .fn-shell { display: block; padding: 24px 16px 48px; }
+
+  .fn-sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 40;
+    width: 300px;
+    max-width: 85vw;
+    max-height: none;
+    border-radius: 0 16px 16px 0;
+    transform: translateX(-105%);
+    visibility: hidden;
+    transition: transform 200ms ease, visibility 200ms;
+  }
+  .fn-sidebar.is-open { transform: none; visibility: visible; }
+}
+
+@media (max-width: 640px) {
+  .fn-edition { display: none; }
+  .fn-article { font-size: 18px; line-height: 30px; }
+  .fn-article h1 { font-size: 38px; line-height: 44px; }
+  .fn-article h2 { font-size: 26px; line-height: 33px; margin-top: 44px; }
+  .fn-article h3 { font-size: 20px; line-height: 28px; }
+  .fn-article pre { padding: 16px; font-size: 13.5px; line-height: 22px; }
+  .fn-article table { display: block; overflow-x: auto; }
+  .fn-chapter-next { grid-column: auto; }
+  .fn-footer { padding: 24px 16px; }
+}
+
+@media print {
+  .fn-header, .fn-sidebar, .fn-rail, .fn-toc-mobile, .fn-chapter-nav, .fn-copy, .fn-skip, .fn-overlay { display: none !important; }
+  .fn-shell { display: block; padding: 0; }
+  .fn-article { font-size: 11pt; line-height: 1.5; }
+  .fn-article pre { white-space: pre-wrap; border: 1px solid #ccc; }
+  .fn-article a { color: inherit; }
+}

@@ -1,0 +1,26 @@
+<nav class="fn-sidebar" id="fn-sidebar" aria-label="Chapters">
+  {% for stage in site.data.book.stages %}
+  <div class="fn-nav-stage stage-{{ stage.id }}">
+    <p class="fn-nav-heading"><span class="fn-blaze" aria-hidden="true"></span>{{ stage.section }}</p>
+    <ul>
+      {% assign stage_chapters = site.data.book.chapters | where: "stage", stage.id %}
+      {% for c in stage_chapters %}
+      <li>
+        <a href="{{ c.slug | relative_url }}"{% if c.slug == fn_slug %} aria-current="page"{% endif %}>
+          <span class="fn-marker">{{ c.number }}</span>
+          <span>{{ c.title }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+  <div class="fn-nav-stage fn-nav-resources">
+    <p class="fn-nav-heading">Resources</p>
+    <ul>
+      <li><a href="https://waynewbishop.github.io/quiver/documentation/quiver/" target="_blank" rel="noopener">Quiver documentation ↗</a></li>
+      <li><a href="https://github.com/waynewbishop/bishop-algorithms-swift-package" target="_blank" rel="noopener">Structures package ↗</a></li>
+      <li><a href="https://github.com/waynewbishop/swift-algorithms" target="_blank" rel="noopener">Book on GitHub ↗</a></li>
+    </ul>
+  </div>
+</nav>

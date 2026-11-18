@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 19: PageRank Algorithm"
 description: "Compute PageRank in Swift using adjacency lists, sink node handling, and iterative rank updates."
 ---

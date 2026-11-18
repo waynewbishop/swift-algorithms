@@ -1,0 +1,58 @@
+<svg class="fn-route-svg" aria-hidden="true" focusable="false" viewBox="0 40 1160 250" width="1160" height="250">
+<polygon class="fn-route-ground" points="40,210 40.0,195.9 87.0,189.7 133.9,179.4 180.9,171.1 227.8,162.9 274.8,154.6 321.7,152.5 368.7,152.5 415.7,144.3 462.6,136.0 509.6,127.8 556.5,119.5 603.5,111.3 650.4,104.0 697.4,96.8 744.3,89.6 791.3,82.4 838.3,78.3 885.2,74.1 932.2,77.2 979.1,72.1 1026.1,70.0 1073.0,74.1 1120.0,113.3 1120,210"/>
+<path class="fn-route-base" d="M40 210 H1120"/>
+<path class="stage-fundamentals fn-route-line" d="M40.0 195.9 L87.0 189.7"/>
+<path class="stage-fundamentals fn-route-line" d="M87.0 189.7 L133.9 179.4"/>
+<path class="stage-algorithms fn-route-line" d="M133.9 179.4 L180.9 171.1"/>
+<path class="stage-algorithms fn-route-line" d="M180.9 171.1 L227.8 162.9"/>
+<path class="stage-algorithms fn-route-line" d="M227.8 162.9 L274.8 154.6"/>
+<path class="stage-algorithms fn-route-line" d="M274.8 154.6 L321.7 152.5"/>
+<path class="stage-swift-concepts fn-route-line" d="M321.7 152.5 L368.7 152.5"/>
+<path class="stage-swift-concepts fn-route-line" d="M368.7 152.5 L415.7 144.3"/>
+<path class="stage-data-structures fn-route-line" d="M415.7 144.3 L462.6 136.0"/>
+<path class="stage-data-structures fn-route-line" d="M462.6 136.0 L509.6 127.8"/>
+<path class="stage-data-structures fn-route-line" d="M509.6 127.8 L556.5 119.5"/>
+<path class="stage-data-structures fn-route-line" d="M556.5 119.5 L603.5 111.3"/>
+<path class="stage-data-structures fn-route-line" d="M603.5 111.3 L650.4 104.0"/>
+<path class="stage-data-structures fn-route-line" d="M650.4 104.0 L697.4 96.8"/>
+<path class="stage-data-structures fn-route-line" d="M697.4 96.8 L744.3 89.6"/>
+<path class="stage-data-structures fn-route-line" d="M744.3 89.6 L791.3 82.4"/>
+<path class="stage-data-structures fn-route-line" d="M791.3 82.4 L838.3 78.3"/>
+<path class="stage-advanced fn-route-line" d="M838.3 78.3 L885.2 74.1"/>
+<path class="stage-advanced fn-route-line" d="M885.2 74.1 L932.2 77.2"/>
+<path class="stage-advanced fn-route-line" d="M932.2 77.2 L979.1 72.1"/>
+<path class="stage-advanced fn-route-line" d="M979.1 72.1 L1026.1 70.0"/>
+<path class="stage-advanced fn-route-line" d="M1026.1 70.0 L1073.0 74.1"/>
+<path class="stage-appendix fn-route-line" d="M1073.0 74.1 L1120.0 113.3"/>
+<g class="stage-fundamentals fn-route-mark" data-chapter="1" data-x="40.0" data-y="195.9"><circle cx="40.0" cy="195.9" r="5.5"/><text x="40.0" y="230">1</text></g>
+<g class="stage-fundamentals fn-route-mark" data-chapter="2" data-x="87.0" data-y="189.7"><circle cx="87.0" cy="189.7" r="5.5"/><text x="87.0" y="230">2</text></g>
+<g class="stage-algorithms fn-route-mark" data-chapter="3" data-x="133.9" data-y="179.4"><circle cx="133.9" cy="179.4" r="5.5"/><text x="133.9" y="230">3</text></g>
+<g class="stage-algorithms fn-route-mark" data-chapter="4" data-x="180.9" data-y="171.1"><circle cx="180.9" cy="171.1" r="5.5"/><text x="180.9" y="230">4</text></g>
+<g class="stage-algorithms fn-route-mark" data-chapter="5" data-x="227.8" data-y="162.9"><circle cx="227.8" cy="162.9" r="5.5"/><text x="227.8" y="230">5</text></g>
+<g class="stage-algorithms fn-route-mark" data-chapter="6" data-x="274.8" data-y="154.6"><circle cx="274.8" cy="154.6" r="5.5"/><text x="274.8" y="230">6</text></g>
+<g class="stage-swift-concepts fn-route-mark" data-chapter="7" data-x="321.7" data-y="152.5"><circle cx="321.7" cy="152.5" r="5.5"/><text x="321.7" y="230">7</text></g>
+<g class="stage-swift-concepts fn-route-mark" data-chapter="8" data-x="368.7" data-y="152.5"><circle cx="368.7" cy="152.5" r="5.5"/><text x="368.7" y="230">8</text></g>
+<g class="stage-data-structures fn-route-mark" data-chapter="9" data-x="415.7" data-y="144.3"><circle cx="415.7" cy="144.3" r="5.5"/><text x="415.7" y="230">9</text></g>
+<g class="stage-data-structures fn-route-mark" data-chapter="10" data-x="462.6" data-y="136.0"><circle cx="462.6" cy="136.0" r="5.5"/><text x="462.6" y="230">10</text></g>
+<g class="stage-data-structures fn-route-mark" data-chapter="11" data-x="509.6" data-y="127.8"><circle cx="509.6" cy="127.8" r="5.5"/><text x="509.6" y="230">11</text></g>
+<g class="stage-data-structures fn-route-mark" data-chapter="12" data-x="556.5" data-y="119.5"><circle cx="556.5" cy="119.5" r="5.5"/><text x="556.5" y="230">12</text></g>
+<g class="stage-data-structures fn-route-mark" data-chapter="13" data-x="603.5" data-y="111.3"><circle cx="603.5" cy="111.3" r="5.5"/><text x="603.5" y="230">13</text></g>
+<g class="stage-data-structures fn-route-mark" data-chapter="14" data-x="650.4" data-y="104.0"><circle cx="650.4" cy="104.0" r="5.5"/><text x="650.4" y="230">14</text></g>
+<g class="stage-data-structures fn-route-mark" data-chapter="15" data-x="697.4" data-y="96.8"><circle cx="697.4" cy="96.8" r="5.5"/><text x="697.4" y="230">15</text></g>
+<g class="stage-data-structures fn-route-mark" data-chapter="16" data-x="744.3" data-y="89.6"><circle cx="744.3" cy="89.6" r="5.5"/><text x="744.3" y="230">16</text></g>
+<g class="stage-data-structures fn-route-mark" data-chapter="17" data-x="791.3" data-y="82.4"><circle cx="791.3" cy="82.4" r="5.5"/><text x="791.3" y="230">17</text></g>
+<g class="stage-advanced fn-route-mark" data-chapter="18" data-x="838.3" data-y="78.3"><circle cx="838.3" cy="78.3" r="5.5"/><text x="838.3" y="230">18</text></g>
+<g class="stage-advanced fn-route-mark" data-chapter="19" data-x="885.2" data-y="74.1"><circle cx="885.2" cy="74.1" r="5.5"/><text x="885.2" y="230">19</text></g>
+<g class="stage-advanced fn-route-mark" data-chapter="20" data-x="932.2" data-y="77.2"><circle cx="932.2" cy="77.2" r="5.5"/><text x="932.2" y="230">20</text></g>
+<g class="stage-advanced fn-route-mark" data-chapter="21" data-x="979.1" data-y="72.1"><circle cx="979.1" cy="72.1" r="5.5"/><text x="979.1" y="230">21</text></g>
+<g class="stage-advanced fn-route-mark" data-chapter="22" data-x="1026.1" data-y="70.0"><circle cx="1026.1" cy="70.0" r="5.5"/><text x="1026.1" y="230">22</text></g>
+<g class="stage-advanced fn-route-mark" data-chapter="23" data-x="1073.0" data-y="74.1"><circle cx="1073.0" cy="74.1" r="5.5"/><text x="1073.0" y="230">23</text></g>
+<g class="stage-appendix fn-route-mark" data-chapter="24" data-x="1120.0" data-y="113.3"><circle cx="1120.0" cy="113.3" r="5.5"/><text x="1120.0" y="230">24</text></g>
+<g class="stage-fundamentals fn-route-stage"><path d="M26.0 244 H101.0"/><rect x="60.5" y="252" width="6" height="13" rx="1.5"/><text x="63.5" y="282">Trailhead</text></g>
+<g class="stage-algorithms fn-route-stage"><path d="M119.9 244 H288.8"/><rect x="201.3" y="252" width="6" height="13" rx="1.5"/><text x="204.3" y="282">Foothills</text></g>
+<g class="stage-swift-concepts fn-route-stage"><path d="M307.7 244 H382.7"/><rect x="342.2" y="252" width="6" height="13" rx="1.5"/><text x="345.2" y="282">Aid station</text></g>
+<g class="stage-data-structures fn-route-stage"><path d="M401.7 244 H805.3"/><rect x="600.5" y="252" width="6" height="13" rx="1.5"/><text x="603.5" y="282">The climb</text></g>
+<g class="stage-advanced fn-route-stage"><path d="M824.3 244 H1087.0"/><rect x="952.7" y="252" width="6" height="13" rx="1.5"/><text x="955.7" y="282">Summit ridge</text></g>
+<g class="stage-appendix fn-route-stage"><path d="M1106.0 244 H1134.0"/><rect x="1117.0" y="252" width="6" height="13" rx="1.5"/><text x="1120.0" y="282">Finish</text></g>
+<g class="fn-route-pin"><path d="M0 -10 V-44"/><rect x="-50" y="-70" width="100" height="26" rx="13"/><text x="0" y="-52">You are here</text></g>
+</svg>

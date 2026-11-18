@@ -1,0 +1,151 @@
+// Chapter text: breadcrumb, headings, body copy, lists, tables, images and notes.
+
+.fn-main { min-width: 0; outline: none; }
+
+.fn-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 20px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.fn-breadcrumb-section { color: var(--stage); font-weight: 600; }
+.fn-breadcrumb-stage { color: var(--stage); }
+
+.fn-article {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  line-height: 32px;
+  color: var(--ink);
+}
+
+.fn-article h1,
+.fn-article h2,
+.fn-article h3,
+.fn-article h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--ink);
+}
+.fn-article h1 { margin: 0 0 28px; font-size: 52px; line-height: 58px; letter-spacing: -0.025em; }
+.fn-article h2 { margin: 56px 0 16px; font-size: 30px; line-height: 38px; letter-spacing: -0.015em; }
+.fn-article h3 { margin: 40px 0 12px; font-size: 22px; line-height: 30px; letter-spacing: -0.01em; }
+.fn-article h4 { margin: 32px 0 8px; font-size: 18px; line-height: 26px; }
+
+.fn-article p { margin: 0 0 20px; }
+.fn-article ul,
+.fn-article ol { margin: 0 0 20px; padding-left: 28px; }
+.fn-article li { margin: 0 0 8px; }
+.fn-article strong { font-weight: 600; }
+.fn-article hr { border: 0; border-top: 1px solid var(--line); margin: 48px 0; }
+
+.fn-article img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 24px auto;
+  border-radius: 8px;
+}
+
+.fn-article table {
+  width: 100%;
+  margin: 24px 0 28px;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.45;
+}
+.fn-article th {
+  text-align: left;
+  padding: 10px 14px;
+  font-weight: 600;
+  border-bottom: 1.5px solid var(--ink);
+}
+.fn-article td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+// A plain Markdown blockquote; add {: .field-note} after it for the Field note style.
+.fn-article blockquote {
+  margin: 24px 0;
+  padding: 4px 0 4px 20px;
+  border-left: 3px solid var(--line);
+  color: var(--muted);
+}
+.fn-article blockquote p:last-child { margin-bottom: 0; }
+
+.fn-article blockquote.field-note {
+  position: relative;
+  padding: 18px 20px 18px 56px;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--fir-tint);
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 28px;
+}
+.fn-article blockquote.field-note::before {
+  content: "Field note";
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fir);
+}
+.fn-article blockquote.field-note::after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: 21px;
+  width: 22px;
+  height: 22px;
+  background: var(--fir);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M4 20 L10 8 L14 14 L17 10 L21 20 Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M4 20 L10 8 L14 14 L17 10 L21 20 Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+// Mobile on-page contents, shown when the right rail is hidden.
+.fn-toc-mobile {
+  display: none;
+  margin: 0 0 28px;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+.fn-toc-mobile summary {
+  min-height: 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.fn-toc-mobile .fn-toc-list { margin-top: 12px; }
+
+// Previous and next chapter cards.
+.fn-chapter-nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 56px;
+}
+.fn-chapter-link {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--card);
+  text-decoration: none;
+}
+.fn-chapter-link:hover { border-color: var(--muted); }
+.fn-chapter-next { text-align: right; grid-column: -2; }
+.fn-chapter-dir { font-size: 13px; color: var(--muted); }
+.fn-chapter-title { font-size: 18px; font-weight: 600; color: var(--ink); }

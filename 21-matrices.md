@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 21: Matrices"
 description: "Create, reshape, and operate on matrices in Swift using Quiver for numerical computing and data science"
 ---

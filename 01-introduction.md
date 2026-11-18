@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 1: Introduction"
 description: "What algorithms are, why they matter, and how Swift's type system shapes the way we implement them"
 ---

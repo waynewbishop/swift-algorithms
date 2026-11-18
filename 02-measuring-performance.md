@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 2: Measuring Performance"
 description: "Master Big O notation in Swift with examples of constant, linear, logarithmic, and quadratic time complexity"
 ---

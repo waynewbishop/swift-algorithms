@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 17: Heaps"
 description: "Build a binary heap and priority queue in Swift for efficient minimum and maximum extraction"
 ---

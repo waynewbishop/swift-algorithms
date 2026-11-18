@@ -1,0 +1,61 @@
+# Book structure for the Field Notes design.
+# Stages give each section its trail name and color; chapters are listed in reading order.
+# Chapter titles here are the short navigation titles; each chapter's front matter keeps its full title.
+
+stages:
+  - id: fundamentals
+    section: Fundamentals
+    stage: Trailhead
+  - id: algorithms
+    section: Algorithms
+    stage: Foothills
+  - id: swift-concepts
+    section: Swift Concepts
+    stage: Aid station
+  - id: data-structures
+    section: Data Structures
+    stage: The climb
+  - id: advanced
+    section: Advanced Topics
+    stage: Summit ridge
+  - id: appendix
+    section: Appendix
+    stage: Finish
+
+# code: which companion package a chapter's Swift lives in (structures or quiver).
+# Leave it out when a chapter has no companion code.
+chapters:
+  - { number: 1,  title: "Introduction",           slug: "01-introduction",            stage: fundamentals }
+  - { number: 2,  title: "Measuring Performance",  slug: "02-measuring-performance",   stage: fundamentals }
+  - { number: 3,  title: "Basic Searching",        slug: "03-basic-searching",         stage: algorithms,      code: structures }
+  - { number: 4,  title: "Basic Sorting",          slug: "04-basic-sorting",           stage: algorithms,      code: structures }
+  - { number: 5,  title: "Advanced Sorting",       slug: "05-advanced-sorting",        stage: algorithms,      code: structures }
+  - { number: 6,  title: "Recursion",              slug: "06-recursion",               stage: algorithms,      code: structures }
+  - { number: 7,  title: "Generics",               slug: "07-generics",                stage: swift-concepts }
+  - { number: 8,  title: "Analyzing Algorithms",   slug: "08-performance-analysis",    stage: swift-concepts }
+  - { number: 9,  title: "Linked Lists",           slug: "09-linked-lists",            stage: data-structures, code: structures }
+  - { number: 10, title: "Stacks and Queues",      slug: "10-stacks-and-queues",       stage: data-structures, code: structures }
+  - { number: 11, title: "Binary Search Trees",    slug: "11-binary-search-trees",     stage: data-structures, code: structures }
+  - { number: 12, title: "Tree Balancing",         slug: "12-tree-balancing",          stage: data-structures, code: structures }
+  - { number: 13, title: "Graphs",                 slug: "13-graphs",                  stage: data-structures, code: structures }
+  - { number: 14, title: "Tries",                  slug: "14-tries",                   stage: data-structures, code: structures }
+  - { number: 15, title: "Hash Tables",            slug: "15-hash-tables",             stage: data-structures, code: structures }
+  - { number: 16, title: "Shortest Paths",         slug: "16-shortest-paths",          stage: data-structures, code: structures }
+  - { number: 17, title: "Heaps",                  slug: "17-heaps",                   stage: data-structures, code: structures }
+  - { number: 18, title: "Dynamic Programming",    slug: "18-dynamic-programming",     stage: advanced }
+  - { number: 19, title: "PageRank",               slug: "19-pagerank-algorithm",      stage: advanced }
+  - { number: 20, title: "Vectors",                slug: "20-vectors",                 stage: advanced,        code: quiver }
+  - { number: 21, title: "Matrices",               slug: "21-matrices",                stage: advanced,        code: quiver }
+  - { number: 22, title: "Matrix Transformations", slug: "22-matrix-transformations",  stage: advanced,        code: quiver }
+  - { number: 23, title: "Similarity Operations",  slug: "23-similarity-operations",   stage: advanced,        code: quiver }
+  - { number: 24, title: "Afterword",              slug: "24-afterword",               stage: appendix }
+
+packages:
+  structures:
+    name: "Structures package"
+    blurb: "This chapter's Swift lives in the Structures package."
+    url: "https://github.com/waynewbishop/bishop-algorithms-swift-package"
+  quiver:
+    name: "Quiver"
+    blurb: "This chapter builds on Quiver, a Swift package for vectors, statistics and machine learning."
+    url: "https://waynewbishop.github.io/quiver/documentation/quiver/"
