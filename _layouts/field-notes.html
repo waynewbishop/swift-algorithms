@@ -67,7 +67,7 @@
   </footer>
 
   <div class="fn-overlay" hidden></div>
-  <script src="{{ '/assets/js/field-notes.js' | relative_url }}" defer></script>
+  <script src="{{ '/assets/js/field-notes.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
   {% if fn_chapter %}
   <script>
     // Remember this chapter so the home page can offer to continue from it.
