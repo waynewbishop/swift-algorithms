@@ -1,0 +1,77 @@
+{%- comment -%}
+  Field Notes home page: hero, the route, stage cards and the book's introduction from index.md.
+{%- endcomment -%}
+{%- assign fn_first = site.data.book.chapters | first -%}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+{% include field-notes/head.html kind="home" %}
+<body class="fn fn-home">
+  <a class="fn-skip" href="#fn-content">Skip to content</a>
+  {% include field-notes/header.html home=true %}
+
+  <main id="fn-content" class="fn-home-main" tabindex="-1">
+    <section class="fn-hero">
+      <div class="fn-hero-text">
+        <p class="fn-kicker">5th edition · Read online</p>
+        <h1>Swift Algorithms &amp; Data&nbsp;Structures</h1>
+        <p class="fn-hero-lede">{{ site.tagline }}</p>
+        <div class="fn-hero-actions">
+          <a class="fn-button fn-button-primary" href="{{ fn_first.slug | relative_url }}">Start with Chapter 1</a>
+          <a class="fn-button fn-button-secondary fn-continue" href="{{ fn_first.slug | relative_url }}" hidden>Continue</a>
+        </div>
+      </div>
+      <div class="fn-hero-art">
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 560 360" width="560" height="360">
+          <circle cx="430" cy="92" r="40" style="fill: var(--rooibos-tint)"/>
+          <path d="M0 300 L70 230 L120 262 L200 120 L262 196 L330 150 L410 236 L470 180 L560 280 V360 H0 Z" style="fill: var(--glacier-tint)"/>
+          <path d="M0 330 L90 268 L160 300 L250 214 L330 270 L420 228 L500 276 L560 254 V360 H0 Z" style="fill: var(--fir-tint)"/>
+          <path d="M200 120 L222 152 L208 148 L196 160 L186 144 Z" style="fill: var(--bg)"/>
+          <path d="M0 300 L70 230 L120 262 L200 120 L262 196 L330 150 L410 236 L470 180 L560 280" fill="none" style="stroke: var(--granite)" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M70 230 L200 120 L330 150 L470 180" fill="none" style="stroke: var(--rooibos)" stroke-width="3" stroke-dasharray="2 7" stroke-linecap="round"/>
+          <circle cx="70" cy="230" r="9" style="fill: var(--bg); stroke: var(--granite)" stroke-width="2"/>
+          <circle cx="200" cy="120" r="11" style="fill: var(--rooibos)"/>
+          <circle cx="330" cy="150" r="9" style="fill: var(--bg); stroke: var(--glacier)" stroke-width="2"/>
+          <circle cx="470" cy="180" r="9" style="fill: var(--bg); stroke: var(--fir)" stroke-width="2"/>
+          <path d="M0 344 H560" style="stroke: var(--line)" stroke-width="1"/>
+        </svg>
+      </div>
+    </section>
+
+    <section class="fn-route" aria-labelledby="fn-route-title">
+      <div class="fn-route-head">
+        <h2 id="fn-route-title">The route</h2>
+        <p>Six stages, {{ site.data.book.chapters | size }} chapters, from trailhead to finish.</p>
+      </div>
+      {% include field-notes/route.svg %}
+
+      <div class="fn-stage-grid">
+        {% for stage in site.data.book.stages %}
+        {% assign stage_chapters = site.data.book.chapters | where: "stage", stage.id %}
+        <section class="fn-stage-card stage-{{ stage.id }}" aria-labelledby="fn-stage-{{ stage.id }}">
+          <div class="fn-stage-head">
+            <h3 id="fn-stage-{{ stage.id }}">{{ stage.section }}</h3>
+            <span class="fn-stage-label"><span class="fn-blaze" aria-hidden="true"></span>Stage {{ forloop.index }} · {{ stage.stage }}</span>
+          </div>
+          <ul>
+            {% for c in stage_chapters %}
+            <li><a href="{{ c.slug | relative_url }}"><span class="fn-marker">{{ c.number }}</span><span>{{ c.title }}</span></a></li>
+            {% endfor %}
+          </ul>
+        </section>
+        {% endfor %}
+      </div>
+    </section>
+
+    <article class="fn-article fn-home-article">
+      {{ content }}
+    </article>
+  </main>
+
+  <footer class="fn-footer">
+    <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author }} · {{ site.title }} · <a href="https://github.com/waynewbishop/swift-algorithms/issues">Feedback</a></p>
+  </footer>
+
+  <div class="fn-overlay" hidden></div>
+  <script src="{{ '/assets/js/field-notes.js' | relative_url }}" defer></script>
+</body>
+</html>

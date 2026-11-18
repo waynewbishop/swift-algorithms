@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 10: Stacks and Queues"
 description: "Implement stacks and queues in Swift with push, pop, enqueue, and dequeue operations"
 ---

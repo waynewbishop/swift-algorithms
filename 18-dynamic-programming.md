@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 18: Dynamic Programming"
 description: "Use memoization and tabulation to eliminate redundant computation in recursive algorithms with dynamic programming in Swift"
 ---

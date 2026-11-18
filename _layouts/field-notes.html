@@ -1,0 +1,78 @@
+{%- comment -%}
+  Field Notes chapter layout. Chapter order, stage and neighbours come from _data/book.yml.
+{%- endcomment -%}
+{%- assign fn_slug = page.path | split: "/" | last | remove: ".md" -%}
+{%- assign fn_chapters = site.data.book.chapters -%}
+{%- assign fn_index = -1 -%}
+{%- for c in fn_chapters -%}
+  {%- if c.slug == fn_slug -%}{%- assign fn_index = forloop.index0 -%}{%- assign fn_chapter = c -%}{%- endif -%}
+{%- endfor -%}
+{%- if fn_chapter -%}
+  {%- assign fn_stage = site.data.book.stages | where: "id", fn_chapter.stage | first -%}
+  {%- if fn_index > 0 -%}{%- assign fn_i = fn_index | minus: 1 -%}{%- assign fn_prev = fn_chapters[fn_i] -%}{%- endif -%}
+  {%- assign fn_i = fn_index | plus: 1 -%}{%- assign fn_next = fn_chapters[fn_i] -%}
+{%- endif -%}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+{% include field-notes/head.html %}
+<body class="fn">
+  <a class="fn-skip" href="#fn-content">Skip to content</a>
+  {% include field-notes/header.html %}
+
+  <div class="fn-shell">
+    {% include field-notes/sidebar.html %}
+
+    <main id="fn-content" class="fn-main" tabindex="-1">
+      {% if fn_chapter %}
+      <p class="fn-breadcrumb stage-{{ fn_stage.id }}">
+        <span class="fn-blaze" aria-hidden="true"></span>
+        <span class="fn-breadcrumb-section">{{ fn_stage.section }}</span>
+        <span aria-hidden="true">·</span>
+        <span class="fn-breadcrumb-stage">{{ fn_stage.stage }}</span>
+        <span aria-hidden="true">·</span>
+        <span>Chapter {{ fn_chapter.number }}</span>
+      </p>
+      {% endif %}
+
+      <details class="fn-toc-mobile" hidden>
+        <summary>On this page</summary>
+        <ul class="fn-toc-list"></ul>
+      </details>
+
+      <article class="fn-article">
+        {{ content }}
+      </article>
+
+      {% include field-notes/chapter-nav.html %}
+    </main>
+
+    <aside class="fn-rail" aria-label="On this page">
+      <div class="fn-toc" hidden>
+        <p class="fn-rail-label">On this page</p>
+        <ul class="fn-toc-list"></ul>
+      </div>
+      {% if fn_chapter.code %}
+      {%- assign fn_package = site.data.book.packages[fn_chapter.code] -%}
+      <div class="fn-companion">
+        <p class="fn-companion-title">Companion code</p>
+        <p class="fn-companion-text">{{ fn_package.blurb }}</p>
+        <a href="{{ fn_package.url }}" target="_blank" rel="noopener">Open {{ fn_package.name }} →</a>
+      </div>
+      {% endif %}
+    </aside>
+  </div>
+
+  <footer class="fn-footer">
+    <p>&copy; {{ 'now' | date: "%Y" }} {{ site.author }} · {{ site.title }} · <a href="https://github.com/waynewbishop/swift-algorithms/issues">Feedback</a></p>
+  </footer>
+
+  <div class="fn-overlay" hidden></div>
+  <script src="{{ '/assets/js/field-notes.js' | relative_url }}" defer></script>
+  {% if fn_chapter %}
+  <script>
+    // Remember this chapter so the home page can offer to continue from it.
+    try { localStorage.setItem('fn-last-chapter', JSON.stringify({ slug: {{ fn_chapter.slug | jsonify }}, number: {{ fn_chapter.number }}, title: {{ fn_chapter.title | jsonify }} })); } catch (e) {}
+  </script>
+  {% endif %}
+</body>
+</html>

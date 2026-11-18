@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 16: Shortest Paths"
 description: "Implement Dijkstra's shortest path algorithm in Swift with weighted graphs and priority queues"
 ---

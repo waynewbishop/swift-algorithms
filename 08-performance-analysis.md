@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 8: Analyzing Algorithms"
 description: "Analyze algorithm performance with best-case, average-case, and amortized complexity in Swift"
 ---

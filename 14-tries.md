@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 14: Tries"
 description: "Build a trie data structure in Swift for autocomplete, prefix search, and dictionary lookups"
 ---

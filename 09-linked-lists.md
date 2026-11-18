@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 9: Linked Lists"
 description: "Build a linked list from scratch in Swift with insert, delete, and traversal operations"
 ---

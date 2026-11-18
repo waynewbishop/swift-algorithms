@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 13: Graphs"
 description: "Model graphs in Swift with adjacency lists, breadth-first search, and depth-first search"
 ---

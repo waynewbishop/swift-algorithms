@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 22: Matrix Transformations"
 description: "Apply scaling, rotation, and shear transformations to vectors and matrices in Swift"
 ---

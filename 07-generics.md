@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 7: Generics"
 description: "Use Swift generics, protocols, and type constraints to build reusable algorithm implementations"
 ---

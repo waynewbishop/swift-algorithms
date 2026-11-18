@@ -1,0 +1,113 @@
+// Code listings, inline code, copy buttons and Rouge syntax colors.
+
+.fn-article code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--code-text);
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.fn-article div.highlighter-rouge {
+  position: relative;
+  margin: 24px 0 28px;
+}
+
+.fn-article div.highlight,
+.fn-article pre {
+  margin: 0;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 12px;
+}
+
+.fn-article pre {
+  overflow-x: auto;
+  padding: 20px 24px;
+  font-family: var(--font-mono);
+  font-size: 14.5px;
+  line-height: 24px;
+  color: var(--code-text);
+}
+.fn-article div.highlight pre { border: 0; background: transparent; }
+
+.fn-article pre code {
+  padding: 0;
+  background: transparent;
+  font-size: inherit;
+  border-radius: 0;
+}
+
+.fn-copy {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+.fn-article div.highlighter-rouge:hover .fn-copy,
+.fn-copy:focus-visible,
+.fn-copy.is-copied { opacity: 1; }
+.fn-copy:hover { color: var(--ink); border-color: var(--muted); }
+.fn-copy.is-copied { color: var(--fir); border-color: var(--fir); }
+
+@media (hover: none) {
+  .fn-copy { opacity: 1; }
+}
+
+// Rouge token classes.
+.fn-article .highlight .k,
+.fn-article .highlight .kd,
+.fn-article .highlight .kn,
+.fn-article .highlight .kp,
+.fn-article .highlight .kr,
+.fn-article .highlight .kc { color: var(--syn-keyword); }
+
+.fn-article .highlight .kt,
+.fn-article .highlight .nc,
+.fn-article .highlight .nb,
+.fn-article .highlight .bp { color: var(--syn-type); }
+
+.fn-article .highlight .s,
+.fn-article .highlight .s1,
+.fn-article .highlight .s2,
+.fn-article .highlight .sb,
+.fn-article .highlight .sc,
+.fn-article .highlight .sd,
+.fn-article .highlight .sh,
+.fn-article .highlight .si,
+.fn-article .highlight .sx { color: var(--syn-string); }
+
+.fn-article .highlight .m,
+.fn-article .highlight .mf,
+.fn-article .highlight .mh,
+.fn-article .highlight .mi,
+.fn-article .highlight .mo { color: var(--syn-number); }
+
+.fn-article .highlight .c,
+.fn-article .highlight .c1,
+.fn-article .highlight .cm,
+.fn-article .highlight .cp,
+.fn-article .highlight .cs { color: var(--syn-comment); font-style: normal; }
+
+.fn-article .highlight .n,
+.fn-article .highlight .nf,
+.fn-article .highlight .nv,
+.fn-article .highlight .vi,
+.fn-article .highlight .vg,
+.fn-article .highlight .o,
+.fn-article .highlight .p { color: var(--code-text); }

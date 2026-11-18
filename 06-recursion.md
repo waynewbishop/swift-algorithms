@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 6: Recursion"
 description: "Understand recursion in Swift through factorial, Fibonacci, call-stack tracing, and memoization."
 ---

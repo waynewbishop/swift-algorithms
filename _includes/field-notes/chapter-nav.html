@@ -1,0 +1,16 @@
+{% if fn_prev or fn_next %}
+<nav class="fn-chapter-nav" aria-label="Chapter">
+  {% if fn_prev %}
+  <a class="fn-chapter-link fn-chapter-prev" href="{{ fn_prev.slug | relative_url }}">
+    <span class="fn-chapter-dir">← Previous · {{ fn_prev.number }}</span>
+    <span class="fn-chapter-title">{{ fn_prev.title }}</span>
+  </a>
+  {% endif %}
+  {% if fn_next %}
+  <a class="fn-chapter-link fn-chapter-next" href="{{ fn_next.slug | relative_url }}">
+    <span class="fn-chapter-dir">Next · {{ fn_next.number }} →</span>
+    <span class="fn-chapter-title">{{ fn_next.title }}</span>
+  </a>
+  {% endif %}
+</nav>
+{% endif %}

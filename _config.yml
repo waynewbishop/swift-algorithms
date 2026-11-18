@@ -139,6 +139,11 @@ exclude:
   - README.md
   - node_modules/
   - vendor/
+  - chapters/
+  - Planning/
+  - GEMINI.md
+  - package.json
+  - package-lock.json
 
 # Include these files
 include:
@@ -150,11 +155,11 @@ defaults:
       path: ""
       type: "pages"
     values:
-      layout: "chapter"
+      layout: "field-notes"
   - scope:
       path: "index.md"
     values:
-      layout: "home"
+      layout: "field-notes-home"
 
 # Timezone
 timezone: America/Los_Angeles

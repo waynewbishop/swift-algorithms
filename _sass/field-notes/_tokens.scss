@@ -1,0 +1,80 @@
+// Field Notes design tokens: palette, stage colors, type and spacing for light and dark themes.
+
+:root {
+  --bg: #FFFFFF;
+  --surface: #F3F4F5;
+  --surface-line: #E6E8EA;
+  --card: #FFFFFF;
+  --line: #E3E3E1;
+  --ink: #1F2226;
+  --muted: #5D6166;
+
+  --glacier: #2A6886;
+  --fir: #3A684A;
+  --rooibos: #A65822;
+  --rooibos-text: #9A4F1E;
+  --alpenglow: #A8463F;
+  --granite: #62666A;
+
+  --glacier-tint: #DCEAF0;
+  --fir-tint: #DDE9DF;
+  --rooibos-tint: #F5E6D6;
+  --alpenglow-tint: #F4DEDA;
+  --granite-tint: #EDEDEB;
+
+  --code-bg: #F7F7F7;
+  --code-border: rgba(0, 0, 0, 0.06);
+  --code-text: #1D1D1F;
+  --syn-keyword: #AD3DA4;
+  --syn-type: #0068D6;
+  --syn-string: #D12F1B;
+  --syn-number: #0068D6;
+  --syn-comment: #6C7986;
+
+  --font-sans: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --header-height: 64px;
+  --radius: 14px;
+}
+
+:root[data-theme="dark"] {
+  --bg: #161718;
+  --surface: #1C1E20;
+  --surface-line: #2A2D30;
+  --card: #1F2123;
+  --line: #2E3134;
+  --ink: #E6E6E3;
+  --muted: #A3A6A9;
+
+  --glacier: #7FB7D1;
+  --fir: #8DBF98;
+  --rooibos: #E39A5E;
+  --rooibos-text: #E39A5E;
+  --alpenglow: #E58E86;
+  --granite: #8E9295;
+
+  --glacier-tint: #1E3440;
+  --fir-tint: #1F3326;
+  --rooibos-tint: #3A2A1D;
+  --alpenglow-tint: #3D2523;
+  --granite-tint: #26292B;
+
+  --code-bg: #1F2123;
+  --code-border: rgba(255, 255, 255, 0.06);
+  --code-text: #E6E6E3;
+  --syn-keyword: #FC5FA3;
+  --syn-type: #5DD8FF;
+  --syn-string: #FC6A5D;
+  --syn-number: #D0BF69;
+  --syn-comment: #8A96A3;
+}
+
+// Each stage of the route sets its own accent and tint.
+.stage-fundamentals    { --stage: var(--granite);     --stage-tint: var(--granite-tint); }
+.stage-algorithms      { --stage: var(--glacier);     --stage-tint: var(--glacier-tint); }
+.stage-swift-concepts  { --stage: var(--rooibos-text); --stage-tint: var(--rooibos-tint); }
+.stage-data-structures { --stage: var(--fir);         --stage-tint: var(--fir-tint); }
+.stage-advanced        { --stage: var(--alpenglow);   --stage-tint: var(--alpenglow-tint); }
+.stage-appendix        { --stage: var(--granite);     --stage-tint: var(--granite-tint); }

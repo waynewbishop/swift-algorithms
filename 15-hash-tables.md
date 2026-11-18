@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 15: Hash Tables"
 description: "Implement hash tables in Swift with chaining, load factors, and collision resolution strategies"
 ---

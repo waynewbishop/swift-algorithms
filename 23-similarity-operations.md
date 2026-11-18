@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 23: Similarity Operations"
 description: "Compute cosine similarity, Euclidean distance, and semantic search rankings in Swift with Quiver"
 ---

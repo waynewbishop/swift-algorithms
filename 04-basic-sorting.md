@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 4: Basic Sorting"
 description: "Build bubble sort, insertion sort, and selection sort in Swift with step-by-step implementations and performance comparisons"
 ---

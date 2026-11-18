@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Afterword"
 description: "How classical algorithms connect to modern technology, and why understanding them matters more than ever"
 ---

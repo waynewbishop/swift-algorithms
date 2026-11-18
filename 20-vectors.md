@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 20: Vectors"
 description: "Perform vector arithmetic, dot products, magnitude, and normalization in Swift with the Quiver package"
 ---

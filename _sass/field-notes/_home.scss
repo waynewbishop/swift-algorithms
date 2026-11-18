@@ -1,0 +1,156 @@
+// Home page: hero, the route profile, stage cards and the introduction.
+
+.fn-home-main {
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 56px 32px 80px;
+  outline: none;
+}
+
+.fn-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 40px 64px;
+}
+.fn-hero-text {
+  flex: 1 1 460px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.fn-kicker {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--rooibos-text);
+}
+.fn-hero h1 {
+  margin: 0;
+  font-size: 64px;
+  line-height: 68px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+.fn-hero-lede {
+  margin: 0;
+  max-width: 560px;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  line-height: 34px;
+  color: var(--muted);
+}
+.fn-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+.fn-hero-art { flex: 1 1 420px; min-width: 0; max-width: 560px; }
+.fn-hero-art svg { display: block; width: 100%; height: auto; }
+
+.fn-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 22px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.fn-button-primary { background: var(--glacier); color: var(--bg) !important; }
+.fn-button-primary:hover { background: var(--ink); }
+.fn-button-secondary { border: 1.5px solid var(--ink); color: var(--ink) !important; }
+.fn-button-secondary:hover { background: var(--surface); }
+
+.fn-route { display: flex; flex-direction: column; gap: 24px; }
+.fn-route-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+}
+.fn-route-head h2 { margin: 0; font-size: 34px; font-weight: 600; letter-spacing: -0.02em; }
+.fn-route-head p { margin: 0; font-family: var(--font-serif); font-style: italic; font-size: 18px; color: var(--muted); }
+
+// The elevation profile; every color comes from the stage classes so dark mode follows.
+.fn-route-svg { display: block; width: 100%; height: auto; }
+.fn-route-ground { fill: var(--granite-tint); }
+.fn-route-base { stroke: var(--line); stroke-width: 1; }
+.fn-route-line { stroke: var(--stage); stroke-width: 3; stroke-linecap: round; fill: none; }
+.fn-route-mark circle { fill: var(--bg); stroke: var(--stage); stroke-width: 2; }
+.fn-route-mark text,
+.fn-route-stage text { fill: var(--stage); text-anchor: middle; font-weight: 600; }
+.fn-route-mark text { font-family: var(--font-mono); font-size: 12px; }
+.fn-route-mark.is-here circle { fill: var(--stage); stroke: var(--bg); }
+.fn-route-stage path { stroke: var(--stage); stroke-width: 2; }
+.fn-route-stage rect { fill: var(--stage); }
+.fn-route-stage text { font-family: var(--font-sans); font-size: 14px; }
+.fn-route-pin { display: none; }
+.fn-route-pin.is-shown { display: inline; }
+.fn-route-pin path { stroke: var(--ink); stroke-width: 1.5; }
+.fn-route-pin rect { fill: var(--ink); }
+.fn-route-pin text { fill: var(--bg); text-anchor: middle; font-family: var(--font-sans); font-size: 13px; font-weight: 600; }
+
+.fn-stage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+.fn-stage-card {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-top: 6px solid var(--stage);
+  border-radius: 18px;
+  background: var(--card);
+  padding: 22px 24px 24px;
+}
+.fn-stage-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.fn-stage-head h3 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -0.01em; }
+.fn-stage-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--stage);
+  white-space: nowrap;
+}
+.fn-stage-card ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.fn-stage-card a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 40px;
+  font-size: 16px;
+  color: var(--ink) !important;
+  text-decoration: none;
+}
+.fn-stage-card a:hover span:last-child { text-decoration: underline; text-underline-offset: 3px; }
+.fn-stage-card .fn-marker { width: 26px; height: 26px; }
+
+.fn-home-article { max-width: 760px; }
+.fn-home-article > h2:first-child { margin-top: 0; }
+
+@media (max-width: 960px) {
+  .fn-home-main { padding: 32px 16px 56px; gap: 56px; }
+}
+
+@media (max-width: 640px) {
+  .fn-hero h1 { font-size: 42px; line-height: 48px; }
+  .fn-hero-lede { font-size: 19px; line-height: 30px; }
+  .fn-route-head h2 { font-size: 28px; }
+  .fn-stage-grid { grid-template-columns: 1fr; }
+  .fn-stage-head { flex-wrap: wrap; }
+}

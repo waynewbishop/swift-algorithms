@@ -1,0 +1,71 @@
+// Document defaults shared by every Field Notes page.
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-height) + 24px);
+}
+
+body.fn {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.fn a { color: var(--glacier); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.fn a:hover { color: var(--ink); }
+
+.fn :focus-visible {
+  outline: 2px solid var(--glacier);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.fn-skip {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--bg) !important;
+  font-weight: 600;
+  text-decoration: none;
+}
+.fn-skip:focus { top: 12px; }
+
+.fn-blaze {
+  display: inline-block;
+  flex: none;
+  width: 6px;
+  height: 13px;
+  border-radius: 1.5px;
+  background: var(--stage, var(--granite));
+}
+
+.fn-marker {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--stage, var(--granite));
+  background: var(--card);
+  color: var(--stage, var(--granite));
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .fn *, .fn *::before, .fn *::after { transition: none !important; animation: none !important; }
+}

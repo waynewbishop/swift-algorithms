@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 3: Basic Searching"
 description: "Implement linear search and binary search in Swift, compare their Big O performance, and learn when to use each"
 ---

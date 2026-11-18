@@ -1,10 +1,8 @@
 ---
-layout: home
+layout: field-notes-home
 title: "Swift Algorithms & Data Structures — 5th Edition"
 description: "Free online book covering Big O notation, sorting, searching, linked lists, trees, graphs, hash tables, dynamic programming, and numerical computing in Swift. With production code examples."
 ---
-
-# Swift Algorithms & Data Structures - 5th Edition
 
 The Swift language has become the cornerstone of Apple development, powering solutions for iPhone, macOS, server-based solutions and beyond. This book provides working implementations of essential algorithms, data structures and mathematics in modern Swift, going beyond pseudocode to show how these concepts work in real code. Each chapter's listings are drawn from, and tested in, the companion Structures and Quiver packages.
 

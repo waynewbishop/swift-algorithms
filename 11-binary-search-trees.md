@@ -1,5 +1,5 @@
 ---
-layout: chapter
+layout: field-notes
 title: "Chapter 11: Binary Search Trees"
 description: "Build a binary search tree in Swift with insert, search, and in-order traversal"
 ---
