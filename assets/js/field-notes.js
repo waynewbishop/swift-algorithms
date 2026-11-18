@@ -50,6 +50,7 @@
     overlay.hidden = false;
     menuButton.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
     var current = sidebar.querySelector('[aria-current="page"]') || sidebar.querySelector('a');
     if (current) current.focus();
   }
@@ -60,6 +61,7 @@
     overlay.hidden = true;
     menuButton.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
     if (restoreFocus) menuButton.focus();
   }
 

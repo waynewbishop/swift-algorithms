@@ -24,13 +24,20 @@
     z-index: 40;
     width: 300px;
     max-width: 85vw;
+    height: 100vh;
+    height: 100dvh;
     max-height: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
     border-radius: 0 16px 16px 0;
     transform: translateX(-105%);
     visibility: hidden;
     transition: transform 200ms ease, visibility 200ms;
   }
   .fn-sidebar.is-open { transform: none; visibility: visible; }
+  .fn-sidebar > * { flex-shrink: 0; }
 }
 
 @media (max-width: 640px) {
