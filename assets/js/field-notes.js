@@ -132,6 +132,13 @@
     continueButton.hidden = false;
   }
 
+  // Phone version of the pin: a plain sentence under the stage row.
+  var hereLine = document.querySelector('.fn-route-here');
+  if (hereLine && lastChapter && lastChapter.number && lastChapter.title) {
+    hereLine.textContent = 'You are here: Chapter ' + lastChapter.number + ', ' + lastChapter.title + '.';
+    hereLine.hidden = false;
+  }
+
   var pin = document.querySelector('.fn-route-pin');
   if (pin && lastChapter && lastChapter.number) {
     var mark = document.querySelector('.fn-route-mark[data-chapter="' + lastChapter.number + '"]');

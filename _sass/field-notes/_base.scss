@@ -2,6 +2,9 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+// Anything marked hidden stays hidden, even when a component sets its own display.
+.fn [hidden] { display: none !important; }
+
 html {
   -webkit-text-size-adjust: 100%;
   scroll-padding-top: calc(var(--header-height) + 24px);

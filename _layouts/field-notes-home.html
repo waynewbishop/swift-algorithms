@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="fn-hero-art">
-        <svg aria-hidden="true" focusable="false" viewBox="0 0 560 360" width="560" height="360">
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 560 360" width="560" height="360" preserveAspectRatio="xMidYMid slice">
           <circle cx="430" cy="92" r="40" style="fill: var(--rooibos-tint)"/>
           <path d="M0 300 L70 230 L120 262 L200 120 L262 196 L330 150 L410 236 L470 180 L560 280 V360 H0 Z" style="fill: var(--glacier-tint)"/>
           <path d="M0 330 L90 268 L160 300 L250 214 L330 270 L420 228 L500 276 L560 254 V360 H0 Z" style="fill: var(--fir-tint)"/>
@@ -43,6 +43,12 @@
         <p>Six stages, {{ site.data.book.chapters | size }} chapters, from trailhead to finish.</p>
       </div>
       {% include field-notes/route.svg %}
+      <ul class="fn-route-legend" aria-hidden="true">
+        {% for stage in site.data.book.stages %}
+        <li class="stage-{{ stage.id }}"><span class="fn-blaze"></span>{{ stage.stage }}</li>
+        {% endfor %}
+      </ul>
+      <p class="fn-route-here" hidden></p>
 
       <div class="fn-stage-grid">
         {% for stage in site.data.book.stages %}

@@ -140,6 +140,10 @@
 .fn-stage-card a:hover span:last-child { text-decoration: underline; text-underline-offset: 3px; }
 .fn-stage-card .fn-marker { width: 26px; height: 26px; }
 
+// Phone-only stage row and "You are here" line; the profile's own labels are too small there.
+.fn-route-legend,
+.fn-route-here { display: none; }
+
 .fn-home-article { max-width: 760px; }
 .fn-home-article > h2:first-child { margin-top: 0; }
 
@@ -148,6 +152,40 @@
 }
 
 @media (max-width: 640px) {
+  .fn-hero { gap: 28px; }
+  .fn-hero-art { flex-basis: auto; max-width: none; width: 100%; }
+  .fn-hero-art svg { height: 150px; }
+
+  // The profile keeps its ground and a heavier line; labels move into the row below it.
+  .fn-route { gap: 16px; }
+  .fn-route-line { stroke-width: 9; }
+  .fn-route-mark,
+  .fn-route-stage,
+  .fn-route-pin { display: none !important; }
+  .fn-route-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .fn-route-legend li {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--stage);
+  }
+  .fn-route-here {
+    display: block;
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 16px;
+    color: var(--ink);
+  }
+
   .fn-hero h1 { font-size: 42px; line-height: 48px; }
   .fn-hero-lede { font-size: 19px; line-height: 30px; }
   .fn-route-head h2 { font-size: 28px; }
