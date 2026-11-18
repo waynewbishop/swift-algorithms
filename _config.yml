@@ -156,6 +156,12 @@ defaults:
       type: "pages"
     values:
       layout: "field-notes"
+      # Link preview image for social media; jekyll-seo-tag turns this into og:image and twitter:image
+      image:
+        path: /assets/images/social-card.png
+        width: 1200
+        height: 630
+        alt: "Swift Algorithms & Data Structures: learn algorithms, data structures, and numerical computing in Swift"
   - scope:
       path: "index.md"
     values:
